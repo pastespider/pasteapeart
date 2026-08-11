@@ -1,0 +1,837 @@
+using PasteApeart.Application.Contracts;
+using PasteApeart.Handler;
+using Microsoft.AspNetCore.Mvc;
+using PasteForm.Helper;
+using System.Dynamic;
+using System.Linq.Dynamic.Core;
+using System.Reflection;
+using System.Text;
+using System.Text.Json;
+
+namespace PasteApeart.Application
+{
+    /// <summary>
+    /// 默认读取 这个很关键，实现了统一的新增 更新 详细 列表规范读取 相当于兜底的!
+    /// Version.2025.07.005
+    /// Version.2026.01.10
+    /// 当前还有一个问题，就是Page不是采用LeftJoin的，是分次查询，因为LeftJoin的组合有问题，目前还在找办法，Queryable死活会被转换成DbSet... .. .
+    ///</summary>
+    [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "view" })]
+    public class DefaultAppService : PasteApeartAppService
+    {
+
+        private DefaultHelper _defaultHelper;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dd"></param>
+        public DefaultAppService(DefaultHelper dd)
+        {
+            _defaultHelper = dd;
+        }
+
+        /// <summary>
+        /// 映射名字
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <returns></returns>
+        private string MapperEntityName(string entityName)
+        {
+            return base.DefaultMapperEntityName(entityName);
+        }
+
+
+        #region 以下是具体实现 Version.2025.07.005
+
+        /// <summary>
+        /// 获取新增格式
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "view" })]
+        [Route("/api/app/{entityName}/readAddModel", Order = 10)]
+        public async Task<VoloModelInfo> ReadAddModel([FromRoute] string entityName)
+        {
+            entityName = MapperEntityName(entityName);
+            // 1. 根据实体名称查找对应的实体类型和 DTO 类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+            if (entityType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体类型: {entityName}");
+            }
+            await FilterDataAsync(entityType, null, "add");
+            var dtoType = _defaultHelper.FindDtoType(entityName, "AddDto");
+
+            if (dtoType == null)
+            {
+                throw new PasteCodeException($"找不到对应的 DTO 类型: {entityName}AddDto");
+            }
+
+            //new一个出来
+            var dto = Activator.CreateInstance(dtoType);
+
+            // 4. 动态读取 DTO 的属性信息
+            //var dataModel = DefaultHelper.ReadModelProperties(dto, dtoType);
+            //return dataModel;
+
+            return await base.DefaultBuildPropertyInfo("add", dto, dtoType);
+        }
+
+        /// <summary>
+        /// 获取更新数据
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        [HttpGet]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "view" })]
+        [Route("/api/app/{entityName}/{id}/readUpdateModel", Order = 10)]
+        public async Task<VoloModelInfo> ReadUpdateModel([FromRoute] string entityName, [FromRoute] string id)
+        {
+            entityName = MapperEntityName(entityName);
+            // 1. 根据实体名称查找对应的实体类型和 DTO 类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+            var dtoType = _defaultHelper.FindDtoType(entityName, "UpdateDto");
+
+            if (entityType == null || dtoType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体或 DTO 类型: {entityName}");
+            }
+            //Console.WriteLine($"准备查询对象:{id.ToString()}的数据");//这里有问题，输出有问题 准备查询对象:System.Object的数据
+            // 2. 动态查询实体
+            //var entity = await _defaultHelper.FindEntityByIdAsync(_dbContext, entityType, id);
+            var entity = await _defaultHelper.FindEntityByIdWithIncludeAsync(_dbContext, entityType, id);
+            if (entity == null)
+            {
+                throw new PasteCodeException("查询的信息不存在，无法执行编辑操作！");
+            }
+            //Console.WriteLine($"get data:{Newtonsoft.Json.JsonConvert.SerializeObject(entity)}");
+
+            await FilterDataAsync(entityType, entity, "update");
+
+            var dto = Activator.CreateInstance(dtoType);
+            _defaultHelper.MapProperties(entity, dto, entityType, dtoType);
+
+            // 3. 动态映射实体到 DTO
+            //var dto = DefaultHelper.MapEntityToDto(ObjectMapper, entity, entityType, dtoType);
+
+            //构建外表等 Include的如何搞定？？？
+            await _defaultHelper.BuildOuterQuery(_dbContext, dto, dtoType);
+
+            // 4. 动态读取 DTO 的属性信息
+            //var dataModel = DefaultHelper.ReadModelProperties(dto, dtoType);
+            //return dataModel;
+            return await base.DefaultBuildPropertyInfo("update", dto, dtoType);
+        }
+
+        /// <summary>
+        /// 获取详细
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/api/app/{entityName}/{id}/readDetailModel", Order = 10)]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "view" })]
+        public async Task<VoloModelInfo> ReadDetailModel([FromRoute] string entityName, [FromRoute] string id)
+        {
+            entityName = MapperEntityName(entityName);
+
+            // 1. 根据实体名称查找对应的实体类型和 DTO 类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+            var dtoType = _defaultHelper.FindDtoType(entityName, "Dto");
+
+            if (entityType == null || dtoType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体或 DTO 类型: {entityName}");
+            }
+
+            // 2. 动态查询实体
+            var entity = await _defaultHelper.FindEntityByIdWithIncludeAsync(_dbContext, entityType, id);
+            if (entity == null)
+            {
+                throw new PasteCodeException("查询的信息不存在，无法执行编辑操作！");
+            }
+
+            await FilterDataAsync(entityType, entity, "detail");
+            var dto = Activator.CreateInstance(dtoType);
+            _defaultHelper.MapProperties(entity, dto, entityType, dtoType);
+            // 3. 动态映射实体到 DTO
+            //var dto = DefaultHelper.MapEntityToDto(ObjectMapper, entity, entityType, dtoType);
+
+            //构建外表等 Include的如何搞定？？？
+            await _defaultHelper.BuildOuterQuery(_dbContext, dto, dtoType);
+
+            // 4. 动态读取 DTO 的属性信息
+            //var dataModel = DefaultHelper.ReadModelProperties(dto, dtoType);
+            //return dataModel;
+            return await base.DefaultBuildPropertyInfo("detail", dto, dtoType);
+
+        }
+
+        /// <summary>
+        /// 获取列表格式
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("/api/app/{entityName}/readListModel", Order = 10)]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "view" })]
+        public async Task<VoloModelInfo> ReadListModel([FromRoute] string entityName, string searchName = "")
+        {
+            return await ReadListQueryModel(entityName, searchName);
+        }
+
+        /// <summary>
+        /// 读取模型数据
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <param name="searchName"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        private async Task<VoloModelInfo> ReadListQueryModel(string entityName, string searchName = "")
+        {
+            entityName = MapperEntityName(entityName);
+
+            Type searchType = null;
+            if (String.IsNullOrEmpty(searchName))
+            {
+                //var extendQuery = "InputQuery" + DefaultHelper.ConvertToPascalCase(entityName);
+                searchType = _defaultHelper.FindQueryType(entityName);
+                if (searchType == null)
+                {
+                    searchName = "InputSearchBase";
+                    searchType = _defaultHelper.AutoFindType(searchName);
+                }
+            }
+            else
+            {
+                searchType = _defaultHelper.AutoFindType(searchName);
+            }
+
+            if (searchType == null)
+            {
+                throw new PasteCodeException("没有检索到搜索Model,请确认InputSearchBase这个基础检索Model存在!");
+            }
+            // 动态查找实体对应的 ListDto 类型
+            var listDtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
+            // 创建 ListDto 实例
+            var listDtoInstance = Activator.CreateInstance(listDtoType);
+            // 动态读取 ListDto 的属性信息
+            //var listModel = BuilderHelper.AttributeReadModelProperty(listDtoInstance, true);
+            //var listModel = DefaultHelper.ReadModelProperties(listDtoInstance, listDtoType, true);
+            var listModel = await base.DefaultBuildPropertyInfo("list", listDtoInstance, listDtoType, true);
+            if (searchType != null)
+            {
+                var search_model = Activator.CreateInstance(searchType);
+                //var searchModel = BuilderHelper.AttributeReadModelProperty(search_model);
+                var searchModel = DefaultHelper.ReadModelProperties(search_model, searchType, true);
+                if (searchModel != null)
+                {
+                    listModel.QueryProperties = searchModel.Properties;
+                }
+            }
+            //}
+            return listModel;
+        }
+
+        /// <summary>
+        /// 获取列表数据
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <param name="searchName"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        [HttpGet]
+        [Route("/api/app/{entityName}/page", Order = 10)]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "view" })]
+        public async Task<dynamic> Page([FromRoute] string entityName, string searchName = "")
+        {
+            entityName = MapperEntityName(entityName);
+            // [FromQuery] InputSearchBase input
+            // 1. 根据实体名称查找对应的实体类型和DTO类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+            var listDtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
+
+            if (entityType == null || listDtoType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体或DTO类型: {entityName}", 404);
+            }
+            await FilterDataAsync(entityType, null, "page");
+            //这里应该要改版，直接利用反射，赋值
+            var query_string = base._httpContext.Request.QueryString.ToString();
+
+            Type searchType = null;
+            if (String.IsNullOrEmpty(searchName))
+            {
+                //var extendQuery = "InputQuery" + DefaultHelper.ConvertToPascalCase(entityName);
+                searchType = _defaultHelper.FindQueryType(entityName);
+                if (searchType == null)
+                {
+                    searchName = "InputSearchBase";
+                    searchType = _defaultHelper.AutoFindType(searchName);
+                }
+            }
+            else
+            {
+                searchType = _defaultHelper.AutoFindType(searchName);
+            }
+
+            if (searchType == null)
+            {
+                throw new PasteCodeException("没有检索到搜索Model,请确认InputSearchBase这个基础检索Model存在!");
+            }
+            dynamic pagedto = new ExpandoObject();
+
+            object searchObject = null;
+            searchObject = Activator.CreateInstance(searchType);
+            var input = _defaultHelper.MapperToQueryModel(query_string, searchType, searchObject);
+            if (input.page == 1)
+            {
+                if (query_string.Contains("request=one"))
+                {
+                    pagedto.pasteModel = await ReadListQueryModel(entityName, searchName);
+                }
+            }
+
+            IQueryable query = _defaultHelper.BuildDynamicQuery(_dbContext, entityType, searchType, searchObject);
+
+            if (input.page == 1)
+            {
+                pagedto.totalCount = await DefaultHelper.ExecuteCountQuery(query, entityType);
+            }
+
+            var isIncludeType = _defaultHelper.HasPasteIncludeProperties(entityType);
+
+            if (isIncludeType)
+            {
+                var includeQuery = _defaultHelper.ApplyAllPasteIncludes(query, entityType);
+                if (includeQuery != null)
+                {
+                    query = includeQuery as IQueryable;
+                }
+            }
+            query = _defaultHelper.ApplyPagingAndSorting(query, entityType, searchType, searchObject);
+            List<object> dtos;
+            if (isIncludeType)
+            {
+                dtos = await _defaultHelper.ExecuteProjectionQueryWithIncludes(query, entityType, listDtoType);
+            }
+            else
+            {
+                dtos = await _defaultHelper.ExecuteProjectionQuery(query, entityType, listDtoType);
+            }
+            if (dtos == null) { return null; }
+            if (dtos?.Any() == false)
+            {
+                return null;
+            }
+            //Console.WriteLine($"line.315 {Newtonsoft.Json.JsonConvert.SerializeObject(dtos)}");
+            //查询外表 并实现 这里是简单的外表ID的查询 如果有更复杂的，还需要实现
+            await _defaultHelper.BuildOuterData(_dbContext, listDtoType, dtos);
+            // 7. 设置结果并返回
+            //pagedDto.Items = dtos.Cast<object>().ToList();
+            pagedto.items = dtos;
+
+            //计算ExtendBind的数据... ExtendBind=true
+            await _defaultHelper.ReadExtendBind(_dbContext, listDtoType, dtos, searchType, searchObject);
+
+            return pagedto;
+        }
+
+        /// <summary>
+        /// 通用创建方法
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        [HttpPost]
+        [Route("/api/app/{entityName}/item", Order = 10)]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "add" })]
+        public async Task<dynamic> CreateItemAsync([FromRoute] string entityName)
+        {
+            entityName = MapperEntityName(entityName);
+            // 获取实体类型和添加DTO类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+            var addDtoType = _defaultHelper.FindDtoType(entityName, "AddDto");
+
+            if (entityType == null || addDtoType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体或添加DTO类型: {entityName}", 404);
+            }
+            using var read = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
+            var inputString = await read.ReadToEndAsync();
+
+            Console.WriteLine(inputString);
+
+            // 反序列化输入数据到添加DTO
+            //var addDto = JsonConvert.DeserializeObject(inputString, addDtoType);
+            //var addDto = Mapster.TypeAdapter(inputString,addDtoType);
+            var addDto = JsonSerializer.Deserialize(inputString, addDtoType, JsonConfig.Options);
+            DefaultHelper.ValidateModel(addDto, addDtoType);
+
+            var mutexFind = await _defaultHelper.FilterFirstOrDefaultAsync(_dbContext, entityType, addDtoType, addDto, null);
+            if (mutexFind != null && mutexFind != default)
+            {
+                throw new PasteCodeException("已经有相同的数据了，修改后重试!");
+            }
+            // 创建实体实例
+            var entity = Activator.CreateInstance(entityType);
+
+            // 映射DTO到实体
+            _defaultHelper.MapProperties(addDto, entity, addDtoType, entityType);
+
+            //ObjectMapper.Map<UserInfoAddDto,UserInfo>(null,null);
+
+            await DataSetExtendAsync(entityType, entity, "add");
+            //下面这个和上面注释的意思一样
+
+            await _defaultHelper.CheckEntityShortData(_dbContext, entityType, entity);
+
+            // 添加到数据库
+            var dbSet = _defaultHelper.FindDbSetObject(_dbContext, entityType);
+            dbSet.GetType().GetMethod("Add").Invoke(dbSet, new[] { entity });
+
+            // 保存更改
+            await _dbContext.SaveChangesAsync();
+
+            var idProperty = _defaultHelper.ReadCurrentProperty(entityType, "Id");
+            if (idProperty != null && idProperty != default)
+            {
+                var idVal = idProperty.GetValue(entity).ToString();
+
+                return await ReadListDtoByIdAsync(entityType, entityName, idVal);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 通用更新方法
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        [HttpPost]
+        [Route("/api/app/{entityName}/updateItem", Order = 10)]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "edit" })]
+        public async Task<object> UpdateItemAsync([FromRoute] string entityName)
+        {
+            entityName = MapperEntityName(entityName);
+            // 获取实体类型和更新DTO类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+            var updateDtoType = _defaultHelper.FindDtoType(entityName, "UpdateDto");
+
+            if (entityType == null || updateDtoType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体或更新DTO类型: {entityName}", 404);
+            }
+
+            //可以执行归属校验 entityName entityType
+
+            using var read = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
+            var inputString = await read.ReadToEndAsync();
+            // 反序列化输入数据到更新DTO
+            //var updateDto = JsonConvert.DeserializeObject(inputString, updateDtoType);
+            var updateDto = JsonSerializer.Deserialize(inputString, updateDtoType, JsonConfig.Options);
+
+            // 手动执行模型验证
+            DefaultHelper.ValidateModel(updateDto, updateDtoType);
+
+            // 获取ID属性值
+            var id = _defaultHelper.GetPropertyValue(updateDto, "Id");
+            if (id == null)
+            {
+                throw new PasteCodeException("更新DTO必须包含Id属性", 400);
+            }
+
+            var mutexFind = await _defaultHelper.FilterFirstOrDefaultAsync(_dbContext, entityType, updateDtoType, updateDto, id);
+            if (mutexFind != null && mutexFind != default)
+            {
+                throw new PasteCodeException("已经有相同的数据了，修改后重试!");
+            }
+            // 查找实体
+            var entity = await _defaultHelper.FindEntityByIdAsync(_dbContext, entityType, id);
+            if (entity == null)
+            {
+                throw new PasteCodeException("需要更新的记录不存在", 404);
+            }
+            await FilterDataAsync(entityType, entity, "update");
+            // 映射DTO到实体
+            _defaultHelper.MapProperties(updateDto, entity, updateDtoType, entityType);
+
+            await DataSetExtendAsync(entityType, entity, "update");
+
+            await _defaultHelper.CheckEntityShortData(_dbContext, entityType, entity);
+
+            // 保存更改
+            await _dbContext.SaveChangesAsync();
+
+            //return id; //旧版本，直接返回ID
+
+            ////反射 XXXListDto 返回给前端 新版本 用于更新table的行数据
+            //var listDtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
+            //var listDto = Activator.CreateInstance(listDtoType);
+            //// xxx 转 xxxListDto
+            //_defaultHelper.MapProperties(entity, listDto, entityType, listDtoType);
+            //return listDto;
+            ////return id;
+
+            return await ReadListDtoByIdAsync(entityType, entityName, id);
+        }
+
+        /// <summary>
+        /// 用于返回ListDto单项数据
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        [Obsolete("Use ReadListDtoByIdAsync")]
+        private async Task<object> ReadItemListDtoAsync(string entityName, object id)
+        {
+            entityName = MapperEntityName(entityName);
+
+            // 1. 根据实体名称查找对应的实体类型和 DTO 类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+            var dtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
+
+            if (entityType == null || dtoType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体或 DTO 类型: {entityName}");
+            }
+
+            // 2. 动态查询实体
+            //var entity = await _defaultHelper.FindEntityByIdAsync(_dbContext, entityType, id);
+            var entity = await _defaultHelper.FindEntityByIdWithIncludeAsync(_dbContext, entityType, id);
+            if (entity == null)
+            {
+                return null;//throw new PasteCodeException("查询的信息不存在，无法执行编辑操作！");
+            }
+
+            //await FilterDataAsync(entityType, entity, "detail");
+            var dto = Activator.CreateInstance(dtoType);
+            _defaultHelper.MapProperties(entity, dto, entityType, dtoType);
+            // 3. 动态映射实体到 DTO
+            //var dto = DefaultHelper.MapEntityToDto(ObjectMapper, entity, entityType, dtoType);
+
+            //构建外表等 Include的如何搞定？？？
+            await _defaultHelper.BuildOuterQuery(_dbContext, dto, dtoType);
+
+            // 4. 动态读取 DTO 的属性信息
+            //var dataModel = DefaultHelper.ReadModelProperties(dto, dtoType);
+            //return dataModel;
+            //return await this.DefaultVoloModelPropertyAsync("detail", dto, dtoType);
+            return dto;
+
+        }
+
+        /// <summary>
+        /// 基于ID获取对象ListDto用于新增或更新后同步到Table的UI中
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <param name="entityName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        private async Task<object> ReadListDtoByIdAsync(Type entityType, string entityName, object id)
+        {
+            entityName = MapperEntityName(entityName);
+            var dtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
+            if (entityType == null || dtoType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体或 DTO 类型: {entityName}");
+            }
+            var entity = await _defaultHelper.FindEntityByIdWithIncludeAsync(_dbContext, entityType, id);
+            if (entity == null)
+            {
+                return null;//throw new PasteCodeException("查询的信息不存在，无法执行编辑操作！");
+            }
+            var dto = Activator.CreateInstance(dtoType);
+            _defaultHelper.MapProperties(entity, dto, entityType, dtoType);
+            await _defaultHelper.BuildOuterQuery(_dbContext, dto, dtoType);
+            return dto;
+        }
+
+
+        /// <summary>
+        /// 通用状态更新方法
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        [HttpPost]
+        [Route("/api/app/{entityName}/updateState", Order = 10)]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "state" })]
+        public async Task<string> UpdateState([FromRoute] string entityName, [FromBody] InputQueryUpdateState input)
+        {
+            entityName = MapperEntityName(entityName);
+            // 获取实体类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+
+            if (entityType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体类型: {entityName}", 404);
+            }
+            if (input.name != "extendBind")
+            {
+                // 查找实体
+                var entity = await _defaultHelper.FindEntityByIdAsync(_dbContext, entityType, input.id);
+                if (entity == null)
+                {
+                    throw new PasteCodeException("没有找到对应的操作对象，无法继续执行", 404);
+                }
+
+                await FilterDataAsync(entityType, entity, "state");
+
+                var property = _defaultHelper.GetPropertyThrowException(entityType, input.name);// entityType.GetProperties().Where(x => x.Name == input.name || x.Name == pauseName).FirstOrDefault();
+
+                if (!property.CanWrite)
+                {
+                    throw new PasteCodeException($"属性 {input.name} 不可写", 400);
+                }
+                // 处理可空布尔类型
+                if (property.PropertyType == typeof(bool?))
+                {
+                    property.SetValue(entity, input.state ? (bool?)true : (bool?)false);
+                }
+                else
+                {
+                    property.SetValue(entity, input.state);
+                }
+                // 保存更改
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                var listDtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
+                if (listDtoType == null || listDtoType == default)
+                {
+                    throw new PasteCodeException($"没有找到这个实体{entityName}的ListDto数据模型!");
+                }
+                var property = listDtoType.GetProperty("ExtendBind");
+                if (property == null || property == default)
+                {
+                    throw new PasteCodeException("没有找到这个字段ExtendBind的信息");
+                }
+
+                var attrs = property.GetCustomAttributes<PasteExtendBindAttribute>();
+                if (attrs?.Any() == false)
+                {
+                    throw new PasteCodeException($"请为{entityName}ListDto的字段ExtendBind配置PasteExtendBind特性后再试,支持绑定多个!");
+                }
+
+                foreach (var attr in attrs)
+                {
+                    var bindEntity = _defaultHelper.FindEntityType(attr.Args1);
+                    if (bindEntity == null || bindEntity == default)
+                    {
+                        throw new PasteCodeException($"PasteExtendBind的args1:{attr.Args1} 配置错误，没有这样的Entity信息!");
+                    }
+                    //Console.WriteLine($"准备计算Bind的逻辑... .. .{attr.Args1} {attr.Args2} {attr.Args3} {attr.Args4} ");
+                    var args = input.search.ToQuerys();
+                    if (args.TryGetValue(attr.Args4, out var grade_id))
+                    {
+                        var dics = new Dictionary<string, string>();
+                        dics.Add(attr.Args3, grade_id);
+                        dics.Add(attr.Args2, input.id);
+
+                        var find_bind = await _defaultHelper.FindFirstOrDefaultAsync(_dbContext, bindEntity, dics, default);
+                        if (find_bind == null || find_bind == default)
+                        {
+                            if (input.state)
+                            {
+                                //新增
+                                var bind_entity = Activator.CreateInstance(bindEntity);
+
+                                //为GradeId RoleId赋值
+                                foreach (var arg in dics)
+                                {
+                                    //var arg_pro = bindEntity.GetProperty(arg.Key, BindingFlags.Public | BindingFlags.Instance);
+                                    var argPro = _defaultHelper.ReadCurrentProperty(bindEntity, arg.Key);
+                                    if (argPro == null || argPro == default)
+                                    {
+                                        throw new PasteCodeException($"没有在Entity:{attr.Args1} 获取到字段:{arg.Key}");
+                                    }
+                                    var arg_val = Convert.ChangeType(arg.Value, argPro.PropertyType);
+                                    argPro.SetValue(bind_entity, arg_val);
+                                }
+
+                                // 添加到数据库
+                                var dbSet = _defaultHelper.FindDbSetObject(_dbContext, bindEntity);
+                                dbSet.GetType().GetMethod("Add").Invoke(dbSet, new[] { bind_entity });
+                                // 保存更改
+                                await _dbContext.SaveChangesAsync();
+                                //Console.WriteLine("执行Bind的新增逻辑... .. .");
+                            }
+                            else
+                            {
+                                //Console.WriteLine("数据不存在，且指令是取消绑定");
+                            }
+                        }
+                        else
+                        {
+                            if (!input.state)
+                            {
+                                // 执行删除操作
+                                //var dbSet = _defaultHelper.FindDbSetObject(_dbContext, bindEntity);
+                                //dbSet.GetType().GetMethod("Remove").Invoke(dbSet, new[] { find_bind });
+                                _dbContext.Remove(find_bind);
+                                await _dbContext.SaveChangesAsync();
+                                //Console.WriteLine("执行Bind的删除逻辑... .. .");
+                            }
+                            else
+                            {
+                                //Console.WriteLine("数据存在，且指令是绑定数据");
+                            }
+                        }
+                    }
+                }
+
+            }
+            return "操作成功";
+        }
+
+        /// <summary>
+        /// 通用删除 遵照ListDto的PasteDisable特性
+        /// </summary>
+        /// <param name="entityName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        [HttpPost]
+        [Route("/api/app/{entityName}/{id}/remove", Order = 10)]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "del" })]
+        public async Task<string> Remove([FromRoute] string entityName, [FromRoute] string id)
+        {
+            entityName = MapperEntityName(entityName);
+            // 获取实体类型
+            var entityType = _defaultHelper.FindEntityType(entityName);
+
+            if (entityType == null)
+            {
+                throw new PasteCodeException($"找不到对应的实体类型: {entityName}", 404);
+            }
+            #region 是否有标记禁止删除
+            var listDtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
+            if (listDtoType != null)
+            {
+                var finds = listDtoType.GetCustomAttributes<PasteDisableAttribute>();
+                if (finds?.Any() == true)
+                {
+                    var find = finds.FirstOrDefault();
+                    if (find.Args3 == "del")
+                    {
+                        throw new PasteCodeException($"实体 {entityName} 不允许删除操作", 403);
+                    }
+                }
+            }
+            #endregion
+
+            // 查找实体
+            var entity = await _defaultHelper.FindEntityByIdAsync(_dbContext, entityType, id);
+            if (entity == null)
+            {
+                throw new PasteCodeException("需要删除的记录不存在", 404);
+            }
+            await FilterDataAsync(entityType, entity, "remove");
+            // 执行删除操作
+            //var dbSet = _defaultHelper.FindDbSetObject(_dbContext, entityType);
+            //dbSet.GetType().GetMethod("Remove").Invoke(dbSet, new[] { entity });
+            _dbContext.Remove(entity);
+            // 保存更改
+            await _dbContext.SaveChangesAsync();
+
+            return "删除成功";
+        }
+
+        #endregion
+
+        #region 以下是数据过滤和自动赋值模块 2025.07.005
+        /// <summary>
+        /// 数据校验，判断权限等 需要在基Class定义AuthDataFilterAsync(Type,Entity)
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <param name="obj"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        private async Task FilterDataAsync(Type entityType, object obj, string action)
+        {
+
+            await base.DefaultAuthDataFilterAsync(entityType,obj,action);
+
+            //// 获取基类类型
+            //Type baseType = this.GetType().BaseType;
+
+            //// 递归查找所有基类中的方法
+            //MethodInfo method = FindMethodInBaseTypes(
+            //    baseType,
+            //    "DefaultAuthDataFilterAsync",
+            //    BindingFlags.NonPublic | BindingFlags.Instance,
+            //    new[] { typeof(object), typeof(object), typeof(object) } // 修正参数数量
+            //);
+
+            //if (method != null)
+            //{
+            //    var task = (Task)method.Invoke(this, new object[] { entityType, obj, action });
+            //    await task;
+            //}
+        }
+
+        /// <summary>
+        /// 递归查找基类方法的辅助方法
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="methodName"></param>
+        /// <param name="bindingAttr"></param>
+        /// <param name="parameterTypes"></param>
+        /// <returns></returns>
+        private MethodInfo FindMethodInBaseTypes(Type type, string methodName, BindingFlags bindingAttr, Type[] parameterTypes)
+        {
+            if (type == null)
+            {
+                return null;
+            }
+            //Console.WriteLine($"{type.Name} {type.FullName}");
+            // 尝试在当前类型中查找方法
+            //var method = type.GetMethod(methodName, bindingAttr, null, parameterTypes, null);
+            var method = type.GetMethod(methodName, bindingAttr);
+
+            if (method != null)
+                return method;
+
+            // 递归查找父类
+            return FindMethodInBaseTypes(type.BaseType, methodName, bindingAttr, parameterTypes);
+        }
+
+        /// <summary>
+        /// 为Entity赋值，比如赋值UserId等 基类需要定义SetDataExtendAsync(Type,Entity,action)
+        /// 一般是一些默认字段输入，比如创建者
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <param name="obj"></param>
+        /// <param name="action">add或update</param>
+        /// <returns></returns>
+        private async Task DataSetExtendAsync(Type entityType, object obj, string action)
+        {
+            await base.DefaultSetDataExtendAsync(entityType,obj,action);
+            //// 获取基类类型
+            //Type baseType = this.GetType().BaseType;
+            //MethodInfo method = FindMethodInBaseTypes(
+            //    baseType,
+            //    "DefaultSetDataExtendAsync",
+            //    BindingFlags.NonPublic | BindingFlags.Instance,
+            //    new[] { typeof(object), typeof(object), typeof(object) } // 修正参数数量
+            //);
+            //if (method != null)
+            //{
+            //    var task = (Task)method.Invoke(this, new object[] { entityType, obj, action });
+            //    await task;
+            //}
+        }
+
+        #endregion
+
+
+    }
+
+}

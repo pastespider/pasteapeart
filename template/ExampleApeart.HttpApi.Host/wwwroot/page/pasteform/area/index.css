@@ -1,0 +1,56 @@
+::-webkit-scrollbar {
+  width: 8px !important;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #8798AF !important;
+  border-radius: 6px !important;
+}
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+.input_box {
+  display: flex;
+  align-items: center;
+}
+.input_box .el-input {
+  width: auto !important;
+  margin: 0 5px;
+}
+.input_box input {
+  width: 80px;
+}
+.button-right {
+  padding-left: 70px;
+}
+.tree_box {
+  overflow-y: scroll;
+}
+.tree_box .tree_flex > .el-tree {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.tree_box .tree_flex > .el-tree > .el-tree-node {
+  padding: 10px 0;
+}
+.tree_box .tree_flex > .el-tree > .el-tree-node > .el-tree-node__children {
+  display: flex;
+  flex-wrap: wrap;
+}
+.tree_box .tree_flex > .el-tree > .el-tree-node > .el-tree-node__children > .el-tree-node {
+  width: 260px;
+}
+.tree_box {
+  overflow: auto;
+  margin: 4px;
+}
+.tree_box::-webkit-scrollbar {
+  width: 3px;
+}
+.tree_box::-webkit-scrollbar-thumb {
+  background: #8798AF;
+  border-radius: 2px;
+}
+.tree_box::-webkit-scrollbar-track {
+  background: transparent;
+}

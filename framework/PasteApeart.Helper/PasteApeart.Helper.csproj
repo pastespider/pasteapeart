@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<NeutralLanguage>zh</NeutralLanguage>
+	<Company>https://soft.pastecode.cn</Company>
+	<Authors>pastecode.cn</Authors>
+	<PackageProjectUrl>https://www.pastecode.cn</PackageProjectUrl>
+	<PackAsTool>False</PackAsTool>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<Description>贴代码框架使用的帮助类，包含特性和反射逻辑！</Description>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<FileVersion>26.8.1</FileVersion>
+	<VersionPrefix>26.8.1</VersionPrefix>
+	<AssemblyVersion>26.8.1</AssemblyVersion>
+	<NeutralLanguage>zh</NeutralLanguage>
+	<Company>https://soft.pastecode.cn/doc/form/</Company>
+	<Authors>pastecode.cn</Authors>
+	<PackageProjectUrl>https://www.pastecode.cn</PackageProjectUrl>
+	<PackAsTool>False</PackAsTool>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<Title>PasteApeart.Helper</Title>
+	<PackageReadmeFile>readme.md</PackageReadmeFile>
+	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	<PackageReleaseNotes><![CDATA[享受Dto特性驱动管理端的乐趣吧！https://soft.pastecode.cn/doc/form/ ]]></PackageReleaseNotes>
+	<Platforms>AnyCPU;ARM64;x64</Platforms>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="readme.md" Pack="true" PackagePath="/" Visible="true" />
+	</ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Resource Include="logo128.png" />
+	</ItemGroup>
+
+</Project>

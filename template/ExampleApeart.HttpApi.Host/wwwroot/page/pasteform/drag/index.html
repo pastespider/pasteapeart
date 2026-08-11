@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态拖拽排序组件</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* 基础样式 */
+        .drag-container {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            padding: 15px;
+            border: 2px dashed #ccc;
+            border-radius: 6px;
+            overflow-x: auto;
+            min-height: 180px;
+            transition: all 0.2s;
+            margin-bottom: 15px;
+        }
+        .drag-container.drag-over {
+            border-color: #4F46E5;
+            background-color: #f0f4ff;
+        }
+        .draggable-item {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 140px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            cursor: grab;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .draggable-item.dragging {
+            opacity: 0.7;
+            cursor: grabbing;
+            background-color: #f0f4ff;
+            transform: scale(1.05);
+        }
+        .draggable-item img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+        .item-info {
+            text-align: center;
+            width: 100%;
+        }
+        .item-info h3 {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* 删除按钮 */
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .draggable-item:hover .delete-btn {
+            opacity: 1;
+        }
+        /* 虚线占位符 */
+        .drag-placeholder {
+            flex-shrink: 0;
+            width: 0;
+            border-left: 2px dashed #4F46E5;
+            height: 120px;
+            margin: auto 5px;
+            transition: all 0.2s;
+        }
+        .drag-placeholder.right {
+            border-left: none;
+            border-right: 2px dashed #4F46E5;
+        }
+        /* 控制按钮区域 */
+        .controls {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .control-btn {
+            padding: 6px 12px;
+            background-color: #4F46E5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .control-btn:hover {
+            background-color: #4338ca;
+        }
+        .control-btn.secondary {
+            background-color: #666;
+        }
+        .control-btn.secondary:hover {
+            background-color: #555;
+        }
+        /* 结果区域 */
+        .order-result {
+            padding: 10px;
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+        .order-result pre {
+            margin: 5px 0 0 0;
+            padding: 8px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            font-size: 13px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body style="background-color: #f9f9f9; padding: 20px; font-family: Arial, sans-serif;">
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <h1 style="color: #333; font-size: 24px;">动态拖拽排序组件</h1>
+        <p style="color: #666; margin-bottom: 20px;">支持动态添加、删除图片，保持拖拽排序功能</p>
+        
+        <!-- 控制按钮 -->
+        <div class="controls">
+            <button id="addImageBtn" class="control-btn">
+                <span>+</span> 添加图片
+            </button>
+            <button id="addSpecificBtn" class="control-btn">
+                <span>↗</span> 添加指定图片
+            </button>
+            <button id="clearAllBtn" class="control-btn secondary">
+                <span>✕</span> 清空所有
+            </button>
+            <button id="getOrderBtn" class="control-btn">
+                <span>⇓</span> 获取当前顺序
+            </button>
+        </div>
+        
+        <!-- 拖拽容器 -->
+        <div id="dragContainer" class="drag-container">
+            <div class="draggable-item" data-src="https://picsum.photos/id/237/200/300" data-id="1">
+                <button class="delete-btn">×</button>
+                <img src="https://picsum.photos/id/237/200/300" alt="小狗">
+                <div class="item-info">
+                    <h3>小狗</h3>
+                </div>
+            </div>
+            <div class="draggable-item" data-src="https://picsum.photos/id/1015/300/200" data-id="2">
+                <button class="delete-btn">×</button>
+                <img src="https://picsum.photos/id/1015/300/200" alt="山脉">
+                <div class="item-info">
+                    <h3>山脉</h3>
+                </div>
+            </div>
+            <div class="draggable-item" data-src="https://picsum.photos/id/1025/250/250" data-id="3">
+                <button class="delete-btn">×</button>
+                <img src="https://picsum.photos/id/1025/250/250" alt="湖泊">
+                <div class="item-info">
+                    <h3>湖泊</h3>
+                </div>
+            </div>
+        </div>
+        
+        <div id="orderResult" class="order-result">
+            点击"获取当前顺序"按钮查看结果
+        </div>
+    </div>
+
+    <script>
+        
+        // 增强版支持动态操作的jQuery拖拽排序组件
+        (function($) {
+            $.fn.dragSort = function(options) {
+                // 默认配置
+                const defaults = {
+                    itemSelector: '.draggable-item',
+                    placeholderClass: 'drag-placeholder',
+                    deleteBtnSelector: '.delete-btn',
+                    onDragStart: null,
+                    onDragEnd: null,
+                    onItemAdded: null,
+                    onItemRemoved: null,
+                    dataAttribute: 'src'
+                };
+                
+                const settings = $.extend({}, defaults, options);
+                
+                return this.each(function() {
+                    const $container = $(this);
+                    let $draggedItem = null;
+                    let $placeholder = null;
+                    
+                    // 初始化
+                    init();
+                    
+                    function init() {
+                        // 初始化现有元素
+                        initItems();
+                        
+                        // 绑定容器事件
+                        $container.on('dragover', handleDragOver);
+                        $container.on('dragenter', handleDragEnter);
+                        $container.on('dragleave', handleDragLeave);
+                        $container.on('drop', handleDrop);
+                        
+                        // 绑定删除按钮事件（使用事件委托支持动态元素）
+                        $container.on('click', settings.deleteBtnSelector, function(e) {
+                            e.stopPropagation();
+                            const $item = $(this).closest(settings.itemSelector);
+                            removeItem($item);
+                        });
+                    }
+                    
+                    // 初始化可拖拽元素
+                    function initItems() {
+                        $container.find(settings.itemSelector).each(function() {
+                            const $item = $(this);
+                            $item.attr('draggable', 'true');
+                            
+                            // 绑定拖拽事件
+                            $item.off('dragstart').on('dragstart', handleDragStart);
+                            $item.off('dragend').on('dragend', handleDragEnd);
+                        });
+                    }
+                    
+                    // 添加新元素
+                    function addItem(itemData) {
+                        // 创建新元素
+                        const $newItem = $(`
+                            <div class="draggable-item" data-src="${itemData.src}" data-id="${itemData.id}">
+                                <button class="delete-btn">×</button>
+                                <img src="${itemData.src}" alt="${itemData.alt}">
+                                <div class="item-info">
+                                    <h3>${itemData.title}</h3>
+                                </div>
+                            </div>
+                        `);
+                        
+                        // 添加到容器
+                        $container.append($newItem);
+                        
+                        // 初始化新元素的拖拽功能
+                        initItems();
+                        
+                        // 触发回调
+                        if ($.isFunction(settings.onItemAdded)) {
+                            settings.onItemAdded($newItem, getCurrentOrder());
+                        }
+                        
+                        return $newItem;
+                    }
+                    
+                    // 移除元素
+                    function removeItem($item) {
+                        if (!$item || !$item.length) return;
+                        
+                        const itemData = {
+                            id: $item.data('id'),
+                            src: $item.data('src')
+                        };
+                        
+                        // 如果删除的是正在拖拽的元素，清理状态
+                        if ($draggedItem && $draggedItem.is($item)) {
+                            if ($placeholder && $placeholder.length) {
+                                $placeholder.remove();
+                                $placeholder = null;
+                            }
+                            $draggedItem = null;
+                            $container.removeClass('drag-over');
+                        }
+                        
+                        // 移除元素
+                        $item.remove();
+                        
+                        // 触发回调
+                        if ($.isFunction(settings.onItemRemoved)) {
+                            settings.onItemRemoved(itemData, getCurrentOrder());
+                        }
+                    }
+                    
+                    // 清空所有元素
+                    function clearAll() {
+                        $container.find(settings.itemSelector).remove();
+                        
+                        // 清理拖拽状态
+                        if ($placeholder && $placeholder.length) {
+                            $placeholder.remove();
+                            $placeholder = null;
+                        }
+                        $draggedItem = null;
+                        $container.removeClass('drag-over');
+                    }
+                    
+                    // 开始拖拽
+                    function handleDragStart(e) {
+                        $draggedItem = $(this);
+                        
+                        // 添加拖拽样式
+                        setTimeout(() => {
+                            $draggedItem.addClass('dragging');
+                        }, 0);
+                        
+                        // 存储数据
+                        e.originalEvent.dataTransfer.setData('text', $draggedItem.data(settings.dataAttribute));
+                        
+                        // 回调
+                        if ($.isFunction(settings.onDragStart)) {
+                            settings.onDragStart($draggedItem);
+                        }
+                    }
+                    
+                    // 结束拖拽
+                    function handleDragEnd() {
+                        $draggedItem.removeClass('dragging');
+                        
+                        // 移除占位符
+                        if ($placeholder && $placeholder.length) {
+                            $placeholder.remove();
+                            $placeholder = null;
+                        }
+                        
+                        $container.removeClass('drag-over');
+                        
+                        // 回调
+                        if ($.isFunction(settings.onDragEnd)) {
+                            settings.onDragEnd($draggedItem, getCurrentOrder());
+                        }
+                        
+                        $draggedItem = null;
+                    }
+                    
+                    // 拖拽经过
+                    function handleDragOver(e) {
+                        e.preventDefault();
+                        
+                        // 如果没有拖拽元素，不处理
+                        if (!$draggedItem || !$draggedItem.length) return;
+                        
+                        // 创建占位符
+                        if (!$placeholder || !$placeholder.length) {
+                            $placeholder = $('<div>').addClass(settings.placeholderClass);
+                        }
+                        
+                        // 计算插入位置
+                        const $afterElement = getDragAfterElement(e.originalEvent.clientX);
+                        
+                        // 插入占位符
+                        if ($afterElement === null) {
+                            $container.append($placeholder);
+                            $placeholder.removeClass('right');
+                        } else {
+                            const $element = $($afterElement);
+                            const rect = $element[0].getBoundingClientRect();
+                            const midX = rect.left + rect.width / 2;
+                            
+                            if (e.originalEvent.clientX < midX) {
+                                $element.before($placeholder);
+                                $placeholder.removeClass('right');
+                            } else {
+                                $element.after($placeholder);
+                                $placeholder.addClass('right');
+                            }
+                        }
+                    }
+                    
+                    // 进入容器
+                    function handleDragEnter(e) {
+                        e.preventDefault();
+                        $container.addClass('drag-over');
+                    }
+                    
+                    // 离开容器
+                    function handleDragLeave(e) {
+                        if (!$.contains($container[0], e.relatedTarget)) {
+                            $container.removeClass('drag-over');
+                        }
+                    }
+                    
+                    // 放置元素
+                    function handleDrop(e) {
+                        e.preventDefault();
+                        $container.removeClass('drag-over');
+                        
+                        if ($placeholder && $placeholder.length && $draggedItem && $draggedItem.length) {
+                            $placeholder.before($draggedItem);
+                        }
+                    }
+                    
+                    // 计算拖拽后位置
+                    function getDragAfterElement(x) {
+                        const draggableElements = [...$container.find(settings.itemSelector).not('.dragging')];
+                        
+                        return draggableElements.reduce((closest, child) => {
+                            const box = child.getBoundingClientRect();
+                            const offset = x - (box.left + box.width / 2);
+                            
+                            if (offset < 0 && offset > closest.offset) {
+                                return { offset: offset, element: child };
+                            } else {
+                                return closest;
+                            }
+                        }, { offset: Number.NEGATIVE_INFINITY }).element;
+                    }
+                    
+                    // 获取当前排序
+                    function getCurrentOrder() {
+                        return $container.find(settings.itemSelector).map(function() {
+                            return {
+                                id: $(this).data('id'),
+                                src: $(this).data(settings.dataAttribute)
+                            };
+                        }).get();
+                    }
+                    
+                    // 暴露公共方法
+                    $container.data('dragSort', {
+                        addItem: addItem,
+                        removeItem: removeItem,
+                        clearAll: clearAll,
+                        initItems:initItems,
+                        getCurrentOrder: getCurrentOrder
+                    });
+                });
+            };
+        })(jQuery);
+
+        // 使用示例
+        $(document).ready(function() {
+            // 初始化拖拽排序组件
+            const $container = $('#dragContainer').dragSort({
+                onDragEnd: function($item, order) {
+                    console.log('排序已更新:', order);
+                },
+                onItemAdded: function($item, order) {
+                    console.log('添加了新元素:', $item.data('id'), '当前顺序:', order);
+                },
+                onItemRemoved: function(itemData, order) {
+                    console.log('移除了元素:', itemData.id, '当前顺序:', order);
+                }
+            });
+            
+            // 获取组件实例
+            const dragSort = $container.data('dragSort');
+            
+            // 随机图片库
+            const imageLibrary = [
+                { id: 10, src: 'https://picsum.photos/id/1040/200/200', title: '小鸟', alt: '一只小鸟' },
+                { id: 11, src: 'https://picsum.photos/id/1060/280/220', title: '花朵', alt: '一朵花' },
+                { id: 12, src: 'https://picsum.photos/id/1074/300/200', title: '海滩', alt: '海滩风景' },
+                { id: 13, src: 'https://picsum.photos/id/1080/250/250', title: '城市', alt: '城市景观' },
+                { id: 14, src: 'https://picsum.photos/id/1084/200/300', title: '食物', alt: '美味食物' },
+                { id: 15, src: 'https://picsum.photos/id/1088/300/200', title: '建筑', alt: '建筑物' }
+            ];
+            
+            // 添加随机图片
+            $('#addImageBtn').click(function() {
+                // 随机选择一张图片
+                const randomImg = imageLibrary[Math.floor(Math.random() * imageLibrary.length)];
+                // 复制对象并生成新ID，避免重复
+                const newImg = {
+                    ...randomImg,
+                    id: randomImg.id + Math.floor(Math.random() * 1000)
+                };
+                dragSort.addItem(newImg);
+            });
+            
+            // 添加指定图片
+            $('#addSpecificBtn').click(function() {
+                const newId = Date.now(); // 使用时间戳作为唯一ID
+                dragSort.addItem({
+                    id: newId,
+                    src: `https://picsum.photos/id/${160 + (newId % 10)}/200/200`,
+                    title: `新增图片 #${newId % 100}`,
+                    alt: `动态添加的图片 ${newId % 100}`
+                });
+            });
+            
+            // 清空所有
+            $('#clearAllBtn').click(function() {
+                if (confirm('确定要清空所有图片吗？')) {
+                    dragSort.clearAll();
+                }
+            });
+            
+            // 获取当前顺序
+            $('#getOrderBtn').click(function() {
+                const order = dragSort.getCurrentOrder();
+                $('#orderResult').html(`
+                    <div>当前顺序 (共 ${order.length} 项):</div>
+                    <pre>${JSON.stringify(
+                        order.map(item => item.src), 
+                        null, 2
+                    )}</pre>
+                `);
+            });
+        });
+    </script>
+</body>
+</html>
+    

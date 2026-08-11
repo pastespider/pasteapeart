@@ -1,0 +1,419 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../static/h-ui.admin/css/style.css" />
+    <title>用户日报告</title>
+    <style>
+        .pagecontent {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .pagecontent .toolarea {
+            display: block;
+            line-height: 40px;
+        }
+
+        .toolarea .spanstate {
+            font-size: 14px;
+            cursor: pointer;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .toolarea input[type=button] {
+            display: inline-block;
+            padding: 4px;
+            border: 0;
+            background-color: rgb(63, 218, 89);
+            border-radius: 2px;
+            cursor: pointer;
+            padding-left: 20px;
+            padding-right: 20px;
+            color: white;
+        }
+
+        .toolarea .selected {
+            font-weight: bold;
+        }
+
+        #chartarea {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            margin: auto;
+        }
+
+        .selectUser {
+            line-height: 30px;
+            width: 200px;
+            text-align: center;
+            height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="pagecontent">
+        <div class="toolarea">
+
+            <!-- 下拉选择客服 -->
+
+
+            <select class="selectUser">
+                <option value="0">所有用户</option>
+            </select>
+
+            <input type="text" value="" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:00:00'})" id="datemax"
+                class="input-text Wdate datestart" style="width:180px;">
+            <span>-</span>
+            <input type="text" value="" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:00:00'})" id="datemax"
+                class="input-text Wdate dateend" style="width:180px;">
+            <input type="button" value="查询" onclick="_funcload();">
+        </div>
+        <!-- 工具选择区域 -->
+        <div id="chartarea">
+
+        </div>
+
+        <div style="position: relative;display:block;text-align: left;">
+            <span style="display:inline-block;line-height:30px;">今日数据</span>
+        </div>
+        <table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
+            <thead>
+                <tr class="text-c">
+                    <th>姓名</th>
+                    <th>全名</th>
+                    <th>总工单数</th>
+                    <th>子工单数</th>
+                    <th>处理时长</th>
+                    <th>平均时长</th>
+                    <th>回复数</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/layer/3.1.1/layer.js"></script>
+    <script type="text/javascript" src="../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+    <script type="text/javascript" src="../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--/_footer 作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <!-- <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script> -->
+
+
+    <script src="../lib/api.js"></script>
+    <!-- <link href="../lib/page.min.css" rel="stylesheet" />
+    <script src="../lib/page.min.js"></script> -->
+
+    <script src="echarts.min.js"></script>
+
+    <script>
+
+        // var pageobject = null;
+
+        var issecond = true;
+        var containername = "dockertest";
+
+        var linuxid = 0;
+
+        function _showpagedata(datas) {
+
+            var option = {
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: function (params) {
+                        var relVal = params[0].name;
+                        for (var i = 0, l = params.length; i < l; i++) {
+                            if (params[i].seriesName.indexOf("耗时") >= 0) {
+                                relVal += '<br/>' + params[i].marker + params[i].seriesName + "：" + params[i].value + "小时"
+                            } else {
+                                relVal += '<br/>' + params[i].marker + params[i].seriesName + "：" + params[i].value
+                            }
+                            // if (i == 1 || i == 2) {
+                            //     relVal += '<br/>' + params[i].marker + params[i].seriesName +"："+ params[i].value + "小时"
+                            // } else {
+                            //     relVal += '<br/>' + params[i].marker + params[i].seriesName +"："+ params[i].value
+                            // }
+                        }
+                        return relVal;
+                    }
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        magicType: { show: true, type: ['stack', 'tiled'] },
+                        saveAsImage: { show: true }
+                    }
+                },
+                legend: {
+                    data: ['工单件数', '耗时', '平均耗时', '回复数', '总工单数']
+                },
+                xAxis: {
+                    data: []
+                },
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '工单件数',
+                        position: 'left',
+                        offset: 0,
+                        axisLabel: {
+                            formatter: '{value}单'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '耗时',
+                        position: 'left',
+                        offset: 60,
+                        axisLabel: {
+                            formatter: '{value}小时'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '平均耗时',
+                        position: 'right',
+                        nameLocation: 'end',
+                        offset: 0,
+                        axisLabel: {
+                            formatter: '{value}小时'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '回复数',
+                        position: 'right',
+                        nameLocation: 'end',
+                        offset: 60,
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    {
+                        type: 'value',
+                        name: '总工单数',
+                        position: 'right',
+                        nameLocation: 'end',
+                        offset: -60,
+                        axisLabel: {
+                            formatter: '{value}个'
+                        }
+                    }
+                ],
+                series: []
+            };
+
+            // data: ['新单', '退款单', '退款金额', '完成单']
+
+            var array1 = new Array();
+            var array2 = new Array();
+            var array3 = new Array();
+            var array4 = new Array();
+            var array5 = new Array();
+
+            //data: ['工单件数', '耗时', '平均耗时', '回复数','总工单数']
+            for (var k = 0; k < datas.length; k++) {
+                var item = datas[k];
+                option.xAxis.data.push(item.dataDate.toString().substr(0, 10));
+
+                array1.push(item.totalSheetNum);
+                array2.push(Number(item.totalMinute / 60).toFixed(2));
+                array3.push(Number(item.avageMinute / 60).toFixed(2));
+                array4.push(item.totalReply);
+                array5.push(item.totalMainSheet);
+            }
+
+            //data: ['新单', '退款单', '退款金额', '完成单']
+            option.series.push({ smooth: true, name: '工单件数', type: 'line', data: array1, yAxisIndex: 0 });
+            option.series.push({ smooth: true, name: '耗时', type: 'line', data: array2, yAxisIndex: 1 });
+            option.series.push({ smooth: true, name: '平均耗时', type: 'line', data: array3, yAxisIndex: 2 });
+            option.series.push({ smooth: true, name: '回复数', type: 'line', data: array4, yAxisIndex: 3 });
+            option.series.push({ smooth: true, name: '总工单数', type: 'line', data: array5, yAxisIndex: 4 });
+
+            // option.series.push({ smooth: true, name: '线程数', type: 'line', data: pidsnum, yAxisIndex: 4 });
+
+            //pidsNum
+
+            //初始化echarts实例
+            var myChart = echarts.init(document.getElementById('chartarea'));
+
+            //使用制定的配置项和数据显示图表
+            myChart.setOption(option);
+
+
+
+            // if(issecond){
+            //     setTimeout(() => {
+            //         _readpagedata(1);
+            //     }, 30000);
+            // }
+
+        }
+        $(window).ready(function () {
+
+
+            var uidstr = _apigetquery("id");
+            if (uidstr != null) {
+                containername = (uidstr);
+            }
+
+            var linuxstr = _apigetquery("linuxid");
+            if (linuxstr != null) {
+                linuxid = parseInt(linuxstr);
+            }
+
+            // $(".spanstate").on('click', function () {
+
+            //     $(".spanstate").addClass("selected");
+            //     var daynow = new Date();
+            //     $(".datestart").val(daynow.Format("yyyy-MM-dd HH:00:00"));
+            //     var daylater = new Date();
+            //     daylater.setTime(daynow.getTime() + 1000 * 3600);
+            //     $(".dateend").val(daylater.Format("yyyy-MM-dd HH:00:00"));
+            //     issecond = true;
+            //     _readpagedata(1);
+
+            // });
+
+
+            _apiget("/api/sheet/userInfo?page=1&size=2000", false, function (code, obj) {
+                // $("[name=sheetInfoId]").empty();
+                if (code == 200) {
+
+                    var datas = obj.items;
+                    var htmlStr = "";
+                    for (var k = 0; k < datas.length; k++) {
+                        var item = datas[k];
+                        htmlStr += '<option value="' + item.id + '">' + item.userName + '</option>';
+                    }
+                    $(".selectUser").append(htmlStr);
+
+                }
+            });
+
+
+            var daynow = new Date();
+            daynow.setTime(daynow.getTime() - 3600000 * 24 * 31);
+            $(".datestart").val(daynow.Format("yyyy-MM-dd 00:00:00"));
+
+            var daylater = new Date();
+            daylater.setTime(daylater.getTime() + 1000 * 3600);
+            $(".dateend").val(daylater.Format("yyyy-MM-dd 00:00:00"));
+
+            _readpagedata(1);
+
+            $(".inputword").keyup(function (event) {
+                if (event.keyCode == 13) {
+                    _readpagedata(1);
+                }
+            });
+
+
+            _funcreadtoday();
+
+        });
+
+        function _funcload() {
+            issecond = false;
+            $(".spanstate").removeClass("selected");
+            _readpagedata(1);
+
+        }
+
+        function _readpagedata(page) {
+            try {
+                var datestart = new Date($(".datestart").val());
+                var dateend = new Date($(".dateend").val());
+
+                if (datestart.getTime() >= dateend.getTime()) {
+
+                    layer.msg("开始时间和结束时时间不对，请重新输入！");
+                    return;
+                }
+
+                _apiget("/api/sheet/dayUserReport?begindate=" + $(".datestart").val() + "&enddate=" + $(".dateend").val() + "&userid=" + $(".selectUser").val(), true, function (code, obj) {
+                    if (code == 200) {
+                        var datas = obj.items;
+                        if (datas.length > 0) {
+                            _showpagedata(datas);
+                        } else {
+                            layer.msg("当前条件没有查询到数据，请选择其他对象或者时间段再试！");
+                        }
+                        // pageobject.nums = obj.totalCount;
+                        // var intid = parseInt(pageobject.nums / pageobject.counts); var less = parseInt(pageobject.nums % pageobject.counts); if (less > 0) { pageobject.pages = intid + 1; } else { pageobject.pages = intid; };
+                    }
+                });
+
+            } catch (error) {
+                layer.msg("时间格式不正确，请重新输入！" + error.message);
+            }
+            //var inputword = $(".inputword").val();
+        }
+
+        function _funcreadtoday() {
+            // <th>账号</th>
+            //         <th>总工单数</th>
+            //         <th>子工单数</th>
+            //         <th>处理时长</th>
+            //         <th>平均时长</th>
+            //         <th>回复数</th>
+
+            $("table").find("tbody").empty();
+            _apiget('/api/sheet/Manage/ReadTodayReport', true, function (code, datas) {
+
+                if (code == 200) {
+
+                    var hstr = "";
+                    for (var k = 0; k < datas.length; k++) {
+                        var item = datas[k];
+                        var htmlStr = '<tr class="text-c">';
+                            htmlStr += '<td>' + item.userInfo.userName + '</td>';
+                        htmlStr += '<td>' + item.userInfo.fullName + '</td>';
+                        htmlStr += '<td>' + item.totalMainSheet + '</td>';
+                        htmlStr += '<td>' + item.totalSheetNum + '</td>';
+                        htmlStr += '<td>' + (Number(item.totalMinute)/60).toFixed(2) + '小时</td>';
+                        htmlStr += '<td>' + (Number(item.avageMinute)/60).toFixed(2) + '小时</td>';
+                        htmlStr += '<td>' + item.totalReply + '</td>';
+                        htmlStr += '</tr>';
+                        hstr += htmlStr;
+                    }
+                    $("table").find("tbody").append(hstr);
+
+                }
+
+            });
+
+        }
+
+    </script>
+</body>
+
+</html>

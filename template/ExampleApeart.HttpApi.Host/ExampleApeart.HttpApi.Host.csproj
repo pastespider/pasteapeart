@@ -1,0 +1,76 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <!-- 添加这一行：支持多个平台 -->
+	  <Platforms>AnyCPU;x64;ARM64</Platforms>
+	  <!-- 启用确定性编译（关键） -->
+	  <Deterministic>true</Deterministic>
+	  <!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	  <SatelliteResourceLanguages>null</SatelliteResourceLanguages>
+	  <!--下面2个这样配置是低内存模式，不适合大并发啥的，注意！-->
+	  <ServerGarbageCollection>true</ServerGarbageCollection>
+	  <GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
+	  
+	  	  <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <RootNamespace>$ext_safeprojectname$.HttpApi.Host</RootNamespace>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <UserSecretsId>$guid1$</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DocumentationFile>..\$ext_safeprojectname$.HttpApi.Host\$ext_safeprojectname$.HttpApi.Host.xml</DocumentationFile>
+	<StartupObject>$ext_safeprojectname$.Program</StartupObject>
+  </PropertyGroup>
+
+	<!-- 添加这个属性组 -->
+
+  <ItemGroup>
+    <Compile Remove="data\**" />
+    <Compile Remove="logs\**" />
+    <Compile Remove="upload\**" />
+    <Content Remove="data\**" />
+    <Content Remove="logs\**" />
+    <Content Remove="upload\**" />
+    <EmbeddedResource Remove="data\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <EmbeddedResource Remove="upload\**" />
+    <None Remove="data\**" />
+    <None Remove="logs\**" />
+    <None Remove="upload\**" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<TrimmerRootAssembly Include="Volo.Abp.EntityFrameworkCore.Sqlite"></TrimmerRootAssembly>
+	</ItemGroup>
+		
+  <ItemGroup>
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.19">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+
+	  <PackageReference Include="Autofac" Version="8.0.0" />
+	  <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <ProjectReference Include="..\$ext_safeprojectname$.Application\$ext_safeprojectname$.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="font\font.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
+</Project>

@@ -1,0 +1,108 @@
+.ul_version_area {
+    position: absolute;
+    width: 100px;
+    background: #ffffff;
+    box-shadow: 0px 0px 8px 3px #d5d1d1;
+    border-radius: 4px;
+    padding: 30px;
+    transition: all 0.5s;
+    right:0;
+
+    li {
+        cursor: pointer;
+        padding: 8px;
+        &:hover {
+            background-color: #5eb95e;
+            color: white;
+        }
+    }
+    
+    a {
+        position: absolute;
+        right: -6px;
+        top: 4px;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 50% 50%;
+        line-height: 16px;
+        cursor: pointer;
+    }
+}
+
+.p-flex-h{
+    display:flex;
+    flex-direction: row;
+}
+.p-flex-v{
+    display:flex;
+    flex-direction: column;
+}
+
+.group{
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding-top:10px;
+    margin-top:-10px;
+
+    // .ghead{
+    //     justify-content: space-between;
+    //     border-bottom: 1px dashed #cbcbcb;
+    //     cursor: pointer;
+    // }
+    .gname{
+        padding:8px;
+        text-align: right;
+        width:160px;
+        color:#5a98de;
+        font-weight: bold;
+    }
+    .gbody{
+        padding: 20px 0 0 0 ;
+        box-sizing: border-box;
+        background-color: #fdfdfd;
+        transition: all 0.6s;
+        display:flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .close{
+        display:none;
+    }
+    .btngroup{
+        margin-top:12px;
+    }
+}
+.tabs{
+    position:relative;
+    display:flex;
+    flex-direction: row;
+    width:100%;
+    position:sticky;
+    top:0;
+    background-color: #fff;
+    border-bottom: 1px solid #f2f2f2;
+    box-sizing: border-box;
+    padding:10px 0 10px 0;
+    z-index: 100;
+    box-shadow: 0 0 2px 4px #fafafa;
+    margin-bottom: 20px;
+
+    .tab{
+        flex:1;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 8px;
+        a{
+            text-decoration: none;
+            color:#5a98de;
+            font-weight: bold;
+        }
+    }
+}
+
+
+.layui-layer-btn-focus{
+    border:1px dashed #999;
+}

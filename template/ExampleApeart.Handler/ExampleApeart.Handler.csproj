@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <!-- 启用确定性编译（关键） -->
+	  <Deterministic>true</Deterministic>
+	  <!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+		<!--
+		<PackageReference Include="Volo.Abp.AutoMapper" Version="8.3.4" />
+		<PackageReference Include="Volo.Abp.ObjectMapping" Version="8.3.4" />-->
+		
+		<PackageReference Include="Mapster" Version="7.4.0" />
+		<PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
+
+		<PackageReference Include="Autofac" Version="8.0.0" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+		
+		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
+		<PackageReference Include="StackExchange.Redis" Version="2.8.58" />
+
+		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
+		<PackageReference Include="PasteApeart.Handler" Version="26.8.1" />
+		<!--<PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="8.103.9.3" />-->
+	</ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\$ext_safeprojectname$.Application.Contracts\$ext_safeprojectname$.Application.Contracts.csproj" />
+    <ProjectReference Include="..\$ext_safeprojectname$.EntityFrameworkCore\$ext_safeprojectname$.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,634 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PasteApeart.EntityFrameworkCore</name>
+    </assembly>
+    <members>
+        <member name="T:PasteApeart.EntityFrameworkCore.auditing.AuditCollection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.auditing.AuditCollection.EntityChanges">
+            <summary>
+            数据库变动
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.auditing.AuditCollection.StartTime">
+            <summary>
+            开始时间
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.auditing.AuditCollection.EndTime">
+            <summary>
+            结束时间
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.auditing.AuditCollection.ExecutionDuration">
+            <summary>
+            持续时间
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.auditing.AuditMetadataCache">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.auditing.AuditMetadataCache.#ctor(System.Nullable{System.TimeSpan})">
+            <summary>
+            
+            </summary>
+            <param name="expiration"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.auditing.AuditMetadataCache.IsAuditDisabledOnType(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.auditing.AuditMetadataCache.IsAuditDisabledOnProperty(System.Reflection.PropertyInfo)">
+            <summary>
+            
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.auditing.AuditMetadataCache.ClearType(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.auditing.AuditMetadataCache.ClearAll">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.auditing.AuditMetadataCache.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.CollectAuditDb`1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.CollectAuditDb`1.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{`0})">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.CollectAuditDb`1._config">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.CollectAuditDb`1._httpContextAccessor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.CollectAuditDb`1._auditMetadataCache">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.CollectAuditDb`1.IsAuditDisabledOnType(System.Type)">
+            <summary>
+            这里后面高单例 延迟清理... .. .
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.CollectAuditDb`1.IsAuditDisabledOnProperty(System.Reflection.PropertyInfo)">
+            <summary>
+            这里后面高单例 延迟清理... .. .
+            </summary>
+            <param name="property"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.CollectAuditDb`1.AutoWrite">
+            <summary>
+            自动写入一些字段
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.CollectAuditDb`1.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.CollectAuditDb`1.SaveChanges">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.CollectAuditDb`1.AutoSaveRangeAuditingEntityChanges(System.Collections.Generic.List{PasteApeart.auditmodels.ApEntityChangeInfo})">
+            <summary>
+            
+            </summary>
+            <param name="changes"></param>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.ICollectAuditDb">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.Set``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.Add(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.AddRange(System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.AddRange(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.AddRangeAsync(System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.AddRangeAsync(System.Collections.Generic.IEnumerable{System.Object},System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.Update(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.UpdateRange(System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.UpdateRange(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.Remove(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.RemoveRange(System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.RemoveRange(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.Attach(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.AttachRange(System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.AttachRange(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            
+            </summary>
+            <param name="entities"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.FindAsync(System.Type,System.Object[])">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <param name="keyValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.FindAsync``1(System.Object[])">
+            <summary>
+            
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="keyValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.Entry``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.Entry(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.SaveChanges">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ICollectAuditDb.SaveChangesAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.ICollectAuditDb.ChangeTracker">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.ICollectAuditDb.Database">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.CurrentUserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.UserIds">
+            <summary>
+            假设需要基于查询获取
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.FilterQuery">
+            <summary>
+            是否要过滤
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.QueryAdvertiserId">
+            <summary>
+            基于当前用户查询得有权限对象
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.IsDesignModel">
+            <summary>
+            设计模式 add-migration
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{`0},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+            <param name="isDesign"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.FilterIQueryable(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.RoleInfo">
+            <summary>
+            权限信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.GradeInfo">
+            <summary>
+            角色信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.GradeRole">
+            <summary>
+            角色权限
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IFilterQueryDbContext`1.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.CurrentUserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.UserIds">
+            <summary>
+            假设需要基于查询获取
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.FilterQuery">
+            <summary>
+            是否要过滤
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.QueryAdvertiserId">
+            <summary>
+            基于当前用户查询得有权限对象
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.RoleInfo">
+            <summary>
+            权限信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.GradeInfo">
+            <summary>
+            角色信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.GradeRole">
+            <summary>
+            角色权限
+            </summary>
+        </member>
+        <member name="P:PasteApeart.EntityFrameworkCore.IPasteApeartDbContext.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.SqliteDb">
+            <summary>
+            表示使用Sqlite数据库
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.SqliteDb.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{PasteApeart.EntityFrameworkCore.SqliteDb},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+            <param name="isDesign"></param>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.ConnectionStringSelector">
+            <summary>
+            返回当前上下文的链接串名称，注意是名称，不是链接字符串
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EntityFrameworkCore.ConnectionStringSelector._readOnly">
+            <summary>
+            只读
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ConnectionStringSelector.IsReadOnly">
+            <summary>
+            是否只读
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ConnectionStringSelector.SetReadOnly(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="isread"></param>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.IConnectionStringSelector">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.IConnectionStringSelector.IsReadOnly">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.IConnectionStringSelector.SetReadOnly(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="isread"></param>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.ReadWriteSplitInterceptor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ReadWriteSplitInterceptor.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="serviceProvider"></param>
+            <param name="config"></param>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ReadWriteSplitInterceptor.ConnectionOpening(System.Data.Common.DbConnection,Microsoft.EntityFrameworkCore.Diagnostics.ConnectionEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult)">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <param name="eventData"></param>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.EntityFrameworkCore.ReadWriteSplitInterceptor.ConnectionOpeningAsync(System.Data.Common.DbConnection,Microsoft.EntityFrameworkCore.Diagnostics.ConnectionEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <param name="eventData"></param>
+            <param name="result"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.EntityFrameworkCore.UseReadOnlyConnectionAttribute">
+            <summary>
+            标注使用只读链接串
+            </summary>
+        </member>
+        <member name="T:PasteApeart.MyAuditingDb">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.MyAuditingDb.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{PasteApeart.MyAuditingDb})">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:PasteApeart.MyAuditingDb.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="P:PasteApeart.MyAuditingDb.ApAuditLog">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.MyAuditingDb.ApEntityChangeInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.MyAuditingDb.ApPropertyChangeInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.MyAuditingDbFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.MyAuditingDbFactory.CreateDbContext(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.PasteApeartDbContextModelCreatingExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.PasteApeartDbContextModelCreatingExtensions.ConfigurePasteApeart(Microsoft.EntityFrameworkCore.ModelBuilder,System.Action{PasteApeart.PasteApeartModelBuilderConfigurationOptions})">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+            <param name="optionsAction"></param>
+        </member>
+        <member name="T:PasteApeart.PasteApeartEntityFrameworkCoreModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.PasteApeartEntityFrameworkCoreModule.RegisterDbContext``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="services"></param>
+        </member>
+        <member name="M:PasteApeart.PasteApeartEntityFrameworkCoreModule.AddPasteApeartEntityFrameworkCoreModule(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="P:PasteApeart.PasteApeartEntityFrameworkCoreModule._config">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.PasteApeartEntityFrameworkCoreModule.BuildConfiguration(System.String[])">
+            <summary>
+            构建配置信息 因为add-migration需要用，所以迁移到这里，大家一起用
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.PasteApeartModelBuilderConfigurationOptions">
+            <summary>
+            配置表前缀 Schema等 按需配置
+            </summary>
+        </member>
+        <member name="M:PasteApeart.PasteApeartModelBuilderConfigurationOptions.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="tablePrefix"></param>
+            <param name="schema"></param>
+        </member>
+        <member name="P:PasteApeart.PasteApeartModelBuilderConfigurationOptions.TablePrefix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.PasteApeartModelBuilderConfigurationOptions.Schema">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.SqliteDbFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.SqliteDbFactory.CreateDbContext(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>图片选择器</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+
+<body>
+
+    <style type="text/css">
+        .img_body {
+            margin: auto;
+            box-sizing: border-box;
+            padding: 20px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+        }
+
+        img {
+            width: auto;
+            height: auto;
+            max-width: 200px;
+            max-height: 200px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.5s;
+        }
+
+        img:last-child {
+            margin-right: 0;
+            margin-bottom: 0;
+        }
+
+        .selected {
+            border: 2px solid #5a98de;
+        }
+    </style>
+
+    <div class="img_body">
+
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/layer/3.1.1/layer.js"></script>
+    <script type="text/javascript" src="../lib/api.js"></script>
+    <script type="text/javascript">
+        var selectNum = 1;
+        var pageData =null;
+        var selectModel=1;//1表示直接url模式，2表示object
+
+        $(window).ready(function () {
+
+            var numStr = _apigetquery('pf_num');
+            if (numStr != null) {
+                selectNum = parseInt(numStr);
+            }
+
+            $(".img_body").on('click', 'img', function () {
+                // console.log($(this).attr('src'));
+
+                if ($(this).hasClass("selected")) {
+                    $(this).removeClass("selected");
+                } else {
+                    $(this).addClass('selected');
+                    if (selectNum == 1) {
+                        $(this).siblings().removeClass('selected');
+                    }
+                }
+
+                //判断数量是否符合，进行返回
+                var imgSelecteds = $(".img_body .selected");
+                if (imgSelecteds.length > 0) {
+
+                    var imgs = new Array();
+                    for (var k = 0; k < imgSelecteds.length; k++) {
+                        var idstr = $(imgSelecteds[k]).attr('data-id');
+                        var urlstr =$(imgSelecteds[k]).attr('src');
+                        if(idstr){
+                            var find = findObjectItem(idstr);
+                            if(find!=null){
+                                imgs.push(find);
+                            }
+                        }else{
+                            imgs.push(urlstr);//直接选择url模式
+                        }
+                        // imgs.push($(imgSelecteds[k]).attr('src'));
+                    }
+                    window.SelectObject = imgs;
+                    //数量够了之后，自动关闭
+                    if (imgSelecteds.length == selectNum) {
+                        sure_select_close_page();
+                    }
+                } else {
+                    window.SelectObject = null;
+                }
+            });
+
+            //特殊情况下可能需要返回对象，而不是单单url，而且url可能是相对得，也就是需要完整对象返回给调用方，如何前后兼容?
+
+            _apiget("/api/app/Upload/Images", true, function (code, obj) {
+                if (code == 200) {
+                    pageData = obj;
+                    var ahtml = '';
+                    obj.forEach(img => {
+                        if(typeof(img) == 'object'){
+                            ahtml += '<img src="' + img.url + '" data-id="'+img.id+'">';
+                            selectModel = 2;
+                        }else{
+                            ahtml += '<img src="' + img + '" >';
+                            selectModel = 1;
+                        }
+                    });
+                    $(".img_body").html(ahtml);
+                } else {
+
+                }
+            })
+
+        });
+
+        /**
+         * 从数据中找到对应得
+         **/
+        function findObjectItem(idkey){
+            if(pageData){
+                for(var item of pageData){
+                    if(item.id === idkey){
+                        return item;
+                    }
+                }
+            }
+            return null;
+        }
+
+        /**
+ * 通知上级点击确定
+ */
+        function sure_select_close_page() {
+            var _top = window.top;
+            if (_top) {
+                if (_top.FuncClickSure) {
+                    _top.FuncClickSure();
+                }
+            }
+        }
+
+
+    </script>
+
+</body>
+
+</html>

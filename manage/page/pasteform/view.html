@@ -1,0 +1,383 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="./style.css" /> 改成下面的 ../lib/pasteform.css -->
+
+    <link rel="stylesheet" type="text/css" href="./view.css?v=20260524" />
+    <link rel="stylesheet" type="text/css" href="../lib/pasteform.css">
+    <!--使用动态载入-->
+    <!-- <link rel="stylesheet" type="text/css" href="../lib/editor.md/css/editormd.min.css"> -->
+
+    <title>数据表单页</title>
+</head>
+
+<body>
+    <div class="page-container view-page">
+        <!-- <div class="form-header">
+            <div class="ititle"></div>
+            <div class="idesc"></div>
+        </div> -->
+        <form class="form newform pasteform" id="paste-form" onsubmit="return false;" action="javascript:void(0);">
+
+            <div class="paste-form-body">
+            </div>
+
+            <div class="row cl singlerow submitrow">
+                <div class="rowbtn">
+                    <input onClick="funcSubmitForm();" class="btn paste-btn-submit" style="display:none;" type="button" value="保存">
+                </div>
+            </div>
+        </form>
+
+        <script type="text/html" id="template_form">
+
+            <!-- 顶部的tab -->
+            <% if(tabs && tabs.length>0 && config.show_tabs){ %>
+                <div class="tabs p-flex-h">
+                    <% tabs.forEach(_tab=>{%>
+                        <div class="tab"><a href="#group_id_<%:=_tab.gcode%>"><%:=_tab.gname%></a></div>
+                    <% }) %>
+                </div>
+            <% } %>
+
+            <!-- 下方的group和item -->
+            <% list.forEach(item=>{%>
+                    <% if(!item.isgroup){ %>
+                        <%:=templatetr({item:item,config:config})%>
+                    <% }else{ %>
+                        <div class="group singlerow <% if(item.hidden){ %>hidden<% } %><% if(item.hide){ %>hide<% } %>" id="group_id_<%:=item.gcode%>" <% if(item.hidden){%> style="display:none;" <% } %>>
+                            <div class="ghead p-flex-h">
+                                <span class="gname"><%:=item.gname%></span>
+                                <!-- 删除和添加模式 -->
+                                 <% if(item.gmodel =="edit"){ %>
+                                    <span style="flex:1;"></span>
+                                    <i class="Hui-iconfont Hui-iconfont-add btngroup" onclick="handler_group_add('<%:=item.gcode%>',event)"></i>
+                                    <i class="Hui-iconfont Hui-iconfont-del3 btngroup" onclick="handler_group_remove('<%:=item.gcode%>',event);"></i>
+                                 <% } %>
+                                <i class="Hui-iconfont <% if(item.gclass=='open'){ %>Hui-iconfont-arrow2-top<% }else{ %>Hui-iconfont-arrow2-bottom<%}%> btngroup btnexcept"></i>
+                            </div>
+                            <div class="gbody <%:=item.gclass%>">
+                                <% item.groups.forEach(ii=>{ %>
+                                    <%:=templatetr({item:ii,config:config})%>
+                                <% }) %>
+                            </div>
+                        </div>
+                    <% } %>
+            <% }) %>
+        </script>
+
+        <script type="text/html" id="template_group_item">
+            <!-- 下方的group和item -->
+            <% list.forEach(item=>{%>
+                    <% if(!item.isgroup){ %>
+                        <%:=templatetr({item:item,config:config})%>
+                    <% }else{ %>
+                        <div class="group singlerow <% if(item.hidden){ %>hidden<% } %><% if(item.hide){ %>hide<% } %>" id="group_id_<%:=item.gcode%>" <% if(item.hidden){%> style="display:none;" <% } %>>
+                            <div class="ghead p-flex-h">
+                                <span class="gname"><%:=item.gname%></span>
+                                <!-- 删除和添加模式 -->
+                                 <% if(item.gmodel =="edit"){ %>
+                                    <span style="flex:1;"></span>
+                                    <i class="Hui-iconfont Hui-iconfont-add btngroup" onclick="handler_group_add('<%:=item.gcode%>',event)"></i>
+                                    <i class="Hui-iconfont Hui-iconfont-del3 btngroup" onclick="handler_group_remove('<%:=item.gcode%>',event);"></i>
+                                 <% } %>
+                                <i class="Hui-iconfont <% if(item.gclass=='open'){ %>Hui-iconfont-arrow2-top<% }else{ %>Hui-iconfont-arrow2-bottom<%}%> btngroup btnexcept"></i>
+                            </div>
+                            <div class="gbody <%:=item.gclass%>">
+                                <% item.groups.forEach(ii=>{ %>
+                                    <%:=templatetr({item:ii,config:config})%>
+                                <% }) %>
+                            </div>
+                        </div>
+                    <% } %>
+            <% }) %>
+        </script>
+
+
+        <!-- 表单的模板信息 -->
+        <script type="text/html" id="template_tr_item">
+            <div class="row cl <% if(item.singlerow){ %>singlerow<% } %> item_<%:=item.name%> <% if(item.hidden){ %>hidden<% } %> <% if(item.hide){ %>hide<% } %> <% if(item.class){%><%:=item.class%><%}%>" <% if(item.style){%> style="<%:=item.style%>" <%}%> <% if(item.empty){%> style="visibility: hidden;" <%}%> <% if(item.hidden){%> style="display:none;" <%}%>>
+                <div class="itemrow">
+                    <% if(item.title){ %>
+                        <label class="form-label" title="<%:=item.placeholder%>"><%:=item.title%><%if(item.mark){%><span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span><%}%><%if(item.required || item.point){%><span class="form-required point<%:=item.point%>">*</span><%}%></label>
+                    <% }else{ %>
+                        <label class="form-label-empty"></label>
+                    <% } %>
+                    <div class="formControls i<%:=item.dataType%>" >
+                        <% switch(item.dataType) { 
+                            case "text": case "Guid": case "splitarray": %>
+                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-text" <% if(item.required){ %>required<% } %> type="text" <% if(item.readonly){ %>readonly<% } %> value="<%:a=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
+                                <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
+                                <%if(item.unit){%>
+                                    <span class="unit"><%:=item.unit%></span>
+                                <%}%>
+                            <% break; 
+                            case "password": %>
+                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-text" <% if(item.required){%>required<%}%> type="password" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
+                                <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
+                            <% break; 
+                            case "html": %>
+                                <div class="item-html"><%:=item.value || ''%></div>
+                            <% break; 
+                            case "number": %>
+                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" placeholder-class="p-form-placeholder" type="number" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <%if(item.unit){%>
+                                    <span class="unit"><%:=item.unit%></span>
+                                <%}%>
+                            <% break; 
+                            case "fentoyuan": %>
+                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <span class="unit">元</span>
+                            <% break; 
+                            case "Double": case "Decimal": %>
+                                <input name="<%:=item.name%>" autocomplete="to-off"  class="input-number" step="<%:=item.step%>" placeholder-class="p-form-placeholder" type="number" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <%if(item.unit){%>
+                                    <span class="unit"><%:=item.unit%></span>
+                                <%}%>
+                            <% break; 
+                            case "textarea": %>
+                                <textarea name="<%:=item.name%>" class="input-textarea" <% if(item.areastyle){%>style="<%:=item.areastyle%>"<%}%> <%if(item.required){%>required<%}%> <% if(item.readonly){ %>readonly<% } %> <%if(item.maxlength>0){%>maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" ><%:=item.value || ''%></textarea>
+                                <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
+                            <% break; 
+                            case "switch": %>
+                                <input type="checkbox" class="input-checkbox mui-switch mui-switch-anim" <% if(item.value){%>checked<%}%> name="<%:=item.name%>">
+                                <span class="placeholder"><%:=item?.placeholder || ''%></span>
+                            <% break; 
+                            case "datetime": %>
+                                <input type="text" autocomplete="to-off" value="<%:=item.value || ''%>" name="<%:=item.name%>" <% if(item.required){%>required<%}%> maxlength="20" <% if(item.readonly){ %>readonly<% } %> placeholder="<%:=item.placeholder%>" onClick="WdatePicker({el:this,dateFmt:'<%:=item.format%>'})"
+                                autocomplete="to-off" class="input-text input-form-date">
+                            <% break; 
+                            case "daterange": %>
+                                <input type="text" autocomplete="to-off" value="<%:=item.value || ''%>" id="<%:=item.name%>" name="<%:=item.name%>" datas="" datae="" <% if(item.readonly){ %>readonly<% } %> <% if(item.required){ %>required<%}%> placeholder="<%:=item.placeholder%>" 
+                                autocomplete="to-off" class="input-text input-form-date">
+                            <% break; 
+                            case "richtext": %>
+                                <div class="editoryarea">
+                                    <div class="editor_toolbar" id="<%:=item.name%>editorbar"></div>
+                                    <div class="editor_body" id="<%:=item.name%>editor" <% if(item.style){%>style="<%:=item.style%>"<%}%>></div>
+                                </div>
+                            <% break; 
+                            case "markdown": %>
+                                <div class="editoryarea">
+                                    <div class="editor_body" id="<%:=item.name%>mdeditor" <% if(item.style){%>style="<%:=item.style%>"<%}%>></div>
+                                </div>
+                            <% break; 
+                            case "score": %>
+                                <span class="ratyli raty<%:=item.name%>" data-rate="<%:=item.value%>" data-ratemax="5"></span> 
+                            <% break; 
+                            case "file": %>
+                                <% if(item.url){%>
+                                    <input type="file" id="<%:=item.name%>" accept="<%:=item.accept%>" datanum="<%:=item.num%>" <% if(item.readonly){ %>readonly<% } %> onchange="handlerUploadOnlyFile(this)" <% if(item.url){ %>dataurl="<%:=item.url%>" <% } %> datatype="<%:=item.type%>" datasize="<%:=item.size%>" style="display:none" />
+                                    <input type="text" name="<%:=item.name%>" autocomplete="to-off" value="<%:=item.value%>" placeholder="<%:=item.placeholder%>" onclick="$('[id=<%:=item.name%>]').trigger('click');">
+                                <%}%>
+                                <% if(item.filehandler){%>
+                                    <input type="file" id="<%:=item.name%>" accept="<%:=item.accept%>" datanum="<%:=item.num%>" <% if(item.readonly){ %>readonly<% } %> onchange=<%:=item.filehandler%> style="display:none" />
+                                    <input type="text" name="<%:=item.name%>" autocomplete="to-off" value="<%:=item.value%>" placeholder="<%:=item.placeholder%>" onclick="$('[id=<%:=item.name%>]').trigger('click');">
+                                <%}%>
+                                <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
+                            <% break; 
+                            case "image": case "images": %>
+                                <input type="text" style="display:none" autocomplete="to-off" name="<%:=item.name%>" <% if(item.readonly){ %>readonly<% } %> <% if(item.imgid && item.imgid !=null ){ %>value="<%:=item.imgid%>"<%}%> >
+                                <input type="file" multiple id="<%:=item.name%>" datanum="<%:=item.num%>" <% if(item.readonly){ %>readonly<% } %> onchange="handlerUploadFile(this)" datatype="<%:=item.type%>" datasize="<%:=item.size%>" style="display:none;" />
+                                <% if(item.num ==1){%>
+                                    <label for="<%:=item.name%>">
+                                        <img class="form-image-head <%:=item.type%>" <% if(item.value && item.value !=null ){ %>src="<%:=item.value%>"<%}%> >
+                                        <%if(!item.value || item.value ==null){%>
+                                            <span class="iconadd icon-add" title="<%:=item?.placeholder || ''%>">
+                                                <i class="Hui-iconfont Hui-iconfont-tuwenxiangqing icon"></i>
+                                            </span>
+                                            <i class="Hui-iconfont Hui-iconfont-close2 icon-close" style="display:none;" data-num="1" onclick="handlerRemoveImageItem(event,this)"></i>
+                                        <%}else{%>
+                                            <span class="iconadd icon-add" style="display:none" title="<%:=item?.placeholder || ''%>">
+                                                <i class="Hui-iconfont Hui-iconfont-tuwenxiangqing icon"></i>
+                                            </span>
+                                            <!-- 删除图片 -->
+                                            <i class="Hui-iconfont Hui-iconfont-close2 icon-close" data-num="1"  onclick="handlerRemoveImageItem(event,this)"></i>
+                                        <%}%>
+                                    </label>
+                                    <%if(item.simg){%>
+                                        <span class="img_dialog Hui-iconfont Hui-iconfont-yundown" data-num="1"  data-name="<%:=item.name%>"  onclick="funcDialogSelectImage(this,item.simg.url,item.simg.query)"></span>
+                                    <%}%>
+                                    <!--<span class="placeholder"><%:=item?.placeholder || ''%></span>-->
+                                <% }else{ %>
+                                    <%if(item.simg){%>
+                                        <span class="img_dialog Hui-iconfont Hui-iconfont-yundown" data-num="<%:=item.num%>" data-name="<%:=item.name%>" onclick="funcDialogSelectImage(this,item.simg.url,item.simg,query)"></span>
+                                    <%}%>
+                                    <!-- <span class="placeholder"><%:=item?.placeholder || ''%></span> -->
+                                    <ul class="imageul <%:=item.type%> drag_<%:=item.name%>">
+                                        <li>
+                                            <label for="<%:=item.name%>">
+                                                <span class="icon-add"  title="<%:=item?.placeholder || ''%>">
+                                                    <i class="icon Hui-iconfont Hui-iconfont-tuwenxiangqing"></i>
+                                                </span>
+                                            </label>
+                                        </li>
+                                        <%if(item.images){%>
+                                            <%item.images.forEach(_img=>{%>
+                                                <li class="draggable-item"><img src="<%:=_img%>"><i class="Hui-iconfont Hui-iconfont-close2 icon-close"  onclick="handlerRemoveImageItem(event,this)"></i></li>
+                                            <%})%>
+                                        <%}%>
+                                    </ul>
+                                <% } %>
+                            <% break; 
+                            case "outer": %>
+                                <div class="outer">
+                                    <% if(item.dataFrom=='Int32' || item.dataFrom=='Int64'){ %>
+                                        <input type="number" class="outerid" autocomplete="to-off" style="display:none;" value="<%:=item.value%>" name="<%:=item.name%>">
+                                    <%}else{%>
+                                        <input type="text" class="outerid" autocomplete="to-off" style="display:none;"  value="<%:=item.value%>" name="<%:=item.name%>">
+                                    <%}%>
+                                    <input type="text" class="outerdisplay" dataname="<%:=item.name%>" <% if(!item.readonly){ %>onclick="handler_outer_value(this)"<% } %> value="<%:=item.display%>" readonly placeholder="<%:=item.placeholder%>" >
+                                    <% if(!item.readonly){ %>
+                                        <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
+                                    <% } %>
+                                </div>
+                            <% break; 
+                            case "outers": %>
+                                <div class="outers">
+                                    <input type="button" value="添加" class="btn btnaddouter" dataname="<%:=item.name%>" onclick="handler_outer_value(this)">
+                                    <ul class="ulouter outers<%:=item.name%>">
+                                        <% if(item.display){%>
+                                            <% item.display.forEach(_display=>{ %>
+                                                <li dataid="<%:=_display[item.display_id]%>">
+                                                    <%:=_display._display%>
+                                                    <span class="outer_close"  onclick="$(this).parents('li').remove();"></span>
+                                                </li>
+                                            <% }) %>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            <% break; 
+                            case "cover": %>
+                                <div class="coverts">
+                                    <% for(var k=0; k< item.value.length; k++){  %>
+                                        <img class="cover_img <% if(k==0){ %>selected<% } %>" onclick="handlerTapImage(this);" src="<%:=item.value[k]%>">
+                                    <% } %>
+                                </div>
+                            <% break; 
+                            case "object": %>
+                                <div class="outer">
+                                    <input type="text" class="outerid" autocomplete="to-off" style="display:none;"  value="<%:=item.value%>" name="<%:=item.name%>">
+                                    <input type="text" class="outerdisplay" autocomplete="to-off" dataname="<%:=item.name%>" value="<%:=item.display%>" onclick="handler_object_value(this)" readonly placeholder="<%:=item.placeholder%>" >
+                                    <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
+                                </div>
+                            <% break; 
+                            case "objects": %>
+                                <div class="outers">
+                                    <input type="button" value="添加" class="btn btnaddouter" dataname="<%:=item.name%>" onclick="handler_object_value(this)">
+                                    <ul class="ulouter outers<%:=item.name%>">
+                                        <% if(item.objects){%>
+                                            <% item.objects.forEach(_display=>{ %>
+                                                <li dataid="<%:=_display._id%>" dataname="<%:=item.name%>"  onclick="handlerEditObject(this);">
+                                                    <%:=_display._display%>
+                                                    <span class="outer_close"  onclick="handlerRemoveObjectItem(this);" ></span>
+                                                </li>
+                                            <% }) %>
+                                        <% } %>
+                                    </ul>
+                                </div>
+                            <% break; 
+                            case "button": %>
+                                <% if(item.buttons){ %>
+                                    <% item.buttons.forEach(_button=>{ %>
+                                        <input type="button" class="btn btnlink" value="<%:=_button.value%>" <% if(_button.btnfunc){ %> onclick="<%:=_button.btnfunc%>" <% }else{ %> onclick="global_form_button_click(this,'<%:=config.className%>','<%:=_button.name%>');" <% } %>>
+                                    <% }) %>
+                                <% }else{ %>
+                                    <input type="button" class="btn btnlink" value="<%:=item.value%>" <% if(item.btnfunc){ %> onclick="<%:=item.btnfunc%>" <% }else{ %> onclick="global_form_button_click(this,'<%:=config.className%>','<%:=item.name%>');" <% } %>>
+                                    <span class="placeholder"><%:=item?.placeholder || ''%></span>
+                                <% } %>
+                            <% break; 
+                            case "select": %>
+                                <select name="<%:=item.name%>" dtype="<%:=item.dataFrom%>" onchange="handlerSectionChange(this)">
+                                    <% if(item.selects){ %>
+                                        <% item.selects.forEach(_select=>{ %>
+                                            <option value="<%:=_select.value%>" <% if (_select.value == item.value){ %>selected<% } %>><%:=_select.name%></option>
+                                        <% }) %>
+                                    <%}%>
+                                </select>
+                            <% break; 
+                            case "lselect": %>
+                                <ul class="ulitems lselect <%:=item.selects_max%>" name="<%:=item.name%>">
+                                    <% if(item.selects){ %>
+                                        <% item.selects.forEach(_select=>{ %>
+                                            <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>" title="<%:=_select.name.replace(/[\",\<,\>]/g,'')%>"><%:=_select.name%></li>
+                                        <% }) %>
+                                    <%}%>
+                                </ul>
+                            <% break; 
+                            case "selects": %>
+                                <ul class="ulitems ulselects" name="<%:=item.name%>">
+                                    <% if(item.selects){ %>
+                                        <% item.selects.forEach(_select=>{ %>
+                                            <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>" title="<%:=_select.name.replace(/[\",\<,\>]/g,'')%>"><%:=_select.name%></li>
+                                        <% }) %>
+                                    <%}%>
+                                </ul>
+                            <% break; 
+                            case "datalist": %>
+                                <input type="text" name="<%:=item.name%>" class="inputword" <% if(item.required){ %>required<% } %> value="<%:=item.value%>" list="<%:=item.name%>" placeholder="<%:=item.placeholder || ''%>">
+                                <% if(item.selects){ %>
+                                    <datalist id="<%:=item.datalistid%>">
+                                        <% item.selects.forEach(_select=>{ %>
+                                            <option value="<%:=_select.value%>" ><%:=_select.name%>(<%:=_select.value%>)</option>
+                                        <% }) %>
+                                    </datalist>
+                                <%}%>
+                                <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
+                            <% break; 
+                            case "sunform": %>
+                                <iframe class="sun_iframe <%:=item.frame.class%>" id="frame_<%:=item.name%>" height="<%:=item.frame.height%>" width="100%" src="<%:=item.frame.url%>"></iframe>
+                            <% break; 
+                            default: %>
+                                <!-- 可根据需要添加默认处理逻辑 -->
+                            <% break; 
+                        } %>
+                    </div>
+                </div>
+            </div>
+        </script>    
+
+        <script type="text/html" id="image_ul_li_item">
+            <li><img src="<%:=img%>"><i class="Hui-iconfont Hui-iconfont-close2 icon-close"  onclick="handlerRemoveImageItem(this)"></i></li>
+        </script>
+
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/layer/3.1.1/layer.js"></script>
+
+    <!--/_footer /作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../lib/api.js"></script>
+
+    <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css">
+    <script type="text/javascript" src="../lib/template.js"></script>
+
+    <!-- 添加对时间区间的支持 -->
+    <script type="text/javascript" async src="../lib/pickerdaterange/dateRange.js"></script>
+    <!-- 添加对日期的支持 -->
+    <script type="text/javascript" async src="../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+
+    <!-- 添加对富文本的支持 使用动态载入 -->
+    <!-- <script type="text/javascript" src="../lib/wangeditor/wangEditor.min.js"></script> -->
+
+    <!-- 添加对markdown的支持 使用动态载入 -->
+    <!-- <script type="text/javascript" src="../lib/editor.md/editormd.min.js"></script> -->
+    <!-- 添加对md的c+v粘贴图片的支持 已经迁移到../lib/api.js中 -->
+    <!-- <script type="text/javascript" async src="../lib/editor.md/md.paste.js"></script> -->
+    <script type="text/javascript" src="./form.js?v=260525"></script>
+    <script type="text/javascript" src="./view.js?v=260525"></script>
+    <!--/请在上方写此页面业务相关的脚本-->
+
+</body>
+
+</html>

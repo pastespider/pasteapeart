@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery.pagination演示</title>
+    <link rel="stylesheet" href="./jquery.pagination.css?v=1">
+
+</head>
+<body>
+<div style="width:800px;margin: 0 auto;">
+
+    <h2>示例</h2>
+    <div id="test" style="margin: 20px 0"></div>
+    <div id="output" style="margin: 20px 0"></div>
+    <h2>示例代码</h2>
+    <pre><code class="javascript hljs">$(<span class="hljs-string">'#test'</span>).pagination({
+    <span class="hljs-attr">current</span>: <span class="hljs-number">2</span>,  <span
+                class="hljs-comment">// 默认为1</span>
+    pageSize: <span class="hljs-number">20</span>,  <span class="hljs-comment">// 默认为10</span>
+    total: <span class="hljs-number">1234</span>,  <span class="hljs-comment">// 默认0</span>
+    callback: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">pageno, pagination</span>) </span>{
+        $(<span class="hljs-string">'#output'</span>).text(<span class="hljs-string">'获取第'</span> + pageno + <span
+                class="hljs-string">'数据'</span>);
+    }
+})</code></pre>
+    <h2>自定义样式</h2>
+    <div id="custom" class="pagination-custom" style="margin: 20px 0"></div>
+    <pre><code class="javascript hljs">$(<span class="hljs-string">'#custom'</span>).pagination({
+    <span class="hljs-attr">current</span>: <span class="hljs-number">2</span>,  <span class="hljs-comment">// 默认为1</span>
+    pageSize: <span class="hljs-number">20</span>,  <span class="hljs-comment">// 默认为10</span>
+    total: <span class="hljs-number">1234</span>,  <span class="hljs-comment">// 默认0</span>
+    callback: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">pageIndex, pagination</span>) </span>{
+
+    }
+})</code></pre>
+</div>
+
+<script type="text/javascript" src="./jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="./jquery.pagination.js?v=1"></script>
+<script>
+    $('#test').pagination({
+        current: 2,  // 默认为1
+        pageSize: 20,  // 默认为10
+        total: 1234,  // 默认0
+        callback: function (pageIndex, pagination) {
+            $('#output').text('获取第' + pageIndex + '页数据');
+        }
+    })
+
+$('#custom').pagination({
+    current: 2,  // 默认为1
+    pageSize: 20,  // 默认为10
+    total: 1234,  // 默认0
+    callback: function (pageIndex, pagination) {
+
+    }
+})
+</script>
+
+</body>
+</html>

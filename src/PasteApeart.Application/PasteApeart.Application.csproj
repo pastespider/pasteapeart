@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <!-- 启用确定性编译（关键） -->
+	  <Deterministic>true</Deterministic>
+	  <!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	  <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>PasteApeart.Application</RootNamespace>
+	    <DocumentationFile>..\PasteApeart.HttpApi.Host\PasteApeart.Application.xml</DocumentationFile>
+	    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
+	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <!--<PackageReference Include="Volo.Abp.Ddd.Application" Version="8.3.4" />-->
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PasteApeart.Handler\PasteApeart.Handler.csproj" />
+  </ItemGroup>
+
+</Project>

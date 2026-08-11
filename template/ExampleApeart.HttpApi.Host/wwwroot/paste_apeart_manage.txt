@@ -1,0 +1,6 @@
+框架新版本PasteApeart
+主要是Dto模式+ IEventHandler
+读写分离
+审计日志
+多租户
+等！

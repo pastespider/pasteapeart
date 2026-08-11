@@ -1,0 +1,136 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="./style.css" /> 改成下面的 ../lib/pasteform.css -->
+    <link rel="stylesheet" type="text/css" href="../lib/pasteform.css">
+    <link rel="stylesheet" type="text/css" href="./detail.css" />
+    <title>PasteForm</title>
+</head>
+
+<body>
+    <div class="page-container detail-page">
+        <!-- <div class="form-header">
+            <div class="ititle"></div>
+            <div class="idesc"></div>
+        </div> -->
+        <form class="form newform" id="paste-form">
+            <div class="paste-form-body"></div>
+        </form>
+        <script type="text/html" id="templatemodel">
+            <% list.forEach(item=>{%>
+                <div class="row cl <% if(item.singlerow){ %>singlerow<% } %>" <% if(item.hidden){%> style="display:none;" <%}%>>
+                    <div class="itemrow">
+                        <label class="form-label"><%:=item.title%><%if(item.required){%><span class="form-required">*</span><%}%></label>
+                        <div class="formControls">
+                            <% if(item.dataType == "richtext"){ %>
+                                <div class="richtext"><%:=item.value%></div>
+                            <%}else if(item.dataType =='image'){%>
+                                <%if(item.value){%><img src="<%:=item.value%>"><%}%>
+                            <%}else if(item.dataType =='textarea'){ %>
+                                <pre><%:=item.value%></pre>
+                            <% } else{%>
+                                <label><%:=item.value%></label>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            <%})%>
+        </script>
+
+        <!--以下是新模板-->
+
+        <script type="text/html" id="template_form">
+
+            <% if(tabs && tabs.length>0){ %>
+                <div class="tabs p-flex-h">
+                    <% tabs.forEach(_tab=>{%>
+                        <div class="tab"><a href="#group_id_<%:=_tab.gcode%>"><%:=_tab.gname%></a></div>
+                    <% }) %>
+                </div>
+            <% } %>
+
+            <% list.forEach(item=>{%>
+                    <% if(!item.isgroup){ %>
+                        <%:=templatetr({item:item,config:config})%>
+                    <% }else{ %>
+
+                        <div class="group singlerow" id="group_id_<%:=item.gcode%>">
+                            <div class="ghead p-flex-h">
+                                <span class="gname"><%:=item.gname%></span>
+                                <i class="Hui-iconfont <% if(item.gclass=='open'){ %>Hui-iconfont-arrow2-top<% }else{ %>Hui-iconfont-arrow2-bottom<%}%> btngroup btnexcept"></i>
+                            </div>
+                            <div class="gbody <%:=item.gclass%>">
+                                <% item.groups.forEach(ii=>{ %>
+                                    <%:=templatetr({item:ii,config:config})%>
+                                <% }) %>
+                            </div>
+                        </div>
+                    <% } %>
+            <% }) %>
+        </script>
+
+        <script type="text/html" id="template_tr_item">
+            <div class="row cl <% if(item.singlerow){ %>singlerow<% } %> item_<%:=item.name%>" <% if(item.empty){%> style="visibility: hidden;" <%}%> <% if(item.hidden){%> style="display:none;" <%}%>>
+                <div class="itemrow">
+                    <% if(item.title){ %>
+                        <label class="form-label" title="<%:=item.title%>"><%:=item.title%><%if(item.mark){%><span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span><%}%><%if(item.required || item.point){%><span class="form-required point<%:=item.point%>">*</span><%}%></label>
+                    <% }else{ %>
+                        <label class="form-label-empty"></label>
+                    <% } %>
+                    <div class="formControls" >
+                        <% if(item.dataType == "html"){ %>
+                            <%:=item.value%>
+                        <% }else if(item.dataType == "richtext"){ %>
+                            <div class="richtext"><%:=item.value%></div>
+                        <%}else if(item.dataType =='image'){%>
+                            <%if(item.value){%>
+                                <% if(Array.isArray(item.value)){ %>
+                                    <% item.value.forEach(img=>{%>
+                                        <img src="<%:=img%>">
+                                    <% }) %>
+                                <%}else{%>
+                                    <img src="<%:=item.value%>">
+                                <%}%>
+                            <%}%>
+                            
+                        <%}else if(item.dataType =='textarea'){ %>
+                            <pre><%:=item.value%></pre>
+                        <% } else{%>
+                            <label><%:=item.value%><% if(item.unit){ %><span class="unit"><%:=item.unit%></span><% } %></label>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+    </div>
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/layer/3.1.1/layer.js"></script>
+    <!-- <script type="text/javascript" src="../static/h-ui/js/H-ui.min.js"></script> -->
+    <!-- <script type="text/javascript" src="../static/h-ui.admin/js/H-ui.admin.js"></script> -->
+    <!--/_footer /作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <script type="text/javascript" src="../lib/api.js"></script>
+
+    <!-- <script type="text/javascript" src="../lib/pickerdaterange/dateRange.js"></script>
+    <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css"> -->
+
+    <!-- <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script> -->
+    <script type="text/javascript" src="../lib/template.js"></script>
+    <!-- <script type="text/javascript" src="../lib/wangeditor/wangEditor.min.js"></script> -->
+    <script type="text/javascript" src="./form.js?ver=20260113"></script>
+    <script type="text/javascript" src="./detail.js?v=20260113"></script>
+    <!--/请在上方写此页面业务相关的脚本-->
+</body>
+
+</html>

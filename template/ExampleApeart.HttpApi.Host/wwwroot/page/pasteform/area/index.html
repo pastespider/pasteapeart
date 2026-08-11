@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>组件作用域排查demo</title>
+  <!-- 引入Vue2（确保版本正确，避免兼容性问题） -->
+  <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+  <style>
+    .node {
+      margin: 8px 0;
+      padding-left: 8px;
+    }
+
+    .checkbox {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #666;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .checkbox.checked {
+      background: #42b983;
+      color: white;
+      text-align: center;
+      line-height: 16px;
+      font-size: 12px;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+  <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript" src="../../lib/layer/3.1.1/layer.js"></script>
+  <script type="text/javascript" src="../../lib/api.js"></script>
+  <style type="text/css">
+        *::-webkit-scrollbar {
+        /*滚动条整体样式*/
+        width: 8px;
+        height: 8px;
+        background-color: transparent;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        /*滚动条里面小方块*/
+        border-radius: 8px;
+        -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+        box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+        background: #f3f3f3;
+    }
+
+    *::-webkit-scrollbar-track {
+        /*滚动条里面轨道*/
+        border-radius: 8px;
+        background: transparent;
+    }
+    .inputbox {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 2px solid #999;
+      position: relative;
+      transition: all 0.5s;
+    }
+
+    .hited::after {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 6px;
+      height: 12px;
+      border: solid rgb(30, 24, 201);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .halfhit::after {
+      content: '';
+      width: 16px;
+      height: 2px;
+      left: 2px;
+      background-color: rgb(30, 24, 201);
+      ;
+      position: absolute;
+      top: 10px;
+    }
+
+    .area_body {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .node {
+      max-width: 800px;
+      width: 20%;
+      min-width: 300px;
+      margin-bottom: 10px;
+      margin-right: 30px;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .node:last-child {
+      margin-bottom: 0;
+      margin-right: 0;
+    }
+
+    .ulitem {
+      position: relative;
+      height: auto;
+      border-radius: 16px;
+      display: flex;
+      transition: all 0.5s;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .ulitem .node {
+      width: 100% !important;
+      margin-bottom: 8px;
+    }
+
+    .city_name {
+      padding: 2px 8px;
+      cursor: pointer;
+    }
+
+    .icon_head {
+      color: #999;
+      font-size: 20px;
+      line-height: 1.2;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .icon_close {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      font-size: 24px;
+      cursor: pointer;
+      color: #999;
+      transition: all 0.5s;
+    }
+
+    .icon_close:hover {
+      color: #42b983;
+    }
+
+    .named {
+      color: rgb(19, 67, 227);
+    }
+
+    .linet {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .level1 {
+      padding-left: 20px;
+      font-size: 16px;
+    }
+
+    .level2 {
+      padding-left: 50px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 组件模板：只绑定组件内部的变量/方法 -->
+  <template id="tree-template">
+    <div class="node">
+      <!-- 1. 绑定组件props里的node.checked -->
+      <!-- <span class="checkbox" :class="{ checked: node.checked }" @click="toggleCheck">
+          {{ node.checked ? '✓' : '' }}
+        </span> -->
+
+      <div class="linet">
+        <icon class="Hui-iconfont icon_head" @click="toggleName(node)" v-if="node.level<=2"
+          :class="node.isExpanded?'isopen Hui-iconfont-arrow2-top':'Hui-iconfont-arrow2-bottom'"></icon>
+
+        <!-- 根据hitval的值绑定不同类名 -->
+        <span class="inputbox" :class="{
+               'unhit': node.hitval === 0,
+               'hited': node.hitval === 1,
+               'halfhit': node.hitval === 2
+             }" @click="toggleSelect(event,node)"></span>
+        <!-- 2. 绑定组件props里的node.label -->
+        <span class="city_name" :class="node.isExpanded?'named':''" @click="toggleName(node)">{{ node.label }}</span>
+      </div>
+
+
+      <div class="ulitem" v-if="node.isExpanded" :class="['level'+node.level]">
+        <!-- <icon class="icon_close Hui-iconfont Hui-iconfont-del" @click="handlerDialogClose(node)"></icon> -->
+        <!-- 3. 递归：给子组件传「当前节点的children」，不是主页面的rootData  -->
+        <tree-node v-for="(child, i) in node.children" :key="child.id" :node="child" v-if="node.children.length"
+          :on-name-taped="nameChange" :on-box-taped="foreachBoxTaped"></tree-node>
+      </div>
+    </div>
+  </template>
+
+  <!-- 主页面Vue挂载点 -->
+  <div id="app">
+    <!-- 给组件传参：rootData是主页面data里的变量 -->
+    <!-- <tree-node :node="rootData"></tree-node> -->
+
+    <div class="area_body">
+      <tree-node v-for="(item, index) in areaList" :key="item.id" :node="item" :on-name-taped="handlernameClick"
+        :on-box-taped="boxChange"></tree-node>
+    </div>
+
+  </div>
+
+
+
+  <script>
+    // 1. 注册组件：明确props和内部方法  
+    // @nameTaped="(data) => console.log('根节点收到事件：', data)"
+    //@nameTaped="$emit('nameTaped',$event)"
+    Vue.component('tree-node', {
+      template: '#tree-template', // 关联模板
+      props: {
+        // 组件只接收「父级传过来的node」，不直接用主页面数据
+        node: {
+          type: Object,
+          required: true,
+          // 强制node的结构（避免传错数据）
+          default: () => ({ label: '', hitval: 0, level: 1, checked: false, children: [] })
+        },
+        onNameTaped: {
+          type: Function,
+          //点击名称后
+          default: () => { }
+        },
+        onBoxTaped: {
+          type: Object,
+          //点击CheckBox
+          default: {}
+        }
+      },
+      methods: {
+        // 组件内部方法：只操作props里的node
+        toggleCheck() {
+          this.node.checked = !this.node.checked;
+        },
+        toggleSelect(event, item) {
+          //计算父级，计算同级... 决定父级的选中状态
+          this.onBoxTaped(item);
+        },
+        toggleName(item) {
+          //点击了名称
+          // console.log('点击了名称', item.label);
+          //这里是组件内点击后，推送事件
+          this.onNameTaped(item);
+        },
+        nameChange(item) {
+          // console.log('name.changeed', item);
+          this.onNameTaped(item);
+        },
+        handlerDialogClose(item) {
+          item.isExpanded = false;
+        },
+        foreachBoxTaped(item) {
+          this.onBoxTaped(item);
+        }
+      }
+    });
+
+    // 2. 主页面Vue实例：只管理根数据
+    new Vue({
+      el: '#app',
+      data: {
+        rootData: {
+          label: '根节点',
+          checked: false,
+          hitval: 0,
+          children: [
+            { label: '子节点1', checked: false, hitval: 0, children: [] },
+            { label: '子节点2', checked: false, hitval: 0, children: [] }
+          ]
+        },
+        areaList: [],
+        areaMap: new Map(),
+        cacheMap: new Map()
+      },
+      mounted() {
+
+        //chacheMap areaid hitval 是否选中 或者半选
+        this.session_key = _apigetquery("session_key");
+
+        if (this.session_key) {
+          // if (this.session_key != null) {
+          let sessionVal = sessionStorage.getItem(this.session_key)
+          if (sessionVal){
+            let jsonList = JSON.parse(sessionVal);
+            if (jsonList && jsonList.length > 0) {
+              for (let aa of jsonList) {
+                if(!aa.level || aa.level==0){
+                  //推测出level
+                  aa.level=this.handlerReadLevel(aa.id);
+                }
+                switch (aa.level) {
+                  case 1: {
+                    this.cacheMap.set(aa.id, 1);
+                  }
+                    break;
+                  case 2: {
+                    let p1 = this.buildParentId(aa.id, 1);
+                    if (this.cacheMap.has(p1)) {
+                      if (this.cacheMap.get(p1) == 1) {
+                        continue;
+                      }
+                    }
+                    this.cacheMap.set(p1, 2);
+                    this.cacheMap.set(aa.id, 1);
+                  } break;
+                  case 3: {
+                    let p1 = this.buildParentId(aa.id, 1);
+                    if (this.cacheMap.has(p1)) {
+                      if (this.cacheMap.get(p1) == 1) {
+                        continue;
+                      }
+                    }
+                    this.cacheMap.set(p1, 2);
+                    let p2 = this.buildParentId(aa.id, 2);
+                    if (this.cacheMap.has(p2)) {
+                      if (this.cacheMap.get(p2) == 1) {
+                        continue;
+                      }
+                    }
+                    this.cacheMap.set(p2, 2);
+                    this.cacheMap.set(aa.id, 1);
+                  } break;
+                  default:
+                    {
+                      //level未知，需要推测
+
+                    }
+                    break;
+                }
+              }
+              console.log('传递值:',jsonList,'处理后:',this.cacheMap);
+            }else{
+              console.log('没有解析到数据');
+            }
+          }else{
+            console.log('没有从',this.session_key,'获取到值');
+          }
+          // }
+        }
+        //载入本地数据 11 22 33 000
+
+        this.getDefaultList();
+        window.funcSubmitForm = () => {
+          if (this.areaList) {
+            var hits = new Array();
+            for (let areaInfo of this.areaList) {
+              this.readNextValue(hits, areaInfo);
+            }
+
+            let tapMap = new Map();
+            for (let hav of hits) {
+              tapMap.set(hav.id, 1);
+            }
+
+            //这里不能直接加，得判断和上面是否重复了...
+            for (let mapid of this.cacheMap.keys()) {
+              if (mapid) {
+                let val = this.cacheMap.get(mapid);
+                if (val == 1) {
+                  if (!tapMap.has(mapid)) {
+                    hits.push({ id: mapid,level:this.handlerReadLevel(mapid) });
+                  }
+                }
+              }
+            }
+
+            // console.log(hits);
+            // if (hits.length > 0) {
+            //   let hitStr = JSON.stringify(hits);
+            //   sessionStorage.setItem('abc', hitStr);
+            // }
+            return hits;
+          }
+          return null;
+        };
+        window.currentAreaList = () => {
+          return this.areaList;
+        };
+        window.currentcacheMap = () => {
+          return this.cacheMap;
+        };
+      },
+      methods: {
+        getDefaultList() {
+          _apiget("/api/app/areaInfo/page?father_id=0&level=1&page=1&size=100", true, (code, obj) => {
+            if (code == 200) {
+              if (obj.items) {
+                obj.items.forEach(ii => {
+                  ii.isExpanded = false;
+                  ii.hitval = 0;
+                  ii.children = [];
+                  if(!ii.label){
+                    ii.label = ii.name;
+                  }
+                  ii.hit_count = 0;
+                  ii.parent_id = 0;
+                  this.areaMap.set(ii.id, ii);
+                  this.handlerFixDefaultSelect(ii);
+                });
+              }
+              this.areaList = obj.items;
+            }
+          })
+        },
+        handlernameClick(item) {
+          // console.log('最外层获得了点击事件');
+          //最外层，接收名称点击事件，这里没打印
+          // console.log('handlernameClick', item);
+          if (item.isExpanded) {
+            item.isExpanded = false;
+            return;
+          }
+
+          if (item.level < 3) {
+            if (!item.children || item.children.length == 0) {
+              this.getNextList(item);
+            } else {
+              // console.log('子项已经有数据了，不需要继续读取');
+              item.isExpanded = true;
+            }
+          } else {
+            console.log('层级太高了，不再继续请求数据');
+          }
+        },
+        getNextList(item) {
+          _apiget(`/api/app/areaInfo/page?father_id=${item.id}&level=${(item.level + 1)}&page=1&size=100`, true, (code, obj) => {
+            if (code == 200) {
+              let hitCount =0;
+              if (obj.items) {
+                for(let ii of obj.items){
+                  ii.isExpanded = false;
+                  ii.hitval = (item.hitval == 1 ? 1 : 0);
+                  ii.children = [];
+                  ii.hit_count = 0;
+                  ii.parent_id = item.id;
+                  if(!ii.label){
+                    ii.label = ii.name;
+                  }
+                  this.areaMap.set(ii.id, ii);
+                  this.handlerFixDefaultSelect(ii);
+                  if(ii.hitval==1){
+                    hitCount++;
+                  }
+                }
+              }
+              item.children = obj.items;
+              item.isExpanded = true;
+              //计算hit_count
+              if(hitCount>0){
+                item.hit_count = hitCount;
+              }
+            }
+          })
+        },
+        readNextValue(hits, areaInfo) {
+          if (areaInfo.hitval == 1) {
+            let info = {
+              id: areaInfo.id,
+              label: areaInfo.label,
+              level: areaInfo.level,
+              name: areaInfo.label
+            };
+            hits.push(info);
+            return;//子项就不要采集了
+          }
+          if (areaInfo.children) {
+            if (areaInfo.children.length > 0) {
+              for (let aa of areaInfo.children) {
+                this.readNextValue(hits, aa);
+              }
+            }
+          }
+        },
+        boxChange(boxItem) {
+          // console.log('box选择了', boxItem);
+          var tap_id = boxItem.id;
+          //这里有问题，因为嵌套了，不是一级数据，所以要做一个... map
+          let item = this.areaMap.get(tap_id);
+          if (!item) {
+            // console.log('没有找到', tap_id);
+            return;
+          }
+          if (item.hitval === 0) {
+            item.hitval = 1;
+            if (item.children) {
+              item.hit_count = item.children.length;
+            }
+          } else if (item.hitval === 1) {
+            item.hitval = 0;
+            item.hit_count = 0;
+          } else {
+            //半选状态
+            item.hitval = 1;
+            if (item.children) {
+              item.hit_count = item.children.length;
+            }
+          }
+          if (item.hitval == 0) {
+            if (item.children && item.children.length > 0) {
+              for (let aa of item.children) {
+                this.nextUnChecked(aa);
+              }
+            }
+          } else if (item.hitval == 1) {
+            if (item.children && item.children.length > 0) {
+              for (let aa of item.children) {
+                this.nextChecked(aa);
+              }
+            }
+          }
+
+          if (boxItem.parent_id > 0) {
+            var parent = this.areaMap.get(boxItem.parent_id);
+            if (parent) {
+              if (item.hitval == 1) {
+                //之前是没选中，现在是选中
+                parent.hit_count++;
+              } else if (item.hitval == 0) {
+                parent.hit_count--;
+              }
+              this.updateParentStatus(parent, item.hitval);
+            }
+          }
+
+
+          //为上级设置，选中，或者不勾选，或者半选状态 ... .. .
+          //获取项 向上，还要读取平局的数据... .. .
+
+        },
+        updateParentStatus(item, hitval) {
+          //更新父级得状态
+          // if(item.parent_id>0){
+          //父级的情况，如果当前是半选，父级要判断选中状态
+          if (item.children && item.children.length > 0) {
+            if (item.hit_count == 0) {
+              // if(item.hitval==2){
+              // item.hitval=0;
+              // return;
+              //被子集影响，子集半选了
+              if (hitval == 2 || hitval == 1) {
+                item.hitval = 2;
+              } else {
+                item.hitval = 0;
+              }
+              // }
+            } else {
+              if (item.hit_count == item.children.length) {
+                if (item.hitval != 1) {
+                  item.hitval = 1;
+                  // return;
+                }
+              }
+              if (item.hit_count < item.children.length) {
+                if (item.hitval != 2) {
+                  item.hitval = 2;
+                  // return;
+                }
+              }
+            }
+          }
+          //再上一级是否变更？
+          if (item.parent_id > 0) {
+            var parent = this.areaMap.get(item.parent_id);
+            if (parent) {
+              this.updateParentStatus(parent, item.hitval);
+            }
+          }
+          // }
+        },
+        nextUnChecked(item) {
+          if (item.hitval != 0) {
+            item.hitval = 0;
+          }
+          if (item.children && item.children.length > 0) {
+            for (let aa of item.children) {
+              this.nextUnChecked(aa);
+            }
+          }
+        },
+        nextChecked(item) {
+          if (item.hitval != 1) {
+            item.hitval = 1;
+          }
+          if (item.children && item.children.length > 0) {
+            for (let aa of item.children) {
+              this.nextChecked(aa);
+            }
+          }
+        },
+        handlerFixDefaultSelect(item) {
+
+          //和当前本地数据结合，看看是否要变更选中状态
+          if (this.cacheMap.has(item.id)) {
+            let mapVal = this.cacheMap.get(item.id);
+            item.hitval = mapVal;
+            if (mapVal == 1) {
+              this.cacheMap.delete(item.id);
+              return;
+            }
+          }
+          if (item.level > 1) {
+            switch (item.level) {
+              case 2: {
+                let p1 = this.buildParentId(item.id, 1);
+                let p1val = this.cacheMap.get(p1);
+                if (p1val && p1val == 1) {
+                  item.hitval = 1;
+                  this.cacheMap.delete(item.id);
+                }
+              }
+                break;
+              case 3: {
+                let p1 = this.buildParentId(item.id, 1);
+                let p1val = this.cacheMap.get(p1);
+                if (p1val && p1val == 1) {
+                  item.hitval = 1;
+                  this.cacheMap.delete(p1);
+                  return;
+                }
+                let p2 = this.buildParentId(item.id, 2);
+                let p2val = this.cacheMap.get(p2);
+                if (p2val && p2val == 1) {
+                  item.hitval = 1;
+                  this.cacheMap.delete(p2);
+                  return;
+                }
+              }
+                break;
+            }
+          }
+        },
+        buildParentId(id, level) {
+          //当前id 获取哪一层的id
+          let idstr = id.toString();
+          if (level == 1) {
+            return Number(`${idstr.substring(0, 2)}0000000`);
+          }
+          if (level == 2) {
+            return Number(`${idstr.substring(0, 4)}00000`);
+          }
+          if (level == 3) {
+            return Number(`${idstr.substring(0, 6)}000`);
+          }
+          return id;
+        },
+        handlerReadLevel(id){
+          //基于id推测出层级 35 04 23 000
+          let idstr = id.toString();
+          if(idstr.length>=9){
+            if(parseInt(idstr.substring(4,6))>0){
+              return 3;
+            }
+            if(parseInt(idstr.substring(2,4))>0){
+              return 2;
+            }
+            if(parseInt(idstr.substring(0,2))>0){
+              return 1;
+            }
+          }
+          return 3;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+{
+  "readme": "!add表示非add的时候，比如update,detail,list的时候 有些地方也可以使用all/*表示所有",
+  "version": "1.0.0",
+  "guid_auto": true, //是否使用有序guid,主要是在EF中调用b.Property(x => x.Id).HasValueGenerator<SequentialGuidValueGenerator>().ValueGeneratedOnAdd();
+  "create_appservice": true, //是否创建对应的AppService,因为你可能使用DefaultAppService替代
+  "build_desc": true, //是否基于XML的注释，生成对应的Description特性
+  "use_query": false,
+  "use_extend": true,
+  "use_automapper": false, //后面转Mapster了，所以不用生成CreateMap<xxx,yyy>();
+  "ignore": { //忽略哪些字段
+    "all": {
+      "add": [ "CreateDate", "AdminUid", "CreateUid" ],
+      "update": [ "UpdateDate", "CreateDate" ],
+      "detail": [ "UpdateDate" ],
+      "list": [ "Body", "Content", "Context" ]
+    },
+    "other": {
+      "UserInfo:add": [ "DelColumn" ] //表示表示这个表的这个add模式下，删除这个字段DelColumn 
+    }
+  },
+  "fields": {
+    "*:!add:UserId": { //表示在adddto中，如果当前class有字段user_id，则添加如下字段(ExtendUser)
+      "PropertyDisplayStr": "用户 表示管理者", //字段说明，如果有空格用_*_替代
+      "PropertyType": "UserShort", //数据类型
+      "Name": "ExtendUser" //字段名
+    },
+    "*:!add:GradeId": {
+      "PropertyDisplayStr": "角色 表示权限的一个分组",
+      "PropertyType": "GradeShort",
+      "Name": "ExtendGrade"
+    },
+    "*:!add:RoleId": {
+      "PropertyDisplayStr": "权限 表示接口的权限",
+      "PropertyType": "RoleShort",
+      "Name": "ExtendRole"
+    }
+  },
+  "attribute": {
+    "ignore": [ "Comment", "Display", "Decription", "Index", "DefaultValue", "Column", "NotMapped" ], //表示忽略哪些来自Domain的特性
+    "all": {
+      "*:!list:UserId": "[PasteOuter(\"userInfo\",\"extendUser\",\"id\",\"userName\")]", //表示这个字段UserId需要添加这个特性多个之间用::隔开 示例：[PasteLeft]::[PasteHidden]
+      "*:all:UserId": "[PasteShort(\"UserInfo\",\"ExtendUser\",\"ToUserShort()\",\"ToQueryUserShort()\")]", //表示这个字段UserId需要添加这个特性多个之间用::隔开 示例：[PasteLeft]::[PasteHidden]
+      "*:!add:ExtendUser": "[PasteDisplay]",
+      "*:list:UserId": "[PasteHidden]",
+
+      "*:!list:RoleId": "[PasteOuter(\"roleInfo\",\"extendRole\",\"id\",\"name\")]",
+      "*:*:RoleId": "[PasteShort(\"RoleInfo\",\"ExtendRole\",\"ToRoleShort()\",\"ToQueryRoleShort()\")]",
+      "*:!add:ExtendRole": "[PasteDisplay]",
+      "*:list:RoleId": "[PasteHidden]",
+
+      "*:!list:GradeId": "[PasteOuter(\"gradeInfo\",\"extendGrade\",\"id\",\"name\")]",
+      "*:*:GradeId": "[PasteShort(\"GradeInfo\",\"ExtendGrade\",\"ToGradeShort()\",\"ToQueryGradeShort()\")]",
+      "*:!add:ExtendGrade": "[PasteDisplay]",
+      "*:list:GradeId": "[PasteHidden]"
+
+    },
+    "other": {
+      "UserInfo:list:userName": "[PasteClass]", //表名称 示例：[PasteClass]::[PasteHidden]
+      "*:add:mark": "[PasteClass]" //新版本支持
+    }
+  }
+}

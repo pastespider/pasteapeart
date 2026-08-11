@@ -1,0 +1,387 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <!-- <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" /> -->
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/blue/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" /> -->
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="./index.css" />
+    <title>PasteApeart管理端</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+</head>
+
+<body>
+    <header class="navbar-wrapper">
+        <div class="header_new_box">
+            <div class="menu_home">
+                <div class="logo_area">
+                    <img src="./lib/images/logo.png">
+                    <div style="display: flex;flex-direction: column;">
+                        <span class="sname">PasteApeart框架-敏捷开发天花板</span>
+                        <span class="idesc" style="font-size: 12px;color:#888;padding-left:10px;">All In Dto And
+                            Hander</span>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-top">
+
+                <!-- <a href="javascript:autoaside(this);" class="aside_switch"><i
+                    class="Hui-iconfont Hui-iconfont-gotop"></i></a> -->
+
+                <span style="flex:1;"></span>
+                <!-- <span class="notice">通知</span> -->
+                <ul class="notice">
+                    <!-- 动态渲染通知项（noRead > 0） -->
+                </ul>
+                <img class="head_img" src="./lib/images/head.png" alt="" srcset="">
+                <a href="#" class="dropDown_A username">未登录<i class="Hui-iconfont">&#xe6d5;</i></a>
+
+                <a href="javascript:;" class="a_logout" onclick="loginOut();">退出</i></a>
+            </div>
+        </div>
+
+
+    </header>
+    <div class="platbody">
+        <div class="platleft">
+            <aside class="Hui-aside">
+
+                <div class="menu_dropdown bk_2">
+
+                </div>
+            </aside>
+
+        </div>
+
+        <script type="text/html" id="templatemenu">
+            <% list.forEach(item=>{ %>
+                <% if(item.fatherId == 0){ %>
+                    <%:=tpa({list:list,item:item,tpa:tpa})%>
+                <% } %>
+            <% }) %>
+        </script>
+        <!-- <i class="Hui-iconfont <% if(iione.icon){ %><%:=iione.icon%><% } %>"></i> -->
+        <script type="text/html" id="template_item">
+            <dl>
+                <dt class="<%:=item.selected%> <% if(item.noRead){ %>mhasnew<% } %>">
+                    <i class="Hui-iconfont <%if(item.icon){%><%:=item.icon%><%}%>"></i><%:=item.name%>
+                    <!-- <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i> -->
+                     <img style="width: 10px;" class="menu_dropdown-arrow" src="./lib/images/top.png" alt="" srcset="">
+                    
+                </dt>
+                <dd style=<%:n=item.display %>>
+                    <ul>
+                        <% list.forEach(iione=>{ %>
+                            <% if(iione.fatherId == item.id){ %>
+
+                                <% if(iione.path){ %>
+                                    <li class="imenu ml<%:=iione.level%> <% if(iione.readCode){ %><%:=iione.readCode%><% } %> <% if(iione.noRead){ %>hasnew<% } %>">
+                                        <a data-href="<%:=iione.path%>" data-title="<%:=iione.name%>"
+                                            href="javascript:;">
+                                            <i class="Hui-iconfont <% if(iione.icon){ %><%:=iione.icon%><% } %>"></i>
+                                            <%:=iione.name%>
+                                        </a>
+                                    </li>
+                                <%}else{%>
+
+                                    <!-- ----------- -->
+                                    <%:=tpa({list:list,item:iione,tpa:tpa})%>
+                                    <!-- =========== -->
+                                     
+                                <%}%>
+                            <% } %>
+                        <% }) %>
+                    </ul>
+                </dd>
+            </dl>
+        </script>
+
+        <div class="platright">
+            <div class="hide_btn" onclick="autoaside(this)"> <img src="./lib/images/hide.png" alt="" srcset=""> </div>
+
+
+            <!-- <div class="dislpayArrow hidden-xs"><a class="pngfix" href="javascript:void(0);"
+                    onClick="displaynavbar(this)"></a>
+            </div> -->
+            <section class="Hui-article-box">
+                <div id="Hui-tabNav" class="Hui-tabNav hidden-xs">
+                    <div class="Hui-tabNav-wp">
+                        <ul id="min_title_list" class="acrossTab cl">
+                            <li class="active">
+                                <!-- <span title="工作平台" data-href="welcome.html">工作平台</span> -->
+                                <span title="工作平台" data-href="welcome.html">工作平台</span>
+                                <!-- <i class="Hui-iconfont">&#xe6a6;</i> -->
+                                <em></em>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="Hui-tabNav-more btn-group">
+                        <a id="js-tabNav-prev" class="btn radius btn-default size-S" href="javascript:;"><i
+                                class="Hui-iconfont">&#xe6d4;</i></a>
+                        <a id="js-tabNav-next" class="btn radius btn-default size-S" href="javascript:;"><i
+                                class="Hui-iconfont">&#xe6d7;</i></a>
+                    </div>
+                </div>
+                <div id="iframe_box" class="Hui-article">
+                    <div class="show_iframe">
+                        <div style="display:none" class="loading"></div>
+                        <iframe id="iframe-welcome" name="child" data-scrolltop="0" scrolling="yes" frameborder="0"
+                            src="welcome.html"></iframe>
+                    </div>
+                </div>
+            </section>
+
+            <div class="contextMenu" id="Huiadminmenu">
+                <ul>
+                    <li id="closethis">关闭当前 </li>
+                    <li id="closeother">关闭其他 </li>
+                    <li id="closeall">关闭全部 </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="./lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="./lib/layer/3.1.1/layer.js"></script>
+    <script type="text/javascript" src="./lib/api.js"></script>
+    <script type="text/javascript" src="./lib/template.js"></script>
+    <script type="text/javascript" src="./pasteform/form.js"></script>
+    <!-- <script type="text/javascript" src="./lib/dateQuickSelect.js"></script> -->
+    <script type="text/javascript">
+        $(window).ready(function () {
+            _apiget("/api/app/User/ReadInfo", true, function (code, obj) {
+                if (code == 200) {
+                    if (obj.hasOwnProperty('userName')) {
+                        $(".username").html(obj.userName);
+                    } else if (obj.hasOwnProperty('name')) {
+                        $(".username").html(obj.name);
+                    }
+                    if (obj.head) {
+                        $(".head_img").attr("src", obj.head);
+                    }
+                    localStorage.setItem("userInfo", JSON.stringify(obj));
+                    if (obj.currentSubject) {
+                        $('#currentSubject').text(obj.currentSubject.name);
+                    }
+                    _apiget('/api/app/roleInfo/menus', true, (c, o) => {
+                        if (c == 200) {
+                            if (o && o.length > 0) {
+                                var list = [];
+                                var str = ``
+                                // var first = false;
+                                for (var k = 0; k < o.length; k++) {
+                                    var item = o[k];
+                                    // if (item.fatherId == 0) {
+                                    if (item.isExpend == undefined) {
+                                        item.isExpend = true;
+                                    }
+                                    if (item.isExpend) {
+                                        item.selected = "selected";
+                                        item.display = "display:block;";
+                                        // first = true;
+                                    } else {
+                                        item.selected = "";
+                                        item.display = "display:none;";
+                                    }
+                                    if (item.readCode) {
+                                        list.push(item)
+                                    }
+                                    // }
+                                }
+                                // console.log(list);
+
+                                // ★★★ 动态渲染通知项（noRead > 0）★★★
+                                var noticeHtml = '';
+                                for (var ni = 0; ni < list.length; ni++) {
+                                    var noticeItem = list[ni];
+                                    if (noticeItem.noRead > 0) {
+                                        noticeHtml += '<li class="notice_item" data-path="' + noticeItem.path + '" data-name="' + noticeItem.name + '">';
+                                        noticeHtml += '    <i class="Hui-iconfont">&#xe62f;</i>';
+                                        noticeHtml += '    <span class="notice_msg"></span>';
+                                        noticeHtml += '    <span class="notice_title">' + noticeItem.name + '</span>';
+                                        noticeHtml += '</li>';
+                                    }
+                                }
+                                $(".notice").html(noticeHtml);
+
+                            }
+
+                            var _tep_item = template($("#template_item").html());
+
+                            var _templatae = $("#templatemenu").html();
+                            var _athml = template(_templatae, { list: o, tpa: _tep_item });
+
+                            $(".menu_dropdown").html(_athml);
+
+                            if (true) {
+                                var script = document.createElement('script');
+                                script.src = "static/h-ui.admin/js/H-ui.admin.js?go=002";
+                                document.body.appendChild(script);
+                            }
+                            if (true) {
+                                var script = document.createElement('script');
+                                script.src = "lib/jquery.contextmenu/jquery.contextmenu.r2.js";
+                                document.body.appendChild(script);
+                            }
+
+                            $(".imenu").on('click', function () {
+                                if ($(this).hasClass('hasnew')) {
+                                    $(this).removeClass('hasnew');
+                                    var noCount = $(this).closest("dd").find(".hasnew").length;
+                                    if (noCount == 0) {
+                                        $(this).closest("dt").removeClass('mhasnew');
+                                    }
+                                }
+                            });
+
+                            setTimeout(function () {
+                                // 移除原有的事件（使用命名空间）
+                                $(document).off('click', '#min_title_list li');
+
+                                // 添加新的事件处理函数
+                                $(document).on('click', '#min_title_list li', function () {
+                                    var bStopIndex = $(this).index();
+                                    var iframe_box = $("#iframe_box");
+                                    $("#min_title_list li").removeClass("active").eq(bStopIndex).addClass("active");
+                                    iframe_box.find(".show_iframe").hide().eq(bStopIndex).show();
+
+                                    // ★★★ 同步左侧菜单高亮 ★★★
+                                    var currentHref = $(this).find('span').attr('data-href');
+                                    if (currentHref) {
+                                        // 移除所有菜单项的 current 类
+                                        $(".Hui-aside").find(".menu_dropdown dl dd ul li").removeClass("current");
+
+                                        // 找到对应的菜单项并添加 current 类
+                                        var $matchedMenu = $(".Hui-aside").find('.menu_dropdown a[data-href="' + currentHref + '"]');
+                                        if ($matchedMenu.length > 0) {
+                                            $matchedMenu.parent().addClass("current");
+
+                                            // ★★★ 展开父级菜单（如果是折叠状态）★★★
+                                            var $parentDl = $matchedMenu.closest('dl');
+                                            var $parentDt = $parentDl.find('dt');
+                                            var $parentDd = $parentDl.find('dd');
+
+                                            // 如果父级菜单是折叠状态，展开它
+                                            if (!$parentDt.hasClass('selected')) {
+                                                $parentDt.addClass('selected');
+                                                $parentDd.css('display', 'block');
+                                            }
+                                        }
+                                    }
+                                });
+                            }, 500);
+
+                        }
+                    })
+                } else {
+                    layer.msg(obj.message, { time: 1500 }, () => {
+                        location.replace('./login/index.html');
+                    });
+                }
+            })
+
+
+            // ★★★ 通知项点击事件（事件委托）★★★
+            $(".notice").on("click", ".notice_item", function () {
+                $(this).find(".notice_msg").hide();
+                var path = $(this).attr('data-path');
+                var name = $(this).attr('data-name');
+                if (path && name) {
+                    AutoIFrame(path, name);
+                }
+            })
+        });
+
+        //自动打开或者刷新某一对应的页面
+        function AutoIFrame(href, title) {
+            var bStop = false,
+                bStopIndex = 0,
+                topWindow = $(window.parent.document),
+                show_navLi = $("#min_title_list li"),
+                iframe_box = topWindow.find("#iframe_box");
+            //console.log(topWindow);
+            if (!href || href == "") {
+                alert("data-href不存在，v2.5版本之前用_href属性，升级后请改为data-href属性");
+                return false;
+            } if (!title) {
+                alert("v2.5版本之后使用data-title属性");
+                return false;
+            }
+            if (title == "") {
+                alert("data-title属性不能为空");
+                return false;
+            }
+            show_navLi.each(function () {
+                if ($(this).find('span').attr("data-href") == href) {
+                    bStop = true;
+                    bStopIndex = show_navLi.index($(this));
+                    return false;
+                }
+            });
+            if (!bStop) {
+                creatIframe(href, title);
+                min_titleList();
+            }
+            else {
+                show_navLi.removeClass("active").eq(bStopIndex).addClass("active");
+                iframe_box.find(".show_iframe").hide().eq(bStopIndex).show().find("iframe").attr("src", href);
+            }
+        }
+
+        //推出登陆，这里最好要通知下后台，后台做一些必要的措施
+        async function loginOut() {
+            saveToken('');
+
+            await apipostPromise('/api/app/User/LoginOut', '');
+
+            location.replace("./login/index.html");
+        }
+
+        /**
+         * 接收object的回传
+         **/
+        function handlerReadOpenValue(obj, path) {
+            console.log(location.href, path, obj);
+        }
+
+        /**
+         * 打开关闭左侧的菜单
+         **/
+        function autoaside(elc) {
+            if ($(".platleft").is(":visible")) {
+                $(".hide_btn img").attr('src', './lib/images/show.png');
+                $(".platleft").css("transform", "translateX(-100%)")
+            } else {
+                $(".hide_btn img").attr('src', './lib/images/hide.png');
+                $(".platleft").css("transform", "translateX(0)")
+
+            }
+            $(".platleft").slideToggle(150);//显示或者隐藏切换
+        }
+
+    </script>
+
+</body>
+
+</html>

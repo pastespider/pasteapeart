@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <!-- 启用确定性编译（关键） -->
+	  <Deterministic>true</Deterministic>
+	  <!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	  <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>PasteApeart.Application.Contracts</RootNamespace>
+	    <DocumentationFile>..\PasteApeart.HttpApi.Host\PasteApeart.Application.Contracts.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PasteApeart.Domain\PasteApeart.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

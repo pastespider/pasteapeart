@@ -1,0 +1,36 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>ExampleApeart.Application</Name>
+    <Description>&lt;没有可用的说明&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>ExampleApeart.Application</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.Application.csproj" File="ExampleApeart.Application.csproj" ReplaceParameters="true">
+      <Folder Name="usermodels" TargetFolderName="usermodels">
+        <ProjectItem ReplaceParameters="true" TargetFileName="GradeInfoAppService.cs">GradeInfoAppService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="GradeRoleAppService.cs">GradeRoleAppService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="RoleInfoAppService.cs">RoleInfoAppService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SingleAppService.cs">SingleAppService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UserGradeAppService.cs">UserGradeAppService.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UserInfoAppService.cs">UserInfoAppService.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="DefaultApiAppService.cs">DefaultApiAppService.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$ApplicationAutoMapperProfile.cs">ExampleApeartApplicationAutoMapperProfile.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$ApplicationModule.cs">ExampleApeartApplicationModule.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$AppService.cs">ExampleApeartAppService.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PasteRoleAttribute.cs">PasteRoleAttribute.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PasteThrowExceptionAttribute.cs">PasteThrowExceptionAttribute.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PasteTransactionFilter.cs">PasteTransactionFilter.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,1937 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="../../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="../../static/h-ui.admin/css/style.css" />
+
+    <link rel="stylesheet" href="./index.css" />
+    <!-- <script src="/manage/lib/vue/vue.js"></script> -->
+    <script type="text/javascript" src="../../lib/vue/vue.js"></script>
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../../lib/vue/element-ui.css">
+    <!-- 引入组件库 -->
+    <script type="text/javascript" src="../../lib/vue/element_index.js"></script>
+    <!-- <script src="/manage/lib/vue/element_index.js"></script> -->
+    <!-- <script src="/manage/lib/vue/index.min.js"></script> -->
+    <script type="text/javascript" src="../../lib/vue/index.min.js"></script>
+    <!-- <script src="/manage/lib/vue/Sortable.min.js"></script> -->
+    <script type="text/javascript" src="../../lib/vue/Sortable.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script> -->
+    <script type="text/javascript" src="../../lib/vue/umd.min.js"></script>
+    <title>sku</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .el-tabs__item {
+            font-size: 16px !important;
+        }
+        .el-table .cell {
+            padding-left: 3px !important;
+            padding-right: 3px !important;
+        }
+        .el-input__inner {
+            padding: 0 5px;
+        }
+        .sku_tab{
+            width:100%;
+            background-color: #f2f2f2;
+            border-collapse: separate;
+            border-spacing: 1px;
+        }
+        .sku_tab thead td{
+            text-align: center;
+            font-weight: bold;
+        }
+        .sku_tab td{
+            background-color: #fff;
+            padding-left:8px;
+            box-sizing: border-box;
+        }
+        .sku_tab img{
+            width:80px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        
+
+        .sku_tab input[type=text],.sku_tab [type=number]{
+            outline: none;
+            border:1px solid #999;
+            border-radius: 4px;
+            padding:4px;
+            min-width: 80px;
+            text-align: center;
+        }
+        .sku_tab [type=number]{
+                line-height: 1.6;
+                width:80px;
+        }
+        .sku_tab input[type=file]{
+            display:none;
+        }
+        .image-preview{
+            position:relative;
+        }
+        .delete-btn{
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+        .delete-btn i:hover{
+            color:crimson;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div id="app" v-cloak>
+
+
+        <div class="addgoods scroll-content" :style="
+        'overflow-x: hidden; overflow-y: auto;height:' + contentStyleObj.height
+      ">
+
+            <div class="item_box">
+                <!-- <div class="addgoods_title scroll-item" >规格/货品设定</div> -->
+                <el-form ref="formsku" :rules="rules">
+                    <el-form-item label="" prop="privateSpecName">
+                        <!-- <template #label>
+                            商品规格：
+                            <a class="atips" onclick="_TapInfoClick(this)" datacode="pro-sku" href="javascript:;">?</a>
+                        </template> -->
+                        <template v-if="privateGoodsItem.length > 0">
+                            <div class="sku_bor_box">
+                                <el-form label-width="80px" v-for="(item, index) in privateGoodsItem">
+                                    <div class="label_tiile padd_5">
+                                        <!-- <div class="item_flex" v-if="index == 0">
+                                            <el-form-item label="规格名：">
+                                                <el-select v-model="item.privateSpecName" clearable="true" placeholder="请选择" @change="chooseSpecName">
+                                                    <el-option
+                                                        v-for="item in skuOptionList"
+                                                        :key="item.name"
+                                                        :value="item.name">
+                                                    </el-option>
+                                                </el-select>    
+                                            </el-form-item>
+                                            <el-tooltip class="item" effect="dark" content="请选择规格名,如 颜色、尺码、型号、款式、口味等"
+                                                placement="top">
+                                                <i class="el-icon-question ques_icon"></i>
+                                            </el-tooltip>
+                                            <el-tooltip class="item" effect="dark" content="勾选后上传图片会对原有的图片进行覆盖" placement="top">
+                                                <el-checkbox v-model="item.isAddSkuImg" @change="handleClickSkuImg($event, index)">添加图片</el-checkbox>
+                                            </el-tooltip>
+                                        </div> -->
+
+                                        <div class="item_flex">
+                                            <el-form-item label="规格名：">
+                                                <div style="display: flex;">
+                                                    <el-input v-model.trim="item.privateSpecName"
+                                                        placeholder="请输入规格名"></el-input>
+
+                                                    <el-select v-model="item.privateSpecName" clearable="true"
+                                                        placeholder="请选择" @change="chooseSpecName">
+                                                        <el-option v-for="item in skuOptionList" :key="item.name"
+                                                            :value="item.name">
+                                                        </el-option>
+                                                    </el-select>
+                                                </div>
+                                            </el-form-item>
+                                            <el-tooltip class="item" effect="dark" content="请输入规格名,如 颜色、尺码、型号、款式、口味等"
+                                                placement="top">
+                                                <i class="el-icon-question ques_icon"></i>
+                                            </el-tooltip>
+                                            <el-tooltip class="item" effect="dark" content="勾选后上传图片会对原有的图片进行覆盖"
+                                                placement="top">
+                                                <el-checkbox v-model="item.isAddSkuImg"
+                                                    @change="handleClickSkuImg($event, index)">添加图片</el-checkbox>
+                                            </el-tooltip>
+                                        </div>
+                                        <i class="el-icon-delete-solid ques_icon" v-if="index != 0"
+                                            @click="delsku(index)"></i>
+                                    </div>
+                                    <el-form-item label="规格值：" class="padd_5">
+                                        <div class="label_input">
+                                            <draggable handle=".canDrag" class="image_flex" v-model="item.desc"
+                                                group="people" @start="drag=true" @end="drag=false"
+                                                @update="updateList">
+                                                <div class="del_box" v-for="(list, lists) in item.desc">
+                                                    <el-input class="unDrag" v-model.trim="list.value"
+                                                        placeholder="请输入规格值"></el-input>
+                                                    <i class="el-icon-error error_del" v-if="lists != 0"
+                                                        @click="delskuitem(index, lists)"></i>
+                                                    <i class="el-icon-rank canDrag"></i>
+                                                    <div class="skuimg_box" v-if="list.skuimgurl">
+                                                        <el-image style="width: 80px; height: 80px"
+                                                            :src="list.skuimgurl" fit="fill"></el-image>
+                                                        <i class="el-icon-error error_del"
+                                                            @click="delskuHeadImg(index, lists)"></i>
+                                                    </div>
+                                                    <el-upload v-if="item.isAddSkuImg && !list.skuimgurl" action="#"
+                                                        multiple="true" list-type="picture-card"
+                                                        :on-change="(file, fileList) => {handleChangeSku(file, fileList, index, lists)}"
+                                                        :auto-upload="false">
+                                                        <i slot="default" class="el-icon-plus"></i>
+                                                    </el-upload>
+                                                </div>
+                                            </draggable>
+                                            <el-button type="text" size="small"
+                                                @click="addSkuItem(index)">+添加规格值</el-button>
+                                        </div>
+                                    </el-form-item>
+                                </el-form>
+                                <div>
+                                    <el-button plain size="small" @click="addSku">添加规格</el-button>
+                                    (注意：添加或者修改规格信息会变更下方的SKU信息和对应的优惠券配置，请谨慎操作！商品图片支持拖拽复制，规格值支持输入框右下角点击拖拽移动位置)
+                                </div>
+                            </div>
+                        </template>
+                        <span class="sku_tips">最多添加 5 个规格名，商品图片支持拖拽复制，规格值支持输入框右下角点击拖拽移动位置(填入规格名前请先上传商品首图
+                            version:2025.03.28)规格图片</span>
+
+                        <div class="stock_set" style="display: flex;justify-content: flex-start;">
+                            <el-input type="number" v-model.trim="stockNumSet" placeholder="批量库存"></el-input>
+                            <el-button type="text" size="small" @click="setStock">批量设置库存</el-button>
+                            <el-input type="number" v-model.trim="moneyNumSet" placeholder="批量价格"></el-input>
+                            <el-button type="text" size="small" @click="setMoney">批量设置原价</el-button>
+                        </div>
+
+                        <div class="otable">
+                            <table class="sku_tab">
+                                <thead>
+                                    <td>规格</td>
+                                    <td>售价</td>
+                                    <td>库存</td>
+                                    <td>图片</td>
+                                    <td>货号</td>
+                                </thead>
+                                <tbody>
+                                    <tr class="item" v-for="(item,index) in sku_ui_list" :key="item">
+                                        <td>{{item.desc}}</td>
+                                        <td><input type="number" step="0.01" v-model="item.sellPriceYuan" />元</td>
+                                        <td><input type="number" v-model="item.stock_num" /></td>
+                                        <td>
+                                            <image-upload 
+                                            :initial-image="item.thumb_img"
+                                            @image-change="handleImageChange(index, $event)"
+                                        ></image-upload>
+                                        </td>
+                                        <td><input type="text" v-model="item.sku_code" placeholder="商品码" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </el-form-item>
+                </el-form>
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../../lib/layer/3.1.1/layer.js"></script>
+    <script type="text/javascript" src="../../static/h-ui/js/H-ui.min.js"></script>
+    <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../../lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
+    <script type="text/javascript" src="../../static/h-ui.admin/js/H-ui.admin.js"></script>
+    <!--/_footer 作为公共模版分离出去-->
+    <!--请在下方写此页面业务相关的脚本-->
+    <!-- <script type="text/javascript" src="../../lib/My97DatePicker/4.8/WdatePicker.js"></script> -->
+
+
+    <script src="../../lib/api.js"></script>
+
+    <script>
+        var _isrunning = false;
+        Vue.use(window['vue-cropper'].default)
+
+        // 注册图片上传组件
+        Vue.component('image-upload', {
+            props: {
+                // 初始图片URL
+                initialImage: {
+                    type: String,
+                    default: null
+                }
+            },
+            template: `
+                <div class="image-upload-container">
+                    <div class="image-preview" @click="handleImageClick">
+                        <!-- 图片预览区域 -->
+                        <img 
+                            v-if="imageUrl" 
+                            :src="imageUrl" 
+                            alt="预览图" 
+                            class="preview-img"
+                        >
+                        
+                        <!-- 默认图标（无图片时显示） -->
+                        <div v-else class="default-icon">
+                            <i class="Hui-iconfont Hui-iconfont-add3"></i>
+                            <!-- <span class="upload-text">点击上传</span> -->
+                        </div>
+                        
+                        <!-- 删除按钮（有图片时显示） -->
+                        <button 
+                            v-if="imageUrl" 
+                            class="delete-btn" 
+                            @click.stop="handleDelete"
+                        >
+                            <i class="Hui-iconfont Hui-iconfont-close2"></i>
+                        </button>
+                        
+                        <!-- 文件上传输入框（隐藏） -->
+                        <input 
+                            type="file" 
+                            ref="fileInput" 
+                            accept="image/*" 
+                            @change="handleFileChange"
+                            class="file-input"
+                        >
+                    </div>
+                </div>
+            `,
+            data() {
+                return {
+                    imageUrl: this.initialImage // 存储图片的URL
+                }
+            },
+            watch: {
+                // 监听初始图片变化
+                initialImage(newVal) {
+                    this.imageUrl = newVal;
+                }
+            },
+            methods: {
+                // 点击图片区域触发文件选择
+                handleImageClick() {
+                    this.$refs.fileInput.click();
+                },
+                
+                // 处理文件选择
+                handleFileChange(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        this.previewImage(file);
+                        // 清空输入框值，以便可以重复选择同一文件
+                        e.target.value = '';
+                    }
+                },
+                
+                // 预览图片
+                previewImage(file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        // this.imageUrl = e.target.result;
+                        // 触发事件，通知父组件图片已更改
+                        // this.$emit('image-change', this.imageUrl, file);
+                        
+                        // 这里可以添加上传到服务器的逻辑
+                         this.uploadToServer(file);
+                    };
+                    reader.readAsDataURL(file);
+                },
+                
+                // 删除图片
+                handleDelete() {
+                    this.imageUrl = null;
+                    // 触发事件，通知父组件图片已删除
+                    this.$emit('image-change', null);
+                },
+                
+                // 上传到服务器的示例方法
+                uploadToServer(file) {
+                    // 实际项目中实现上传逻辑
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    
+                    // 示例：使用fetch上传
+                    /*
+                    fetch('/api/upload', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('上传成功', data);
+                        // 如果服务器返回了图片URL，可以更新imageUrl
+                        // this.imageUrl = data.imageUrl;
+                    })
+                    .catch(error => {
+                        console.error('上传失败', error);
+                        // 上传失败时清除预览
+                        this.imageUrl = this.initialImage;
+                    });
+                    */
+                    $.ajax({
+                        url: "/api/app/Upload/UpImage?type=sku&size=1500*0",
+                        type: 'post',
+                        contentType: false,
+                        processData: false,
+                        async: true,
+                        data: formData,
+                        headers: { "token": readToken() },
+                        success: (obj) => {
+                            this.imageUrl = obj.data[0].url;
+                            this.$emit('image-change', this.imageUrl, file);
+                        },
+                        error: (res) => {
+                            if (res.status == 413) {
+                                layer.msg('图片超过限制')
+                            }
+                            if (res.status == 401) {
+                                layer.msg('登录过期，请重新登录')
+                            }
+                            if (res.status == 403) {
+                                layer.msg('您没有此操作权限')
+                            }
+                            if (loadid != 0) {
+                                layer.close(loadid);
+                            }
+                        }
+                    });
+                    //图片上传
+                }
+            }
+        });
+
+
+        new Vue({
+            el: '#app',
+            data() {
+
+                var skulist = (rule, value, callback) => {
+                    for (const i of this.privateGoodsItem) {
+                        if (!i.privateSpecName || i.dynamicTags.length == 0) {
+                            return callback(new Error('请填入规格名并填入最少一个规格值'));
+                        } else {
+                            callback();
+                        }
+                    }
+                    for (const i of this.sku_ui_list) {
+                        if (i.sellPriceYuan == 0 || !i.sellPriceYuan) {
+                            return callback(new Error('请填入价格'));
+                        } else {
+                            callback();
+                        }
+                    }
+                };
+                return {
+                    id: 0,
+                    isAddSkuImg: false, //添加sku图片
+
+                    dialogImageUrl: '',
+                    dialogVisible: false,
+                    disabled: false,
+                    list: [
+                        { id: 0, name: '未选择，使用统一邮费' },
+                    ],
+                    myCroppa: {},
+                    option: {
+                        img: 'https://avatars2.githubusercontent.com/u/15681693?s=460&v=4',
+                        size: 1,
+                        full: false,
+                        outputType: 'png',
+                        canMove: true,
+                        fixedBox: false,
+                        original: false,
+                        canMoveBox: true,
+                        autoCrop: true,
+                        // 只有自动截图开启 宽度高度才生效
+                        autoCropWidth: 750,
+                        autoCropHeight: 340,
+                        centerBox: true,
+                        high: true,
+                        max: 99999
+                    },
+                    fixed: true,
+                    fixedNumber: [1, 1], //[4, 3]
+                    imgObj: {
+                        width: 500,
+                        height: 500
+                    },
+                    filename: '',
+                    fileList: [],
+                    examList: [],
+                    bannerList: [],
+                    headList: [],
+                    showImageList: [],
+                    showVideoList: [],
+                    limitMin: 0,
+                    limitTotal: 0,
+                    limitTimeMax: 0,
+                    drag: false,
+                    preview: {},
+                    tableColumnList: {
+                        tableHeaderList: [],
+                        tableBodyList: []
+                        // inventory: ''
+                    },
+                    sku_ui_list:[],
+                    privateGoodsItem: [
+                        {
+                            privateSpecName: '', //规格名
+                            dynamicTags: [], //规格值数组
+                            desc: [{
+                                value: '',
+                                vcode: this.getRandom(),
+                                skuimgurl: '',
+                            }],
+                            inputVisible: false,
+                            inputValue: '',
+                            vcode: this.getRandom(),
+                            isAddSkuImg: false
+                        }
+                    ],
+                    presaleform: {
+                        stock_type: 0,
+                        full_payment_presale_delivery_type: null,
+                        presale_begin_time: null,
+                        presale_end_time: null,
+                        presale_begin_time_show: null,
+                        presale_end_time_show: null,
+                        full_payment_presale_delivery_time: null,
+                    },
+                    starindex: 0, //复制图片起始位置
+                    moveIndex: 0, //复制图片移动中位置
+                    rules: {
+                        privateSpecName: [{ required: true, validator: skulist, trigger: 'blur' }]
+                    },
+                    cateList: [],
+
+                    compressFile: null,
+
+                    lastfinal: [], //上一次的规格内容数组
+
+
+                    skubody: [], //规格预览数组
+                    skuShow: false, //规格数组显示
+                    showView: true, //预览显示
+
+                    openAppList: [],
+                    stockNumSet: 10000,
+                    moneyNumSet: null,
+                    showForm: true, //表单弹出页还是长页
+
+
+
+                    contentStyleObj: {
+                        // height: '86vh',
+                    },
+
+
+                    repeatTag: '', //重复的sku规格值
+
+                    skuOptionList: [],
+                    cateid: 0,
+
+                    pickerOptions: {
+                        shortcuts: [{
+                            text: '今天',
+                            onClick(picker) {
+                                picker.$emit('pick', new Date());
+                            }
+                        }, {
+                            text: '昨天',
+                            onClick(picker) {
+                                const date = new Date();
+                                date.setTime(date.getTime() - 3600 * 1000 * 24);
+                                picker.$emit('pick', date);
+                            }
+                        }, {
+                            text: '一周前',
+                            onClick(picker) {
+                                const date = new Date();
+                                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                                picker.$emit('pick', date);
+                            }
+                        }]
+                    },
+                    showPresale: false,
+                    session_key: ''
+                }
+            },
+            watch: {
+                'option.img': {
+                    handler: function (val) {
+                        const that = this
+                        const img = new Image()
+                        img.src = val
+                        img.onload = function () {
+                            that.imgObj.width = this.width / 2
+                            that.imgObj.height = this.height / 2
+                        }
+                    },
+                    immediate: true
+                },
+                bannerList() {
+                    var imagelist = ['png', 'jpg', 'jpeg', 'bmp', 'gif']
+                    console.log(this.bannerList);
+                    this.showImageList = this.bannerList.filter(function (image) {
+                        // 使用some方法检查image是否包含imagelist中的某个后缀  
+                        return imagelist.some(function (extension) {
+                            // 使用endsWith方法检查image是否以某个后缀结尾  
+                            return image.url.endsWith(extension);
+                        });
+                    });
+
+                    // 使用filter方法筛选出不包含imagelist中后缀的字符串  
+                    this.showVideoList = this.bannerList.filter(function (image) {
+                        // 对匹配的取反即为不包含  
+                        return !imagelist.some(function (extension) {
+                            return image.url.endsWith(extension);
+                        });
+                    });
+                },
+                // 监听规格数据
+                calculateAttribute(newArray) {
+                    console.log(newArray, 'newval');
+                    console.log(this.sku_ui_list, '596this.sku_ui_list');
+
+                    // setTimeout(function(){
+
+                    // },300);
+                    var _findempty = false;
+                    newArray.forEach(newar => {
+                        if (newar.childer) {
+                            for (var ione of newar.childer) {
+                                if (ione.value.length == 0) {
+                                    _findempty = true;
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                    if (_findempty) {
+                        console.log("规格值有空值，不再继续执行！");
+                        return;
+                    }
+
+                    // if(_isrunning){
+                    //     return;
+                    // }
+                    _isrunning = true;
+                    // console.log('----------- begin check ------------');
+
+                    let tableObj = {
+                        tableBodyList: [],
+                        tableHeaderList: []
+                    }
+                    // 表头
+                    let skuTableArr = JSON.parse(JSON.stringify(newArray))
+                    tableObj.tableHeaderList = skuTableArr.map((item) => {
+                        return {
+                            prop: item.name,
+                            propName: item.name
+                        }
+                    })
+                    // console.log(tableObj.tableHeaderList, 'tableObj.tableHeaderList');
+                    this.tableColumnList.tableHeaderList = tableObj.tableHeaderList // 表头
+
+                    let cloneNewVal = JSON.parse(JSON.stringify(newArray))
+                    let attrName = [] //规格名数组
+                    let attrValue = [] //规格值数组
+
+                    let allvalarray = [];//所有的规格值的vcode的数组，综合在一起
+
+                    for (let i of cloneNewVal) {
+                        console.log(cloneNewVal, 'key');
+                        attrName.push(i.name)
+                        let attrArr = []
+                        i.childer.forEach((vals) => {
+                            attrArr.push(vals.vcode)
+                            if (allvalarray.indexOf(vals.vcode) == -1) {
+                                allvalarray.push(vals.vcode);
+                            }
+                        })
+                        attrValue.push(attrArr)
+                    }
+                    console.log(attrValue, 'attrValue');
+                    // console.log(this.privateGoodsItem.length, Object.keys(newVal).length);
+                    // 表格内容数据（笛卡尔积算法）
+                    let finalArr = this.cartesianProductOf(...attrValue)
+                    console.log(finalArr, 'finalArr');
+                    // vcode
+                    //[
+                    //{'1231234','123123'}
+                    //]
+                    var _vcode_map = new Map();// string:{name value vcode ncode}
+                    newArray.forEach(newar => {
+                        if (newar.childer) {
+                            newar.childer.forEach(ione => {
+                                _vcode_map.set(ione.vcode, { name: newar.name, value: ione.value, vcode: ione.vcode, ncode: newar.ncode, skuimgurl: ione.skuimgurl });
+                            });
+                        }
+                    });
+                    // console.log(_vcode_map);
+
+                    //    var _obj = {
+                    // skus:this.sku_ui_list
+                    //    };
+                    var oldvalcodes = [];//现有的skus中的所有的vcode的集合
+                    if (this.sku_ui_list) {
+                        this.sku_ui_list.forEach(sku => {
+                            if (sku.skuArray && sku.skuArray.length > 0) {
+                                sku.skuArray.forEach(isku => {
+                                    if (oldvalcodes.indexOf(isku.vcode) == -1) {
+                                        oldvalcodes.push(isku.vcode);
+
+                                    }
+                                    let getskuimgurl = _vcode_map.get(isku.vcode)
+                                    if (getskuimgurl && getskuimgurl.skuimgurl) {
+                                        if(!sku.thumb_img){
+                                        sku.thumb_img = getskuimgurl.skuimgurl;
+                                        //什么情况下不覆盖呢... .. .
+                                        }
+                                    }
+                                })
+                            }
+                        });
+                    }
+
+                    var _del_array = this.matharrayadd(oldvalcodes, allvalarray);
+                    if (_del_array && _del_array.length > 0) {
+                        console.log('del sku values ', _del_array);
+                    }
+
+                    var _add_array = this.matharrayadd(allvalarray, oldvalcodes);
+                    if (_add_array && _add_array.length > 0) {
+                        console.log("new sku vcodes ", _add_array);
+                    }
+                    //执行补足 或者删除 
+                    console.log(this.sku_ui_list, '710this.sku_ui_list');
+                    console.log(this.privateGoodsItem, '710privateGoodsItem');
+                    for (var iarr of finalArr) {
+                        this.complatearray(_vcode_map, iarr, this.sku_ui_list, _del_array, _add_array);
+                    }
+                    let testlist = JSON.parse(JSON.stringify(this.sku_ui_list))
+                    console.log(testlist, 'this.sku_ui_list');
+                    //执行新增处理 如果sku中没有这个组合，则新增
+                    finalArr.forEach(iarr => {
+                        // console.log("准备检查是否存在，如果不存在则新增！",iarr);
+                        this.complatetoadd(_vcode_map, iarr, this.sku_ui_list);
+                    });
+
+                    //重新生成sku.desc的文本内容
+                    this.sku_ui_list.forEach(sku => {
+                        // console.log("update desc text",sku);
+                        if (sku.skuArray && sku.skuArray.length > 0) {
+                            var _sku_name_array = [];
+                            sku.skuArray.forEach((_sku) => {
+                                _sku_name_array.push(_sku.value);
+                            });
+                            sku.desc = _sku_name_array.join(' ');
+                        } else {
+                            sku.desc = "";
+                        }
+
+                    });
+
+                    window.tableColumnList = this.tableColumnList;
+                    this.$forceUpdate();
+                    _isrunning = false;
+                    console.log('----------- end check ------------');
+                    this.sku_ui_list =[...this.sku_ui_list];
+                    return;
+                }
+            },
+            computed: {
+                // 计算规格
+                calculateAttribute() {
+
+                    // 初始化
+                    let obj = []
+                    for (const i of this.privateGoodsItem) {
+                        i.dynamicTags = []
+                        for (let j of i.desc) {
+                            if (j.value) {
+                                i.dynamicTags.push(this.handleReplaceStr(j.value))
+                                j.value = this.handleReplaceStr(j.value)
+                            }
+
+                        }
+                        if (!i.vcode) i.vcode = this.getRandom()
+
+                    }
+                    // ----------------------------------
+                    this.privateGoodsItem.forEach((item) => {
+                        // 判断有没有输入规格名
+                        // 规格值括号[]转换
+                        item.dynamicTags = this.handleReplaceStr(item.dynamicTags)
+                        if (item.privateSpecName) {
+                            //规格名:规格值     //'颜色':'尺寸'
+                            item.privateSpecName = this.handleReplaceStr(item.privateSpecName)
+                            let arr = {}
+                            arr.name = item.privateSpecName
+                            arr.childer = item.desc
+                            arr.ncode = item.vcode
+                            // obj[item.privateSpecName] = item.dynamicTags
+                            // obj[item.privateSpecName] = item.desc
+                            obj.push(arr)
+                            arr = []
+                        }
+                        // console.log(item, 'item');
+                    })
+                    console.log(obj, this.privateGoodsItem, 'obj');
+                    window.privateGoodsItem = this.privateGoodsItem;
+                    return obj
+                },
+                bannerList() {
+                    var imagelist = ['png', 'jpg', 'jpeg', 'bmp', 'gif']
+                    this.showImageList = this.bannerList.filter(function (image) {
+                        // 使用some方法检查image是否包含imagelist中的某个后缀  
+                        return imagelist.some(function (extension) {
+                            // 使用endsWith方法检查image是否以某个后缀结尾  
+                            return image.endsWith(extension);
+                        });
+                    });
+
+                    // 使用filter方法筛选出不包含imagelist中后缀的字符串  
+                    this.showVideoList = this.bannerList.filter(function (image) {
+                        // 对匹配的取反即为不包含  
+                        return !imagelist.some(function (extension) {
+                            return image.endsWith(extension);
+                        });
+                    });
+                }
+            },
+            created() {
+                document.ondragover = function (e) { e.preventDefault(); };
+            },
+            mounted() {
+                var timer = setInterval(() => {
+                    if ($(".computedspan")) {
+                        $(".computedspan").remove();
+                        clearInterval(timer)
+                        // console.log(1232);
+                    }
+
+                }, 1000);
+                this.id = _apigetquery("id");
+                this.cateid = _apigetquery("cate_id");
+                this.session_key = _apigetquery("session_key");
+                if (this.id > 0) {
+                    // this.getlist()
+                }
+                this.handleLocalData()
+                // if(this.session_key) {
+                //     let getdata = localStorage.getItem(this.session_key)
+                //     if(getdata) {
+                //         let jsondata = JSON.parse(getdata)
+                //         this.privateGoodsItem = jsondata.skuFormatBody
+                //         this.sku_ui_list = jsondata.skus
+                //         console.log(this.sku_ui_list, jsondata);
+                //     }
+
+                // }
+                // if(this.session_key) {
+                //     if(getdata) {
+
+
+
+                // console.log(JSON.parse(localStorage.getItem('skus')), localStorage.getItem('skus'));
+                //     }
+
+                // }
+                // this.getselect()
+                // window.aabbcc = "------------"
+                // console.log('112233');
+                window.funcSubmitForm = () => {
+                    let goodsItem = JSON.parse(JSON.stringify(this.privateGoodsItem))
+                    let tablelist = JSON.parse(JSON.stringify(this.sku_ui_list))
+                    for (let i of goodsItem) {
+                        delete i.vcode
+                        delete i.ncode
+                        for (let desc of i.desc) {
+                            delete desc.vcode
+                            if (desc.skuid) {
+                                delete desc.skuid
+                            }
+                        }
+                    }
+                    for (const i of tablelist) {
+                        i.sku_attrs = []
+                        for (let j = 0; j < i.skuArray.length; j++) {
+                            i.sku_attrs.push({
+                                attr_key: i.skuArray[j].name,
+                                attr_value: i.skuArray[j].value
+                            })
+                        }
+                        console.log(i.thumb_img);
+                        i.sale_price = parseInt(i.sellPriceYuan * 100)
+                        i.stock_num = parseInt(i.stock_num)
+                        // i.skuFormat = JSON.stringify(i.skuArray)
+                        delete i.stock_type
+                        delete i.full_payment_presale_delivery_type
+                        delete i.presale_begin_time
+                        delete i.presale_end_time
+                        delete i.presale_begin_time_show
+                        delete i.presale_end_time_show
+                        delete i.full_payment_presale_delivery_time
+                        delete i.skuArray
+                    }
+
+                    for (const i of tablelist) {
+                        delete i.desc
+                        delete i.skuFormat
+                    }
+                    let obj = {
+                        skus: tablelist,
+                        skuFormatBody: goodsItem
+                    }
+                    sessionStorage.setItem(this.session_key, JSON.stringify(tablelist))
+                    // localStorage.setItem('skuFormatBody', JSON.stringify(goodsItem))
+                    return obj
+                }
+
+            },
+            methods: {
+                getselect() {
+                    if(this.cateid){
+                        _apiget(`/api/app/categoryInfo/${this.cateid}/detail`, true, (code, obj) => {
+                        if (code == 200) {
+                            if (obj.attr?.sale_attr_list?.length > 0) {
+                                let sku_sel_list = obj.attr.sale_attr_list
+                                this.skuOptionList = obj.attr.sale_attr_list
+                                for (const i in sku_sel_list) {
+                                    if (!sku_sel_list.hasOwnProperty(i)) break
+                                    // this.privateGoodsItem[i].privateSpecName = sku_sel_list[i].name
+                                    // this.privateGoodsItem[i].dynamicTags = sku_sel_list[i].value.split(';')
+                                }
+
+                            }
+                        }
+                    });
+                    }
+                },
+                handleImageChange(index, imageUrl) {
+                    this.sku_ui_list[index].thumb_img = imageUrl;
+                    console.log(`第${index+1}行图片已更新`,imageUrl);
+                    // 这里可以添加保存到服务器的逻辑
+                    console.log(this.sku_ui_list);//绑定UI的变了，数据没变？？？
+                },
+                handleLocalData() {
+                    // console.log("line.797","handleLocalData");
+                    if (this.session_key) {
+                        let getdata = sessionStorage.getItem(this.session_key)
+                        let jsondata = {}
+                        try {
+                            if (getdata) {
+                                jsondata = JSON.parse(getdata)
+                                // this.privateGoodsItem = jsondata.skuFormatBody
+                                // this.sku_ui_list = jsondata.skus
+                                // console.log(this.sku_ui_list, jsondata);
+                                console.log(jsondata);
+                            } else {
+                                return
+                            }
+                        } catch (err) {
+
+                        }
+                        let skuFormatBody = []
+                        // for (const i of getdata) {
+                        //     skuFormatBody.forEach((item) => {
+                        //         if(item.privateSpecName == i.) {
+
+                        //         }
+                        //     })
+                        // }
+                        //console.log(this.generateSkuitem(jsondata));
+                        //jsondata = this.generateSkuitem(jsondata)
+                        var _keymap = new Map();//用于当前显示名称 对应的key只在这个范围内一次性使用
+                        if (jsondata.skuFormatBody) {
+                            this.privateGoodsItem = jsondata.skuFormatBody
+                            
+                            this.privateGoodsItem.forEach((item, index) => {
+                                if (!item.ncode) item.ncode = this.getRandom()
+                                _keymap.set("n" + item.privateSpecName, item.ncode);
+                                item.desc.forEach((list, j) => {
+                                    list.vcode = this.getRandom()
+                                    list.skuimgurl = list.skuimgurl || ''
+                                    _keymap.set("v" + list.value, list.vcode);
+                                })
+                                item.isAddSkuImg = false
+                            })
+                        }
+                        console.log(jsondata.skuFormatBody, _keymap, 'jsondata.skuFormatBody');
+                        if (jsondata.skus) {
+
+                            jsondata.skus.forEach(item=>{
+                                item.sellPriceYuan = Number(item.sale_price / 100).toFixed(2);
+                                item.skuArray = item.sku_attrs.map(attr => ({ // 处理多属性
+                                    name: attr.attr_key,
+                                    value: attr.attr_value,
+                                }));
+                            });
+
+                            // setTimeout(() => {
+                                // this.sku_ui_list = JSON.parse(localStorage.getItem('skus'))
+                                if (jsondata.skus) {
+                                    let arr = []
+                                    for (let i of this.privateGoodsItem) {
+                                        arr = [...arr, ...i.dynamicTags]
+                                    }
+                                    let skuarrs = []
+                                    for (let i of jsondata.skus) {
+                                        if (i.skuArray) {
+                                            // i.skuArray = i.skuFormat;
+                                            // i.skuFormat = i.skuFormat
+                                            // i.head = {}
+                                            // for (let j = 0; j < i.skuFormat.length; j++) {
+                                            //     i.head[i.skuFormat[j].name] = i.skuFormat[j].value
+                                            // }
+                                            for (let sku of i.skuArray) {
+                                                var _get = _keymap.get("n" + sku.name);
+                                                if (_get) {
+                                                    // console.log(_get, 'get');
+                                                    sku.ncode = _get;
+                                                }
+                                                _get = _keymap.get("v" + sku.value);
+                                                if (_get) {
+                                                    // console.log(_get, 'vget');
+                                                    sku.vcode = _get;
+                                                }
+                                            }
+                                        }
+                                        i.sellPrice = parseInt(i.sale_price)
+                                        i.sellPriceYuan = Number(i.sale_price / 100).toFixed(2)
+                                        skuarrs.push(i)
+                                    }
+                                    this.sku_ui_list = skuarrs
+                                }
+                        }
+                    }
+                },
+                generateSkuitem(resdata) {
+                    // 生成 skus 数组
+                    const skus = resdata.map(item => {
+                        const skuAttr = item.sku_attrs; // 假设每个sku只有一个属性
+                        let skuFormatfor = []
+                        let descarr = []
+                        for (const i of skuAttr) {
+                            skuFormatfor.push({
+                                name: i.attr_key,
+                                value: i.attr_value,
+                            })
+                            descarr.push(i.attr_value)
+                        }
+                        return {
+                            sale_price: item.sale_price,
+                            sellPriceYuan: (item.sale_price / 100).toString(), // 根据sale_price计算
+                            stock_num: item.stock_num,
+                            sort: 100, // 默认值
+                            thumb_img: item.thumb_img,
+                            skuArray: item.sku_attrs.map(attr => ({ // 处理多属性
+                                name: attr.attr_key,
+                                value: attr.attr_value,
+                            })),
+                            sku_attrs: item.sku_attrs,
+                            sku_deliver_info: {
+                                stock_type: item.sku_deliver_info.stock_type
+                            },
+                            sku_code: item.sku_code,
+                            desc: item.sku_attrs.map(attr => attr.attr_value).join(" "), // 使用属性值作为描述
+                            productId: null,
+                            out_sku_id: 0,
+                            id: item.sku_id
+                        };
+                    });
+
+                    // 生成 skuFormatBody
+                    // const attrValues = [...new Set(resdata.map(item => item.sku_attrs[0].attr_value))];
+                    // const skuFormatBody = [{
+                    //     privateSpecName: resdata[0]?.sku_attrs[0]?.attr_key || "尺码", // 假设所有属性key相同
+                    //     dynamicTags: attrValues,
+                    //     desc: attrValues.map(value => ({ value, skuimgurl: "" })),
+                    //     inputVisible: false,
+                    //     inputValue: "",
+                    //     isAddSkuImg: false
+                    // }];
+
+                    // 生成 skuFormatBody（多规格处理）
+                    const specMap = new Map();
+                    
+                    // 收集所有规格信息
+                    resdata.forEach(item => {
+                        item.sku_attrs.forEach(attr => {
+                        if (!specMap.has(attr.attr_key)) {
+                            specMap.set(attr.attr_key, new Set());
+                        }
+                        specMap.get(attr.attr_key).add(attr.attr_value);
+                        });
+                    });
+
+                    // 转换为目标格式
+                    const skuFormatBody = Array.from(specMap).map(([key, values]) => ({
+                        privateSpecName: key,
+                        dynamicTags: Array.from(values),
+                        desc: Array.from(values).map(value => ({ 
+                            value,
+                            skuimgurl: "", 
+                            vcode: this.getRandom()
+                        })),
+                        inputVisible: false,
+                        inputValue: "",
+                        isAddSkuImg: false
+                    }));
+
+                    return { skus, skuFormatBody };
+                },
+                getlist() {
+                    _apiget("/api/app/productInfo/" + this.id + "/infoForUpdate", true, (code, obj) => {
+                        if (code == 200) {
+                            var _keymap = new Map();//用于当前显示名称 对应的key只在这个范围内一次性使用
+
+                            if (obj.skuFormatBody) {
+                                this.privateGoodsItem = JSON.parse(obj.skuFormatBody)
+                                // console.log(this.privateGoodsItem);
+                                // this.privateGoodsItem[0].dynamicTags = this.handleReplaceStr(this.privateGoodsItem[0].dynamicTags)
+                                // for (let i of this.privateGoodsItem[0].desc) {
+                                //     i.value = this.handleReplaceStr(i.value)
+                                // }
+                                this.privateGoodsItem.forEach((item, index) => {
+                                    if (!item.ncode) item.ncode = this.getRandom()
+                                    _keymap.set("n" + item.privateSpecName, item.ncode);
+                                    item.desc.forEach((list, j) => {
+                                        list.vcode = this.getRandom()
+                                        list.skuimgurl = list.skuimgurl || ''
+                                        _keymap.set("v" + list.value, list.vcode);
+                                    })
+                                    item.isAddSkuImg = false
+                                })
+                                window.privateGoodsItem = this.privateGoodsItem;
+                            }
+                            console.log(_keymap, '_keymap');
+                            if (obj.skus) {
+                                let arr = []
+                                for (let i of this.privateGoodsItem) {
+                                    arr = [...arr, ...i.dynamicTags]
+
+                                }
+                                let skuarrs = []
+                                // console.log("11111111111111111111111");
+                                for (let i of obj.skus) {
+                                    if(i.skuFormat){
+                                        i.skuArray = JSON.parse(i.skuFormat);
+                                    }
+                                    // if (i.skuFormat != null && i.skuFormat != '') {
+                                        // if (i.skuFormat.indexOf('[') == -1) {
+                                            // i.skuFormat = "[]";
+                                        // }
+
+                                        // i.skuFormat = JSON.parse(i.skuFormat)
+                                        // i.skuvalueArr = [] //存储value数组
+                                        // if(!i.skuFormat[0].name) {
+                                        //     continue
+                                        // }
+                                        // i.head = {}
+                                        // for (let j = 0; j < i.skuFormat.length; j++) {
+                                        //     i.head[i.skuFormat[j].name] = i.skuFormat[j].value
+                                        // }
+                                        for (let sku of i.skuArray) {
+                                            var _get = _keymap.get("n" + sku.name);
+                                            if (_get) {
+                                                // console.log(_get, 'get');
+                                                sku.ncode = _get;
+                                            }
+                                            _get = _keymap.get("v" + sku.value);
+                                            if (_get) {
+                                                // console.log(_get, 'vget');
+                                                sku.vcode = _get;
+                                            }
+                                            // console.log("current sku", sku);
+                                            // i.skuvalueArr.push(sku.value)
+                                            // sku.vcode="";//规格值代码，根据sku.value去获取
+                                            // sku.ncode="";//规格名称代码 根据sku.name去获取
+                                        }
+                                    // }
+                                    // if(i.sku_deliver_info){
+                                    //     if (i.sku_deliver_info.stock_type == 1) {
+                                    //         i.stock_type = i.sku_deliver_info.stock_type
+                                    //         i.full_payment_presale_delivery_type = i.sku_deliver_info.full_payment_presale_delivery_type
+                                    //         i.presale_begin_time = i.sku_deliver_info.presale_begin_time
+                                    //         i.presale_end_time = i.sku_deliver_info.presale_end_time
+                                    //         i.presale_begin_time_show = this.timestampToDateTime(i.sku_deliver_info.presale_begin_time)
+                                    //         i.presale_end_time_show = this.timestampToDateTime(i.sku_deliver_info.presale_end_time)
+                                    //         i.full_payment_presale_delivery_time = i.sku_deliver_info.full_payment_presale_delivery_time
+                                    //     }
+                                    // }
+                                    i.sellPrice = Number(i.sellPrice)
+                                    i.sellPriceYuan = Number(i.sellPrice / 100)
+                                    skuarrs.push(i)
+                                    // console.log("action sku value", i);
+                                }
+                                console.log(skuarrs, 'this.sku_ui_list');
+                                this.sku_ui_list = skuarrs
+
+
+                                setTimeout(() => {
+
+                                    console.log(this.sku_ui_list, 'getlist');
+                                }, 1000)
+
+                            }
+                            // this.getlogs()
+                        }
+                    })
+                },
+                //对比上面的规格和下面的sku中的规格，处理多出和减少的
+                //执行 规格的新增 比如 12变123 执行删除 比如123 124包含3的删除
+                complatearray(vcodemap, vcodes, skus, _del_array, _add_array) {
+                    //vcodes 新的规格值的组合
+                    //newallvodes 新的规格值的总和
+                    //_del_array 多的vcode集合
+                    // _add_array 新增的vcode集合
+                    // var _handler = false;
+                    // var _find = false;//是否有找到这个组合
+                    // var _model = null;
+
+                    // var _del_array=this.matharrayadd(oldallvodes,newallvodes);
+                    // console.log('del sku values ',_del_array);
+
+                    var _del_skuid_array = new Array();
+
+                    var _del_index = -1;
+                    //下方遍历所有的skus 看看是否新增 删除 还是修改
+                    for (var i = 0; i < skus.length; i++) {
+                        var sku = skus[i];
+                        // if (i == 0) {
+                        //     _model = Object.assign({}, sku);
+                        // }
+                        var skuarray = sku.skuArray;
+                        //vcodemap: vcode => { name,value,ncode,vcode}
+                        var _sku_vcode_array = new Array();
+                        skuarray.forEach((_sku) => {
+                            _sku_vcode_array.push(_sku.vcode);
+                        });
+                        // console.log("voces",vcodes," sku.skuarray.vcodes",_sku_vcode_array);
+                        //如果命中，则修改规格名称 或者规格值
+                        if (this.matharrayequal(vcodes, _sku_vcode_array)) {
+                            skuarray.forEach(sku => {
+                                var _get = vcodemap.get(sku.vcode);
+                                if (_get) {
+                                    sku.value = _get.value;
+                                    sku.name = _get.name;
+                                }
+                            });
+                            // _handler = true;
+                            // _find = true;
+
+                            // break;
+                            if (_del_array == null || _del_array.length == 0) {
+                                break;
+                            }
+
+                        }
+
+                        //如果有新增的规格 且全包含 表示当前sku缺少至少一个属性
+                        if (_add_array && _add_array.length > 0) {
+                            if (this.matharrayallinclude(vcodes, _sku_vcode_array)) {
+                                // console.log("vcodes ",vcodes," include",_sku_vcode_array);
+                                var _adds = this.matharrayadd(vcodes, _sku_vcode_array);
+                                if (_adds && _adds.length > 0) {
+                                    console.log("需要向", skuarray, "写入", _adds.join('---'));
+                                    _adds.forEach(ione => {
+                                        // 后面改 sku中没有这个规格值，新增一个进来
+                                        var _get = vcodemap.get(ione);
+                                        if (_get) {
+                                            skuarray.push({ name: _get.name, value: _get.value, vcode: ione });
+                                        } else {
+                                            console.log("没有获取到vcode:", ione, "的对象，表示这个规格代码代表的规格值和规格名称信息！");
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                        //不相等，可能不是这个sku，要从全局判断
+                        //判定 是新增 还是删除
+                        if (_del_array && _del_array.length > 0) {
+                            console.log('check include array to del ', _del_array, "from", _sku_vcode_array);
+                            if (this.matharrayinclude(_del_array, _sku_vcode_array)) {
+                                // 表示这个sku要被删除
+                                // console.log("由于规格值多出当前sku将要被删除",sku);
+                                _del_skuid_array.push(sku.out_sku_id);
+                                console.log('hit include array to del ', _del_array, "from", _sku_vcode_array);
+                            }
+                        }
+
+
+                    }
+
+                    //删除需要删除的sku!!!
+                    if (_del_skuid_array && _del_skuid_array.length > 0) {
+                        for (var id of _del_skuid_array) {
+                            var _hit = -1;
+                            for (var k = 0; k < skus.length; k++) {
+                                if (skus[k].out_sku_id == id) {
+                                    _hit = k;
+                                    console.log('将要删除 skuid', sku.out_sku_id,);
+                                    break;
+                                }
+                            }
+                            if (_hit > -1) {
+                                skus.splice(_hit, 1);
+                            }
+                        }
+                    }
+                },
+                complatetoadd(vcodemap, vcodes, skus) {
+                    //vcodes 新的规格值的组合
+                    var _find = false;//是否有找到这个组合
+                    var _model = null;
+
+                    // var _del_array=this.matharrayadd(oldallvodes,newallvodes);
+                    // console.log('del sku values ',_del_array);
+
+                    // var _del_skuid_array = new Array();
+
+                    var _del_index = -1;
+                    //下方遍历所有的skus 看看是否新增 删除 还是修改
+                    for (var i = 0; i < skus.length; i++) {
+                        var sku = skus[i];
+                        if (i == 0) {
+                            _model = Object.assign({}, sku);
+                        }
+                        var skuarray = sku.skuArray;
+                        var _sku_vcode_array = new Array();
+                        skuarray.forEach((_sku) => {
+                            _sku_vcode_array.push(_sku.vcode);
+                        });
+                        // console.log(_sku_vcode_array, '_sku_vcode_array');
+                        //如果命中，则修改规格名称 或者规格值
+                        if (this.matharrayequal(vcodes, _sku_vcode_array)) {
+                            _find = true;
+                            break;
+                        }
+                    }
+
+                    if (!_find) {
+                        console.log("need add new sku", vcodes.join(" "));
+                        //如果没有找到这个组合，则新增一个
+                        var _tempskuarray = new Array();
+                        vcodes.forEach(ione => {
+                            //后面改 sku中没有这个规格值，新增一个进来
+                            var _get = vcodemap.get(ione);
+                            if (_get) {
+                                _tempskuarray.push({ name: _get.name, value: _get.value, vcode: ione });
+                            } else {
+                                console.log("没有获取到vcode:", ione, "的对象，表示这个规格代码代表的规格值和规格名称信息！");
+                            }
+                        });
+                        //基于vcodes 进行新增一个_sku_obj
+                        if (_model != null) {
+                            _model.id = 0;
+                            _model.skuArray = new Array();
+                        } else {
+                            _model = {
+                                sale_price: 0,
+                                sellPriceYuan: 0,
+                                stock_num: 10000,
+                                sort: 100,
+                                thumb_img: '',
+                                skuFormat: '',
+                                skuArray: [],
+                                sku_attrs: [],
+                                sku_deliver_info: {
+
+                                },
+                                stock_type: 0,
+                                full_payment_presale_delivery_type: null,
+                                presale_begin_time: null,
+                                presale_begin_time_show: null,
+                                presale_end_time: null,
+                                presale_end_time_show: null,
+                                full_payment_presale_delivery_time: null,
+                                sku_code: '',
+                                desc: '',
+                                productId: this.id,
+                                out_sku_id: 0,
+                            }
+                        }
+                        _model.skuArray = _tempskuarray;
+                        skus.push(_model);
+                    }
+
+                    //如何处理规格减少的情况???
+                },
+                //
+                //
+                matharrayadd(array1, array2) {
+                    //输出array1 比array2多的数组集合
+                    if (array2 && array2.length > 0) {
+                        var _clone = Object.assign([], array1);
+                        array2.forEach(ia => {
+                            var _index = _clone.indexOf(ia);
+                            if (_index >= 0) {
+                                _clone.splice(_index, 1);
+                            }
+                        })
+                        return _clone;
+                    }
+                    return array1;
+                },
+                matharrayallinclude(array1, array2) {
+                    //array1是否全部包含array2 也就是array2中的每一项在array1中都有，且array1大于array2
+                    if (array1.length > array2.length) {
+                        var _clone = Object.assign([], array2);
+                        array1.forEach(ia => {
+                            var _index = _clone.indexOf(ia);
+                            if (_index >= 0) {
+                                _clone.splice(_index, 1);
+                            }
+                        })
+                        return (_clone.length == 0);
+                    }
+                    return false;
+                },
+                matharrayequal(array1, array2) {
+                    //对比2个数组是否相等 也可以使用排序后的字符串对比
+                    if (array1.length == array2.length) {
+                        // var _clone = Object.assign([], array1);
+                        var _hitcount = 0;
+                        array2.forEach(ia => {
+                            var _index = array1.indexOf(ia);
+                            if (_index >= 0) {
+                                _hitcount++
+                                // _clone.splice(_index, 1);
+                            }
+                        })
+                        return array1.length == _hitcount;
+                    }
+                    return false;
+                },
+                matharrayinclude(array1, array2) {
+                    //array1 是否有元素在array2中，有一个也算
+                    if (array1.length > 0 && array2.length > 0) {
+                        for (var ia of array2) {
+                            var _index = array1.indexOf(ia);
+                            if (_index >= 0) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                },
+                timestampToDateTime(timestamp) {
+                    const date = new Date(timestamp);
+                    const year = date.getFullYear();
+                    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+                    const day = ("0" + date.getDate()).slice(-2);
+                    const hours = ("0" + date.getHours()).slice(-2);
+                    const minutes = ("0" + date.getMinutes()).slice(-2);
+                    const seconds = ("0" + date.getSeconds()).slice(-2);
+                    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                },
+                handleCate(index) {
+                    this.cateList[index].selected = !this.cateList[index].selected
+                    this.$set(this.cateList, index, this.cateList[index])
+                },
+                chooseSpecName(e) {
+                    console.log(e, 'chooseSpecName');
+                    // if(!e) {
+
+                    // }
+                    let chooseobj = this.skuOptionList.find(item => item.name == e);
+                    console.log(chooseobj);
+                    this.privateGoodsItem[0].dynamicTags = chooseobj.value.split(';')
+                    let itemdesc = this.privateGoodsItem[0].dynamicTags
+                    this.privateGoodsItem[0].desc = []
+                    for (const i of itemdesc) {
+                        this.privateGoodsItem[0].desc.push({
+                            value: i,
+                            vcode: this.getRandom(),
+                            skuimgurl: '',
+                        })
+                    }
+                    this.$forceUpdate();
+                    console.log(this.privateGoodsItem);
+                },
+                handleImageshow(arr) {
+                    let imgarr = []
+                    for (let i of arr) {
+                        imgarr.push({
+                            url: i
+                        })
+                        // console.log(imgarr);
+                    }
+                    return imgarr
+                },
+                handleImageDelUrl(arr) {
+                    let imgarr = []
+                    for (let i of arr) {
+                        imgarr.push(i.url)
+                    }
+                    return imgarr.join(',')
+                },
+                ensureNoDuplicates(specs) {
+                    // 创建一个集合来存储已经存在的值  
+                    const existingValues = new Set();
+
+                    // 遍历每条规格  
+                    for (const spec of specs) {
+                        // 创建一个新的数组来存储合法的dynamicTags  
+                        const newDynamicTags = [];
+
+                        // 遍历当前的dynamicTags  
+                        for (const tag of spec.dynamicTags) {
+                            // 如果该值不存在于existingValues集合中，则添加到新数组和集合中  
+                            if (!existingValues.has(tag)) {
+                                // newDynamicTags.push(tag);  
+                                existingValues.add(tag);
+                            } else {
+                                this.repeatTag = tag
+                                return false
+                            }
+                        }
+
+                        // 更新当前的dynamicTags为新的不包含重复值的数组  
+                        // spec.dynamicTags = newDynamicTags;  
+                    }
+
+                    // 返回处理后的specs数组  
+                    return true;
+                },
+                realTime(data) {
+                    console.log(data)
+                    this.preview = data
+                },
+                handleClose() {
+                    this.dialogVisible = false
+                },
+                // 返回规格值vcode
+                handleSkuIndex(desc) {
+                    // let arr = desc.split(' ')
+                    let backarr = []
+                    // console.log(this.privateGoodsItem, 'this.privateGoodsItem');
+                    this.privateGoodsItem.forEach((item, index) => {
+                        item.desc.forEach((list, j) => {
+                            var result = this.handelChangeInclude(desc, list.value);
+                            // console.log(desc,"==",list.value,"=>",result);
+                            if (result) {
+                                // console.log(arr[index], list.value, list.skuid,list, '-----------------');
+                                backarr.push(list.vcode);
+                                return
+                            }
+                        })
+                    })
+                    // console.log(backarr);
+                    return backarr
+                },
+                handelChangeInclude(desc, tar) {
+
+                    if (desc == tar) {
+                        return true;
+                    }
+
+                    var _ntart = tar + " ";
+                    if (desc.indexOf(_ntart) == 0) {
+                        return true;
+                    }
+                    _ntart = " " + tar + " ";
+                    if (desc.indexOf(_ntart) > 0) {
+                        return true;
+                    }
+                    _ntart = " " + tar;
+                    var _zindex = desc.lastIndexOf(_ntart);
+                    // console.log(_zindex,"-"+desc+"-","="+_ntart+"=");
+                    if (desc.lastIndexOf(_ntart) == (desc.length - _ntart.length)) {
+                        return true;
+                    }
+                    // console.log("return false ",desc,"->",tar);
+                    //var desc ="红 色 黄色 大红色"
+                    //var _target="红 色";
+                    // desc == _target
+                    // desc.startwith(_target+" ");
+                    // desc.endwidth(" "+_target);
+                    // desc.contains(" "+_target+" ")
+                    return false;
+                },
+                handleReplaceStr(str) {
+                    // console.log("line 2218",typeof str,str);
+                    if (typeof str == "string") {
+                        str = str.replace('[', '【').replace(']', '】').replace('.', '')
+                        return str
+                    } else {
+                        let strArr = []
+                        for (let i of str) {
+                            let arrkey = i.replace('[', '【').replace(']', '】').replace('.', '')
+                            strArr.push(arrkey)
+                            // console.log(arrkey, 'array');
+                        }
+                        // console.log(strArr, 'array');
+                        return strArr
+                    }
+
+                },
+                // 上传之前
+                async beforeUpload(file) {
+                    console.log(file, 123);
+                },
+                handleSuccess(response, file, fileList) {
+                    console.log(response, file, fileList);
+                },
+                getRandom() {
+                    var code = '';
+                    for (var i = 0; i < 6; i++) {
+                        code += parseInt(Math.random() * 10);
+                    }
+                    return code
+                },
+                // canvas生成的格式为base64，需要进行转化, base64->file
+                dataURLtoFile(dataurl, fileName) {
+                    let arr = dataurl.split(','),
+                        mime = arr[0].match(/:(.*?);/)[1],
+
+                        bstr = atob(arr[1]),
+                        n = bstr.length,
+                        u8arr = new Uint8Array(n);
+                    while (n--) {
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    return new File([u8arr], fileName, { type: mime })
+                },
+                handleChangeTable(file, fileList, index) {
+                    let formData = new FormData();
+                    formData.append(file.name, file.raw)
+                    this.uploadSku(formData, index, 'sku')
+                    fileList.splice(fileList.length - 1, 1)
+                },
+                handleChangeSku(file, fileList, index, lists) {
+                    let formData = new FormData();
+                    formData.append(file.name, file.raw)
+                    this.uploadSku(formData, index, 'tablehead', lists)
+                    fileList.splice(fileList.length - 1, 1)
+                },
+
+                handleClickSkuImg(e, index) {
+                    // for (const i of this.privateGoodsItem) {
+                    //    if(i.isAddSkuImg) {
+                    //         return this.$message({
+                    //             message: '勾选多个添加图片会对原有的图片进行覆盖',
+                    //             type: 'warning'
+                    //         });
+                    //    }
+                    // }
+                    console.log(e, index);
+                    this.privateGoodsItem[index].isAddSkuImg = e
+                    this.$set(this.privateGoodsItem, index, this.privateGoodsItem[index])
+                },
+
+                delskuHeadImg(index, lists) {
+                    this.privateGoodsItem[index].desc[lists].skuimgurl = ''
+                    this.$set(this.privateGoodsItem, index, this.privateGoodsItem[index])
+                },
+
+                blobToFile(theBlob, fileName, fileType) {
+                    var file = new window.File([theBlob], fileName, { type: fileType })
+                    return file;
+                },
+                uploadSku(formData, index, type, lists) {
+                    $.ajax({
+                        url: "/api/app/Upload/UpImage?type=sku&size=1500*0",
+                        type: 'post',
+                        contentType: false,
+                        processData: false,
+                        async: true,
+                        data: formData,
+                        headers: { "token": readToken() },
+                        success: (obj) => {
+                            if (type == 'sku') {
+                                this.sku_ui_list[index].thumb_img = obj.data[0].url
+                            } else {
+                                this.privateGoodsItem[index].desc[lists].skuimgurl = obj.data[0].url
+                                console.log(this.privateGoodsItem);
+                                this.$set(this.privateGoodsItem, index, this.privateGoodsItem[index])
+                            }
+                        },
+                        error: (res) => {
+                            if (res.status == 413) {
+                                layer.msg('图片超过限制')
+                            }
+                            if (res.status == 401) {
+                                layer.msg('登录过期，请重新登录')
+                            }
+                            if (res.status == 403) {
+                                layer.msg('您没有此操作权限')
+                            }
+                            if (loadid != 0) {
+                                layer.close(loadid);
+                            }
+                        }
+                    });
+                },
+                handleRemove(file, fileList) {
+
+                },
+                handleChangeCurrent(currentRow, oldCurrentRow) {
+                    // console.log(currentRow, oldCurrentRow);
+                },
+                handleClickDelImg(index, type) {
+                    if (type == 'file') {
+                        this.fileList.splice(index, 1)
+                    }
+                    if (type == 'exam') {
+                        this.examList.splice(index, 1)
+                    }
+                    if (type == 'banner') {
+                        this.bannerList.splice(index, 1)
+                    }
+                    if (type == 'table') {
+                        this.sku_ui_list[index].thumb_img = ''
+                    }
+                    this.$refs.ruleform.validate()
+                },
+                updateTable(e) {
+                    const newIndex = e.newIndex// 新位置下标
+                    const oldIndex = e.oldIndex// 原始位置下标
+                    // 打印出新位置 位置从0开始算
+                    // console.log(newIndex)
+                    // console.log(oldIndex)
+                },
+                //拖拽开始
+                dragstar(e, index) {
+                    this.drag = true
+                    this.starindex = index
+                    // console.log(e, index);
+                },
+                dragenter(e, index) {
+                    this.moveIndex = index
+                },
+                // 拖拽结束
+                dragend(e, index) {
+                    // console.log(e, index);
+                    this.sku_ui_list[this.moveIndex].thumb_img = this.sku_ui_list[this.starindex].thumb_img
+                    e.preventDefault();
+                    e.stopPropagation();
+                },
+                _tapsetcoupon(id) {
+                    // console.log('tap set coupon');
+                    // console.log(elc);
+                    if (id != 0) {
+                        _showedit('规格优惠券', '../../../../coupon/bitch.html?skuid=' + id, '0', '90%', '80%')
+                        // window.parent.creatIframe('coupon/bitch.html?skuid='+id + '&type=sku','规格优惠券['+id+']')
+                        //设置tag this.sku_ui_list[index].image = obj.data[0].url
+                        if (this.tableColumnList) {
+                            if (this.sku_ui_list && this.sku_ui_list.length > 0) {
+                                for (var a = 0; a < this.sku_ui_list.length; a++) {
+                                    var ii = this.sku_ui_list[a];
+                                    if (ii.id == id) {
+                                        ii.tag = '已点击';
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        layer.msg("编辑的时候才可以使用当前功能！");
+                    }
+                },
+                updateList(e) {
+                    const newIndex = e.newIndex// 新位置下标
+                    const oldIndex = e.oldIndex// 原始位置下标
+                    // 打印出新位置 位置从0开始算
+                    // console.log(newIndex)
+                    // console.log(oldIndex)
+                    // 打印出来的为该位置的对象
+                    // console.log(this.fileList)
+                },
+                addSku() {
+                    if (this.privateGoodsItem.length == 5) return layer.msg('最多添加 5 个规格名')
+                    var _randcode = this.getRandom();
+                    this.privateGoodsItem.push({
+                        privateSpecName: '',
+                        dynamicTags: [],
+                        desc: [{
+                            value: '',
+                            vcode: _randcode,
+                            skuimgurl: ''
+                        }],
+                        inputVisible: false,
+                        inputValue: '',
+                        vcode: _randcode,
+                        isAddSkuImg: false
+                    })
+                },
+                // 笛卡尔积算法
+                cartesianProductOf(...args) {
+                    return args.reduce((total, current) => {
+                        let ret = []
+                        total.forEach((a) => {
+                            current.forEach((b) => {
+                                ret.push(a.concat([b]))
+                            })
+                        })
+                        return ret
+                    },
+                        [[]]
+                    )
+                },
+                addSkuItem(index) {
+                    var _randcode = this.getRandom();
+                    this.privateGoodsItem[index].desc.push({ value: '', skuid: _randcode, vcode: _randcode, skuimgurl: '' })
+                    this.$set(this.privateGoodsItem, index, this.privateGoodsItem[index])
+                },
+                clogArr() {
+                    const specParams = []
+                    for (let spec = 0; spec < this.privateGoodsItem.length; spec++) {
+                        specParams.push({
+                            isCommon: false,
+                            paramName: this.privateGoodsItem[spec].privateSpecName,  // 货品名
+                            paramNameValues: this.privateGoodsItem[spec].dynamicTags,  // 商品对应规格名的规格值
+                            price: this.privateGoodsItem[spec].price
+                        })
+                    }
+                    // console.log(specParams, this.sku_ui_list);
+                    // let arr = []
+                    // let tablearr = []
+                    // for (let i = 0; i < this.sku_ui_list.length; i++) {
+                    //     tablearr.push(Object.assign(this.sku_ui_list[i],res.data.attrs[i]));  
+                    // }
+
+                },
+                handleblur(e, index) {
+                    console.log(this.sku_ui_list, index);
+                    this.$set(this.sku_ui_list, index, this.sku_ui_list[index])
+                    // this.$forceUpdate();
+                },
+                handleSelectChangesku(e, index, row) {
+                    console.log(this.sku_ui_list, index, row);
+                    this.$set(this.sku_ui_list, index, this.sku_ui_list[index])
+                    // this.$forceUpdate();
+                },
+                handleChangeDate(e, index, arg) {
+                    console.log(Math.floor(new Date(e).getTime() / 1000));
+                    this.sku_ui_list[index][arg] = Math.floor(new Date(e).getTime() / 1000)
+                    this.$set(this.sku_ui_list, index, this.sku_ui_list[index])
+                    // this.$forceUpdate();
+                },
+                delsku(index) {
+                    this.privateGoodsItem.splice(index, 1)
+                },
+                delskuitem(index, skuindex) {
+                    this.privateGoodsItem[index].desc.splice(skuindex, 1)
+                    this.$set(this.privateGoodsItem, index, this.privateGoodsItem[index])
+                },
+                handleBatchStockType() {
+                    for (const i of this.sku_ui_list) {
+                        i.stock_type = this.presaleform.stock_type
+                    }
+                    this.$forceUpdate()
+                },
+                handleBatchDeliveryType() {
+                    for (const i of this.sku_ui_list) {
+                        i.full_payment_presale_delivery_type = parseInt(this.presaleform.full_payment_presale_delivery_type)
+                    }
+                    this.$forceUpdate()
+                },
+                handleSelectChangeBatch(e) {
+                    for (const i of this.sku_ui_list) {
+                        i.full_payment_presale_delivery_time = this.presaleform.full_payment_presale_delivery_time
+                    }
+                    this.$forceUpdate()
+                },
+                handleChangeDateBatch(e, time_index) {
+
+                    this.presaleform[time_index] = Math.floor(new Date(e).getTime() / 1000)
+
+                    let nowtime = Math.floor(new Date().getTime() / 1000)
+                    if (this.presaleform.presale_end_time) {
+                        if (this.presaleform.presale_end_time - nowtime > 2592000) {
+                            this.$alert('预售结束时间距离现在需<=30天', '提示', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+
+                                }
+                            });
+                        }
+                    }
+                    if (this.presaleform.presale_end_time && this.presaleform.presale_begin_time) {
+                        if (this.presaleform.presale_end_time - this.presaleform.presale_begin_time > 1296000) {
+                            this.$alert('预售时间区间需<=15天', '提示', {
+                                confirmButtonText: '确定',
+                                callback: action => {
+
+                                }
+                            });
+                        }
+                    }
+                    console.log(e, this.presaleform);
+                },
+                handleBatchTime(e) {
+                    for (const i of this.sku_ui_list) {
+                        i[e] = this.presaleform[e]
+                        i[e + '_show'] = this.presaleform[e + '_show']
+                    }
+                    this.$forceUpdate()
+                    console.log(this.sku_ui_list);
+                },
+                isVideo(url) {
+                    // 使用文件扩展名来判断是否为视频  
+                    const ext = url.split('.').pop().toLowerCase();
+                    const videoExts = ['mp4', 'webm', 'ogg', 'mov', 'avi', /* ... 其他视频扩展名 ... */];
+                    return videoExts.includes(ext);
+                },
+                isImage(url) {
+                    // 使用文件扩展名来判断是否为图片  
+                    const ext = url.split('.').pop().toLowerCase();
+                    const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp' /* ... 其他图片扩展名 ... */];
+                    return imageExts.includes(ext);
+                },
+                handleClickSku() {
+
+                },
+                setStock() {
+                    this.sku_ui_list.forEach((item) => {
+                        item.stock_num = this.stockNumSet
+
+                    })
+                    console.log(this.sku_ui_list);
+                },
+                setMoney() {
+                    if (this.moneyNumSet > 0 && this.moneyNumSet != null) {
+                        this.sku_ui_list.forEach((item) => {
+                            item.sellPriceYuan = this.moneyNumSet
+                            item.sale_price = parseInt((this.moneyNumSet / 100).toFixed(2))
+                        })
+                    }
+
+                }
+
+            }
+        })
+    </script>
+    <script>
+
+        $(function () {
+
+        })
+
+
+
+    </script>
+</body>
+
+</html>

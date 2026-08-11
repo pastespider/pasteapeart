@@ -1,0 +1,306 @@
+*::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+  background: #f3f3f3;
+}
+*::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  border-radius: 8px;
+  background: transparent;
+}
+.newform {
+  position: relative;
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 50px 20px 30px 20px;
+}
+.newform .paste-form-body {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.newform .row {
+  position: relative;
+  margin-bottom: 20px;
+  width: 50%;
+}
+.newform .singlerow {
+  width: 100%;
+}
+.newform .itemrow {
+  display: flex;
+  flex-direction: row;
+}
+.newform .lineitem {
+  flex: 1;
+  position: relative;
+  margin-right: 10px;
+}
+.newform .lineitem:last-child {
+  margin-right: 0 !important;
+}
+.newform .option {
+  line-height: 40px;
+  text-align: left;
+  padding-left: 10px;
+  height: 40px;
+}
+.newform .form-label {
+  padding: 0 6px;
+  color: #555;
+  width: 100px;
+  font-size: 14px;
+  overflow: hidden;
+  line-height: 40px;
+  text-align: right;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  text-wrap: nowrap;
+}
+.newform .form-label:after {
+  content: ':';
+}
+.newform .p-form-placeholder {
+  color: #b6b6b6;
+}
+.newform .formControls {
+  position: relative;
+  flex: 1;
+  width: 100px;
+  color: #555;
+  padding: 8px;
+}
+.newform .formControls .placeholder {
+  color: #b6b6b6;
+  display: inline-block;
+  clear: both;
+  position: relative;
+  bottom: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 14px;
+}
+.newform .formControls .image {
+  max-height: 100px;
+}
+.newform .formControls img {
+  max-width: 200px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.5s;
+}
+.newform .formControls img:hover {
+  box-shadow: 0 0 2px 2px #999;
+}
+.newform .formControls label {
+  word-wrap: break-word;
+  white-space: break-spaces;
+  text-wrap: wrap;
+  display: inline;
+}
+.newform .formControls .richtext {
+  white-space: break-spaces;
+  word-break: break-all;
+}
+.newform .round {
+  border-radius: 4px;
+  border: 1px solid #f1f1f1;
+  line-height: 50px;
+}
+.newform code {
+  word-wrap: break-word;
+  text-wrap: wrap;
+  word-break: break-all;
+  white-space: break-spaces;
+}
+.newform pre {
+  display: block;
+  white-space: break-spaces;
+  word-wrap: break-word;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+.group {
+  background: aliceblue;
+  padding: 6px;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+.group .ghead {
+  padding-right: 10px;
+}
+.form-required {
+  color: chocolate;
+  padding: 2px;
+}
+.editor_body {
+  height: 500px;
+}
+.input-textarea {
+  padding: 10px;
+  line-height: 1.5;
+}
+.form-header {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+.ititle {
+  padding: 10px;
+  font-weight: 600;
+  font-size: 28px;
+  color: #333;
+}
+.idesc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #999;
+}
+.editor_body {
+  border: 1px solid #999;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.spanlen {
+  position: absolute;
+  right: 26px;
+  bottom: 12px;
+  color: #999;
+  font-size: 12px;
+}
+.spanclean {
+  position: absolute;
+  right: 4px;
+  bottom: 12px;
+  opacity: 0.1;
+  width: 22px;
+  height: 22px;
+  background-color: #b6b6b6;
+  border-radius: 50% 50%;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.spanclean:hover {
+  opacity: 0.8;
+}
+textarea {
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #f1f1f1;
+  transition: all 0.5s;
+  width: 100%;
+}
+textarea:focus {
+  border: 1px solid #3d62db;
+}
+textarea:read-only {
+  background-color: #f1f1f1;
+}
+.icon {
+  font-size: 32px;
+  color: #d1d1d1;
+}
+.icon-add {
+  width: 60px;
+  text-align: center;
+  display: inline-block;
+  border: 1px solid #d1d1d1;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.imageul {
+  display: block;
+  padding-inline-start: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+.imageul li {
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+.imageul img {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+}
+.imageul .icon-add {
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #999;
+  border-radius: 6px;
+  line-height: 100px;
+}
+.imageul .icon-close {
+  position: absolute;
+  top: -2px;
+  right: 2px;
+  cursor: pointer;
+  color: #999;
+  display: inline-block;
+  font-size: 24px;
+}
+.outers {
+  position: relative;
+}
+.outers .btnaddouter {
+  font-size: 12px;
+  padding: 4px 10px;
+  margin-bottom: 10px;
+  margin: 10px 10px 10px 0;
+  background: #4290f7;
+  outline: none;
+  border: none;
+  color: #f2f2f2;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.outers .ulouter {
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 0;
+}
+.outers .ulouter li {
+  position: relative;
+  display: inline-block;
+  padding: 8px;
+  width: 160px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+.outers .ulouter .outer_close {
+  position: absolute;
+  right: 8px;
+  cursor: pointer;
+  opacity: 0.2;
+}
+.outers .ulouter .outer_close:hover {
+  opacity: 1;
+}

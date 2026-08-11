@@ -1,0 +1,77 @@
+::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px;
+  }
+::-webkit-scrollbar-thumb {
+    background: #8798AF !important;
+    border-radius: 6px !important;
+  }
+::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+.input_box {
+    display: flex;
+    align-items: center;
+    .el-input {
+        width: auto !important;
+        margin: 0 5px;
+    }
+    input {
+        width: 80px;
+    }
+}
+
+.button-right {
+    padding-left: 70px;
+}
+.tree_box {
+    // height: 60vh;
+    overflow-y: scroll;
+    
+    .tree_flex {
+        &> .el-tree{
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            
+            &> .el-tree-node {
+                padding: 10px 0;
+                &> .el-tree-node__children {
+                    display: flex;
+                    flex-wrap: wrap;
+                    &> .el-tree-node {
+                        width: 260px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+.tree_box {
+    // 必须有高度 overflow 为自动
+        overflow: auto;
+        // height: 434px;
+        // border-top: 1px solid #eff1f4;
+        // border-bottom: 1px solid #eff1f4;
+        // padding: 0px 30px 11px 27px;
+        margin: 4px;
+     
+    // 滚动条的样式,宽高分别对应横竖滚动条的尺寸
+        &::-webkit-scrollbar {
+          width: 3px;
+        }
+     
+    // 滚动条里面默认的小方块,自定义样式
+        &::-webkit-scrollbar-thumb {
+          background: #8798AF;
+          border-radius: 2px;
+        }
+     
+    // 滚动条里面的轨道
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+    }

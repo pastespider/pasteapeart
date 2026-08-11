@@ -1,0 +1,456 @@
+using System.Collections.Generic;
+using System;
+using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Volo.Abp.Application.Dtos;
+using Volo.Abp.Domain.Repositories;
+using PasteForm.Helper;
+using {{ Namespace }}.Application.Contracts;
+
+namespace {{ Namespace }}.{{ DirName }}
+{
+    /// <summary>
+    ///{{ DisplayStr }}
+    ///</summary>
+    [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "view" })]
+    public class {{ Name }}AppService : {{ Namespace }}AppService
+    {
+
+        /// <summary>
+        ///{{ DisplayStr }}
+        ///</summary>
+        public {{ Name }}AppService():base()
+        {
+
+        }
+
+        /// <summary>
+        /// 读取AddDto的数据模型
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+		[TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "add" })]
+        public VoloModelInfo ReadAddModel()
+        {
+            var _model = BuilderHelper.DynamicReadModelProperty<{{ Name }}AddDto>(new {{ Name }}AddDto());
+            return _model;
+        }
+
+        /// <summary>
+        /// 读取UpdateDto的数据模型
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+		[TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "edit" })]
+        public async Task<VoloModelInfo> ReadUpdateModel({{ EntityType | replace : '"',"" }} id)
+        {
+        {%- if updateOuterCount > 0 -%}
+            var _query = from a in _dbContext.{{ Name }}
+            {%- assign my_index = 0 -%}
+            {%- for classProperty in UpdatePropertys -%}
+                {%- if classProperty.class_attributes != null -%}
+                    {%- for classAttribute in classProperty.class_attributes -%}
+                        {%- if classAttribute.name == "PasteShort" -%}
+                            {%- assign my_index = my_index | plus: 1 -%}
+                            join b{{my_index}}1 in _dbContext.{{ classAttribute.Args1 }} on a.{{ classProperty.name }} equals b{{my_index}}1.Id into b{{my_index}}2
+                            from b{{my_index}}3 in b{{my_index}}2.DefaultIfEmpty()
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
+            {%- endfor -%}
+
+            select new {{ Name }}UpdateDto
+            {
+                Id = a.Id,
+                {%- assign my_index = 0 -%}
+                {%- for classProperty in UpdatePropertys -%}
+                    {%- unless classProperty.build_from_config -%}
+                        {{ classProperty.name }} = a.{{ classProperty.name }},
+                        {%- if classProperty.class_attributes != null -%}
+                            {%- for classAttribute in classProperty.class_attributes -%}
+                                {%- if classAttribute.name == "PasteShort" -%}
+                                    {%- assign my_index = my_index | plus: 1 -%}
+                                    {{ classAttribute.Args2 }} = b{{ my_index }}3 != null ? b{{ my_index }}3.{{ classAttribute.Args3 }} : null,
+                                {%- endif -%}
+                            {%- endfor -%}
+                        {%- endif -%}
+                    {%- endunless -%}
+                {%- endfor -%}
+            };
+
+			var _info = await _query.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            if (_info == null || _info == default)
+            {
+                throw new PasteCodeException("查询的信息不存在，无法执行编辑操作！");
+            }
+        {%- else -%}
+            var info = await _dbContext.{{ Name }}.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            if (info == null || info == default)
+            {
+                throw new PasteCodeException("需要查询的信息不存在", 404);
+            }
+            var _info = ObjectMapper.Map<{{ Name }}, {{ Name }}UpdateDto>(info);
+        {%- endif -%}
+            var _dataModel = BuilderHelper.DynamicReadModelProperty<{{ Name }}UpdateDto>(_info);
+            return _dataModel;
+        }
+
+        /// <summary>
+        /// 读取详细
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+		[TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "edit" })]
+        public async Task<VoloModelInfo> ReadDetailModel({{ EntityType | replace : '"',"" }} id)
+        {
+        {%- if detailOuterCount > 0 -%}
+            var _query = from a in _dbContext.{{ Name }}
+            {%- assign my_index = 0 -%}
+            {%- for classProperty in DetailPropertys -%}
+                {%- if classProperty.class_attributes != null -%}
+                    {%- for classAttribute in classProperty.class_attributes -%}
+                        {%- if classAttribute.name == "PasteShort" -%}
+                            {%- assign my_index = my_index | plus: 1 -%}
+                            join b{{my_index}}1 in _dbContext.{{ classAttribute.Args1 }} on a.{{ classProperty.name }} equals b{{my_index}}1.Id into b{{my_index}}2
+                            from b{{my_index}}3 in b{{my_index}}2.DefaultIfEmpty()
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
+            {%- endfor -%}
+
+            select new {{ Name }}Dto
+            {
+                Id = a.Id,
+                {%- assign my_index = 0 -%}
+                {%- for classProperty in DetailPropertys -%}
+                    {%- unless classProperty.build_from_config -%}
+                        {{ classProperty.name }} = a.{{ classProperty.name }},
+                        {%- if classProperty.class_attributes != null -%}
+                            {%- for classAttribute in classProperty.class_attributes -%}
+                                {%- if classAttribute.name == "PasteShort" -%}
+                                    {%- assign my_index = my_index | plus: 1 -%}
+                                    {{ classAttribute.Args2 }} = b{{ my_index }}3 != null ? b{{ my_index }}3.{{ classAttribute.Args3 }} : null,
+                                {%- endif -%}
+                            {%- endfor -%}
+                        {%- endif -%}
+                    {%- endunless -%}
+                {%- endfor -%}
+            };
+
+			var _info = await _query.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            if (_info == null || _info == default)
+            {
+                throw new PasteCodeException("查询的信息不存在，无法执行编辑操作！");
+            }
+        {%- else -%}
+            var info = await _dbContext.{{ Name }}.Where(x => x.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            if (info == null || info == default)
+            {
+                throw new PasteCodeException("需要查询的信息不存在", 404);
+            }
+            var _info = ObjectMapper.Map<{{ Name }}, {{ Name }}Dto>(info);
+        {%- endif -%}
+
+            var _dataModel = BuilderHelper.DynamicReadModelProperty<{{ Name }}Dto>(_info);
+            return _dataModel;
+        }
+
+		/// <summary>
+        /// 读取ListDto的数据模型
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public VoloModelInfo ReadListModel()
+        {
+            var _model = BuilderHelper.DynamicReadModelProperty<{{ Name }}ListDto>(new {{ Name }}ListDto());
+			var _query_model = BuilderHelper.DynamicReadModelProperty(new InputQuery{{ Name }}());
+            if (_query_model != null)
+            {
+                _model.QueryProperties = _query_model.Properties;
+            }
+            return _model;
+        }
+
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<PasteResultDto<{{ Name }}ListDto>> Page([FromQuery] InputQuery{{ Name }} input)
+        {
+            var _query = from a in _dbContext.{{ Name }}
+                        {%- assign has_search_fields = false -%}
+            {%- for prop in ListPropertys -%}
+                {%- if prop.class_attributes != null -%}
+                    {%- for attr in prop.class_attributes -%}
+                        {%- if attr.name == "PasteFieldQuery" -%}
+                            {%- if prop.property_type == "int" or prop.property_type == "long" -%}
+            .WhereIf(input.{{ prop.name }} != 0, x => x.{{ prop.name }} == input.{{ prop.name }})
+                            {%- elsif prop.property_type == "string" -%}
+            .WhereIf(!String.IsNullOrEmpty(input.{{ prop.name }}), x => x.{{ prop.name }} == input.{{ prop.name }})
+                            {%- endif -%}
+                        {%- elsif attr.name == "PasteSearch" -%}
+                            {%- assign has_search_fields = true -%}
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
+            {%- endfor -%}
+            {%- comment %} 严格按您要求：input.word搜索所有标记了PasteSearch的string字段 {% endcomment -%}
+            {%- if has_search_fields -%}
+                {%- assign has_first = false -%}
+                .WhereIf(!String.IsNullOrEmpty(input.word), x =>
+                {%- for prop in ListPropertys -%}
+                    {%- if prop.class_attributes != null -%}
+                        {%- for attr in prop.class_attributes -%}
+                            {%- if attr.name == "PasteSearch" -%}
+                                {%- if has_first == false -%}
+                                 x.{{ prop.name }}.Contains(input.word)
+                                    {%- assign has_first = true -%}
+                                {%- else -%}
+                                 || x.{{ prop.name }}.Contains(input.word)
+                                {%- endif -%}
+                            {%- endif -%}
+                        {%- endfor -%}
+                    {%- endif -%}
+                {%- endfor -%}
+                )
+            {%- endif -%}
+            {%- assign my_index = 0 -%}
+            {%- for classProperty in ListPropertys -%}
+                {%- if classProperty.class_attributes != null -%}
+                    {%- for classAttribute in classProperty.class_attributes -%}
+                        {%- if classAttribute.name == "PasteShort" -%}
+                            {%- assign my_index = my_index | plus: 1 -%}
+                            join b{{my_index}}1 in _dbContext.{{ classAttribute.Args1 }} on a.{{ classProperty.name }} equals b{{my_index}}1.Id into b{{my_index}}2
+                            from b{{my_index}}3 in b{{my_index}}2.DefaultIfEmpty()
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
+            {%- endfor -%}
+
+            select new {{ Name }}ListDto
+            {
+                Id = a.Id,
+                {%- assign my_index = 0 -%}
+                {%- for classProperty in ListPropertys -%}
+                {%- if classProperty.name != "Id" -%}
+                    {%- unless classProperty.build_from_config -%}
+                        {{ classProperty.name }} = a.{{ classProperty.name }},
+                        {%- if classProperty.class_attributes != null -%}
+                            {%- for classAttribute in classProperty.class_attributes -%}
+                                {%- if classAttribute.name == "PasteShort" -%}
+                                    {%- assign my_index = my_index | plus: 1 -%}
+                                    {{ classAttribute.Args2 }} = b{{ my_index }}3 != null ? b{{ my_index }}3.{{ classAttribute.Args3 }} : null,
+                                {%- endif -%}
+                            {%- endfor -%}
+                        {%- endif -%}
+                    {%- endunless -%}
+                {%- endif -%}
+                {%- endfor -%}
+            };
+            var _pagedto = new PasteResultDto<{{ Name }}ListDto>();
+            if (input.page == 1)
+            {
+                _pagedto.TotalCount = await _query.CountAsync();
+               if(input.request=="one"){
+                  _pagedto.BuildModel(new {{ Name }}ListDto(),new InputQuery{{ Name }}()); 
+                }
+            }
+            var dataList = await _query
+                .OrderByDescending(x => x.Id)
+                .Page(input.page, input.size)
+                .AsNoTracking()
+                .ToListAsync();
+            if(dataList==null||dataList.Count == 0){
+               return null;// throw new PasteCodeException("没有查询到数据",204); //由前端处理这个204 由前端处理
+            }
+            _pagedto.Items = dataList;
+            return _pagedto;
+        }
+
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private async Task<{{ Name }}ListDto> ListItemAsync({{ EntityType }} id)
+        {
+            var _query = from a in _dbContext.{{ Name }}.Where(x=>x.Id == id)
+            {%- assign my_index = 0 -%}
+            {%- for classProperty in ListPropertys -%}
+                {%- if classProperty.class_attributes != null -%}
+                    {%- for classAttribute in classProperty.class_attributes -%}
+                        {%- if classAttribute.name == "PasteShort" -%}
+                            {%- assign my_index = my_index | plus: 1 -%}
+                            join b{{my_index}}1 in _dbContext.{{ classAttribute.Args1 }} on a.{{ classProperty.name }} equals b{{my_index}}1.Id into b{{my_index}}2
+                            from b{{my_index}}3 in b{{my_index}}2.DefaultIfEmpty()
+                        {%- endif -%}
+                    {%- endfor -%}
+                {%- endif -%}
+            {%- endfor -%}
+
+            select new {{ Name }}ListDto
+            {
+                Id = a.Id,
+                {%- assign my_index = 0 -%}
+                {%- for classProperty in ListPropertys -%}
+                {%- if classProperty.name != "Id" -%}
+                    {%- unless classProperty.build_from_config -%}
+                        {{ classProperty.name }} = a.{{ classProperty.name }},
+                        {%- if classProperty.class_attributes != null -%}
+                            {%- for classAttribute in classProperty.class_attributes -%}
+                                {%- if classAttribute.name == "PasteShort" -%}
+                                    {%- assign my_index = my_index | plus: 1 -%}
+                                    {{ classAttribute.Args2 }} = b{{ my_index }}3 != null ? b{{ my_index }}3.{{ classAttribute.Args3 }} : null,
+                                {%- endif -%}
+                            {%- endfor -%}
+                        {%- endif -%}
+                    {%- endunless -%}
+                {%- endif -%}
+                {%- endfor -%}
+            };
+
+            var info = await query.FirstOrDefaultAsync();
+            return info;
+        }
+
+        /// <summary>
+        /// 添加一个
+        ///</summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpPost]
+		[TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "add" })]
+        public async Task<{{ Name }}ListDto> CreateItemAsync({{ Name }}AddDto input)
+        {
+            //var _userid = base.ReadCurrentUserId();
+            var info = ObjectMapper.Map<{{ Name }}AddDto, {{ Name }}>(input);
+            //添加自定义
+            _dbContext.Add(info);
+            {%- for item in AddPropertys -%}
+                {%- case item.Name -%}
+                    {%- when "CreateDate" -%}
+                        info.CreateDate = DateTime.Now;
+                    {%- when "create_time" -%}
+                        info.CreateDate = DateTime.Now.ToUnixTimeSeconds();
+                    {%- when "UserId" -%}
+                        {%- if item.nullable -%}
+                        info.UserId = base.ReadCurrentUserId();
+                        {%- else -%}
+                        info.UserId = base.ReadCurrentUserIdThrowException();
+                        {%- endif -%}
+                    {%- when "MemberId" -%}
+                        {%- if item.nullable -%}
+                        info.MemberId = base.ReadCurrentMemberId();
+                        {%- else -%}
+                        info.MemberId = base.ReadCurrentMemberIdThrowException();
+                        {%- endif -%}
+                    {%- when "Sort" -%}
+                        if (input.Sort == 0)
+                        {
+                            var max = await _dbContext.{{ Name }}.AsQueryable().OrderByDescending(x => x.Sort).Select(x => x.Sort).FirstOrDefaultAsync();
+                            info.Sort = max + 10;
+                        }
+                    {%- when "SiteId" -%}
+                        {%- if item.nullable -%}
+                        info.SiteId = base.ReadCurrentSiteId();
+                        {%- else -%}
+                        info.SiteId = base.ReadCurrentSiteIdThrowException();
+                        {%- endif -%}
+                    {%- else -%}
+                {%- endcase -%}
+            {%- endfor -%}
+            await _dbContext.SaveChangesAsync();
+            //var backinfo = ObjectMapper.Map<{{ Name }}, {{ Name }}ListDto>(info);
+            // return backinfo;
+            return await ListItemAsync(info.Id);
+        }
+		
+        /// <summary>
+        /// 更新一个
+        ///</summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "edit" })]
+        public async Task<{{ Name }}ListDto> UpdateItemAsync({{ Name }}UpdateDto input)
+        {
+            var info = await _dbContext.{{ Name }}.Where(x => x.Id == input.Id).FirstOrDefaultAsync();
+            if (info == null || info == default)
+            {
+                throw new PasteCodeException("需要查询的信息不存在", 404);
+            }
+            ObjectMapper.Map<{{ Name }}UpdateDto, {{ Name }}>(input, info);
+            await _dbContext.SaveChangesAsync();
+            //var backinfo = ObjectMapper.Map<{{ Name }}, {{ Name }}ListDto>(info);
+            //return backinfo;
+            return await ListItemAsync(input.Id);
+        }
+		
+        {%- if booleanCount > 0 -%}
+        /// <summary>
+        /// 更新状态，或者更新绑定
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        /// <exception cref="PasteCodeException"></exception>
+        [HttpPost]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "state" })]
+        public async Task<string> UpdateState(InputQueryUpdateState input)
+        {
+            {%- if entity_type != "string" -%}
+            if (!{{ EntityType | replace : '"',"" }}.TryParse(input.id, out var _id))
+            {
+                throw new PasteCodeException("提供的参数id错误，无法继续执行");
+            }
+            {%- else -%}
+                var _id -input.id;
+            {%- endif -%}
+
+                //因为只有一个isenable，直接写
+                var find = await _dbContext.{{ Name }}.Where(x => x.Id == _id).FirstOrDefaultAsync();
+                if (find == null || find == default)
+                {
+                    throw new PasteCodeException("没有找到对应的操作对象，无法继续执行");
+                }
+
+                switch(input.name){
+                 {%- for item in ListPropertys -%}
+                    {%- if item.property_type == "bool" -%}
+                        case "{{ item.lower_name }}":
+                        {
+                            find.{{item.name}} = input.state;
+                        }
+                        break;
+                    {%- endif -%}
+                {%- endfor -%}
+                }
+                await _dbContext.SaveChangesAsync();
+            return "提交成功";
+        }
+        {%- endif -%}
+		
+		/// <summary>
+        /// 删除数据，不需要删除的话注意注释这个 ListDto中附带disable标注忽略删除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "data", "del" })]
+        public async Task<string> Remove({{ EntityType | replace : '"',"" }} id)
+        {
+            var info = await _dbContext.{{ Name }}.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (info == null || info == default)
+            {
+                throw new PasteCodeException("需要查询的信息不存在", 404);
+            }
+            _dbContext.Remove(info);
+            await _dbContext.SaveChangesAsync();
+            return "删除成功";
+        }
+    }
+}

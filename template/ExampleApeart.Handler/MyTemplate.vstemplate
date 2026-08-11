@@ -1,0 +1,41 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>ExampleApeart.Handler</Name>
+    <Description>&lt;没有可用的说明&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>ExampleApeart.Handler</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.Handler.csproj" File="ExampleApeart.Handler.csproj" ReplaceParameters="true">
+      <Folder Name="apeart" TargetFolderName="apeart">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ClaimsPrincipalExtensions.cs">ClaimsPrincipalExtensions.cs</ProjectItem>
+      </Folder>
+      <Folder Name="common" TargetFolderName="common">
+        <ProjectItem ReplaceParameters="true" TargetFileName="CacheHandler.cs">CacheHandler.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ImageHelper.cs">ImageHelper.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="LinqExtend.cs">LinqExtend.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ObjectExtend.cs">ObjectExtend.cs</ProjectItem>
+      </Folder>
+      <Folder Name="eventmodels" TargetFolderName="eventmodels">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AbsEventModelExtensions.cs">AbsEventModelExtensions.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EventDemoModelHandler.cs">EventDemoModelHandler.cs</ProjectItem>
+      </Folder>
+      <Folder Name="modelhandler" TargetFolderName="modelhandler">
+        <ProjectItem ReplaceParameters="true" TargetFileName="LevelHandler.cs">LevelHandler.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UserHandler.cs">UserHandler.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$HandlerModule.cs">ExampleApeartHandlerModule.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="JsonConfig.cs">JsonConfig.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="SerilogCustomHandler.cs">SerilogCustomHandler.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,34 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>ExampleApeart.Application.Contracts</Name>
+    <Description>&lt;没有可用的说明&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>ExampleApeart.Application.Contracts</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.Application.Contracts.csproj" File="ExampleApeart.Application.Contracts.csproj" ReplaceParameters="true">
+      <Folder Name="eventmodels" TargetFolderName="eventmodels">
+        <ProjectItem ReplaceParameters="true" TargetFileName="EventDemoModel.cs">EventDemoModel.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="zreadme.md">zreadme.md</ProjectItem>
+      </Folder>
+      <Folder Name="usermodels" TargetFolderName="usermodels">
+        <ProjectItem ReplaceParameters="true" TargetFileName="GradeInfoDto.cs">GradeInfoDto.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="GradeRoleDto.cs">GradeRoleDto.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="RoleInfoDto.cs">RoleInfoDto.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UserGradeDto.cs">UserGradeDto.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UserInfoDto.cs">UserInfoDto.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$ApplicationContractsModule.cs">ExampleApeartApplicationContractsModule.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PublicString.cs">PublicString.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,425 @@
+@charset "utf-8";
+/* 你自己的样式 */
+.btnguid {
+  position: absolute;
+  right: 15px;
+}
+.btnguid:hover {
+  background-color: #5a98de;
+}
+.inputparentid {
+  width: 100px;
+  line-height: 30px;
+  padding-left: 20px;
+  border: 1px solid #5eb95e;
+  border-radius: 4px;
+}
+.btnsearch {
+  height: 30px;
+  line-height: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 70px;
+  background-color: #5eb95e;
+  color: white;
+  border: 0;
+}
+.btnsearch:hover {
+  background-color: #c81623;
+}
+.menutype {
+  display: inline-block;
+  vertical-align: middle;
+}
+.menutype li {
+  float: left;
+  line-height: 30px;
+  margin-left: 20px;
+  border: 1px solid #5eb95e;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 70px;
+  text-align: center;
+}
+.menutype .selected {
+  border: 1px solid #c81623;
+  background-color: #c81623;
+  color: white;
+}
+.form-horizontal .form-label {
+  text-align: left !important;
+  font-size: 12px;
+  color: #777;
+}
+input[type=text]:read-only {
+  border: none !important;
+  border-bottom: 1px solid #5a98de;
+}
+.inputword {
+  line-height: 30px;
+  margin-left: 20px;
+  border: 1px solid #5eb95e;
+  border-radius: 4px;
+  /* cursor: pointer; */
+  width: 170px;
+  padding-left: 10px;
+  text-align: left;
+}
+.customtext {
+  line-height: 30px;
+  margin-left: 20px;
+  border: 1px solid #5eb95e;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 70px;
+  text-align: center;
+}
+.btnstyle {
+  height: 30px;
+  line-height: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 70px;
+  background-color: #5eb95e;
+  color: white;
+  border: 0;
+}
+.btnstyle:hover {
+  background-color: #c81623;
+}
+.btnselect {
+  position: absolute;
+  right: 15px;
+  top: 0;
+  height: 32px;
+  width: 100px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #5a98de;
+}
+input[type=number] {
+  line-height: 28px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 10px;
+}
+.btnchoose {
+  position: absolute;
+  height: 28px;
+  line-height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 60px;
+  background-color: #3c5e3c;
+  color: white;
+  border: 0;
+  margin-right: 10px;
+  right: 1px;
+  top: 1px;
+}
+.btnchoose:hover {
+  background-color: greenyellow;
+}
+.btn-primary {
+  position: relative;
+  margin: auto;
+  width: 80%;
+}
+textarea {
+  margin: 0px;
+  width: 100%;
+  height: 150px;
+  color: black;
+  padding: 10px;
+  line-height: 20px;
+  box-sizing: border-box;
+  border: 1px solid #666;
+  border-radius: 2px;
+}
+select {
+  line-height: 30px;
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: left;
+  min-width: 150px;
+}
+.input-text:required {
+  /* border-left: 2px solid red; */
+  border-bottom: 1px solid red;
+  padding-bottom: 0px;
+}
+.input-text {
+  -webkit-animation: all 1s;
+  animation: all 1s;
+}
+.input-text:focus {
+  border-bottom: 1px solid #5a98de;
+}
+.btnselectid {
+  position: absolute;
+  top: 1px;
+  right: 16px;
+}
+*::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 10px;
+  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+}
+*::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 0;
+  /* box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2); */
+  background: #e9e9e9;
+}
+*::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  /* box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2); */
+  border-radius: 0;
+  border: 1px solid #e1e1e1;
+  background: transparent;
+}
+.statereplay {
+  color: #5eb95e;
+}
+.statefinish {
+  color: #c81623;
+}
+.statetake {
+  color: #bc15dd;
+}
+.statework {
+  color: #f57207;
+}
+.statewait {
+  color: #0400ff;
+}
+.stateclose {
+  color: #4a4b4b;
+}
+.statecannel {
+  color: #1e1f1f;
+}
+.uhead {
+  width: 30px;
+  height: 30px;
+  border: 1px dashed #4a4a88;
+  padding: 1px;
+  border-radius: 50% 50%;
+}
+.uminhead {
+  width: 22px;
+  height: 22px;
+  border: 1px dashed #4a4a88;
+  padding: 1px;
+  border-radius: 50% 50%;
+}
+.table {
+  position: relative;
+}
+.table a {
+  margin-right: 10px;
+  border: 1px solid #5eb95e;
+  border-radius: 4px;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-decoration: none;
+}
+.table .left {
+  text-align: left !important;
+}
+.table input[type=button] {
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border: 1px solid #afafaf;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+.table input[type=button]:hover {
+  border: 1px solid #5eb95e;
+}
+/*switch开关*/
+.mui-switch {
+  width: 92px;
+  height: 30px;
+  position: relative;
+  border: 1px solid #dfdfdf;
+  background-color: #fdfdfd;
+  box-shadow: #dfdfdf 0 0 0 0 inset;
+  border-radius: 30px;
+  background-clip: content-box;
+  display: inline-block;
+  -webkit-appearance: none;
+  user-select: none;
+  outline: none;
+}
+.mui-switch::before {
+  content: '';
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: -1px;
+  left: 0;
+  border-radius: 30px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.mui-switch::before::before {
+  left: 2em;
+}
+.mui-switch:checked::before {
+  left: 60px;
+}
+.mui-switch-anim {
+  transition: border cubic-bezier(0, 0, 0, 1) 0.4s, box-shadow cubic-bezier(0, 0, 0, 1) 0.4s;
+}
+.mui-switch-anim::before {
+  transition: left 0.3s;
+}
+.mui-switch-anim:checked {
+  box-shadow: #64bd63 0 0 0 16px inset;
+  background-color: #64bd63;
+  transition: border ease 0.4s, box-shadow ease 0.4s, background-color ease 1.2s;
+}
+.mui-switch-anim:checked::before {
+  transition: left 0.3s;
+}
+.newform {
+  position: relative;
+  padding: 20px 20px 30px 20px;
+}
+.newform .row {
+  position: relative;
+  margin-bottom: 38px;
+}
+.newform .lineitem {
+  flex: 1;
+  position: relative;
+  margin-right: 10px;
+}
+.newform .lineitem:last-child {
+  margin-right: 0 !important;
+}
+.newform .option {
+  line-height: 40px;
+  text-align: left;
+  padding-left: 10px;
+  height: 40px;
+}
+.newform .form-label {
+  position: absolute;
+  z-index: 1;
+  top: -7px;
+  left: 6px;
+  background: white;
+  font-size: 12px;
+  padding: 0 4px 0 4px;
+  color: #638ac7;
+}
+.newform .formControls {
+  position: relative;
+}
+.newform .formControls .input-text {
+  height: 50px !important;
+}
+.newform .formControls input[type=text],
+.newform .formControls input[type=number],
+.newform .formControls input[type=password] {
+  line-height: 50px;
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid #f1f1f1;
+  padding: 0 0 0 10px;
+  outline: none;
+  transition: all 0.5s;
+}
+.newform .formControls input[type=text]:focus,
+.newform .formControls input[type=number]:focus,
+.newform .formControls input[type=password]:focus {
+  border: 1px solid #3d62db;
+}
+.newform .formControls input[type=text]:required,
+.newform .formControls input[type=number]:required,
+.newform .formControls input[type=password]:required {
+  border: 1px solid salmon;
+}
+.newform .formControls input[type=text]:read-only,
+.newform .formControls input[type=number]:read-only,
+.newform .formControls input[type=password]:read-only {
+  background-color: #f1f1f1;
+}
+.newform .formControls input[type=text]:focus,
+.newform .formControls input[type=number]:focus {
+  border: 1px solid #3d62db;
+}
+.newform .formControls input[type=checkbox] {
+  cursor: pointer;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+.newform .formControls select {
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #f1f1f1;
+  transition: all 0.5s;
+  width: 100%;
+}
+.newform .formControls select:focus {
+  border: 1px solid #3d62db;
+}
+.newform .formControls select:optional {
+  line-height: 50px;
+}
+.newform .formControls select option {
+  line-height: 50px;
+  height: 40px;
+}
+.newform .formControls textarea {
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #f1f1f1;
+  transition: all 0.5s;
+}
+.newform .formControls textarea:focus {
+  border: 1px solid #3d62db;
+}
+.newform .formControls textarea:read-only {
+  background-color: #f1f1f1;
+}
+.newform .formControls label {
+  display: inline-block;
+  line-height: 50px;
+}
+.newform .round {
+  border-radius: 4px;
+  border: 1px solid #f1f1f1;
+  line-height: 50px;
+}
+.newform .btn-primary {
+  background-color: #5a98de;
+  color: #f1f1f1;
+  transition: all 0.5;
+  line-height: 40px;
+  height: 38px;
+  text-align: center;
+  margin: auto;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 1s;
+}
+.newform .btn-primary:hover {
+  background-color: #3bb4f2;
+}
+@media (max-width: 767px) {
+  .newform {
+    padding: 20px 10px 30px 10px !important;
+  }
+}

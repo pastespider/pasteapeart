@@ -1,0 +1,435 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link href="static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+    <link href="static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+    <link href="static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <title>欢迎页</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <style type="text/css">
+        html,body{
+            overflow: hidden;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访问数统计面板</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 20px;
+        }
+        
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metric-card {
+            text-align: center;
+        }
+        
+        .metric-card h3 {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .metric-card .value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .metric-card .description {
+            font-size: 14px;
+            color: #95a5a6;
+        }
+        
+        .trend-card {
+            grid-column: span 4;
+        }
+        
+        .chart-card {
+            grid-column: span 1;
+        }
+
+        .table-box{
+            grid-column: span 2;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .chart {
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+        
+        .bar {
+            width: 30px;
+            background: linear-gradient(to top, #3498db, #2ecc71);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+        }
+        
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        .y-axis {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        
+        .y-axis-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-align: right;
+            padding-right: 5px;
+        }
+        
+        .conversion-rate {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .conversion-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .conversion-item .label {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+        
+        .conversion-item .value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .pie-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #3498db 0% 40%,
+                #2ecc71 40% 70%,
+                #e74c3c 70% 100%
+            );
+            margin: 20px auto;
+            position: relative;
+        }
+        
+        .pie-center {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .color-1 {
+            background-color: #3498db;
+        }
+        
+        .color-2 {
+            background-color: #2ecc71;
+        }
+        
+        .color-3 {
+            background-color: #e74c3c;
+        }
+        
+        h2 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .trend-card, .chart-card {
+                grid-column: span 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- 访问数卡片 -->
+        <div class="card metric-card">
+            <h3>访问数</h3>
+            <div class="value">$2,000</div>
+            <div class="description">总访问数</div>
+        </div>
+        
+        <!-- 成交量卡片1 -->
+        <div class="card metric-card">
+            <h3>成交量</h3>
+            <div class="value">$20,000</div>
+            <div class="description">总成交额</div>
+        </div>
+        
+        <!-- 下笔数卡片 -->
+        <div class="card metric-card">
+            <h3>下笔数</h3>
+            <div class="value">$8,000</div>
+            <div class="description">总下笔数</div>
+        </div>
+        
+        <!-- 成交量卡片2 -->
+        <div class="card metric-card">
+            <h3>成交量</h3>
+            <div class="value">$5,000</div>
+            <div class="description">总成交额</div>
+        </div>
+        
+        <!-- 访问量趋势卡片 -->
+        <div class="card trend-card">
+            <h2>访问量</h2>
+            <div class="chart-container">
+                <div class="y-axis">
+                    <div class="y-axis-label">80,000</div>
+                    <div class="y-axis-label">60,000</div>
+                    <div class="y-axis-label">40,000</div>
+                    <div class="y-axis-label">20,000</div>
+                    <div class="y-axis-label">0</div>
+                </div>
+                <div class="chart">
+                    <div class="bar" style="height: 25%">
+                        <div class="bar-label">8:00</div>
+                    </div>
+                    <div class="bar" style="height: 35%">
+                        <div class="bar-label">9:00</div>
+                    </div>
+                    <div class="bar" style="height: 50%">
+                        <div class="bar-label">10:00</div>
+                    </div>
+                    <div class="bar" style="height: 65%">
+                        <div class="bar-label">11:00</div>
+                    </div>
+                    <div class="bar" style="height: 75%">
+                        <div class="bar-label">12:00</div>
+                    </div>
+                    <div class="bar" style="height: 85%">
+                        <div class="bar-label">13:00</div>
+                    </div>
+                    <div class="bar" style="height: 90%">
+                        <div class="bar-label">14:00</div>
+                    </div>
+                    <div class="bar" style="height: 95%">
+                        <div class="bar-label">15:00</div>
+                    </div>
+                    <div class="bar" style="height: 100%">
+                        <div class="bar-label">16:00</div>
+                    </div>
+                    <div class="bar" style="height: 85%">
+                        <div class="bar-label">17:00</div>
+                    </div>
+                    <div class="bar" style="height: 70%">
+                        <div class="bar-label">18:00</div>
+                    </div>
+                    <div class="bar" style="height: 60%">
+                        <div class="bar-label">19:00</div>
+                    </div>
+                    <div class="bar" style="height: 45%">
+                        <div class="bar-label">20:00</div>
+                    </div>
+                    <div class="bar" style="height: 30%">
+                        <div class="bar-label">21:00</div>
+                    </div>
+                    <div class="bar" style="height: 20%">
+                        <div class="bar-label">22:00</div>
+                    </div>
+                    <div class="bar" style="height: 15%">
+                        <div class="bar-label">23:00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 转化率卡片 -->
+        <div class="card table-box">
+            <h2>转化率</h2>
+            <div class="conversion-rate">
+                <div class="conversion-item">
+                    <div class="label">价格</div>
+                    <div class="value">12.5%</div>
+                </div>
+                <div class="conversion-item">
+                    <div class="label">月度日</div>
+                    <div class="value">8.3%</div>
+                </div>
+                <div class="conversion-item">
+                    <div class="label">环比</div>
+                    <div class="value">+2.1%</div>
+                </div>
+                <div class="conversion-item">
+                    <div class="label">时间</div>
+                    <div class="value">15:30</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 访问来源卡片 -->
+        <div class="card">
+            <h2>访问来源</h2>
+            <div class="pie-chart">
+                <div class="pie-center">访问来源</div>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color color-1"></div>
+                    <span>直接访问</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-2"></div>
+                    <span>搜索引擎</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-3"></div>
+                    <span>社交媒体</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 成交占比卡片 -->
+        <div class="card chart-card">
+            <h2>成交占比</h2>
+            <div class="pie-chart">
+                <div class="pie-center">成交占比</div>
+            </div>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color color-1"></div>
+                    <span>收款量</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-2"></div>
+                    <span>电子产品</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color color-3"></div>
+                    <span>服装</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 简单的交互效果
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+    </script>
+</body>
+</html>

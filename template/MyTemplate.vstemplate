@@ -1,0 +1,46 @@
+<VSTemplate Version="2.0.0" Type="ProjectGroup"
+    xmlns="http://schemas.microsoft.com/developer/vstemplate/2005">
+	<TemplateData>
+		<Name>PasteApeart</Name>
+		<Description>贴代码PasteApeart框架模板 V26.8.1 更多资料 https://soft.pastecode.cn/</Description>
+		<ProjectType>CSharp</ProjectType>
+		<ProjectSubType></ProjectSubType>
+		<SortOrder>2000</SortOrder>
+		<CreateNewFolder>true</CreateNewFolder>
+		<DefaultName>PasteProject</DefaultName>
+		<ProvideDefaultName>false</ProvideDefaultName>
+		<LocationField>Enabled</LocationField>
+		<EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+		<CreateInPlace>true</CreateInPlace>
+		<Icon>logo.ico</Icon>
+		<LanguageTag>CSharp</LanguageTag>
+		<PlatformTag>Windows</PlatformTag>
+		<PlatformTag>Linux</PlatformTag>
+		<PlatformTag>macOS</PlatformTag>
+	  <Hidden>false</Hidden>	
+	</TemplateData>
+	<TemplateContent>
+		<ProjectCollection>
+			<SolutionFolder Name="src">
+				<ProjectTemplateLink ProjectName="$safeprojectname$.HttpApi.Host" CopyParameters="true">
+					ExampleApeart.HttpApi.Host\MyTemplate.vstemplate
+				</ProjectTemplateLink>
+				<ProjectTemplateLink ProjectName="$safeprojectname$.Application.Contracts" CopyParameters="true">
+					ExampleApeart.Application.Contracts\MyTemplate.vstemplate
+				</ProjectTemplateLink>
+				<ProjectTemplateLink ProjectName="$safeprojectname$.Application" CopyParameters="true">
+					ExampleApeart.Application\MyTemplate.vstemplate
+				</ProjectTemplateLink>
+				<ProjectTemplateLink ProjectName="$safeprojectname$.Domain" CopyParameters="true">
+					ExampleApeart.Domain\MyTemplate.vstemplate
+				</ProjectTemplateLink>
+				<ProjectTemplateLink ProjectName="$safeprojectname$.Handler" CopyParameters="true">
+					ExampleApeart.Handler\MyTemplate.vstemplate
+				</ProjectTemplateLink>
+				<ProjectTemplateLink ProjectName="$safeprojectname$.EntityFrameworkCore" CopyParameters="true">
+					ExampleApeart.EntityFrameworkCore\MyTemplate.vstemplate
+				</ProjectTemplateLink>
+			</SolutionFolder>
+		</ProjectCollection>
+	</TemplateContent>
+</VSTemplate>

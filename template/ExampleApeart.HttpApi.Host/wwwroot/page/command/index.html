@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5shiv.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <!-- <link rel="stylesheet" type="text/css" href="static/h-ui/css/H-ui.min.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/H-ui.admin.css" /> -->
+    <link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="static/h-ui.admin/skin/blue/skin.css" id="skin" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="static/h-ui.admin/css/style.css" /> -->
+    <!--[if IE 6]>
+    <script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <!-- <link rel="stylesheet" type="text/css" href="../index.css" /> -->
+    <title>数据库预览</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <style type="text/css">
+        body {
+            margin: auto;
+            width: 100%;
+            max-width: 1400px;
+            box-sizing: border-box;
+            padding: 30px;
+        }
+
+        .inputbody {
+            width: 100%;
+            height: 300px;
+            padding: 10px;
+            line-height: 2.0;
+        }
+
+        .result {
+            width: 100%;
+            background-color: aliceblue;
+            padding: 10px;
+            line-height: 1.0;
+            overflow-y: auto;
+
+        }
+
+        .areatop {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .areal {
+            width: 500px;
+            flex: 1;
+        }
+
+        .arear {
+            width: 300px;
+            flex: 1;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        pre {
+            white-space: break-spaces;
+            word-wrap: break-word;
+            line-height: 1.6;
+        }
+
+        ul{
+            list-style-type: none;
+        }
+        li{
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="pbody areatop">
+        <div class="areal">
+            <textarea class="inputbody"></textarea>
+        </div>
+
+        <div class="arear">
+            <ul>
+
+            </ul>
+        </div>
+    </div>
+    <div class="ilab">
+        <input type="button" value="查询" onclick="command(true)">
+        <input type="button" value="提交" onclick="command(false)">
+    </div>
+    <div class="result">
+        <div class="iheader"></div>
+        <pre></pre>
+    </div>
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/layer/3.1.1/layer.js"></script>
+    <script type="text/javascript" src="../lib/api.js"></script>
+    <script type="text/javascript" src="../lib/template.js"></script>
+    <script type="text/javascript" src="../pasteform/form.js"></script>
+
+    <script type="text/javascript">
+        // async function func_query_submit() {
+        //     var input = $(".inputbody").val();
+        //     if (input) {
+        //         var info = {
+        //             command: input
+        //         };
+        //         if (input.indexOf("select") == -1 && input.indexOf("SELECT") == -1) {
+        //             layer.msg("没有监测到有 select 字样！");
+        //             return;
+        //         }
+        //         var read = await apipostPromise('/api/app/Test/QueryCommand', info);
+        //         if (typeof read.info == "object") {
+        //             read.info = JSON.stringify(read.info, null, 2);
+        //         }
+        //         $(".iheader").html(new Date().getTime());
+        //         $(".result pre").html(read.info);
+        //     }
+        // }
+
+        // async function func_exec_submit() {
+        //     var input = $(".inputbody").val();
+        //     if (input) {
+        //         var info = {
+        //             command: input
+        //         };
+        //         if (input.indexOf("update") == -1 && input.indexOf("delete") == -1 && input.indexOf("UPDATE") == -1 && input.indexOf("DELETE") == -1) {
+        //             layer.msg("没有监测到有 update delete 字样！");
+        //             return;
+        //         }
+        //         var read = await apipostPromise('/api/app/Test/ExecuteCommand', info);
+        //         if (typeof read.info == "object") {
+        //             read.info = JSON.stringify(read.info, null, 2);
+        //         }
+        //         $(".iheader").html(new Date().getTime());
+        //         $(".result pre").html(read.info);
+        //     }
+        // }
+
+        $(window).ready(function () {
+            $(".arear").on("click", "li", function () {
+                var text = $(this).text();
+                $(".inputbody").val(text);
+            });
+        });
+
+        async function command(isquery) {
+            var input = $(".inputbody").val();
+            if (input) {
+                var info = {
+                    command: input
+                };
+                var url = '/api/app/Tool/QueryCommand';
+                if (isquery) {
+                    if (input.indexOf("select") == -1 && input.indexOf("SELECT") == -1) {
+                        layer.msg("没有监测到有 select 字样！");
+                        return;
+                    }
+                } else {
+                    if (input.indexOf("update") == -1 && input.indexOf("delete") == -1 && input.indexOf("INSERT") == -1 && input.indexOf("UPDATE") == -1 && input.indexOf("DELETE") == -1) {
+                        layer.msg("没有监测到有 update delete 字样！");
+                        return;
+                    }
+                    url = '/api/app/Tool/ExecuteCommand';
+                }
+                var read = await apipostPromise(url, info);
+                $(".arear ul").append(`<li>${input}</li>`);
+                if (typeof read.info == "object") {
+                    read.info = JSON.stringify(read.info, null, 2);
+                }
+                $(".iheader").html(new Date().getTime());
+                $(".result pre").html(read.info);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

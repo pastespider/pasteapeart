@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<!-- 启用确定性编译（关键） -->
+		<Deterministic>true</Deterministic>
+		<!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>PasteApeart.Application</RootNamespace>
+		<DocumentationFile>PasteApeart.Application.xml</DocumentationFile>
+		<FileVersion>26.8.1</FileVersion>
+		<VersionPrefix>26.8.1</VersionPrefix>
+		<AssemblyVersion>26.8.1</AssemblyVersion>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+  <ItemGroup>
+	  <None Include="readme.md" Pack="true" PackagePath="/" Visible="true" />
+  </ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+	</ItemGroup>
+  <ItemGroup>
+	<PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
+	<PackageReference Include="PasteApeart.Helper" Version="26.7.1" />
+	<PackageReference Include="PasteApeart.Handler" Version="26.7.1" />
+  </ItemGroup>
+
+</Project>

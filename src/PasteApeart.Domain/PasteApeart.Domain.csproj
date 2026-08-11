@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <!-- 启用确定性编译（关键） -->
+	  <Deterministic>true</Deterministic>
+	  <!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	  <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>PasteApeart.Domain</RootNamespace>
+		  <DocumentationFile>..\PasteApeart.HttpApi.Host\PasteApeart.Domain.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.19" />
+    <!--<PackageReference Include="Volo.Abp.Ddd.Domain" Version="8.3.4" />-->
+	  <PackageReference Include="PasteForm.Helper" Version="26.7.1" />
+  </ItemGroup>
+
+</Project>

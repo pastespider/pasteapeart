@@ -1,0 +1,35 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>ExampleApeart.EntityFrameworkCore</Name>
+    <Description>&lt;没有可用的说明&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>ExampleApeart.EntityFrameworkCore</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.EntityFrameworkCore.csproj" File="ExampleApeart.EntityFrameworkCore.csproj" ReplaceParameters="true">
+      <Folder Name="auditing" TargetFolderName="auditing">
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyAuditingDb.cs">MyAuditingDb.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="MyAuditingDbFactory.cs">MyAuditingDbFactory.cs</ProjectItem>
+      </Folder>
+      <Folder Name="EntityFrameworkCore" TargetFolderName="EntityFrameworkCore">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AbsFilterDbContext.cs">AbsFilterDbContext.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$DbContextModelCreatingExtensions.cs">ExampleApeartDbContextModelCreatingExtensions.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$EntityFrameworkCoreModule.cs">ExampleApeartEntityFrameworkCoreModule.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$ModelBuilderConfigurationOptions.cs">ExampleApeartModelBuilderConfigurationOptions.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="I$ext_safeprojectname$DbContext.cs">IExampleApeartDbContext.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ISqlDbContext.cs">ISqlDbContext.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SqliteDb.cs">SqliteDb.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SqliteDbFactory.cs">SqliteDbFactory.cs</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

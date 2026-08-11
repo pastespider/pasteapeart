@@ -1,0 +1,42 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>ExampleApeart.Domain</Name>
+    <Description>&lt;没有可用的说明&gt;</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>ExampleApeart.Domain</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.Domain.csproj" File="ExampleApeart.Domain.csproj" ReplaceParameters="true">
+      <Folder Name="enummodels" TargetFolderName="enummodels">
+        <ProjectItem ReplaceParameters="true" TargetFileName="EnumIsEnableState.cs">EnumIsEnableState.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="EnumRoleType.cs">EnumRoleType.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="ILevelEntity.cs">ILevelEntity.cs</ProjectItem>
+      </Folder>
+      <Folder Name="template" TargetFolderName="template">
+        <ProjectItem ReplaceParameters="true" TargetFileName="config.json">config.json</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="dto.txt">dto.txt</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="readme.md">readme.md</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="server.txt">server.txt</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="temp.md">temp.md</ProjectItem>
+      </Folder>
+      <Folder Name="usermodels" TargetFolderName="usermodels">
+        <ProjectItem ReplaceParameters="true" TargetFileName="GradeInfo.cs">GradeInfo.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="GradeRole.cs">GradeRole.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="RoleInfo.cs">RoleInfo.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UserGrade.cs">UserGrade.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="UserInfo.cs">UserInfo.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="AppConfig.cs">AppConfig.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$DbProperties.cs">ExampleApeartDbProperties.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,491 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PasteApeart.HttpApi.Host</name>
+    </assembly>
+    <members>
+        <member name="T:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware">
+            <summary>
+            审计日志中间件
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware.#ctor(Microsoft.Extensions.Logging.ILogger{PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware},PasteApeart.HttpApi.Host.auditmodels.IAuditLogProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.AuditingConfigOptions},Microsoft.AspNetCore.Mvc.Infrastructure.IActionDescriptorCollectionProvider)">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+            <param name="auditLogManager"></param>
+            <param name="config"></param>
+            <param name="actionDescriptorCollectionProvider"></param>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="_next"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware.Truncate(System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="maxLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware.SerializeHeaders(Microsoft.AspNetCore.Http.IHeaderDictionary)">
+            <summary>
+            记录header
+            </summary>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware.ReadRequestBody(Microsoft.AspNetCore.Http.HttpRequest)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware.IsAuditingDisabled(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            检查是否有禁用特性
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware.IsTextContent(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="contentType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditMiddleware.ShouldSkipAudit(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.auditmodels.AuditServiceCollectionExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.AuditServiceCollectionExtensions.AddAuditLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.auditmodels.IAuditLogProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.IAuditLogProvider.InsertAsync(PasteApeart.auditmodels.ApAuditLog)">
+            <summary>
+            
+            </summary>
+            <param name="auditLog"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.auditmodels.SqliteAuditLogProvider">
+            <summary>
+            入库 入库
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.SqliteAuditLogProvider.#ctor(PasteApeart.MyAuditingDb)">
+            <summary>
+            
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.auditmodels.SqliteAuditLogProvider.InsertAsync(PasteApeart.auditmodels.ApAuditLog)">
+            <summary>
+            
+            </summary>
+            <param name="auditLog"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.Controllers.TestController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.TestController.ReadEnumInfo(System.String)">
+            <summary>
+            获取所有枚举，或者某一个枚举数据的值
+            </summary>
+            <param name="enumName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.TestController.InputDate(PasteApeart.HttpApi.Host.Controllers.InputDate)">
+            <summary>
+            测试时间 格式
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.TestController.TestAdaptAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.Controllers.InputDate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.InputDate.sdate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.InputDate.edate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.Controllers.UploadController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UploadController.UploadImage(System.Int32,System.Int32)">
+            <summary>
+            富文本上传图片 控件
+            </summary>
+            <param name="typeid"></param>
+            <param name="objid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UploadController.UpImage(System.String,System.String)">
+            <summary>
+            上传图片
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UploadController.TestUpload(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            测试上传
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UploadController.CalculateMd5(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UploadController.UpFile(System.String)">
+            <summary>
+            上传文件
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UploadController.IsImageExtension(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.Controllers.WangEditorUpload">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.WangEditorUpload.errno">
+            <summary>
+            有几个错误
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.WangEditorUpload.data">
+            <summary>
+            数据集
+            </summary>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.Controllers.WangEditorUploadItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.WangEditorUploadItem.url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.WangEditorUploadItem.alt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.WangEditorUploadItem.href">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.WangEditorUploadItem.size">
+            <summary>
+            资源大小
+            </summary>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.Controllers.UserController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UserController.Image(System.String)">
+            <summary>
+            获取验证码
+            </summary>
+            <param name="guid"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UserController.Login(PasteApeart.HttpApi.Host.Controllers.InputLogin)">
+            <summary>
+            登入
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UserController.LoginOut">
+            <summary>
+            登出
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UserController.ReadInfo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Controllers.UserController.Now">
+            <summary>
+            结果缓存 需要添加app.UseResponseCaching();
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.Controllers.InputLogin">
+            <summary>
+            登录的模型
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.InputLogin.Email">
+            <summary>
+            邮箱或者手机号码
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.InputLogin.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.InputLogin.code">
+            <summary>
+            图形验证码代码
+            </summary>
+        </member>
+        <member name="P:PasteApeart.HttpApi.Host.Controllers.InputLogin.guid">
+            <summary>
+            图形验证码串号
+            </summary>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.PasteApeartHttpApiHostModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PasteApeart.HttpApi.Host.PasteApeartHttpApiHostModule.DefaultCorsPolicyName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.PasteApeartHttpApiHostModule.AddPasteApeartHttpApiHostModule(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="Services"></param>
+            <param name="Configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.HttpApi.Host.Services.AuthMiddleware">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.HttpApi.Host.Services.AuthMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.AuthTagDescriptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.AuthTagDescriptions.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:PasteApeart.Controllers.IBaseController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Controllers.IBaseController.LazyServiceProvider">
+            <summary>
+            用了AUTOFACE所以这里要public
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Controllers.IBaseController.Logger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Controllers.IBaseController._dbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.Controllers.IBaseController.CurrentUserId">
+            <summary>
+            获取登录者UID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Controllers.IBaseController.CurrentUserToken">
+            <summary>
+            获取登录者UID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Program.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.StartHostedService">
+            <summary>
+            系统初始化
+            </summary>
+        </member>
+        <member name="M:PasteApeart.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.RabbitConfig},PasteApeart.Handler.rabbitmodel.RabbitMultiConsumerHandler,Microsoft.Extensions.Logging.ILogger{PasteApeart.StartHostedService},PasteApeart.ChannelHelper,PasteApeart.Handler.EventActionHandler,Microsoft.Extensions.Options.IOptions{PasteApeart.Application.Contracts.AppConfig})">
+            <summary>
+            
+            </summary>
+            <param name="serviceProvider"></param>
+            <param name="rabbitMultiConsumerHandler"></param>
+            <param name="logger"></param>
+            <param name="channelHelper"></param>
+            <param name="eventHandler"></param>
+            <param name="config"></param>
+        </member>
+        <member name="F:PasteApeart.StartHostedService.cts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.StartHostedService.StartAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:PasteApeart.StartHostedService.InstanceSystemDataUpdateAsync">
+            <summary>
+            初始化系统
+            </summary>
+        </member>
+        <member name="M:PasteApeart.StartHostedService.InitAuditDataUpdateAsync">
+            <summary>
+            初始化审计日志的数据库等
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.StartHostedService.ReahChannelEventModelAsync(System.Threading.CancellationToken)">
+            <summary>
+            处理Channel中的EventModel
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.StartHostedService.StopAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:PasteApeart.StartHostedService.DisposeAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PasteApeart.Startup._configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:PasteApeart.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:PasteApeart.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+        </member>
+    </members>
+</doc>

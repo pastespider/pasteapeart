@@ -1,0 +1,373 @@
+﻿<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="./style.css" /> 改成下面的 ../lib/pasteform.css -->
+    <link rel="stylesheet" type="text/css" href="../lib/pasteform.css">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <link href="../lib/page.min.css" rel="stylesheet" type="text/css" />
+    <title></title>
+</head>
+
+<body>
+
+    <div class="page-container">
+        <div class="searcharea">
+            <form id="formsearch" class="pasteform oneline">
+                <div class="searchbox">
+                    <!-- <label>
+                        <span>关键字:</span>
+                        <input type="text" class="inputword" name="word" placeholder="输入关键字查询" value="">
+                    </label> -->
+                    <!-- 这里用于添加对其他的查询 -->
+                </div>
+            </form>
+            <div class="tap_more">
+                <i class="Hui-iconfont Hui-iconfont-arrow3-bottom" style="cursor: pointer;"
+                    onclick="func_auto_searcharea(this);"></i>
+            </div>
+        </div>
+        <div class="ppbody">
+            <div class="st">
+                
+                <input type="button" class="isedit btn btnstyle btnadd" value="新增" onclick="tap_add_form(this);" />
+
+                <span class="sn">数据名称</span>
+                <span class="idesc">数据的描述，在Class的注释的后部分,名称为数据的前部分，他们用空格隔开！</span>
+
+                <!-- 功能按钮区域 -->
+                <div class="func_btn_area"></div>
+
+                <input type="button" class="btnsearch btn" onclick="readPageData(1);" value="查询">
+                <a class="btnrefush" href="javascript:location.replace(location.href);" title="刷新"><i
+                        class="Hui-iconfont">&#xe68f;</i></a>
+                <a href="javascript:func_auto_searcharea(this);" class="btnautoarea" title="显示更多查询项"><i
+                        class="Hui-iconfont Hui-iconfont-search1"></i></a>
+            </div>
+            <div class="batcharea"></div>
+            <div class="mt-20 table_wrap">
+                <table class="table table-border tb_freeze table-bordered table-bg table-hover table-sort table-responsive">
+                    <thead>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="pagenumarea" class="pagenumarea"></div>
+
+        <!-- 查询的信息模板 -->
+        <script type="text/html" id="template_search">
+            <% list.forEach(item=>{ %>
+                <% if(item.dataType=="String" || item.dataType == 'Guid'){ %>
+                    <div class="sitem" <%if(item.hidden){%>style="display:none;"<%}%>>
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                        <input type="text" name="<%:=item.name%>" class="inputword" onkeyup="handler_keyup(event)" <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>">
+                        <span class="spanclean" onclick="handlerSearchClean(this)">x</span>
+                    </div>
+                <% } %>
+                <% if(item.dataType=="Int32" || item.dataType=='Int64'){ %>
+                    <div class="sitem" <%if(item.hidden){%>style="display:none;"<%}%>>
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                        <input type="number" name="<%:=item.name%>" class="inputword"  onkeyup="handler_keyup(event)"  <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>">
+                        <span class="spanclean" onclick="handlerSearchClean(this)">x</span>
+                    </div>
+                <% } %>
+                <% if(item.dataType=='outer'){ %>
+                    <div class="outer sitem" <%if(item.hidden){%>style="display:none;"<%}%>>
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                        <% if(item.dataFrom=='Int32' || item.dataFrom=='Int64'){ %>
+                            <input type="number" class="outerid" style="display:none;" <%if(item.value){%>value="<%:=item.value%>"<%}%> name="<%:=item.name%>">
+                        <%}else{%>
+                            <input type="text" class="outerid" style="display:none;" <%if(item.value){%>value="<%:=item.value%>"<%}%> value="<%:=item.value%>" name="<%:=item.name%>">
+                        <%}%>
+                        <input type="text" class="outerdisplay" dataname="<%:=item.name%>" value="<%:=item.display%>" onclick="handler_outer_value(this)" readonly placeholder="<%:=item.placeholder%>" >
+                        <span class="spanclean" onclick="handlerSearchCleanOuterInput(this)">x</span>
+                    </div>
+                <% } %>
+                <% if(item.dataType=="select"){ %>
+                    <div  class="sitem" <% if(item.hidden){ %>style="display:none;"<% } %> >
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                        <select name="<%:=item.name%>" onchange="handler_select_change(this);">
+                            <% if(item.selects){ %>
+                                <% item.selects.forEach(_select=>{ %>
+                                    <option value="<%:=_select.value%>" <% if(_select.value==item.value){%>selected<% } %>><%:=_select.name%></option>
+                                <% }) %>
+                            <%}%>
+                        </select>
+                    </div>
+                <% } %>
+
+                <% if(item.dataType=="lselect"){ %>
+                    <div  class="sitem" <%if(item.hidden){%>style="display:none;"<%}%> >
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                    <ul class="ulitems lselect" name="<%:=item.name%>">
+                        <% if(item.selects){ %>
+                            <% item.selects.forEach(_select=>{ %>
+                                <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>"><%:=_select.name%></li>
+                            <% }) %>
+                        <%}%>
+                    </ul>
+                </div>
+                <% } %>
+
+                <% if(item.dataType=="selects"){ %>
+                    <div  class="sitem" <%if(item.hidden){%>style="display:none;"<%}%> >
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                    <ul class="ulitems ulselects" name="<%:=item.name%>">
+                        <% if(item.selects){ %>
+                            <% item.selects.forEach(_select=>{ %>
+                                <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>"><%:=_select.name%></li>
+                            <% }) %>
+                        <%}%>
+                    </ul>
+                </div>
+                <% } %>
+
+                <% if(item.dataType=="DateTime"){ %>
+                    <div class="sitem" <%if(item.hidden){%>style="display:none;"<%}%>>
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                        <input type="text" name="<%:=item.name%>" <%if(item.value){%>value="<%:=item.value%>"<%}%> class="inputword" onClick="WdatePicker({el:this,dateFmt:'<%:=item.format%>'})" placeholder="<%:=item.placeholder || ''%>">
+                        <span class="spanclean" onclick="handlerSearchClean(this)">x</span>
+                    </div>
+                <% } %>
+                <% if(item.dataType=="datalist"){ %>
+                    <div class="sitem" <%if(item.hidden){%>style="display:none;"<%}%>>
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                        <input type="text" name="<%:=item.name%>" class="inputword" list="<%:=item.name%>" placeholder="<%:=item.placeholder || ''%>">
+                            <% if(item.selects){ %>
+                                <datalist id="<%:=item.datalistid%>">
+                                    <% item.selects.forEach(_select=>{ %>
+                                        <option value="<%:=_select.value%>" ><%:=_select.name%>(<%:=_select.value%>)</option>
+                                    <% }) %>
+                                </datalist>
+                            <%}%>
+                        <span class="spanclean" onclick="handlerSearchClean(this)">x</span>
+                    </div>
+                <% } %>
+                <% if(item.dataType=='daterange'){%>
+                    <div class="sitem" <%if(item.hidden){%>style="display:none;"<%}%>>
+                        <span class="tl"><%:=item.title%>:</span>
+                        <% if(item.mark){ %>
+                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                        <% } %>
+                            <input type="text" class="inputword" name="<%:=item.name%>" readonly datas="" datae="" <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>" id="<%:=item.name%>">
+                    </div>
+                <% } %>
+            <% }) %>
+        </script>
+
+        <!-- 头部的批量操作的模板 -->
+        <script type="text/html" id="template_batch">
+            <div class="buttons">
+                <% batchs.forEach(item=>{ %>
+                    <input type="button" class="btn btntool" value=<%:=item.name%> onclick=<%:=item.func%> >
+                <% }) %>
+            </div>
+        </script>
+
+        <!-- 头部的信息模板 -->
+        <script type="text/html" id="template_header">
+                <tr>
+                    <% for(var k=0;k< list.length;k++){ %>
+                        <% var item = list[k]; %>
+                        <% if(!item.hidden){ %>
+                            <td>
+                            <% if(config.batch && k==0){ %> 
+                                <input type="checkbox" class="cbbatch" onclick="tap_batch_check_change(this);"> 
+                            <%}%>
+                            <%:=item.title%>
+                            <% if(item.attributes!=null){ %>
+                                <% item.attributes.forEach(_attribute=>{ %>
+                                    <% if(_attribute.name=='orderby'){ %>
+                                        <span class="orderby">
+                                            <i class="Hui-iconfont ordersell icon-top" dataval="<%:=_attribute.args1%>"></i>
+                                            <i class="Hui-iconfont ordersell icon-bottom" dataval="<%:=_attribute.args2%>"></i>
+                                        </span>
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                            <% if(item.mark){ %>
+                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>')">?</span>
+                            <% } %>
+                            </td>
+                        <% } %>
+                    <% } %>
+                    <% if(config.model!='bind'){ %>
+                    <td>操作</td>
+                    <% } %>
+                </tr>
+        </script>
+
+        <!-- 表格的信息模板 -->
+        <script type="text/html" id="template_body">
+            <!-- 注意花括号百分比的是当前的模板 2个花括号的是占位，下一个的模板代码 -->
+            {{ list.forEach(item=>{ }}
+        <tr {{ if(config.batch){ }} class="trline" dataid="{{:=item.id}}" {{ } }}>
+            <% for(var k=0;k< list.length;k++){ %>
+                <% var item=list[k]; %>
+                    <% if(!item.hidden){ %>
+                        <td <% if(item.class){ %>class=<%:=item.class%> <% } %> >
+                            <% if(config.batch && k==0){ %>
+                                <input type="checkbox" class="trbatch" dataid={{:=item.id}}>
+                            <%}%>
+                            <% if(item.dataType=='image' ){ %>
+                                {{ if(item.<%:=item.name%> && item.<%:=item.name%> != null){ }}
+                                    <img class="image" src="{{:=item.<%:=item.name%>}}">
+                                {{ } }}
+                            <% }else if(item.dataType=='head' ){ %>
+                                <img class="head" src="{{:=item.<%:=item.name%>}}">
+                            <% }else if(item.dataType=='switch' ){ %>
+                                <input type="checkbox" class="input-checkbox mui-switch mui-switch-anim" onchange="handlerSwitchChange(this)" dataid="{{:=item.id}}" dataname="<%:=item.name%>" {{ if(item.<%:=item.name%>){ }}checked{{ } }} >
+                            <% }else{ %>
+                                <%if(item.html){%>
+                                        <%:=item.html%>
+                                <%}else{%>
+                                        <span class="itd">{{:=item?.<%:=item.name%>}}</span>
+                                <%}%>
+                            <% } %>
+                            <!-- 这里考虑添加编辑模式 -->
+                        </td>
+                    <% } %>
+            <% } %>
+
+            <% if(config.model!='bind' ){ %>
+
+                <td class="fleft">
+                                        <!-- 这里填写编辑或者其他 -->
+                    {{ if(config.model=='view'){ }}
+                        <% if(config.menubox){%>
+                            <a href="javascript:;" onclick="open_menu_box(this);" onmouseover="open_menu_box(this);"><i class="Hui-iconfont Hui-iconfont-more"></i></a>
+                            <div class="menubox" style="z-index: 100;" onmouseleave="$(this).fadeOut();">
+                                    <% list.forEach(item=>{%>
+                                        <% if(item.dataType=='menubox' ){ %>
+                                            <% if(item.attributes){ %>
+                                                <% item.attributes.forEach(_attribute=>{ %>
+                                                    <% if(_attribute.name=='menu' ){ %>
+                                                        <a onclick=<%:=_attribute.args2%> >
+                                                                        <%if(_attribute.args3){%>
+                                                                                <i class="Hui-iconfont <%:=_attribute.args3%>"></i>
+                                                                        <%}%>
+                                                                    <%:=_attribute.args1%>
+                                                        </a>
+                                                    <% } %>
+                                                <% }) %>
+                                            <% } %>
+                                        <% } %>
+                                        <% if(item.dataType=='ifmenubox' ){ %>
+                                            {{ if(<%:=item.ifmenu.expression%>){ }}
+                                                <%:=item.ifmenu.value%>
+                                            {{ } }}
+                                        <% } %>
+                                    <% }) %>
+                            </div>
+                        <% } %>
+
+                        <% if(!config.disable_edit){ %>
+                                                    <a href="javascript:;" onclick="tap_view_item(this)"
+                                                        dataid="{{:=item.id}}"><i
+                                                            class="Hui-iconfont Hui-iconfont-shuru"></i>编辑</a>
+                        <% } %>
+
+                                                        <!-- 处理自定义的类型，由于是表的性质，穿透到数据的className -->
+                        <% list.forEach(item=>{%>
+                            <% if(item.dataType=='menu'){ %>
+                                <% if(item.attributes){ %>
+                                    <% item.attributes.forEach(_attribute=>{ %>
+                                        <% if(_attribute.name=='menu' ){ %>
+                                            <a onclick=<%:=_attribute.args2%> >
+                                                <% if(_attribute.args3){%>
+                                                    <i class="Hui-iconfont <%:=_attribute.args3%>"></i>
+                                                <%}%>
+                                                <%:=_attribute.args1%>
+                                            </a>
+                                        <% } %>
+                                    <% }) %>
+                                <% } %>
+                            <% } %>
+                            <% if(item.dataType=='ifmenu'){ %>
+                                {{ if(<%:=item.ifmenu.expression%>){ }}
+                                    <%:=item.ifmenu.value%>
+                                {{ } }}
+                            <% } %>
+                        <% }) %>
+
+                        <% if(config.enable_view){ %>
+                            <a href="javascript:;" onclick="tap_detail_item(this)"
+                            dataid="{{:=item.id}}"><i
+                                class="Hui-iconfont Hui-iconfont-shuru"></i>详细</a>
+                        <% } %>
+
+                        <% if(!config.disable_del){ %>
+                            <a href="javascript:;" onclick="handler_tap_del(this)" class="a-del" dataid="{{:=item.id}}">
+                                <i class="Hui-iconfont Hui-iconfont-del3"></i>删除</a>
+                        <% } %>
+                        
+                    {{ } }}
+                    
+                    {{ if(config.model=='select'){ }}
+                                <a href="javascript:;" class="mselect" onclick="tap_select_item(this)" dataid="{{:=item.id}}">
+                                    <i class="Hui-iconfont Hui-iconfont-fabu"></i>选择</a>
+                    {{ } }}
+
+                </td>
+            <% } %>
+        </tr>
+        {{ }) }}
+        </script>
+    </div>
+
+    <!-- 注释
+     <% if(item.className=='bookMarkModel'){ %>
+        <a href="javascript:open_window('添加标签','./view.html?path=bookMarkBody&bookMarkModelId={{:=item.id}}');">添加标签</a>
+     <% } %>
+    内容 -->
+
+    <!--_footer 作为公共模版分离出去-->
+    <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="../lib/layer/3.1.1/layer.js"></script>
+    <script type="text/javascript" src="../lib/template.js"></script>
+    <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="../lib/api.js?v=2"></script>
+    <script type="text/javascript" src="../lib/page.min.js"></script>
+    <script type="text/javascript" src="./form.js?v=25031602"></script>
+    <script type="text/javascript" src="./index.js?v=25031601"></script>
+
+    <script type="text/javascript" src="../lib/pickerdaterange/dateRange.js"></script>
+    <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css">
+
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+[
+  {
+    "name": "系统管理",
+    "model": "",
+    "role": "",
+    "icon": "Hui-iconfont-menu",
+    "path": "",
+    "roleType": 1,
+    "desc": "",
+    "isEnable": true,
+    "sort": 10,
+    "fatherId": 0,
+    "items": [
+      {
+        "name": "超级权限",
+        "model": "root",
+        "role": "root",
+        "icon": "",
+        "path": "",
+        "roleType": 0,
+        "desc": "",
+        "isEnable": true,
+        "sort": 20,
+        "fatherId": 121,
+        "items": null
+      },
+      {
+        "name": "数据查看",
+        "model": "data",
+        "role": "view",
+        "icon": "",
+        "path": "",
+        "roleType": 0,
+        "desc": "",
+        "isEnable": true,
+        "sort": 30,
+        "fatherId": 121,
+        "items": null
+      },
+      {
+        "name": "数据删除",
+        "model": "data",
+        "role": "del",
+        "icon": "",
+        "path": "",
+        "roleType": 0,
+        "desc": "",
+        "isEnable": true,
+        "sort": 40,
+        "fatherId": 121,
+        "items": null
+      },
+      {
+        "name": "权限管理",
+        "model": "",
+        "role": "",
+        "icon": "Hui-iconfont-userid",
+        "path": "pasteform/index.html?path=roleInfo",
+        "roleType": 1,
+        "desc": "",
+        "isEnable": true,
+        "sort": 100,
+        "fatherId": 121,
+        "items": null
+      },
+      {
+        "name": "角色管理",
+        "model": "",
+        "role": "",
+        "icon": "Hui-iconfont-user-group",
+        "path": "pasteform/index.html?path=gradeInfo",
+        "roleType": 1,
+        "desc": "",
+        "isEnable": true,
+        "sort": 110,
+        "fatherId": 121,
+        "items": null
+      },
+      {
+        "name": "账号管理",
+        "model": "",
+        "role": "",
+        "icon": "Hui-iconfont-user",
+        "path": "pasteform/index.html?path=userInfo",
+        "roleType": 1,
+        "desc": "",
+        "isEnable": true,
+        "sort": 120,
+        "fatherId": 121,
+        "items": null
+      },
+      {
+        "name": "数据查询",
+        "model": "",
+        "role": "",
+        "icon": "Hui-iconfont-search1",
+        "path": "command/index.html",
+        "roleType": 1,
+        "desc": "",
+        "isEnable": true,
+        "sort": 779,
+        "fatherId": 121,
+        "items": null
+      },
+      {
+        "name": "图标案例",
+        "model": "",
+        "role": "",
+        "icon": "Hui-iconfont-pifu",
+        "path": "lib/Hui-iconfont/1.0.8/demo.html",
+        "roleType": 1,
+        "desc": "",
+        "isEnable": true,
+        "sort": 900,
+        "fatherId": 121,
+        "items": null
+      }
+    ]
+  }
+]

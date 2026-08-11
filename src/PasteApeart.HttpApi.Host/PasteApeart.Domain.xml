@@ -1,0 +1,679 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PasteApeart.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:PasteApeart.CurrentUser">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.CurrentUser.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.CurrentUser.Token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Entity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Entity`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TKey"></typeparam>
+        </member>
+        <member name="P:PasteApeart.Entity`1.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.Entity`1.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Entity`1.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Entity`1.op_Equality(PasteApeart.Entity{`0},PasteApeart.Entity{`0})">
+            <summary>
+            
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Entity`1.op_Inequality(PasteApeart.Entity{`0},PasteApeart.Entity{`0})">
+            <summary>
+            
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.IEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.IEntity`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TKey"></typeparam>
+        </member>
+        <member name="P:PasteApeart.IEntity`1.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.auditmodels.ApAuditLog">
+            <summary>
+            审计日志
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.LogId">
+            <summary>
+            日志ID 用于关联查询
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.UserId">
+            <summary>
+            当前用户
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.IpAddress">
+            <summary>
+            客户端地址
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.Url">
+            <summary>
+            URL
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.HttpMethod">
+            <summary>
+            Method
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.HttpStatusCode">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.RequestBody">
+            <summary>
+            请求内容
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.QueryString">
+            <summary>
+            地址参数
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.Headers">
+            <summary>
+            Headers
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.ResponseBody">
+            <summary>
+            返回信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.ExecutionDuration">
+            <summary>
+            持续时长 毫秒
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.Exception">
+            <summary>
+            异常信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.HasException">
+            <summary>
+            是否异常
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.HasEntityChange">
+            <summary>
+            是否变更
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.EntityChanges">
+            <summary>
+            字段变更 
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApAuditLog.ExecutionTime">
+            <summary>
+            执行时间
+            </summary>
+        </member>
+        <member name="T:PasteApeart.auditmodels.ApEntityChangeInfo">
+            <summary>
+            数据库变更
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApEntityChangeInfo.LogId">
+            <summary>
+            日志ID 用于关联查询
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApEntityChangeInfo.EntityType">
+            <summary>
+            实体类型名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApEntityChangeInfo.EntityId">
+            <summary>
+            实体主键值
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApEntityChangeInfo.ChangeType">
+            <summary>
+            4Added, 3Modified, 2Deleted
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApEntityChangeInfo.PropertyChanges">
+            <summary>
+            属性变更列表
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApEntityChangeInfo.ChangeTime">
+            <summary>
+            变更时间
+            </summary>
+        </member>
+        <member name="T:PasteApeart.auditmodels.ApPropertyChangeInfo">
+            <summary>
+            数据库字段变更记录
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApPropertyChangeInfo.LogId">
+            <summary>
+            日志ID 用于关联查询
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApPropertyChangeInfo.PropertyName">
+            <summary>
+            属性名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApPropertyChangeInfo.OriginalValue">
+            <summary>
+            原始值
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApPropertyChangeInfo.NewValue">
+            <summary>
+            当前值
+            </summary>
+        </member>
+        <member name="P:PasteApeart.auditmodels.ApPropertyChangeInfo.ValueType">
+            <summary>
+            值类型
+            </summary>
+        </member>
+        <member name="T:PasteApeart.AuditingConfigOptions">
+            <summary>
+            审计日志得配置
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.Enable">
+            <summary>
+            总开关 是否启用
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.EnableHttpGet">
+            <summary>
+            GET请求是否记录
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.EnableEntityChange">
+            <summary>
+            是否记录Entity的变更
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.EnableException">
+            <summary>
+            发生异常后 是否记录 无论HTTPMETHOD
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.LogRequestBody">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.LogResponseBody">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.AuditItemKey">
+            <summary>
+            数据存储在HttpContext的Key名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.IgnoredPaths">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.MaxRequestBodySize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.MaxResponseBodySize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.LogFileUploads">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.AuditingConfigOptions.ExcludedContentTypes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.DisableAuditingAttribute">
+            <summary>
+            禁用日志收集
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EnableAuditingAttribute">
+            <summary>
+            启用日志收集
+            </summary>
+        </member>
+        <member name="T:PasteApeart.ConnectionConfig">
+            <summary>
+            链接信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ConnectionConfig.MainConnectionString">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ConnectionConfig.SqliteConnectionString">
+            <summary>
+            sql的主链接
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ConnectionConfig.SqliteReadOnly">
+            <summary>
+            只读链接 sqlite的只读链接
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ConnectionConfig.DataType">
+            <summary>
+            数据库类型 sqlite pgsql mysql sqlserver
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ConnectionConfig.CacheType">
+            <summary>
+            缓存类型 memory redis
+            </summary>
+        </member>
+        <member name="T:PasteApeart.IUserIdEntiry">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.IUserIdEntiry.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EnumIsEnableState">
+            <summary>
+            状态枚举
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumIsEnableState.All">
+            <summary>
+            全部
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumIsEnableState.True">
+            <summary>
+            是
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumIsEnableState.False">
+            <summary>
+            否
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EnumModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumModel.ok">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumModel.fail">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumModel.error">
+            <summary>
+            错误
+            </summary>
+        </member>
+        <member name="T:PasteApeart.EnumRoleType">
+            <summary>
+            权限类型
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumRoleType.All">
+            <summary>
+            全部
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumRoleType.Role">
+            <summary>
+            <![CDATA[<i_*_style="color:green;">权限</i>]]>
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumRoleType.Menu">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumRoleType.Button">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="F:PasteApeart.EnumRoleType.MiniMenu">
+            <summary>
+            小程序菜单
+            </summary>
+        </member>
+        <member name="T:PasteApeart.ILevelEntity">
+            <summary>
+            支持 非递归多级查询，支持多级排序
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ILevelEntity.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ILevelEntity.SortStr">
+            <summary>
+            排序串
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ILevelEntity.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ILevelEntity.Sort">
+            <summary>
+            排序 层级内排序
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ILevelEntity.FatherId">
+            <summary>
+            父级
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ILevelEntity.FatherStr">
+            <summary>
+            父级串 替换递归查询用
+            </summary>
+        </member>
+        <member name="P:PasteApeart.ILevelEntity.RootId">
+            <summary>
+            根级 大块
+            </summary>
+        </member>
+        <member name="T:PasteApeart.PasteApeartDbProperties">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.PasteApeartDbProperties.DbTablePrefix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.PasteApeartDbProperties.DbSchema">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:PasteApeart.PasteApeartDbProperties.ConnectionStringName">
+            <summary>
+            Pgsql主库
+            </summary>
+        </member>
+        <member name="F:PasteApeart.PasteApeartDbProperties.ReadonlyConnectionStringName">
+            <summary>
+            Pgsql从库
+            </summary>
+        </member>
+        <member name="F:PasteApeart.PasteApeartDbProperties.SqliteConnectionStringName">
+            <summary>
+            Sqlite主库
+            </summary>
+        </member>
+        <member name="F:PasteApeart.PasteApeartDbProperties.SqliteReadOnlyConnectionStringName">
+            <summary>
+            Sqlite从库
+            </summary>
+        </member>
+        <member name="F:PasteApeart.PasteApeartDbProperties.AuditingConnectionStringName">
+            <summary>
+            审计日志的数据库链接
+            </summary>
+        </member>
+        <member name="T:PasteApeart.usermodels.GradeInfo">
+            <summary>
+            角色信息 一个账号可以绑定多个角色，角色绑定权限
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.GradeInfo.Name">
+            <summary>
+            角色名称 只要是系统内不重复即可，必填
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.GradeInfo.Code">
+            <summary>
+            角色代码
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.GradeInfo.Desc">
+            <summary>
+            描述 对这个角色的补充说明 64
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.GradeInfo.Mark">
+            <summary>
+            备注 这个角色的内部备注，desc一般表示外部备注 64
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.GradeInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:PasteApeart.usermodels.GradeRole">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.GradeRole.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.GradeRole.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="T:PasteApeart.usermodels.RoleInfo">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Model">
+            <summary>
+            模块
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Icon">
+            <summary>
+            图标名称 一般表示样式名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.FatherId">
+            <summary>
+            父级
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.SortStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.RootId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.RoleInfo.FatherStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.usermodels.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserGrade.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserGrade.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:PasteApeart.usermodels.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserInfo.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserInfo.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserInfo.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserInfo.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserInfo.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserInfo.PassWord">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:PasteApeart.usermodels.UserInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+    </members>
+</doc>

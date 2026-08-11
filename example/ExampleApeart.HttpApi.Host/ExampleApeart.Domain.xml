@@ -1,0 +1,363 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleApeart.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleApeart.AppConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.AppConfig.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.AppConfig.Version">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.AppConfig.RootAccount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.AppConfig.RootPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.AppConfig.RabbitQueue">
+            <summary>
+            是否使用RabbitMQ 否则使用本地的Channel
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.AppConfig.CacheType">
+            <summary>
+            缓存模式 默认为memory 可选 redis
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.AppConfig.DataType">
+            <summary>
+            数据库模式 默认sqlite 可选看自己实现db比如 pgsql mysql mariadb sqlserver等
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.AppConfig.UseReadWrite">
+            <summary>
+            使用读写分离
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.EnumIsEnableState">
+            <summary>
+            状态枚举
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.EnumIsEnableState.All">
+            <summary>
+            全部
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.EnumIsEnableState.True">
+            <summary>
+            是
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.EnumIsEnableState.False">
+            <summary>
+            否
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.EnumRoleType">
+            <summary>
+            权限类型
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.EnumRoleType.All">
+            <summary>
+            全部
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.EnumRoleType.Role">
+            <summary>
+            <![CDATA[<i_*_style="color:green;">权限</i>]]>
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.EnumRoleType.Menu">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.EnumRoleType.Button">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.EnumRoleType.MiniMenu">
+            <summary>
+            小程序菜单
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.ILevelEntity">
+            <summary>
+            支持 非递归多级查询，支持多级排序
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ILevelEntity.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ILevelEntity.SortStr">
+            <summary>
+            排序串
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ILevelEntity.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ILevelEntity.Sort">
+            <summary>
+            排序 层级内排序
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ILevelEntity.FatherId">
+            <summary>
+            父级
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ILevelEntity.FatherStr">
+            <summary>
+            父级串 替换递归查询用
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ILevelEntity.RootId">
+            <summary>
+            根级 大块
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.ExampleApeartDbProperties">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartDbProperties.DbTablePrefix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartDbProperties.DbSchema">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.ExampleApeartDbProperties.ConnectionStringName">
+            <summary>
+            Pgsql主库
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.ExampleApeartDbProperties.ReadonlyConnectionStringName">
+            <summary>
+            Pgsql从库
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.ExampleApeartDbProperties.SqliteConnectionStringName">
+            <summary>
+            Sqlite主库
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.ExampleApeartDbProperties.SqliteReadOnlyConnectionStringName">
+            <summary>
+            Sqlite从库
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.ExampleApeartDbProperties.AuditingConnectionStringName">
+            <summary>
+            审计日志的数据库链接
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeInfo">
+            <summary>
+            角色信息 一个账号可以绑定多个角色，角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfo.Name">
+            <summary>
+            名称 只要是系统内不重复即可，必填
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfo.Code">
+            <summary>
+            代码
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfo.Desc">
+            <summary>
+            描述 对这个角色的补充说明 64
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfo.Mark">
+            <summary>
+            备注 这个角色的内部备注，desc一般表示外部备注 64
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeRole">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRole.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRole.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleInfo">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Model">
+            <summary>
+            模块
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Icon">
+            <summary>
+            图标名称 一般表示样式名称
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.FatherId">
+            <summary>
+            父级
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.SortStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.RootId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.FatherStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGrade.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGrade.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfo.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfo.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfo.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfo.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfo.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfo.PassWord">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -11,12 +11,12 @@ namespace PasteApeart.Handler
     /// <summary>
     /// 队列处理 可以被RabbitMQ或者Channel的消费者调用
     /// </summary>
-    public class EventActionHandler : ISingletonDependency
+    public class EventActionHandler : ISingletonDependency, IEventActionHandler
     {
 
         private readonly ILogger<EventActionHandler> _logger;
         private readonly IServiceProvider _serviceProvider;
-        private readonly ChannelHelper _channelHelper;
+        private readonly IChannelHelper _channelHelper;
 
         /// <summary>
         /// 
@@ -24,7 +24,7 @@ namespace PasteApeart.Handler
         /// <param name="logger"></param>
         /// <param name="serviceProvider"></param>
         /// <param name="channelHelper"></param>
-        public EventActionHandler(ILogger<EventActionHandler> logger, IServiceProvider serviceProvider, ChannelHelper channelHelper)
+        public EventActionHandler(ILogger<EventActionHandler> logger, IServiceProvider serviceProvider, IChannelHelper channelHelper)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;

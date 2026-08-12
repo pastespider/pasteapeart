@@ -11,7 +11,7 @@ namespace PasteApeart
     /// <summary>
     /// 
     /// </summary>
-    public class ChannelHelper : ISingletonDependency
+    public class ChannelHelper : ISingletonDependency, IChannelHelper
     {
 
         //private readonly Channel<ChannelNoticeModel> _channelnotice;

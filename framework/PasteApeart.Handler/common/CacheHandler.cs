@@ -7,7 +7,7 @@ namespace PasteApeart
     /// <summary>
     /// 数据对象的缓存帮助类 注意当前是IScopedDependency周期
     /// </summary>
-    public class CacheHandler : IScopedDependency
+    public class CacheHandler : IScopedDependency, ICacheHandler
     {
         private readonly IAppCache _appCache;
         //private readonly IObjectMapper _objectMapper;
@@ -36,7 +36,7 @@ namespace PasteApeart
         /// <param name="id"></param>
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
-        public async Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : Entity
+        public async Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : IEntity
         {
             var cachePrefix = GetCachePrefix<TEntity>();
             var cacheKey = $"{cachePrefix}{id}";
@@ -63,7 +63,7 @@ namespace PasteApeart
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
         /// <exception cref="PasteCodeException"></exception>
-        public async Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : Entity
+        public async Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : IEntity
         {
             var read = await DtoAsync<TEntity, TDto>(id, expireSeconds);
             if (read != null)
@@ -100,83 +100,6 @@ namespace PasteApeart
         }
 
         #endregion
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="_model"></param>
-        ///// <param name="_role"></param>
-        ///// <param name="_grade"></param>
-        ///// <param name="_token"></param>
-        ///// <returns></returns>
-        //public async Task<(int code, bool role)> HasRoleAsync(string _model, string _role, string _grade, string _token = null)
-        //{
-        //    if (!string.IsNullOrEmpty(_token))
-        //    {
-        //        if (!String.IsNullOrEmpty(_grade))
-        //        {
-        //            if (_token.Contains($"{_grade}"))
-        //            {
-        //                return (200, true);
-        //            }
-        //        }
-        //        var roles = await ReadRoleListAsync(_token);
-        //        if (roles != null && roles.Any())
-        //        {
-        //            var has_auth = roles.Where(x => (x.Model == "root" && x.Role == "root") || (x.Model == _model && x.Role == "root") || (x.Model == _model && x.Role == _role)).Any();
-        //            return (403, has_auth);
-        //        }
-        //        else
-        //        {
-        //            return (401, false);
-        //        }
-        //    }
-        //    return (401, false);
-        //}
-
-        ///// <summary>
-        ///// 获取权限列表
-        ///// </summary>
-        ///// <param name="token"></param>
-        ///// <returns></returns>
-        //public async Task<List<RoleAuthDto>> ReadRoleListAsync(string token)
-        //{
-        //    var roles = await _appCache.GetObjectAsync<List<RoleAuthDto>>(token);
-        //    if (roles != null && roles.Any())
-        //    {
-        //        return roles;
-        //    }
-        //    return null;
-        //}
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="_model"></param>
-        ///// <param name="_role"></param>
-        ///// <param name="_grade"></param>
-        ///// <param name="_token"></param>
-        ///// <returns></returns>
-        //public async Task<bool> HasAuthAsync(string _model, string _role, string _grade, string _token = null)
-        //{
-        //    if (!string.IsNullOrEmpty(_token))
-        //    {
-        //        if (!String.IsNullOrEmpty(_grade))
-        //        {
-        //            if (_token.Contains($"{_grade}"))
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //        var roles = await ReadRoleListAsync(_token.CurrentTokenCacheKey());
-        //        if (roles != null && roles.Any())
-        //        {
-        //            var has_auth = roles.Where(x => (x.Model == "root" && x.Role == "root") || (x.Model == _model && x.Role == "root") || (x.Model == _model && x.Role == _role)).Any();
-        //            return has_auth;
-        //        }
-        //    }
-        //    return false;
-        //}
 
     }
 }

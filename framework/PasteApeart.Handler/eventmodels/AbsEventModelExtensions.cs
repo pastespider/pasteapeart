@@ -126,7 +126,7 @@ namespace PasteApeart
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public static async Task<bool> ToAutoExpireAndSendAsync(this AbsEventModel input, ChannelHelper _channelHelper)
+        public static async Task<bool> ToAutoExpireAndSendAsync(this AbsEventModel input, IChannelHelper _channelHelper)
         {
             input.RetryTime++;
             if (input.MaxRetryTime <= 0)

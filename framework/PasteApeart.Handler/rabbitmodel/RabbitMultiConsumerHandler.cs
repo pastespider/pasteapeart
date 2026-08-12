@@ -26,7 +26,7 @@ namespace PasteApeart.Handler.rabbitmodel
         //private readonly SemaphoreSlim _channelSemaphore;
         private IChannel _defaultChannel; // 用于声明的默认channel
         private readonly IServiceProvider _serviceProvider;
-        private readonly ChannelHelper _channelHelper;
+        private readonly IChannelHelper _channelHelper;
 
         /// <summary>
         /// 
@@ -37,7 +37,7 @@ namespace PasteApeart.Handler.rabbitmodel
         public RabbitMultiConsumerHandler(
             IServiceProvider serviceProvider,
             ILogger<RabbitMultiConsumerHandler> logger,
-            ChannelHelper channelHelper,
+            IChannelHelper channelHelper,
             IOptions<RabbitConfig> rabbitConfig)
         {
             _serviceProvider = serviceProvider;

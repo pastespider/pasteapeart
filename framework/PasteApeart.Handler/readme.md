@@ -11,6 +11,11 @@
 ## 26.8.2
 1.redis加HashGetIntAsync,HashGetLongAsync等
 
+## 26.8.3
+
+1.提取CacheHandler,RabbitMQProducer,ChannelHelper,EventActionHandler等为对应的接口，以便使用者可以实现自定义的逻辑，而不一定用我立面的
+2.基于1，对应的引入的时候，要先申明生命周期注入，比如Services.AddSingleton<ICacheHandler,CacheHandler>();
+
 ## 文件列表
 
 ```

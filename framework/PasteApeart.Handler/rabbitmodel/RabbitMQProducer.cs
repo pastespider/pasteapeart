@@ -9,7 +9,7 @@ namespace PasteApeart
     /// <summary>
     /// 
     /// </summary>
-    public class RabbitMQProducer : ISingletonDependency
+    public class RabbitMQProducer : ISingletonDependency, IRabbitMQProducer
     {
 
         // synchronization locks

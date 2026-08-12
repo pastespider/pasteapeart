@@ -11,7 +11,7 @@ namespace PasteApeart
         /// <param name="id"></param>
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
-        Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : IEntity;
+        Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class, IEntity;
 
         /// <summary>
         /// 
@@ -21,7 +21,7 @@ namespace PasteApeart
         /// <param name="id"></param>
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
-        Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : IEntity;
+        Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class, IEntity;
 
         /// <summary>
         /// 

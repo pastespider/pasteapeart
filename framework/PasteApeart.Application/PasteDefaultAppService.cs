@@ -12,13 +12,13 @@ namespace PasteApeart.Application
     /// <summary>
     /// 
     ///</summary>
-    public class PasteApeartDefaultAppService : IScopedDependency
+    public class PasteDefaultAppService : IScopedDependency, IPasteDefaultAppService
     {
 
         /// <summary>
         /// 
         /// </summary>
-        private readonly PasteApeartDefaultHelper _defaultHelper;
+        private readonly IPasteDefaultHelper _defaultHelper;
 
         /// <summary>
         /// 
@@ -30,7 +30,7 @@ namespace PasteApeart.Application
         /// </summary>
         /// <param name="defaultHelper"></param>
         /// <param name="dbContext"></param>
-        public PasteApeartDefaultAppService(PasteApeartDefaultHelper defaultHelper, DbContext dbContext)
+        public PasteDefaultAppService(IPasteDefaultHelper defaultHelper, DbContext dbContext)
         {
             _defaultHelper = defaultHelper;
             _dbContext = dbContext;
@@ -220,7 +220,7 @@ namespace PasteApeart.Application
             {
                 var search_model = Activator.CreateInstance(searchType);
                 //var searchModel = BuilderHelper.AttributeReadModelProperty(search_model);
-                var searchModel = PasteApeartDefaultHelper.ReadModelProperties(search_model, searchType, true);
+                var searchModel = PasteDefaultHelper.ReadModelProperties(search_model, searchType, true);
                 if (searchModel != null)
                 {
                     listModel.QueryProperties = searchModel.Properties;
@@ -291,7 +291,7 @@ namespace PasteApeart.Application
 
             if (input.page == 1)
             {
-                pagedto.totalCount = await PasteApeartDefaultHelper.ExecuteCountQuery(query, entityType);
+                pagedto.totalCount = await PasteDefaultHelper.ExecuteCountQuery(query, entityType);
             }
 
             var isIncludeType = _defaultHelper.HasPasteIncludeProperties(entityType);
@@ -359,7 +359,7 @@ namespace PasteApeart.Application
             //var addDto = JsonConvert.DeserializeObject(inputString, addDtoType);
             //var addDto = Mapster.TypeAdapter(inputString,addDtoType);
             var addDto = JsonSerializer.Deserialize(inputString, addDtoType, JsonConfig.Options);
-            PasteApeartDefaultHelper.ValidateModel(addDto, addDtoType);
+            PasteDefaultHelper.ValidateModel(addDto, addDtoType);
 
             var mutexFind = await _defaultHelper.FilterFirstOrDefaultAsync(_dbContext, entityType, addDtoType, addDto, null);
             if (mutexFind != null && mutexFind != default)
@@ -424,7 +424,7 @@ namespace PasteApeart.Application
             var updateDto = JsonSerializer.Deserialize(inputString, updateDtoType, JsonConfig.Options);
 
             // 手动执行模型验证
-            PasteApeartDefaultHelper.ValidateModel(updateDto, updateDtoType);
+            PasteDefaultHelper.ValidateModel(updateDto, updateDtoType);
 
             // 获取ID属性值
             var id = _defaultHelper.GetPropertyValue(updateDto, "Id");

@@ -15,7 +15,7 @@ namespace PasteApeart.Application
     /// <summary>
     /// 通用接口帮助类
     /// </summary>
-    public class PasteApeartDefaultHelper : ISingletonDependency
+    public class PasteDefaultHelper : ISingletonDependency, IPasteDefaultHelper
     {
         /// <summary>
         /// 
@@ -43,7 +43,7 @@ namespace PasteApeart.Application
         /// <param name="typeDomainScanner"></param>
         /// <param name="typeDtoScanner"></param>
         /// <param name="extendType"></param>
-        public PasteApeartDefaultHelper(IMemoryCache memoryCache, Func<Type[]> typeDomainScanner, Func<Type[]> typeDtoScanner, Type extendType)
+        public PasteDefaultHelper(IMemoryCache memoryCache, Func<Type[]> typeDomainScanner, Func<Type[]> typeDtoScanner, Type extendType)
         {
             _memoryCache = memoryCache;
             _domainTypeScanner = typeDomainScanner;

@@ -177,47 +177,47 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="T:PasteApeart.Application.PasteApeartDefaultAppService">
+        <member name="T:PasteApeart.Application.PasteDefaultAppService">
              <summary>
              
             </summary>
         </member>
-        <member name="F:PasteApeart.Application.PasteApeartDefaultAppService._defaultHelper">
+        <member name="F:PasteApeart.Application.PasteDefaultAppService._defaultHelper">
             <summary>
             
             </summary>
         </member>
-        <member name="F:PasteApeart.Application.PasteApeartDefaultAppService._dbContext">
+        <member name="F:PasteApeart.Application.PasteDefaultAppService._dbContext">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.#ctor(PasteApeart.Application.PasteApeartDefaultHelper,Microsoft.EntityFrameworkCore.DbContext)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.#ctor(PasteApeart.Application.IPasteDefaultHelper,Microsoft.EntityFrameworkCore.DbContext)">
             <summary>
             
             </summary>
             <param name="defaultHelper"></param>
             <param name="dbContext"></param>
         </member>
-        <member name="P:PasteApeart.Application.PasteApeartDefaultAppService.FuncMapperEntityName">
+        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncMapperEntityName">
             <summary>
             映射EntityName，这样就不会把数据库表名称暴露出去了 选填
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.DefaultMapperEntityName(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultMapperEntityName(System.String)">
             <summary>
             映射名称 这样就不会把数据库表名称暴露出去了
             </summary>
             <param name="entityName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.ReadAddModel(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadAddModel(System.String)">
             <summary>
             获取新增格式
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.ReadUpdateModel(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadUpdateModel(System.String,System.String)">
             <summary>
             获取更新数据
             </summary>
@@ -226,19 +226,19 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.ReadDetailModel(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadDetailModel(System.String,System.String)">
             <summary>
             获取详细
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.ReadListModel(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadListModel(System.String,System.String)">
             <summary>
             获取列表格式
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.ReadListQueryModel(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadListQueryModel(System.String,System.String)">
             <summary>
             读取模型数据
             </summary>
@@ -247,7 +247,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.Page(System.String,System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.Page(System.String,System.String,System.String)">
             <summary>
             
             </summary>
@@ -257,7 +257,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.CreateItemAsync(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.CreateItemAsync(System.String,System.String)">
             <summary>
             
             </summary>
@@ -266,7 +266,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.UpdateItemAsync(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.UpdateItemAsync(System.String,System.String)">
             <summary>
             
             </summary>
@@ -275,7 +275,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.ReadItemListDtoAsync(System.String,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadItemListDtoAsync(System.String,System.Object)">
             <summary>
             用于返回ListDto单项数据
             </summary>
@@ -284,7 +284,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.ReadListDtoByIdAsync(System.Type,System.String,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadListDtoByIdAsync(System.Type,System.String,System.Object)">
             <summary>
             基于ID获取对象ListDto用于新增或更新后同步到Table的UI中
             </summary>
@@ -294,7 +294,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.UpdateState(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.UpdateState(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
             <summary>
             通用状态更新方法
             </summary>
@@ -303,7 +303,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.Remove(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.Remove(System.String,System.String)">
             <summary>
             通用删除 遵照ListDto的PasteDisable特性
             </summary>
@@ -312,12 +312,12 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="P:PasteApeart.Application.PasteApeartDefaultAppService.FuncAfterRemove">
+        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncAfterRemove">
             <summary>
             删除后 调用
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.DefaultRemoveAsync(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultRemoveAsync(System.String,System.String)">
             <summary>
             
             </summary>
@@ -325,12 +325,12 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="P:PasteApeart.Application.PasteApeartDefaultAppService.FuncFilterData">
+        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncFilterData">
             <summary>
             读取数据后的权限判断，注意entityObject可能为null
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.DefaultFilterDataAsync(System.Type,System.Object,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultFilterDataAsync(System.Type,System.Object,System.String)">
             <summary>
             数据校验，判断权限等 需要在基Class定义AuthDataFilterAsync(Type,Entity)
             </summary>
@@ -339,12 +339,12 @@
             <param name="action"></param>
             <returns></returns>
         </member>
-        <member name="P:PasteApeart.Application.PasteApeartDefaultAppService.FuncAfterUpdateState">
+        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncAfterUpdateState">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.DefaultAfterUpdateStateAsync(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultAfterUpdateStateAsync(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
             <summary>
             
             </summary>
@@ -352,7 +352,7 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.FindMethodInBaseTypes(System.Type,System.String,System.Reflection.BindingFlags,System.Type[])">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.FindMethodInBaseTypes(System.Type,System.String,System.Reflection.BindingFlags,System.Type[])">
             <summary>
             递归查找基类方法的辅助方法
             </summary>
@@ -362,12 +362,12 @@
             <param name="parameterTypes"></param>
             <returns></returns>
         </member>
-        <member name="P:PasteApeart.Application.PasteApeartDefaultAppService.FuncDataSet">
+        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncDataSet">
             <summary>
             新增和更新前 比如一些特殊字段的处理
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.DefaultDataSetExtendAsync(System.Type,System.Object,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultDataSetExtendAsync(System.Type,System.Object,System.String)">
             <summary>
             为Entity赋值，比如赋值UserId等 基类需要定义SetDataExtendAsync(Type,Entity,action)
             一般是一些默认字段输入，比如创建者
@@ -377,12 +377,12 @@
             <param name="action">add或update</param>
             <returns></returns>
         </member>
-        <member name="P:PasteApeart.Application.PasteApeartDefaultAppService.FuncBuildProperty">
+        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncBuildProperty">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultAppService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
             <summary>
             构建元数据返回给前端
             </summary>
@@ -392,32 +392,32 @@
             <param name="listModel"></param>
             <returns></returns>
         </member>
-        <member name="T:PasteApeart.Application.PasteApeartDefaultHelper">
+        <member name="T:PasteApeart.Application.PasteDefaultHelper">
             <summary>
             通用接口帮助类
             </summary>
         </member>
-        <member name="F:PasteApeart.Application.PasteApeartDefaultHelper._memoryCache">
+        <member name="F:PasteApeart.Application.PasteDefaultHelper._memoryCache">
             <summary>
             
             </summary>
         </member>
-        <member name="F:PasteApeart.Application.PasteApeartDefaultHelper._dtoTypeScanner">
+        <member name="F:PasteApeart.Application.PasteDefaultHelper._dtoTypeScanner">
             <summary>
              typeof(InputSearchBase).Assembly.GetTypes();
             </summary>
         </member>
-        <member name="F:PasteApeart.Application.PasteApeartDefaultHelper._domainTypeScanner">
+        <member name="F:PasteApeart.Application.PasteDefaultHelper._domainTypeScanner">
             <summary>
             typeof(RoleInfo).Assembly.GetTypes();
             </summary>
         </member>
-        <member name="F:PasteApeart.Application.PasteApeartDefaultHelper._linqExtendType">
+        <member name="F:PasteApeart.Application.PasteDefaultHelper._linqExtendType">
             <summary>
             LinqExtend的Type
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,System.Func{System.Type[]},System.Func{System.Type[]},System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,System.Func{System.Type[]},System.Func{System.Type[]},System.Type)">
             <summary>
             <![CDATA[services.AddSingleton(sp => new PasteApeartDefaultHelper(sp.GetRequiredService<IMemoryCache>(),() => typeof(RoleInfo).Assembly.GetTypes()))]]>
             </summary>
@@ -426,14 +426,14 @@
             <param name="typeDtoScanner"></param>
             <param name="extendType"></param>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.MemoryProperties(System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.MemoryProperties(System.Type)">
             <summary>
             等效于 ReadTypeProperties
             </summary>
             <param name="t"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.MemoryPropertyInfo(System.Type,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.MemoryPropertyInfo(System.Type,System.String)">
             <summary>
             获取某一个字段的PropertyInfo信息 可能返回null
             </summary>
@@ -441,7 +441,7 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindDomainTypeThrowException(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindDomainTypeThrowException(System.String)">
             <summary>
             
             </summary>
@@ -449,14 +449,14 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindOnlyDomainType(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindOnlyDomainType(System.String)">
             <summary>
             
             </summary>
             <param name="entityName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindDtoTypeThrowException(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindDtoTypeThrowException(System.String)">
             <summary>
             
             </summary>
@@ -464,7 +464,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindOnlyDtoType(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindOnlyDtoType(System.String)">
             <summary>
             
             </summary>
@@ -472,19 +472,19 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ListDomainTypes">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ListDomainTypes">
             <summary>
             不要调用
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ListDtoTypes">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ListDtoTypes">
             <summary>
             不要调用
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ReadExtendBind(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.List{System.Object},System.Type,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ReadExtendBind(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.List{System.Object},System.Type,System.Object)">
             <summary>
             扩展 ExtendBind的赋值 查询某一个对象，有多少绑定，比如给角色绑定权限，给用户绑定角色
             </summary>
@@ -494,7 +494,7 @@
             <param name="searchType"></param>
             <param name="searchModel"></param>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.MapperToQueryModel(System.String,System.Type,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.MapperToQueryModel(System.String,System.Type,System.Object)">
             <summary>
             处理映射对象 搜索的信息检索
             处理基础查询page size word等信息，如果有其他的则进行转化，由queryString转化成SearchObject
@@ -504,7 +504,7 @@
             <param name="search"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.BuildOuterQuery(Microsoft.EntityFrameworkCore.DbContext,System.Object,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.BuildOuterQuery(Microsoft.EntityFrameworkCore.DbContext,System.Object,System.Type)">
             <summary>
             
             </summary>
@@ -513,7 +513,7 @@
             <param name="dtoType"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ReadSingleListDtoByIdAsync(Microsoft.EntityFrameworkCore.DbContext,System.String,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ReadSingleListDtoByIdAsync(Microsoft.EntityFrameworkCore.DbContext,System.String,System.Object)">
             <summary>
             查询某一个数据对象 用于创建或者更新后返回ListDto使用
             这个一般是给系统的其他AppService使用，比如UserInfo的创建后调用
@@ -524,14 +524,14 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindEntityType(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindEntityType(System.String)">
             <summary>
             查找Entity类型，和RoleInfo放一起
             </summary>
             <param name="entityName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindDtoType(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindDtoType(System.String,System.String)">
             <summary>
             查找Dto的类型
             </summary>
@@ -539,7 +539,7 @@
             <param name="suffix"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.GetPropertyThrowException(System.Type,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.GetPropertyThrowException(System.Type,System.String)">
             <summary>
             基于名称大小写查找字段
             </summary>
@@ -548,21 +548,21 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.AutoFindType(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.AutoFindType(System.String)">
             <summary>
             从Domain或者Dto中查找类型
             </summary>
             <param name="typeName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindQueryType(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindQueryType(System.String)">
             <summary>
             获取InputQueryXXX的类型
             </summary>
             <param name="entityName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindEntityByIdAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object,System.Threading.CancellationToken)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindEntityByIdAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object,System.Threading.CancellationToken)">
             <summary>
             基于Id查询第一个数据 如果要查询Include的使用FindEntityByIdWithIncludeAsync
             </summary>
@@ -573,7 +573,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindEntityByIdWithIncludeAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object,System.Threading.CancellationToken)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindEntityByIdWithIncludeAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object,System.Threading.CancellationToken)">
             <summary>
             基于Id查询第一个数据，包含Include,使用PasteIncludeAttribute标记 待测试
             </summary>
@@ -583,7 +583,7 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.BuildQueryable(System.Object,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.BuildQueryable(System.Object,System.Type)">
             <summary>
             
             </summary>
@@ -591,14 +591,14 @@
             <param name="entityType"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.HasPasteIncludeProperties(System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.HasPasteIncludeProperties(System.Type)">
             <summary>
             判断实体类型是否有任何标记了 PasteIncludeAttribute 的属性
             </summary>
             <param name="entityType">实体类型</param>
             <returns>true 表示有 PasteInclude 属性，需要使用 Include 版本</returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.HasAttributeType(System.Type,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.HasAttributeType(System.Type,System.Type)">
             <summary>
             判断实体类型是否有任何标记了 XXXAttribute 的属性
             </summary>
@@ -606,7 +606,7 @@
             <param name="attributeType">typeof(PasteIncludeAttribute)</param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ApplyAllPasteIncludes(System.Object,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ApplyAllPasteIncludes(System.Object,System.Type)">
             <summary>
             
             </summary>
@@ -614,7 +614,7 @@
             <param name="entityType"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ApplyInclude(System.Object,System.Type,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ApplyInclude(System.Object,System.Type,System.String)">
             <summary>
             
             </summary>
@@ -623,7 +623,7 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.BuildIdFilterExpression(System.Type,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.BuildIdFilterExpression(System.Type,System.Object)">
             <summary>
             
             </summary>
@@ -631,7 +631,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindDbSetProperty(Microsoft.EntityFrameworkCore.DbContext,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindDbSetProperty(Microsoft.EntityFrameworkCore.DbContext,System.Type)">
             <summary>
             
             </summary>
@@ -640,7 +640,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindDbSetObject(Microsoft.EntityFrameworkCore.DbContext,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindDbSetObject(Microsoft.EntityFrameworkCore.DbContext,System.Type)">
             <summary>
             
             </summary>
@@ -648,7 +648,7 @@
             <param name="entityName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FilterFirstOrDefaultAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Type,System.Object,System.Object,System.Threading.CancellationToken)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FilterFirstOrDefaultAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Type,System.Object,System.Object,System.Threading.CancellationToken)">
             <summary>
             基于PasteMutex排重 id!=id and name==name
             </summary>
@@ -661,7 +661,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindFirstOrDefaultAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindFirstOrDefaultAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
             <summary>
             查找符合条件的第一个数据
             一般用于新增，或者更新排重使用
@@ -673,7 +673,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ReadModelProperties(System.Object,System.Type,System.Boolean)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ReadModelProperties(System.Object,System.Type,System.Boolean)">
             <summary>
             动态读取模型属性
             </summary>
@@ -682,14 +682,14 @@
             <param name="IsListModel">针对枚举的备注过滤</param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ConvertToPascalCase(System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ConvertToPascalCase(System.String)">
             <summary>
             单词大小写转化
             </summary>
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ValidateModel(System.Object,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ValidateModel(System.Object,System.Type)">
             <summary>
             验证输入是否通过校验
             </summary>
@@ -698,7 +698,7 @@
             <exception cref="T:System.ArgumentNullException"></exception>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.BuildOuterData(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.List{System.Object})">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.BuildOuterData(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.List{System.Object})">
             <summary>
             补充Extend外表查询 比如ExtendUser 可能有多个
             </summary>
@@ -707,7 +707,7 @@
             <param name="_dbContext"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.CheckEntityShortData(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.CheckEntityShortData(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object)">
             <summary>
             校验外表是否合法 PasteLink的校验
             </summary>
@@ -716,7 +716,7 @@
             <param name="entity"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.BuildDynamicQuery(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Type,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.BuildDynamicQuery(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Type,System.Object)">
             <summary>
             构建搜索项
             </summary>
@@ -726,14 +726,14 @@
             <param name="_dbContext"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ReadTypeProperties(System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ReadTypeProperties(System.Type)">
             <summary>
             获取目标类型的PropertyInfo,如果有new的则进行基类过滤
             </summary>
             <param name="searchType"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ApplyFilterConditions(System.Linq.IQueryable,System.Type,System.Reflection.PropertyInfo[],System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ApplyFilterConditions(System.Linq.IQueryable,System.Type,System.Reflection.PropertyInfo[],System.Object)">
             <summary>
             应用过滤条件的方法
             后续要优化成 entityProperties和searchProperties
@@ -744,14 +744,14 @@
             <param name="input"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ReturnOperator(System.Reflection.PropertyInfo)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ReturnOperator(System.Reflection.PropertyInfo)">
             <summary>
             获取运算符
             </summary>
             <param name="property"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.FindSearchProperty(System.Reflection.PropertyInfo,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.FindSearchProperty(System.Reflection.PropertyInfo,System.Type)">
             <summary>
             查询属性 查询字段
             </summary>
@@ -759,7 +759,7 @@
             <param name="entityType"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.IsDefaultValue(System.Object,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.IsDefaultValue(System.Object,System.Type)">
             <summary>
             判断值是否为类型的默认值
             </summary>
@@ -767,7 +767,7 @@
             <param name="type"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.GetPropertyAccess(System.Linq.Expressions.ParameterExpression,System.Type,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.GetPropertyAccess(System.Linq.Expressions.ParameterExpression,System.Type,System.String)">
             <summary>
             应对有 new 字段的情况
             </summary>
@@ -776,7 +776,7 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ApplyComparisonFilter(System.Linq.IQueryable,System.Type,System.Reflection.PropertyInfo,System.Object,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ApplyComparisonFilter(System.Linq.IQueryable,System.Type,System.Reflection.PropertyInfo,System.Object,System.String)">
             <summary>
             后续需要优化下 不然每次都获取Properties 主要是针对继承等情况... .. .
             </summary>
@@ -787,7 +787,7 @@
             <param name="operatorName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ApplySearchKeyword(System.Linq.IQueryable,System.Type,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ApplySearchKeyword(System.Linq.IQueryable,System.Type,System.String)">
             <summary>
             应用关键字搜索
             </summary>
@@ -796,7 +796,7 @@
             <param name="keyword"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ApplyPagingAndSorting(System.Linq.IQueryable,System.Type,System.Type,System.Object)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ApplyPagingAndSorting(System.Linq.IQueryable,System.Type,System.Type,System.Object)">
             <summary>
             上面的补充，用于其他查询
             </summary>
@@ -807,7 +807,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ReadCurrentPropertyThrowException(System.Type,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ReadCurrentPropertyThrowException(System.Type,System.String)">
             <summary>
             查找字段 应对new的情况
             </summary>
@@ -816,7 +816,7 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ReadCurrentProperty(System.Type,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ReadCurrentProperty(System.Type,System.String)">
             <summary>
             
             </summary>
@@ -824,7 +824,7 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ExecuteCountQuery(System.Linq.IQueryable,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ExecuteCountQuery(System.Linq.IQueryable,System.Type)">
             <summary>
             执行计数查询的方法
             </summary>
@@ -832,22 +832,22 @@
             <param name="entityType"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ExecuteProjectionQuery(System.Linq.IQueryable,System.Type,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ExecuteProjectionQuery(System.Linq.IQueryable,System.Type,System.Type)">
             <summary>
             直接查询并投影为DTO 这个有问题，Include等不足
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ExecuteProjectionQueryWithIncludes(System.Linq.IQueryable,System.Type,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ExecuteProjectionQueryWithIncludes(System.Linq.IQueryable,System.Type,System.Type)">
             <summary>
             执行包含 Include 的查询并映射到 DTO 旧版本ExecuteProjectionQuery
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.MapEntityListToDtoListDirectly(System.Object,System.Type,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.MapEntityListToDtoListDirectly(System.Object,System.Type,System.Type)">
             <summary>
             直接映射整个实体列表到 DTO 列表
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.BuildSelectExpression(System.Type,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.BuildSelectExpression(System.Type,System.Type)">
             <summary>
             
             </summary>
@@ -855,7 +855,7 @@
             <param name="dtoType"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.BuildIdQuery(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.List{System.Object})">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.BuildIdQuery(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.List{System.Object})">
             <summary>
             构建ID查询条件
             </summary>
@@ -864,7 +864,7 @@
             <param name="ids"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.GetPropertyValue(System.Object,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.GetPropertyValue(System.Object,System.String)">
             <summary>
             
             </summary>
@@ -872,7 +872,7 @@
             <param name="propertyName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.ForeachMapProperties(System.Object,System.Object,System.Type,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.ForeachMapProperties(System.Object,System.Object,System.Type,System.Type)">
             <summary>
             结果映射到实体Dto中
             </summary>
@@ -881,7 +881,7 @@
             <param name="sourceType"></param>
             <param name="destinationType"></param>
         </member>
-        <member name="M:PasteApeart.Application.PasteApeartDefaultHelper.MapProperties(System.Object,System.Object,System.Type,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.MapProperties(System.Object,System.Object,System.Type,System.Type)">
             <summary>
             使用 ObjectMapper 进行对象映射
             </summary>

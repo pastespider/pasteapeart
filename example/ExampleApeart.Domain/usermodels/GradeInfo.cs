@@ -34,12 +34,14 @@ namespace ExampleApeart.usermodels
         /// 描述 对这个角色的补充说明 64
         /// </summary>
         [MaxLength(64)]
+        [PasteSearch]
         public string Desc { get; set; } = "";
 
         /// <summary>
         /// 备注 这个角色的内部备注，desc一般表示外部备注 64
         /// </summary>
         [MaxLength(64)]
+        [PasteSearch]
         public string Mark { get; set; } = "";
 
         /// <summary>

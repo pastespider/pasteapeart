@@ -9,7 +9,7 @@
              默认读取 这个很关键，实现了统一的新增 更新 详细 列表规范读取 相当于兜底的!
             </summary>
         </member>
-        <member name="M:ExampleApeart.Application.DefaultApiAppService.#ctor(PasteApeart.Application.PasteApeartDefaultAppService)">
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.#ctor(PasteApeart.Application.IPasteDefaultAppService)">
             <summary>
             
             </summary>
@@ -84,6 +84,70 @@
             <param name="id"></param>
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="T:ExampleApeart.Application.ExampleApeartDefaultService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.#ctor(PasteApeart.Application.IPasteDefaultHelper,PasteApeart.IChannelHelper,ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="defaultHelper"></param>
+            <param name="channelHelper"></param>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultAfterUpdateStateAsync(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
+            <summary>
+            修改状态后 包含 绑定
+            </summary>
+            <param name="entityName"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
+            <summary>
+            生成元数据
+            </summary>
+            <param name="action"></param>
+            <param name="dto"></param>
+            <param name="dtoType"></param>
+            <param name="listModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultDataSetExtendAsync(System.Type,System.Object,System.String)">
+            <summary>
+            数据赋值后，主要用于比如是否可以编辑，是否可以新增等，也可以做默认数据的输入
+            </summary>
+            <param name="entityType"></param>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultFilterDataAsync(System.Type,System.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultMapperEntityName(System.String)">
+            <summary>
+            自定义名称，比如UserInfo你要对外接口为member就在这里配置
+            </summary>
+            <param name="entityName">管理端输入的TableName</param>
+            <returns>Dbset的Name</returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultRemoveAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
         </member>
         <member name="T:ExampleApeart.Application.PasteTransactionFilter">
             <summary>
@@ -334,13 +398,6 @@
             <summary>
             读取ListDto的数据模型
             </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ExampleApeart.usermodels.GradeInfoAppService.Page(ExampleApeart.usermodels.InputQueryGradeInfo)">
-            <summary>
-            获取
-            </summary>
-            <param name="input"></param>
             <returns></returns>
         </member>
         <member name="M:ExampleApeart.usermodels.GradeInfoAppService.Remove(System.Int32)">

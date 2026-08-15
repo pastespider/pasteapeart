@@ -384,13 +384,24 @@ function handlerReadFormData() {
     if (!_beforeValidity("#paste-form")) {
         return null;
     }
-    var _info = $("#paste-form").parseForm();
-    //表单验证的补充
-    var _result = FuncHandlerParseFormValue(_info);
-    if (!_result) {
-        return null;
-    }
+    return readFormDataSkipValidity(true);
 
+}
+
+/**
+ * 跳过验证，读取表单数据 特殊情况下使用
+ * 一般给比如动态构建url的时候使用,需要传入false
+ */
+function readFormDataSkipValidity(boolValidity){
+    var _info = $("#paste-form").parseForm();
+
+    if(boolValidity){
+        //表单验证的补充
+        var _result = FuncHandlerParseFormValue(_info);
+        if (!_result) {
+            return null;
+        }
+    }
     if (_map_values) {
         for (let akey of _map_values.keys()) {
             if (akey) {

@@ -36,12 +36,10 @@ namespace PasteApeart.Application
             _dbContext = dbContext;
         }
 
-        //version 26.07.29
-
-        /// <summary>
-        /// 映射EntityName，这样就不会把数据库表名称暴露出去了 选填
-        /// </summary>
-        public Func<string, string> FuncMapperEntityName { get; set; } = null;
+        ///// <summary>
+        ///// 映射EntityName，这样就不会把数据库表名称暴露出去了 选填
+        ///// </summary>
+        //public Func<string, string> FuncMapperEntityName { get; set; } = null;
 
         /// <summary>
         /// 映射名称 这样就不会把数据库表名称暴露出去了
@@ -50,10 +48,10 @@ namespace PasteApeart.Application
         /// <returns></returns>
         public virtual string DefaultMapperEntityName(string entityName)
         {
-            if (FuncMapperEntityName != null)
-            {
-                return FuncMapperEntityName(entityName);
-            }
+            //if (FuncMapperEntityName != null)
+            //{
+            //    return FuncMapperEntityName(entityName);
+            //}
             return entityName;
         }
 
@@ -353,7 +351,7 @@ namespace PasteApeart.Application
             //using var read = new StreamReader(_httpContext.Request.Body, Encoding.UTF8);
             //var inputString = await read.ReadToEndAsync();
 
-            Console.WriteLine(inputString);
+            //Console.WriteLine(inputString);
 
             // 反序列化输入数据到添加DTO
             //var addDto = JsonConvert.DeserializeObject(inputString, addDtoType);
@@ -699,11 +697,11 @@ namespace PasteApeart.Application
             var listDtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
             if (listDtoType != null)
             {
-                var finds = listDtoType.GetCustomAttributes<PasteDisableAttribute>();
+                var finds = listDtoType.GetCustomAttributes<PasteEnableAttribute>();
                 if (finds?.Any() == true)
                 {
                     var find = finds.FirstOrDefault();
-                    if (find.Args3 == "del")
+                    if (find.Args3 == "false")
                     {
                         throw new PasteCodeException($"实体 {entityName} 不允许删除操作", 403);
                     }
@@ -725,10 +723,7 @@ namespace PasteApeart.Application
             // 保存更改
             await _dbContext.SaveChangesAsync();
 
-            if (FuncAfterRemove != null)
-            {
-                await FuncAfterRemove((entityName, id));
-            }
+            await DefaultAfterRemoveAsync(entityName,id);
 
             return "删除成功";
         }
@@ -738,10 +733,10 @@ namespace PasteApeart.Application
 
         #region 以下是数据过滤和自动赋值模块
 
-        /// <summary>
-        /// 删除后 调用
-        /// </summary>
-        public Func<(string entityName, string id), Task> FuncAfterRemove { get; set; } = null;
+        ///// <summary>
+        ///// 删除后 调用
+        ///// </summary>
+        //public Func<(string entityName, string id), Task> FuncAfterRemove { get; set; } = null;
 
         /// <summary>
         /// 
@@ -749,18 +744,18 @@ namespace PasteApeart.Application
         /// <param name="entityName"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual async Task DefaultRemoveAsync(string entityName, string id)
+        public virtual async Task DefaultAfterRemoveAsync(string entityName, string id)
         {
-            if (FuncAfterRemove != null)
-            {
-                await FuncAfterRemove((entityName, id));
-            }
+            //if (FuncAfterRemove != null)
+            //{
+            //    await FuncAfterRemove((entityName, id));
+            //}
         }
 
-        /// <summary>
-        /// 读取数据后的权限判断，注意entityObject可能为null
-        /// </summary>
-        public Func<(string actionName, Type entityType, object entityObject), Task> FuncFilterData { get; set; } = null;
+        ///// <summary>
+        ///// 读取数据后的权限判断，注意entityObject可能为null
+        ///// </summary>
+        //public Func<(string actionName, Type entityType, object entityObject), Task> FuncFilterData { get; set; } = null;
 
         /// <summary>
         /// 数据校验，判断权限等 需要在基Class定义AuthDataFilterAsync(Type,Entity)
@@ -771,17 +766,17 @@ namespace PasteApeart.Application
         /// <returns></returns>
         public virtual async Task DefaultFilterDataAsync(Type entityType, object obj, string action)
         {
-            if (FuncFilterData != null)
-            {
-                await FuncFilterData((action, entityType, obj));
-                return;
-            }
+            //if (FuncFilterData != null)
+            //{
+            //    await FuncFilterData((action, entityType, obj));
+            //    return;
+            //}
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Func<(string entityName, InputQueryUpdateState input), Task> FuncAfterUpdateState { get; set; } = null;
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public Func<(string entityName, InputQueryUpdateState input), Task> FuncAfterUpdateState { get; set; } = null;
 
         /// <summary>
         /// 
@@ -791,10 +786,10 @@ namespace PasteApeart.Application
         /// <returns></returns>
         public virtual async Task DefaultAfterUpdateStateAsync(string entityName, InputQueryUpdateState input)
         {
-            if (FuncAfterUpdateState != null)
-            {
-                await FuncAfterUpdateState((entityName, input));
-            }
+            //if (FuncAfterUpdateState != null)
+            //{
+            //    await FuncAfterUpdateState((entityName, input));
+            //}
         }
 
 
@@ -839,17 +834,17 @@ namespace PasteApeart.Application
         /// <returns></returns>
         public virtual async Task DefaultDataSetExtendAsync(Type entityType, object obj, string action)
         {
-            if (FuncDataSet != null)
-            {
-                await FuncDataSet((action, entityType, obj));
-                return;
-            }
+            //if (FuncDataSet != null)
+            //{
+            //    await FuncDataSet((action, entityType, obj));
+            //    return;
+            //}
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public Func<(string actionName, Type dtoType, object dtoObject), Task<VoloModelInfo>> FuncBuildProperty { get; set; } = null;
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public Func<(string actionName, Type dtoType, object dtoObject), Task<VoloModelInfo>> FuncBuildProperty { get; set; } = null;
 
         /// <summary>
         /// 构建元数据返回给前端
@@ -861,10 +856,10 @@ namespace PasteApeart.Application
         /// <returns></returns>
         public virtual async Task<VoloModelInfo> DefaultBuildPropertyInfo(string action, object dto, Type dtoType, bool listModel = false)
         {
-            if (FuncBuildProperty != null)
-            {
-                return await FuncBuildProperty((action, dtoType, dto));
-            }
+            //if (FuncBuildProperty != null)
+            //{
+            //    return await FuncBuildProperty((action, dtoType, dto));
+            //}
             if (!listModel)
             {
                 if (dtoType.Name.EndsWith("ListDto"))

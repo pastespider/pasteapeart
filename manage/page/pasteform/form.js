@@ -868,6 +868,7 @@ async function LoadModelProperity(properties) {
                             // }
                         }
                     }
+                    handlerLoaditem(_pro);
                 }
             }
 
@@ -888,7 +889,7 @@ async function LoadModelProperity(properties) {
         for (let pro of _global_data_properties) {
             if (pro.attributes) {
                 pro.attributes.forEach(la => {
-                    if (la.name=="image" && la.args1) {
+                    if (la.name == "image" && la.args1) {
                         let numCount = parseInt(la.args1);
                         if (numCount > 1) {
                             if ($(`.drag_${pro.name}`).length > 0) {
@@ -1035,7 +1036,7 @@ function FuncHandlerParseFormValue(_info) {
                     {
                         var _value = _info[item.name];
                         if (_value) {
-                            _info[item.name] =Number((_value * 100).toFixed(2));// Number(Math.fround(_value * 100));
+                            _info[item.name] = Number((_value * 100).toFixed(2));// Number(Math.fround(_value * 100));
                         }
                     }
                     break;
@@ -1530,54 +1531,37 @@ function setValueToSameLevel(name, target_info, target_name, target_value) {
 
 /**
  * 支持参数化url 会从当前得properies中获取value进行宏替换 宏的写法{{:=item.xxx}}
- * TODO 这里有个问题，如果参数化的url中有多个参数，且有些参数没有值，这时候应该怎么处理？目前的做法是直接把这个参数去掉了，可能会导致接口访问错误，所以后续得优化成如果没有值就替换成空字符串，或者直接替换成null字符串，或者干脆不替换这个参数了，这个需要根据实际情况来定了！
+ * TODO 这里有个问题，如果参数化的url中有多个参数，且有些参数没有值，这时候应该怎么处理？目前的做法是直接把这个参数去掉了，
+ * 可能会导致接口访问错误，所以后续得优化成如果没有值就替换成空字符串，或者直接替换成null字符串，或者干脆不替换这个参数了，这个需要根据实际情况来定了！
+ * 会组合当前url的query，以便给后续使用，如果不要当前的url，则使用handlerMicroString
  * @param {*} _url 
  * @returns 
  */
 function handlerBuildDynamicUrl(_url) {
-    const regex = /{{:=item\.(\w+)}}/g;
-    let match;
-    let keys = [];
-    const urlParts = _url.split('?');
-    let baseUrl = urlParts[0];
-    let queryString = urlParts[1] || '';
 
-    // 使用正则表达式匹配所有符合条件的变量
-    while ((match = regex.exec(_url)) !== null) {
-        keys.push({ key: match[1], val: match[0] });
+    var newUrl = handlerMicroString(_url);
+    const urlParts = newUrl.split('?');
+    let queryString = urlParts[1] || '';
+    const queryParams = new URLSearchParams(queryString);
+    let baseUrl = urlParts[0];//基础
+    var query = location.search;
+    if (!query || query.indexOf("?") == -1) {
+        return newUrl;
     }
 
-    if (keys && keys.length > 0) {
-        const queryParams = new URLSearchParams(queryString);
-        for (const item of keys) {
-            if (item.key) {
-                const _property = funcFindPropertry(item.key);
-                if (_property) {
-                    // 替换URL中的变量
-                    const _reg = new RegExp(item.val, 'g');
-                    _url = _url.replace(_reg, _property.value);
-
-                    // 同时更新queryParams对象
-                    for (const [key, value] of queryParams.entries()) {
-                        if (value.includes(item.val)) {
-                            queryParams.set(key, value.replace(_reg, _property.value));
-                        }
-                    }
-                } else {
-                    // 如果没有找到属性值，移除包含该变量的参数 下面有待商榷啊！
-                    for (const [key, value] of queryParams.entries()) {
-                        if (value.includes(item.val)) {
-                            queryParams.delete(key);
-                        }
-                    }
-                }
+    //从当前的url中获取query参数，组合到新的url中
+    if (query) {
+        const currentQueryParams = new URLSearchParams(query);
+        for (const [key, value] of currentQueryParams.entries()) {
+            if (!queryParams.has(key)) {
+                queryParams.append(key, value);
             }
         }
-        // 重新构建URL
-        const newQueryString = queryParams.toString();
-        _url = baseUrl + (newQueryString ? `?${newQueryString}` : '');
     }
+    const newQueryString = queryParams.toString();
+    _url = baseUrl + (newQueryString ? `?${newQueryString}` : '');
     return _url;
+
 }
 
 /**
@@ -1588,52 +1572,19 @@ function handlerBuildDynamicUrl(_url) {
  * @returns {string} 替换后的字符串
  */
 function handlerBuildDynamicData(inputStr) {
-    // 匹配所有{{:=item.property}}模式
-    const regex = /{{:=item\.(\w+)}}/g;
-
-    // 存储所有匹配到的变量
-    const variables = [];
-    let match;
-    // 收集所有变量
-    while ((match = regex.exec(inputStr)) !== null) {
-        variables.push({
-            fullMatch: match[0],      // 完整匹配，如：{{:=item.id}}
-            propertyName: match[1],   // 属性名，如：id
-            index: match.index        // 在字符串中的位置
-        });
-    }
-    // 如果没有找到变量，直接返回原字符串
-    if (variables.length === 0) {
-        return inputStr;
-    }
-    // 创建一个副本用于替换
-    let result = inputStr;
-    // 使用倒序替换，避免索引位置变化问题
-    variables.sort((a, b) => b.index - a.index);
-    // 替换所有变量
-    for (const variable of variables) {
-        const property = funcFindPropertry(variable.propertyName);
-        if (property && property.value !== undefined) {
-            // 替换所有匹配项
-            const regexEscaped = variable.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            result = result.replace(new RegExp(regexEscaped, 'g'), property.value);
-        } else {
-            //result = result.replace(new RegExp(variable.fullMatch, 'g'), '');
-        }
-    }
-    return result;
+    return handlerMicroString(inputStr);
 }
 
 /**
  * 动态构建信息 使用global_data_properties 和 当前得Url 中的数据进行替换
  * 基于{{:=item.property}}的宏处理，替换为对应的属性值
  * @param {string} inputStr 示例：<a href="./page/?id={{:=item.id}}" title="{{:=item.name}}">{{:=item.id}}</a>
+ * @param {Array} arrModel 数组处理方式，如果不填写使用ids=1&ids=2的模式，如果填写表示用1,2的模式
  * @returns {string} 替换后的字符串
  */
-function handlerMicroString(inputStr) {
+function handlerMicroString(inputStr, arrModel) {
     // 匹配所有{{:=item.property}}模式
     const regex = /{{:=item\.(\w+)}}/g;
-
     // 存储所有匹配到的变量
     const variables = [];
     let match;
@@ -1653,32 +1604,143 @@ function handlerMicroString(inputStr) {
     let result = inputStr;
     // 使用倒序替换，避免索引位置变化问题
     variables.sort((a, b) => b.index - a.index);
-    if (_global_data_properties) {
-        for (const variable of variables) {
-            const property = funcFindPropertry(variable.propertyName);
-            if (property && property.value !== undefined) {
-                // 替换所有匹配项
-                const regexEscaped = variable.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                result = result.replace(new RegExp(regexEscaped, 'g'), property.value);
-            } else {
-                // result = result.replace(new RegExp(variable.fullMatch, 'g'), '');
-            }
-        }
+    //直接从当前表单读取数据
+    var formData = null;//可能当前不是表单页面
+    if (typeof readFormDataSkipValidity === 'function') {
+        formData = readFormDataSkipValidity();
     }
-    if (result.indexOf("{{") >= 0) {
-        let pars = new URLSearchParams(location.search);
-        let mapVals = new Map();
-        for (const [key, value] of pars.entries()) {
-            mapVals.set(key, value);
-        }
-        for (const variable of variables) {
-            if (mapVals.has(variable.propertyName)) {
-                const regexEscaped = variable.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                result = result.replace(new RegExp(regexEscaped, 'g'), mapVals.get(variable.propertyName));
+    //当前url中的query
+    let mapVals = handlerReadQueryFromSearch(location.search);
+    for (const variable of variables) {
+        let found = false;
+        let curVal = null;
+
+        // 1. 表单数据
+        if (formData && formData.hasOwnProperty(variable.propertyName)) {
+            const val = formData[variable.propertyName];
+            if (val !== undefined && val !== null) {
+                curVal = val;
+                found = true;
             }
+        }
+
+        // 2. 元数据
+        if (!found && _global_data_properties) {
+            const property = funcFindPropertry(variable.propertyName);
+            if (property && property.value !== undefined && property.value !== null) {
+                curVal = property.value;
+                found = true;
+            }
+        }
+
+        // 3. URL参数
+        if (!found && mapVals.has(variable.propertyName)) {
+            const val = mapVals.get(variable.propertyName);
+            if (val !== undefined && val !== null) {
+                curVal = val;
+                found = true;
+            }
+        }
+
+        // 4. 替换或删除
+        if (found) {
+            // 有值：正常替换
+            result = privaiteRegexReplace(curVal, arrModel, variable, result);
+        } else {
+            // 没值：删除整个参数
+            result = privateRemoveParamFromUrl(result, variable);
         }
     }
     return result;
+}
+
+/**
+ * 从URL中删除包含占位符的参数
+ * @param {string} url 完整的URL字符串
+ * @param {object} variable 变量对象 { fullMatch: '{{:=item.id}}', propertyName: 'id' }
+ * @returns {string} 删除参数后的URL
+ */
+function privateRemoveParamFromUrl(url, variable) {
+    // 转义特殊字符
+    const escapedMatch = variable.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    // 匹配几种情况：
+    // 1. &id={{:=item.id}}  → 删除 &id=xxx
+    // 2. ?id={{:=item.id}}  → 删除 ?id=xxx 或 ?id=xxx&  → 变成 ? 或 空
+    // 3. id={{:=item.id}}   → 删除 id=xxx
+
+    // 情况1: 删除 &参数名=占位符 (中间可能有其他参数)
+    let result = url.replace(new RegExp(`&${variable.propertyName}=${escapedMatch}`, 'g'), '');
+
+    // 情况2: 删除 ?参数名=占位符 (开头)
+    // 如果是 ?id=xxx  → 删除后变成 ''
+    // 如果是 ?id=xxx&other=yyy → 删除后变成 ?other=yyy
+    result = result.replace(new RegExp(`\\?${variable.propertyName}=${escapedMatch}(&)?`, 'g'), (match, amp) => {
+        // 如果有 &，说明后面还有参数，保留 ?
+        return amp ? '?' : '';
+    });
+
+    // 情况3: 如果占位符不在参数中（比如在path中），直接替换为空
+    result = result.replace(new RegExp(escapedMatch, 'g'), '');
+
+    // 清理多余的 ? 和 &
+    // 如果 URL 以 ?& 开头，修复为 ?
+    result = result.replace(/^\?&/, '?');
+    // 如果 URL 以 & 开头，修复为 ?
+    result = result.replace(/^&/, '?');
+    // 如果 URL 以 ?$ 结尾（只有?没有参数），去掉 ?
+    result = result.replace(/\?$/, '');
+    // 删除多余的 & 在 ? 后面
+    result = result.replace(/\?&/, '?');
+
+    return result;
+}
+
+/**
+ * 基于正则表达式的替换方法，处理数组和单值的情况
+ * @param {*} curVal 
+ * @param {*} arrModel 
+ * @param {*} variable 
+ * @param {*} result 
+ * @returns 
+ */
+function privaiteRegexReplace(curVal, arrModel, variable, result) {
+    if (Array.isArray(curVal)) {
+        if (arrModel && arrModel.length > 0) {
+            curVal = curVal.join(arrModel);
+        } else {
+            // ids=[1,2,3] → "1&ids=2&ids=3"
+            curVal = curVal.map((v, index) => {
+                return index === 0 ? v : `${variable.propertyName}=${v}`;
+            }).join('&');
+        }
+    }
+    const regexEscaped = variable.fullMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return result.replace(new RegExp(regexEscaped, 'g'), curVal);
+}
+
+/**
+ * 读取location.search中的query参数，支持重复参数，并将其存储在一个Map中
+ * @param {*} search 
+ */
+function handlerReadQueryFromSearch(search) {
+    // 当前url中的query - 支持重复参数
+    let pars = new URLSearchParams(search);
+    let mapVals = new Map();
+    for (const [key, value] of pars.entries()) {
+        // 如果已经存在，改为存储数组
+        if (mapVals.has(key)) {
+            const existing = mapVals.get(key);
+            if (Array.isArray(existing)) {
+                existing.push(value);
+            } else {
+                mapVals.set(key, [existing, value]);
+            }
+        } else {
+            mapVals.set(key, value);
+        }
+    }
+    return mapVals;
 }
 
 /**
@@ -1937,6 +1999,7 @@ function handler_outer_value(elc) {
                 if (_attribute) {
                     funcLinkOuterOpenSelect(`选择${find.title}`, _attribute.args1, '100', (objs) => {
                         handler_display_outers_toui(objs, _attribute, elc);
+                        handlerLoaditem(find);
                     });
                 }
             }
@@ -2491,9 +2554,9 @@ function funcUpdateImages() {
         var _zindex = 0;
         for (let src of imgs) {
             if (_zindex == 0) {
-                _html += `<img class="cover_img active" onclick="handlerTapImage(this);" src="${src}">`;
+                _html += `<img class="cover_img active" onerror="this.onerror=null; this.src='./lib/default.png';" onclick="handlerTapImage(this);" src="${src}">`;
             } else {
-                _html += `<img class="cover_img" onclick="handlerTapImage(this);" src="${src}">`;
+                _html += `<img class="cover_img" onerror="this.onerror=null; this.src='./lib/default.png';" onclick="handlerTapImage(this);" src="${src}">`;
             }
             _zindex++;
         }
@@ -2893,13 +2956,46 @@ function appendImageToUI(_num, _name, obj) {
             }
         }
     } else {
-        var _ahtml = "";
+        // var _ahtml = "";
+        // obj.data.forEach(img => {
+        //     _ahtml += '<li class="draggable-item"><img src="' + img.url + '"  onerror="this.onerror=null; this.src=\'./lib/default.png\';"><i class="Hui-iconfont Hui-iconfont-close2 icon-close"  onclick="handlerRemoveImageItem(event,this)"></i></li>';
+        // });
+        // // var _imageul = $(elc).parents(".formControls").find(".imageul");//drag_{name}
+        // var _imageul = `.drag_${_name}`;
+        // $(_imageul).append(_ahtml);
+
+        const fragment = document.createDocumentFragment();
         obj.data.forEach(img => {
-            _ahtml += '<li class="draggable-item"><img src="' + img.url + '"><i class="Hui-iconfont Hui-iconfont-close2 icon-close"  onclick="handlerRemoveImageItem(event,this)"></i></li>';
+            // 创建 li
+            const li = document.createElement('li');
+            li.className = 'draggable-item';
+
+            // 创建 img
+            const imgEl = document.createElement('img');
+            imgEl.src = img.url || './lib/default.png';
+            imgEl.alt = img.alt;
+            imgEl.onerror = function () {
+                this.onerror = null;
+                this.src = './lib/default.png';
+            };
+
+            // 创建删除图标
+            const icon = document.createElement('i');
+            icon.className = 'Hui-iconfont Hui-iconfont-close2 icon-close';
+            icon.onclick = function (e) {
+                handlerRemoveImageItem(e, this);
+            };
+
+            li.appendChild(imgEl);
+            li.appendChild(icon);
+            fragment.appendChild(li);
         });
-        // var _imageul = $(elc).parents(".formControls").find(".imageul");//drag_{name}
-        var _imageul = `.drag_${_name}`;
-        $(_imageul).append(_ahtml);
+
+        // 使用 jQuery 或原生方式添加
+        $(`.drag_${_name}`).append(fragment);
+        // 或者
+        // document.querySelector(`.drag_${_name}`).appendChild(fragment);
+
         //读取所有值到输入框中，作为值
         handlerReadImages(_name);
         //超出数量，隐藏添加按钮！
@@ -3256,6 +3352,7 @@ function handlerSectionChange(elc) {
         //     }
         //     handlerBuildNewUrlToLoad(_name, _val);
         // }
+        handlerLoaditem(_property);
     }
 }
 
@@ -3361,7 +3458,7 @@ function handlerExchangeItemToUIData(item) {
                 case "fentoyuan":
                     {
                         if (item.value) {
-                            item.value =(parseFloat(item.value) / 100).toFixed(2);//(parseFloat(item.value) / 100).toFixed(2);
+                            item.value = (parseFloat(item.value) / 100).toFixed(2);//(parseFloat(item.value) / 100).toFixed(2);
                         }
                         item.dataType = "fentoyuan";
                     }
@@ -3719,7 +3816,7 @@ function handlerExchangeItemToUIData(item) {
                     {
                         //所以这个要放最后面
                         item.singlerow = false;
-                        item.halfrow=true;
+                        item.halfrow = true;
                     }
                     break;
                 case "object":
@@ -4027,8 +4124,8 @@ function handlerExchangeItemToUIData(item) {
                     }
                 }
                 //可能前面标记了
-                if(item.halfrow){
-                    item.singlerow=false;
+                if (item.halfrow) {
+                    item.singlerow = false;
                 }
             }
             break;
@@ -4141,10 +4238,27 @@ function handlerTakeGroupInfo(_group_name, _ui_data_list, item) {
 }
 
 /**
+ * 输入框失去焦点后
+ * @param {*} elc 
+ */
+function handlerBlur(elc) {
+    var name = $(elc).attr("name");
+    if (name) {
+        var find = funcFindPropertry(name);
+        if (find) {
+            handlerLoaditem(find);
+        }
+    }
+}
+
+/**
  * 执行特性loaditem
  * @param {*} find 当前是某一个字段 
  */
 function handlerLoaditem(find) {
+    if (!find.attributes) {
+        return;
+    }
     var _laterread = funcFindAttribute(find.attributes, "loaditem");
     if (_laterread) {
         var _url = _laterread.args1;
@@ -4152,7 +4266,34 @@ function handlerLoaditem(find) {
             var _read_url = handlerBuildDynamicUrl(_url);
             _apiget(_read_url, true, (cc, oo) => {
                 if (cc == 200) {
-                    handler_replace_item(oo);
+                    var newList = new Array();
+                    var mapKeys = new Map();
+                    if (Array.isArray(oo)) {
+                        for (var _item of oo) {
+                            mapKeys.set(_item.name, _item);
+                        }
+                    } else {
+                        mapKeys.set(oo.name, oo);
+                    }
+                    if (_global_data_properties) {
+                        //进行更替
+                        _global_data_properties.forEach(_item => {
+                            if (mapKeys.has(_item.name)) {
+                                newList.push(mapKeys.get(_item.name));
+                            } else {
+                                newList.push(_item);
+                            }
+                        });
+                        _global_data_properties = newList;
+                    }
+                    //oo可能是一个集合，先要进行数据更替
+                    if (Array.isArray(oo)) {
+                        oo.forEach(ooitem => {
+                            handler_replace_item(ooitem);
+                        });
+                    } else {
+                        handler_replace_item(oo);
+                    }
                 }
             });
         }
@@ -4164,7 +4305,11 @@ function handlerLoaditem(find) {
  * @param {*} item 
  */
 function handler_replace_item(item) {
+    if (item.hidden) {
+        return;
+    }
     handlerExchangeItemToUIData(item);
+    //如果是Outer模式呢???
     var _name = item.name;
     var _theml = $("#template_tr_item").html();
     var _vhtml = template(_theml, { item: item });

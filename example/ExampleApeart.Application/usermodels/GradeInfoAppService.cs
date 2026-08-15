@@ -90,70 +90,70 @@ namespace ExampleApeart.usermodels
             return _model;
         }
 
-        /// <summary>
-        /// 获取
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [UseReadOnlyConnectionAttribute]
-        public async Task<PasteResultDto<GradeInfoListDto>> Page([FromQuery] InputQueryGradeInfo input)
-        {
-            var _query = from a in _dbContext.GradeInfo
+        ///// <summary>
+        ///// 获取
+        ///// </summary>
+        ///// <param name="input"></param>
+        ///// <returns></returns>
+        //[HttpGet]
+        //[UseReadOnlyConnectionAttribute]
+        //public async Task<PasteResultDto<GradeInfoListDto>> Page([FromQuery] InputQueryGradeInfo input)
+        //{
+        //    var _query = from a in _dbContext.GradeInfo
 
-                         select new GradeInfoListDto
-                         {
-                             Id = a.Id,
-                             Name = a.Name,
-                             Code = a.Code,
-                             Desc = a.Desc,
-                             Mark = a.Mark,
-                             IsEnable = a.IsEnable,
-                         };
+        //                 select new GradeInfoListDto
+        //                 {
+        //                     Id = a.Id,
+        //                     Name = a.Name,
+        //                     Code = a.Code,
+        //                     Desc = a.Desc,
+        //                     Mark = a.Mark,
+        //                     IsEnable = a.IsEnable,
+        //                 };
 
-            _query = _query
-                .WhereIf(!String.IsNullOrEmpty(input.word), x =>
-                                 x.Name.Contains(input.word)
-                                 || x.Code.Contains(input.word)
-                )
-            ;
+        //    _query = _query
+        //        .WhereIf(!String.IsNullOrEmpty(input.word), x =>
+        //                         x.Name.Contains(input.word)
+        //                         || x.Code.Contains(input.word)
+        //        )
+        //    ;
 
 
-            var _pagedto = new PasteResultDto<GradeInfoListDto>();
-            if (input.page == 1)
-            {
-                _pagedto.TotalCount = await _query.CountAsync();
-                if (input.request == "one")
-                {
-                    _pagedto.BuildModel(new GradeInfoListDto(), new InputQueryGradeInfo());
-                }
-            }
-            var dataList = await _query
-                .OrderByDescending(x => x.Id)
-                .Page(input.page, input.size)
-                .AsNoTracking()
-                .ToListAsync();
-            if (dataList == null || dataList.Count == 0)
-            {
-                return null;// throw new PasteCodeException("没有查询到数据",204); //由前端处理这个204 由前端处理
-            }
-            _pagedto.Items = dataList;
-            if (input.user_id > 0)
-            {
-                var binds = await _dbContext.UserGrade.Where(x => x.UserId == input.user_id).Select(x => x.GradeId).ToArrayAsync();
-                if (binds?.Length > 0)
-                {
-                    foreach (var item in dataList)
-                    {
-                        if (binds.Contains(item.Id))
-                        {
-                            item.ExtendBind = true;
-                        }
-                    }
-                }
-            }
-            return _pagedto;
-        }
+        //    var _pagedto = new PasteResultDto<GradeInfoListDto>();
+        //    if (input.page == 1)
+        //    {
+        //        _pagedto.TotalCount = await _query.CountAsync();
+        //        if (input.request == "one")
+        //        {
+        //            _pagedto.BuildModel(new GradeInfoListDto(), new InputQueryGradeInfo());
+        //        }
+        //    }
+        //    var dataList = await _query
+        //        .OrderByDescending(x => x.Id)
+        //        .Page(input.page, input.size)
+        //        .AsNoTracking()
+        //        .ToListAsync();
+        //    if (dataList == null || dataList.Count == 0)
+        //    {
+        //        return null;// throw new PasteCodeException("没有查询到数据",204); //由前端处理这个204 由前端处理
+        //    }
+        //    _pagedto.Items = dataList;
+        //    if (input.user_id > 0)
+        //    {
+        //        var binds = await _dbContext.UserGrade.Where(x => x.UserId == input.user_id).Select(x => x.GradeId).ToArrayAsync();
+        //        if (binds?.Length > 0)
+        //        {
+        //            foreach (var item in dataList)
+        //            {
+        //                if (binds.Contains(item.Id))
+        //                {
+        //                    item.ExtendBind = true;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return _pagedto;
+        //}
 
         ///// <summary>
         ///// 添加一个

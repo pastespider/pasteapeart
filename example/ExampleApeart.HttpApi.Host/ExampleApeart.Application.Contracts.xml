@@ -156,12 +156,7 @@
         </member>
         <member name="P:ExampleApeart.usermodels.InputQueryGradeInfo.Name">
             <summary>
-            名称 只要是系统内不重复即可，必填
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.usermodels.InputQueryGradeInfo.Code">
-            <summary>
-            代码
+            名称 
             </summary>
         </member>
         <member name="P:ExampleApeart.usermodels.InputQueryGradeInfo.user_id">

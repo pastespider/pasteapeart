@@ -1,6 +1,6 @@
+using ExampleApeart.usermodels;
 using Microsoft.EntityFrameworkCore;
 using PasteApeart.EntityFrameworkCore;
-using ExampleApeart.usermodels;
 
 namespace ExampleApeart.EntityFrameworkCore
 {
@@ -53,5 +53,5 @@ namespace ExampleApeart.EntityFrameworkCore
 
     }
 
-    
+
 }

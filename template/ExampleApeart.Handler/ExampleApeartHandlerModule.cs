@@ -22,6 +22,13 @@ namespace $ext_safeprojectname$
             services.AddTransient<ILazyServiceProvider, LazyServiceProvider>();
             services.AddScoped<CurrentUser>();
 
+            services.AddSingleton<IChannelHelper,ChannelHelper>();
+            services.AddSingleton<IRabbitMQProducer, RabbitMQProducer>();
+            services.AddSingleton<IEventActionHandler, EventActionHandler>();
+            services.AddSingleton<RabbitMultiConsumerHandler>();
+            services.AddSingleton<RabbitMQProducer>();
+            services.AddSingleton<ChannelHelper>();
+
             services.AddAutoDependencyInjection(typeof(PasteApeartHandlerModule).Assembly);
 
             services.AddAutoDependencyInjection(typeof($ext_safeprojectname$HandlerModule).Assembly);

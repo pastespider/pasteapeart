@@ -17,8 +17,8 @@ namespace ExampleApeart
 
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<StartHostedService> _logger;
-        private readonly ChannelHelper _channelHelper;
-        private readonly EventActionHandler _eventHandler;
+        private readonly IChannelHelper _channelHelper;
+        private readonly IEventActionHandler _eventHandler;
         private readonly AppConfig _config;
         private readonly RabbitMultiConsumerHandler _rabbitReviceHandler;
         private readonly RabbitConfig _rabbitConfig;
@@ -33,7 +33,7 @@ namespace ExampleApeart
         /// <param name="channelHelper"></param>
         /// <param name="eventHandler"></param>
         /// <param name="config"></param>
-        public StartHostedService(IServiceProvider serviceProvider, IOptions<RabbitConfig> rabbitConfig, RabbitMultiConsumerHandler rabbitMultiConsumerHandler, ILogger<StartHostedService> logger, ChannelHelper channelHelper, EventActionHandler eventHandler, IOptions<AppConfig> config)
+        public StartHostedService(IServiceProvider serviceProvider, IOptions<RabbitConfig> rabbitConfig, RabbitMultiConsumerHandler rabbitMultiConsumerHandler, ILogger<StartHostedService> logger, IChannelHelper channelHelper, IEventActionHandler eventHandler, IOptions<AppConfig> config)
         {
             _serviceProvider = serviceProvider;
             _logger = logger;

@@ -1,4 +1,475 @@
-# 用了 18 年 .NET 后，我为什么最终选择了这个「PasteApeart」的框架作为团队标准
+# 如果我说有一个框架比AI开发效率还高，你信不信？
+
+>在AI盛行的当下，如果有人和你说，有一个WEB框架，开发效率可以超过AI，你肯定会觉得我再说大话！！！
+
+>PasteApeart是一个超敏捷的开发框架，可以说也是AI的专属开发框架！
+
+## 先来几个热身的需求，一起来看看几个业务实际场景
+
+>假设系统中是这么定于的角色信息(GradeInfo)，有权限信息(RoleInfo),我们用这个来举个例子
+
+## 角色信息
+
+![角色信息](./imgs/001.png)
+
+### 需求一:添加角色按照名称查询
+从上面可以看到，一开始是只有关键字查询的，我们要添加对名称的查询，只要一下2个步骤
+#### 在InputQueryGradeInfo中添加如下代码
+```csharp
+
+    ///<summary>
+    /// 查询
+    ///</summary>
+    [Description("查询")]
+    public class InputQueryGradeInfo : InputSearchBase
+    {
+        ///<summary>
+        ///名称 
+        ///</summary>
+        [MaxLength(16)]
+        [Description("名称 基于名称查询")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// 角色 用于为用户选择角色?
+        /// </summary>
+        [PasteHidden]
+        [PasteQuery("user_id", true)]
+        [PasteExtendBind("UserGrade", "GradeId", "UserId", "user_id")]
+        public int user_id { get; set; }
+    }
+
+```
+#### 重新生成项目，然后一键部署
+
+![一键部署](./imgs/002.png)
+
+打开10几秒钟后，或者看通知，重新刷新下角色信息页面
+
+![名称查询](./imgs/003.png)
+可以看到已经有这个名称的UI出来了，我们试一下查询
+![查询结果](./imgs/004.png)
+
+### 需求二：为角色分配权限(绑定权限)
+如果说一个角色要表示多个权限，那么我们需要引入一个新的表GradeRole
+
+#### 创建Entity(GradeRole)
+
+```csharp
+
+    /// <summary>
+    /// 角色绑定权限
+    /// </summary>
+    [Comment("角色绑定权限")]
+    public class GradeRole : Entity<int>
+    {
+        /// <summary>
+        /// 角色ID 点击选择角色
+        /// </summary>
+        [PasteShort("GradeInfo", "ExtendGrade", "ToShortGrade()")]
+        public int GradeId { get; set; }
+
+        /// <summary>
+        /// 权限ID 点击选择权限
+        /// </summary>
+        [PasteShort("RoleInfo", "ExtendRole", "ToShortRole()")]
+        public int RoleId { get; set; }
+    }
+
+```
+#### 生成Dto
+针对PasteApeart(PasteForm)我们提供了PasteBuilder包含VS版本和VSCODE版本，也就是一个插件，直接生成对应的代码
+
+![查询结果](./imgs/005.png)
+这样你就获得了对应的Dto文件
+```csharp
+    ///<summary>
+    ///角色绑定权限
+    ///</summary>
+    [Description("角色绑定权限")]
+    public class GradeRoleAddDto
+    {
+        ///<summary>
+        ///角色ID 点击选择角色
+        ///</summary>
+        [PasteQuery("grade_id", false)]
+        [Description("角色ID 点击选择角色")]
+        [PasteOuter("gradeInfo", "extendGrade", "id", "name")]
+        [PasteShort("GradeInfo", "ExtendGrade", "ToGradeShort()")]
+        public int GradeId { get; set; }
+        ///<summary>
+        ///权限ID 点击选择权限
+        ///</summary>
+        [PasteQuery("role_id", false)]
+        [Description("权限ID 点击选择权限")]
+        [PasteOuter("roleInfo", "extendRole", "id", "name")]
+        [PasteShort("RoleInfo", "ExtendRole", "ToRoleShort()")]
+        public int RoleId { get; set; }
+    }
+
+    ///<summary>
+    ///角色绑定权限
+    ///</summary>
+    [Description("角色绑定权限")]
+    public class GradeRoleUpdateDto : GradeRoleAddDto
+    {
+
+        ///<summary>
+        ///ID
+        ///</summary>
+        [PasteHidden]
+        [Description("ID")]
+        public int Id { get; set; }
+
+
+        ///<summary>
+        /// 权限 表示接口的权限
+        ///</summary>
+        [PasteDisplay]
+        [Description("权限 表示接口的权限")]
+        public RoleShort ExtendRole { get; set; }
+
+
+        ///<summary>
+        /// 角色 表示权限的一个分组
+        ///</summary>
+        [PasteDisplay]
+        [Description("角色 表示权限的一个分组")]
+        public GradeShort ExtendGrade { get; set; }
+
+    }
+
+    ///<summary>
+    ///角色绑定权限
+    ///</summary>
+    [Description("角色绑定权限")]
+    public class GradeRoleDto : GradeRoleUpdateDto
+    {
+
+
+
+    }
+
+    ///<summary>
+    ///角色绑定权限
+    ///</summary>
+    [Description("角色绑定权限")]
+    [PasteLinkQuery("role_id,grade_id")]
+    public class GradeRoleListDto : EntityDto<int>
+    {
+        ///<summary>
+        ///角色ID 点击选择角色
+        ///</summary>
+        [Description("角色ID 点击选择角色")]
+        [PasteShort("GradeInfo", "ExtendGrade", "ToGradeShort()")]
+        [PasteHidden()]
+        public int GradeId { get; set; }
+        ///<summary>
+        ///权限ID 点击选择权限
+        ///</summary>
+        [Description("权限ID 点击选择权限")]
+        [PasteShort("RoleInfo", "ExtendRole", "ToRoleShort()")]
+        [PasteHidden()]
+        public int RoleId { get; set; }
+
+
+        ///<summary>
+        /// 角色 表示权限的一个分组
+        ///</summary>
+        [PasteDisplay]
+        [Description("角色 表示权限的一个分组")]
+        public GradeShort ExtendGrade { get; set; }
+
+        ///<summary>
+        /// 权限 表示接口的权限
+        ///</summary>
+        [PasteDisplay]
+        [Description("权限 表示接口的权限")]
+        public RoleShort ExtendRole { get; set; }
+
+    }
+
+
+    ///<summary>
+    /// 查询
+    ///</summary>
+    [Description("查询")]
+    public class InputQueryGradeRole : InputSearchBase
+    {
+        ///<summary>
+        ///角色ID 点击选择角色
+        ///</summary>
+        [PasteQuery("grade_id", false)]
+        [PasteOuter("gradeInfo", "extendGrade", "id", "name")]
+        [Description("角色ID 点击选择角色")]
+        public int GradeId { get; set; }
+
+        ///<summary>
+        ///权限ID 点击选择权限
+        ///</summary>
+        [PasteQuery("role_id", false)]
+        [PasteOuter("roleInfo", "extendRole", "id", "name")]
+        [Description("权限ID 点击选择权限")]
+        public int RoleId { get; set; }
+    }
+```
+其实上面的Dto一个都不需要，因为没用武之地！当然了，如果你要提供一个页面查看综合信息的，还是可以用的
+
+#### 扩展ExtendBind
+如果说我们要给角色绑定权限，那么主体就是Grade，也就是GradeId，然后比如，打开RoleInfo表格，然后勾选需要绑定的(已经勾选的，查询列表的时候显示)
+所以我们要去RoleInfo中配置
+
+1.InputQueryRoleInfo中添加GradeId
+```csharp
+    ///<summary>
+    /// 查询
+    ///</summary>
+    [Description("查询")]
+    public class InputQueryRoleInfo : InputSearchBase
+    {
+
+        /// <summary>
+        /// 父级ID 基于父级ID查询
+        /// </summary>
+        [PasteOuter("roleInfo")]
+        [PasteQuery("fatherId", true)]
+        [Description("父级ID 基于父级ID查询")]
+        public int FatherId { get; set; }
+
+        /// <summary>
+        /// 角色ID 查询某一个角色拥有多少权限
+        /// </summary>
+        [PasteQuery("grade_id", true)]
+        [PasteHidden]//默认隐藏，因为只要query触发
+        [PasteExtendBind("GradeRole", "RoleId", "GradeId", "grade_id")]
+        [Description("角色ID 查询某一个角色拥有多少权限")]
+        public int GradeId { get; set; }
+
+        /// <summary>
+        /// 权限类型 基于权限类型查询
+        /// </summary>
+        [PasteLselect("", "", 1)]
+        [Description("权限类型 基于权限类型查询")]
+        [PasteField("RoleType")]
+        public EnumRoleType role_type { get; set; } = EnumRoleType.All;
+
+        /// <summary>
+        /// 排序 这个字段是隐藏的
+        /// </summary>
+        [PasteHidden]
+        [Description("排序 这个字段是隐藏的")]
+        public new string orderby { get; set; } = "SortStr";
+
+    }
+```
+注意看这个字段
+```csharp
+        /// <summary>
+        /// 角色ID 查询某一个角色拥有多少权限
+        /// </summary>
+        [PasteQuery("grade_id", true)]
+        [PasteHidden]//默认隐藏，因为只要query触发
+        [PasteExtendBind("GradeRole", "RoleId", "GradeId", "grade_id")]
+        [Description("角色ID 查询某一个角色拥有多少权限")]
+        public int GradeId { get; set; }
+```
+我配置了[PasteHidden]也就是他一直都是隐藏的，依靠url的query(grade_id)传入，静默模式
+
+2.配置扩展
+在RoleInfoListDto中配置
+```csharp
+
+    ///<summary>
+    ///权限列表
+    ///</summary>
+    [PasteLinkQuery("fatherId")]
+    [PasteButton("备份", "global_role_output(this);")]
+    [PasteButton("恢复", "global_role_default(this);", "", "grady")]
+    [Description("权限列表")]
+    public class RoleInfoListDto
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        [PasteOrderby]
+        [Description("ID")]
+        public int Id { get; set; }
+
+        ///<summary>
+        ///名称
+        ///</summary>
+        [PasteClass]
+        [PasteHtml("<div class=\"level level{{:=item.level}} role{{:=item.roleTypeInt}}\">{{ if(item.icon){ }}<i class=\"Hui-iconfont {{:=item.icon}}\"></i>{{ } }} {{:=item.name}}</div>")]
+        [Description("名称")]
+        public string Name { get; set; }
+
+        ///<summary>
+        ///描述
+        ///</summary>
+        [PasteClass]
+        [Description("描述")]
+        public string Desc { get; set; }
+
+        ///<summary>
+        ///状态
+        ///</summary>
+        [PasteSwitch("view")]
+        [Description("状态")]
+        public bool IsEnable { get; set; }
+
+        /// <summary>
+        /// 绑定 扩展基于角色的时候是否拥有这个权限
+        /// </summary>
+        [PasteSwitch("bind")]
+        [PasteHidden("bind")]
+        [PasteExtendBind("GradeRole", "RoleId", "GradeId", "grade_id")]
+        [Description("绑定 扩展基于角色的时候是否拥有这个权限")]
+        public bool ExtendBind { get; set; }
+
+        /// <summary>
+        /// 详情
+        /// </summary>
+        [PasteMenu("详情", "open_window('详细','./pasteform/detail.html?path=roleInfo&id={{:=item.id}}');")]
+        [Description("详情")]
+        public int Menu2 { get; set; }
+
+        /// <summary>
+        /// 子项
+        /// </summary>
+        [PasteMenu("子项", "open_window('子项','./pasteform/index.html?path=roleInfo&fatherId={{:=item.id}}','90%','90%');")]
+        [Description("子项")]
+        public int Menu3 { get; set; }
+
+    }
+
+
+```
+
+关键看上面的这个字段
+```csharp
+
+        /// <summary>
+        /// 绑定 扩展基于角色的时候是否拥有这个权限
+        /// </summary>
+        [PasteSwitch("bind")]
+        [PasteHidden("bind")]
+        [PasteExtendBind("GradeRole", "RoleId", "GradeId", "grade_id")]
+        [Description("绑定 扩展基于角色的时候是否拥有这个权限")]
+        public bool ExtendBind { get; set; }
+
+```
+以下三个特性是必须的，表示这个字段只有在model=bind的时候才显示
+```
+        [PasteSwitch("bind")]
+        [PasteHidden("bind")]
+        [PasteExtendBind("GradeRole", "RoleId", "GradeId", "grade_id")]
+```
+
+上面配置完成后，你会发觉好像少了入口，我们在GradeInfoListDto中配置一下
+```csharp
+
+    ///<summary>
+    ///角色信息 一个账号可以绑定多个角色,角色绑定权限
+    ///</summary>
+    [Description("角色信息 一个账号可以绑定多个角色,角色绑定权限")]
+    public class GradeInfoListDto : GradeInfoUpdateDto
+    {
+        ///<summary>
+        ///状态
+        ///</summary>
+        [PasteSwitch("view")]
+        [PasteSort(10)]
+        [Description("状态")]
+        public new bool IsEnable { get; set; }
+
+        /// <summary>
+        /// 绑定
+        /// </summary>
+        [PasteSort(12)]
+        [PasteHidden("bind")]
+        [PasteSwitch("bind")]
+        [PasteExtendBind("UserGrade", "GradeId", "UserId", "user_id")]
+        public bool ExtendBind { get; set; }
+
+        /// <summary>
+        /// 普通Menu模式
+        /// </summary>
+        [PasteMenu("绑定权限", "open_window('绑定权限','pasteform/index.html?path=roleInfo&model=bind&grade_id={{:=item.id}}','80%','80%')")]
+        public int Menu1 { get; }
+
+        /// <summary>
+        /// 普通Html模式
+        /// </summary>
+        [PasteMenuhtml]
+        public string Menu11 => $"<a href=\"javascript:;\" onclick=\"open_window('绑定权限','pasteform/index.html?path=roleInfo&model=bind&grade_id={Id}','80%','80%')\">绑定权限</a>";
+
+        /// <summary>
+        /// 权限模式
+        /// </summary>
+        [PasteHidden]
+        [PasteMenu("绑定权限", "open_window('绑定权限','pasteform/index.html?path=roleInfo&model=bind&grade_id={{:=item.id}}','80%','80%')", btnCode: "bind")]
+        public int Menu3 { get; }
+
+        /// <summary>
+        /// 条件模式
+        /// </summary>
+        [PasteIfMenu("item.id == 2", "绑定权限", "open_window('绑定权限','pasteform/index.html?path=roleInfo&model=bind&grade_id={{:=item.id}}','80%','80%')")]
+        public int Menu31 { get; }
+
+        /// <summary>
+        /// 条件权限模式
+        /// </summary>
+        [PasteHidden]
+        [PasteIfMenu("item.id == 2", "绑定权限", "open_window('绑定权限','pasteform/index.html?path=roleInfo&model=bind&grade_id={{:=item.id}}','80%','80%')", btnCode: "bind")]
+        public int Menu32 { get; }
+
+        /// <summary>
+        /// 直接渲染UI 
+        /// </summary>
+        [PasteMenuhtml]
+        public string Menu2 => IsEnable ? $"<a href=\"javascript:;\" onclick=\"open_window('{Name}的详细','./pasteform/detail.html?path=gradeInfo&id={Id}','','90%')\">{IsEnable}</a>" : $"";
+    }
+
+```
+注意看这个字段
+```sharp
+        /// <summary>
+        /// 权限模式
+        /// </summary>
+        [PasteHidden]
+        [PasteMenu("绑定权限", "open_window('绑定权限','pasteform/index.html?path=roleInfo&model=bind&grade_id={{:=item.id}}','80%','80%')", btnCode: "bind")]
+        public int Menu3 { get; }
+```
+
+下一个步骤就是重新生成，然后一键部署，发布了!
+
+重新启动后的，效果如下
+
+![查询结果](./imgs/006.png)
+
+如果你再次打开绑定权限的话，你会发现，你上次勾选的已经是打勾状态了(表示已经写入了GradeRole)
+你也可以去数据库查看，是否有这么一条数据！
+是不是很简单！！！
+
+**总结：你会发现，如果你要为一个字段配置可查询，只要在查询的Model中添加这个字段即可，上面的步骤是全部了，你会发觉管理端代码是不用动的！这就是PasteApeart框架的优雅所在！**
+
+### 附加问题，如果要模糊查询呢？
+只需要把上面的Name字段改成如下
+```csharp
+
+        ///<summary>
+        ///名称 
+        ///</summary>
+        [MaxLength(16)]
+        [PasteField("Name","()")]
+        [Description("名称 基于名称查询")]
+        public string Name { get; set; }
+
+```
+如果当前字段和表字段一致，且查询是全等查询的话，PasteField可以省略，具体用法可以查看特性[PasteField]
+
+
+# 用了 10+ 年 .NET 后，我为什么最终选择了这个「PasteApeart」的框架作为团队标准
 
 > 开篇声明：这不是一篇「又一个框架吹水文」，而是我在 .NET 后端 18 年、带团队 15 年、用过 7 种主流框架踩坑之后，对「框架到底是什么」这个问题的最终答案。
 

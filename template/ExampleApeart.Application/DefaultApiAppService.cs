@@ -1,8 +1,8 @@
+using $ext_safeprojectname$;
 using Microsoft.AspNetCore.Mvc;
 using PasteApeart.Application;
 using PasteApeart.Application.Contracts;
 using PasteApeart.Helper;
-using System.Reflection;
 using System.Text;
 
 namespace $ext_safeprojectname$.Application
@@ -14,19 +14,17 @@ namespace $ext_safeprojectname$.Application
     public class DefaultApiAppService : $ext_safeprojectname$AppService
     {
 
-        private readonly PasteApeartDefaultAppService _appService;
+        private readonly IPasteDefaultAppService _appService;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="appService"></param>
-        public DefaultApiAppService(PasteApeartDefaultAppService appService)
+        public DefaultApiAppService(IPasteDefaultAppService appService)
         {
             _appService = appService;
         }
 
-
-        #region 以下是具体实现 Version.2025.07.005
 
         /// <summary>
         /// 获取新增格式
@@ -37,7 +35,7 @@ namespace $ext_safeprojectname$.Application
         [Route("/api/app/{entityName}/readAddModel", Order = 10)]
         public async Task<VoloModelInfo> ReadAddModel([FromRoute] string entityName)
         {
-            
+
             return await _appService.ReadAddModel(entityName);
 
         }
@@ -171,7 +169,7 @@ namespace $ext_safeprojectname$.Application
 
         }
 
-        #endregion
+
 
     }
 

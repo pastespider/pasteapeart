@@ -19,7 +19,7 @@ namespace PasteApeart
         private readonly ILogger<ChannelHelper> _logger;
         //private readonly AppConfig _config;
         private readonly ConcurrentDictionary<long, List<IEventModel>> queueList;
-        private readonly RabbitMQProducer _producer;
+        private readonly IRabbitMQProducer _producer;
         private readonly RabbitConfig _rabbitConfig;
 
         private readonly IAppCache _appCache;
@@ -29,8 +29,7 @@ namespace PasteApeart
         /// </summary>
         public ChannelHelper(
             ILogger<ChannelHelper> logger,
-            //IOptions<AppConfig> config,
-            RabbitMQProducer producer,
+            IRabbitMQProducer producer,
             IAppCache appCache,
             IOptions<RabbitConfig> rabbitConfig
             )

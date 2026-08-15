@@ -359,7 +359,7 @@ function DetailhandlerExchangeDataTypeToUIType(properties) {
                     case "html":
                         {
                             if(_attribute.args1){
-                                item.value = handlerBuildDynamicData(_attribute.args1);
+                                item.value = handlerMicroString(_attribute.args1);
                                 item.dataType="html";
                             }
                         }

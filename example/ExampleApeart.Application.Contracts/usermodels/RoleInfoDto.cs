@@ -554,12 +554,6 @@ namespace ExampleApeart.usermodels
         [Description("角色ID 查询某一个角色拥有多少权限")]
         public int GradeId { get; set; }
 
-        ///// <summary>
-        ///// 多角色 只是测试不做实际查询
-        ///// </summary>
-        //[PasteLselect(ExampleApeartString.SelectRoleTypeQuery, "", 2)]
-        //public int[] grade_ids { get; set; } = new int[] { 1, 2 };
-
         /// <summary>
         /// 权限类型 基于权限类型查询
         /// </summary>
@@ -567,13 +561,6 @@ namespace ExampleApeart.usermodels
         [Description("权限类型 基于权限类型查询")]
         [PasteField("RoleType")]
         public EnumRoleType role_type { get; set; } = EnumRoleType.All;
-
-        ///// <summary>
-        ///// 授权类型
-        ///// </summary>
-        //[PasteLselect("", "", 1)]
-        //[Description("授权类型")]
-        //public EnumModel AuthType { get; set; } = EnumModel.ok;
 
         /// <summary>
         /// 排序 这个字段是隐藏的

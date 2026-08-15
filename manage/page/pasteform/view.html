@@ -114,37 +114,37 @@
                     <div class="formControls i<%:=item.dataType%>" >
                         <% switch(item.dataType) { 
                             case "text": case "Guid": case "splitarray": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-text" <% if(item.required){ %>required<% } %> type="text" <% if(item.readonly){ %>readonly<% } %> value="<%:a=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-text" <% if(item.required){ %>required<% } %> type="text" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:a=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
                                 <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
                                 <%if(item.unit){%>
                                     <span class="unit"><%:=item.unit%></span>
                                 <%}%>
                             <% break; 
                             case "password": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-text" <% if(item.required){%>required<%}%> type="password" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-text" <% if(item.required){%>required<%}%> type="password" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
                                 <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
                             <% break; 
                             case "html": %>
                                 <div class="item-html"><%:=item.value || ''%></div>
                             <% break; 
                             case "number": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" placeholder-class="p-form-placeholder" type="number" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" placeholder-class="p-form-placeholder" type="number" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
                                 <%if(item.unit){%>
                                     <span class="unit"><%:=item.unit%></span>
                                 <%}%>
                             <% break; 
                             case "fentoyuan": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" onblur="handlerBlur(this)" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
                                 <span class="unit">元</span>
                             <% break; 
                             case "Double": case "Decimal": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off"  class="input-number" step="<%:=item.step%>" placeholder-class="p-form-placeholder" type="number" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>" autocomplete="to-off"  class="input-number" step="<%:=item.step%>" placeholder-class="p-form-placeholder" type="number" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
                                 <%if(item.unit){%>
                                     <span class="unit"><%:=item.unit%></span>
                                 <%}%>
                             <% break; 
                             case "textarea": %>
-                                <textarea name="<%:=item.name%>" class="input-textarea" <% if(item.areastyle){%>style="<%:=item.areastyle%>"<%}%> <%if(item.required){%>required<%}%> <% if(item.readonly){ %>readonly<% } %> <%if(item.maxlength>0){%>maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" ><%:=item.value || ''%></textarea>
+                                <textarea name="<%:=item.name%>" class="input-textarea" <% if(item.areastyle){%>style="<%:=item.areastyle%>"<%}%> <%if(item.required){%>required<%}%> <% if(item.readonly){ %>readonly<% } %> <%if(item.maxlength>0){%>maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" onblur="handlerBlur(this)"><%:=item.value || ''%></textarea>
                                 <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
                             <% break; 
                             case "switch": %>
@@ -189,7 +189,7 @@
                                 <input type="file" multiple id="<%:=item.name%>" datanum="<%:=item.num%>" <% if(item.readonly){ %>readonly<% } %> onchange="handlerUploadFile(this)" datatype="<%:=item.type%>" datasize="<%:=item.size%>" style="display:none;" />
                                 <% if(item.num ==1){%>
                                     <label for="<%:=item.name%>">
-                                        <img class="form-image-head <%:=item.type%>" <% if(item.value && item.value !=null ){ %>src="<%:=item.value%>"<%}%> >
+                                        <img class="form-image-head <%:=item.type%>" onerror="this.onerror=null; this.src='./lib/default.png';" <% if(item.value && item.value !=null ){ %>src="<%:=item.value%>"<%}%> >
                                         <%if(!item.value || item.value ==null){%>
                                             <span class="iconadd icon-add" title="<%:=item?.placeholder || ''%>">
                                                 <i class="Hui-iconfont Hui-iconfont-tuwenxiangqing icon"></i>
@@ -222,7 +222,7 @@
                                         </li>
                                         <%if(item.images){%>
                                             <%item.images.forEach(_img=>{%>
-                                                <li class="draggable-item"><img src="<%:=_img%>"><i class="Hui-iconfont Hui-iconfont-close2 icon-close"  onclick="handlerRemoveImageItem(event,this)"></i></li>
+                                                <li class="draggable-item"><img src="<%:=_img%>" onerror="this.onerror=null; this.src='./lib/default.png';"><i class="Hui-iconfont Hui-iconfont-close2 icon-close"  onclick="handlerRemoveImageItem(event,this)"></i></li>
                                             <%})%>
                                         <%}%>
                                     </ul>
@@ -259,7 +259,7 @@
                             case "cover": %>
                                 <div class="coverts">
                                     <% for(var k=0; k< item.value.length; k++){  %>
-                                        <img class="cover_img <% if(k==0){ %>selected<% } %>" onclick="handlerTapImage(this);" src="<%:=item.value[k]%>">
+                                        <img class="cover_img <% if(k==0){ %>selected<% } %>" onerror="this.onerror=null; this.src='./lib/default.png';" onclick="handlerTapImage(this);" src="<%:=item.value[k]%>">
                                     <% } %>
                                 </div>
                             <% break; 
@@ -346,7 +346,7 @@
         </script>    
 
         <script type="text/html" id="image_ul_li_item">
-            <li><img src="<%:=img%>"><i class="Hui-iconfont Hui-iconfont-close2 icon-close"  onclick="handlerRemoveImageItem(this)"></i></li>
+            <li><img src="<%:=img%>" onerror="this.onerror=null; this.src='./lib/default.png';"><i class="Hui-iconfont Hui-iconfont-close2 icon-close"  onclick="handlerRemoveImageItem(this)"></i></li>
         </script>
 
     </div>
@@ -359,13 +359,13 @@
     <!--请在下方写此页面业务相关的脚本-->
     <script type="text/javascript" src="../lib/api.js"></script>
 
-    <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css">
-    <script type="text/javascript" src="../lib/template.js"></script>
+    <link rel="stylesheet" href="./lib/pickerdaterange/dateRange.css">
+    <script type="text/javascript" src="./lib/template.js"></script>
 
     <!-- 添加对时间区间的支持 -->
-    <script type="text/javascript" async src="../lib/pickerdaterange/dateRange.js"></script>
+    <script type="text/javascript" async src="./lib/pickerdaterange/dateRange.js"></script>
     <!-- 添加对日期的支持 -->
-    <script type="text/javascript" async src="../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" async src="./lib/My97DatePicker/4.8/WdatePicker.js"></script>
 
     <!-- 添加对富文本的支持 使用动态载入 -->
     <!-- <script type="text/javascript" src="../lib/wangeditor/wangEditor.min.js"></script> -->
@@ -374,8 +374,8 @@
     <!-- <script type="text/javascript" src="../lib/editor.md/editormd.min.js"></script> -->
     <!-- 添加对md的c+v粘贴图片的支持 已经迁移到../lib/api.js中 -->
     <!-- <script type="text/javascript" async src="../lib/editor.md/md.paste.js"></script> -->
-    <script type="text/javascript" src="./form.js?v=260525"></script>
-    <script type="text/javascript" src="./view.js?v=260525"></script>
+    <script type="text/javascript" src="./form.js?v=260807"></script>
+    <script type="text/javascript" src="./view.js?v=260807"></script>
     <!--/请在上方写此页面业务相关的脚本-->
 
 </body>

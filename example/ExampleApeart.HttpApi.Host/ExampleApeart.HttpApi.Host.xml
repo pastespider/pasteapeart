@@ -401,7 +401,7 @@
             系统初始化
             </summary>
         </member>
-        <member name="M:ExampleApeart.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.RabbitConfig},PasteApeart.Handler.rabbitmodel.RabbitMultiConsumerHandler,Microsoft.Extensions.Logging.ILogger{ExampleApeart.StartHostedService},PasteApeart.ChannelHelper,PasteApeart.Handler.EventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleApeart.AppConfig})">
+        <member name="M:ExampleApeart.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.RabbitConfig},PasteApeart.Handler.rabbitmodel.RabbitMultiConsumerHandler,Microsoft.Extensions.Logging.ILogger{ExampleApeart.StartHostedService},PasteApeart.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleApeart.AppConfig})">
             <summary>
             
             </summary>

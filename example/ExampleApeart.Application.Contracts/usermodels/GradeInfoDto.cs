@@ -17,7 +17,7 @@ namespace ExampleApeart.usermodels
         ///</summary>
         [MaxLength(8)]
         [Required]
-        [Description("代码")]
+        [Description("代码 最大8个字符，用于系统内标识，标识权限模块等")]
         public string Code { get; set; }
 
         ///<summary>
@@ -46,7 +46,7 @@ namespace ExampleApeart.usermodels
         ///状态
         ///</summary>
         [Description("状态")]
-        public bool IsEnable { get; set; }
+        public bool IsEnable { get; set; } = true;
     }
 
     ///<summary>
@@ -168,17 +168,19 @@ namespace ExampleApeart.usermodels
     public class InputQueryGradeInfo : InputSearchBase
     {
         ///<summary>
-        ///名称 只要是系统内不重复即可，必填
+        ///名称 
         ///</summary>
         [MaxLength(16)]
-        [Description("名称 只要是系统内不重复即可，必填")]
+        [PasteField("Name","()")]
+        [Description("名称 基于名称查询")]
         public string Name { get; set; }
-        ///<summary>
-        ///代码
-        ///</summary>
-        [MaxLength(8)]
-        [Description("代码")]
-        public string Code { get; set; }
+
+        /////<summary>
+        /////代码
+        /////</summary>
+        //[MaxLength(8)]
+        //[Description("代码")]
+        //public string Code { get; set; }
 
         /// <summary>
         /// 角色 用于为用户选择角色?

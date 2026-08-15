@@ -59,6 +59,7 @@ namespace ExampleApeart.Handler.eventmodels
             {
 
                 //业务代码
+                Console.WriteLine("自定义 实现 业务代码");
 
             }
             catch (Exception exl)

@@ -1517,3 +1517,10 @@ public class UserInfoListDto{
 
 ## 26.07.11
     1.优化金额精度转化的问题！
+
+## 26.08.01
+    1.loaditem添加对输入框，lselect select 等的支持！
+    2.引入readFormDataSkipValidity函数，表示读取当前表单数据，不进行验证，特殊的情况下使用，比如你要获悉当前表单的结果的时候
+    3.修复 handlerMicroString handlerBuildDynamicData(后续用handlerMicroString) handlerBuildDynamicUrl 基于当前表单，然后
+    4.添加对数组的支持，比如ids=1&ids=2&ids=3这样传递
+    

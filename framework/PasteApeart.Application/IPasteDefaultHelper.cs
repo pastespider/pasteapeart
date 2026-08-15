@@ -7,9 +7,9 @@ namespace PasteApeart.Application
 {
     public interface IPasteDefaultHelper
     {
-        static abstract Task<int> ExecuteCountQuery(IQueryable query, Type entityType);
-        static abstract VoloModelInfo ReadModelProperties(object model, Type modelType, bool IsListModel = false);
-        static abstract void ValidateModel(object model, Type modelType);
+        //static abstract Task<int> ExecuteCountQuery(IQueryable query, Type entityType);
+        //static abstract VoloModelInfo ReadModelProperties(object model, Type modelType, bool IsListModel = false);
+        //static abstract void ValidateModel(object model, Type modelType);
         object ApplyAllPasteIncludes(object query, Type entityType);
         IQueryable ApplyPagingAndSorting(IQueryable query, Type entityType, Type searchType, object input);
         Type AutoFindType(string typeName);

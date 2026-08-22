@@ -177,6 +177,401 @@
             <param name="input"></param>
             <returns></returns>
         </member>
+        <member name="T:PasteApeart.Application.IPasteDefaultAppService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.CreateItemAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="inputString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultAfterUpdateStateAsync(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="action"></param>
+            <param name="dto"></param>
+            <param name="dtoType"></param>
+            <param name="listModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultDataSetExtendAsync(System.Type,System.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultFilterDataAsync(System.Type,System.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultMapperEntityName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultAfterRemoveAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.Page(System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="queryString"></param>
+            <param name="searchName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.ReadAddModel(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.ReadDetailModel(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.ReadListModel(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="searchName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.ReadUpdateModel(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.Remove(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.UpdateItemAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="inputString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.UpdateState(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.Application.IPasteDefaultHelper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ExecuteCountQuery(System.Linq.IQueryable,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="query"></param>
+            <param name="entityType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ReadModelProperties(System.Object,System.Type,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <param name="modelType"></param>
+            <param name="IsListModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ValidateModel(System.Object,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <param name="modelType"></param>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ApplyAllPasteIncludes(System.Object,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="query"></param>
+            <param name="entityType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ApplyPagingAndSorting(System.Linq.IQueryable,System.Type,System.Type,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="query"></param>
+            <param name="entityType"></param>
+            <param name="searchType"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.AutoFindType(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.BuildDynamicQuery(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Type,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="entityType"></param>
+            <param name="searchType"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.BuildOuterData(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.List{System.Object})">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="listDtoType"></param>
+            <param name="dtos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.BuildOuterQuery(Microsoft.EntityFrameworkCore.DbContext,System.Object,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="dto"></param>
+            <param name="dtoType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.CheckEntityShortData(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="entityType"></param>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ExecuteProjectionQuery(System.Linq.IQueryable,System.Type,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="query"></param>
+            <param name="entityType"></param>
+            <param name="dtoType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ExecuteProjectionQueryWithIncludes(System.Linq.IQueryable,System.Type,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="query"></param>
+            <param name="entityType"></param>
+            <param name="dtoType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.FilterFirstOrDefaultAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Type,System.Object,System.Object,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="entityType"></param>
+            <param name="dtoType"></param>
+            <param name="dtoValue"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.FindDbSetObject(Microsoft.EntityFrameworkCore.DbContext,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.FindDtoType(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="suffix"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.FindEntityByIdAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="entityType"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.FindEntityByIdWithIncludeAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Object,System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="entityType"></param>
+            <param name="id"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.FindEntityType(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.FindFirstOrDefaultAsync(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.Dictionary{System.String,System.String},System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="entityType"></param>
+            <param name="args"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.FindQueryType(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ForeachMapProperties(System.Object,System.Object,System.Type,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="destination"></param>
+            <param name="sourceType"></param>
+            <param name="destinationType"></param>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.GetPropertyThrowException(System.Type,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.GetPropertyValue(System.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.HasAttributeType(System.Type,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <param name="attributeType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.HasPasteIncludeProperties(System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.MapperToQueryModel(System.String,System.Type,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="_search"></param>
+            <param name="searchType"></param>
+            <param name="search"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.MapProperties(System.Object,System.Object,System.Type,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="source"></param>
+            <param name="destination"></param>
+            <param name="sourceType"></param>
+            <param name="destinationType"></param>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ReadCurrentProperty(System.Type,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <param name="propertyName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ReadExtendBind(Microsoft.EntityFrameworkCore.DbContext,System.Type,System.Collections.Generic.List{System.Object},System.Type,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="listDtoType"></param>
+            <param name="dataList"></param>
+            <param name="searchType"></param>
+            <param name="searchModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultHelper.ReadSingleListDtoByIdAsync(Microsoft.EntityFrameworkCore.DbContext,System.String,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="_dbContext"></param>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:PasteApeart.Application.PasteDefaultAppService">
              <summary>
              
@@ -198,11 +593,6 @@
             </summary>
             <param name="defaultHelper"></param>
             <param name="dbContext"></param>
-        </member>
-        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncMapperEntityName">
-            <summary>
-            映射EntityName，这样就不会把数据库表名称暴露出去了 选填
-            </summary>
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultMapperEntityName(System.String)">
             <summary>
@@ -312,23 +702,13 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncAfterRemove">
-            <summary>
-            删除后 调用
-            </summary>
-        </member>
-        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultRemoveAsync(System.String,System.String)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultAfterRemoveAsync(System.String,System.String)">
             <summary>
             
             </summary>
             <param name="entityName"></param>
             <param name="id"></param>
             <returns></returns>
-        </member>
-        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncFilterData">
-            <summary>
-            读取数据后的权限判断，注意entityObject可能为null
-            </summary>
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultFilterDataAsync(System.Type,System.Object,System.String)">
             <summary>
@@ -338,11 +718,6 @@
             <param name="obj"></param>
             <param name="action"></param>
             <returns></returns>
-        </member>
-        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncAfterUpdateState">
-            <summary>
-            
-            </summary>
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultAfterUpdateStateAsync(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
             <summary>
@@ -377,11 +752,6 @@
             <param name="action">add或update</param>
             <returns></returns>
         </member>
-        <member name="P:PasteApeart.Application.PasteDefaultAppService.FuncBuildProperty">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
             <summary>
             构建元数据返回给前端
@@ -402,12 +772,12 @@
             
             </summary>
         </member>
-        <member name="F:PasteApeart.Application.PasteDefaultHelper._dtoTypeScanner">
+        <member name="F:PasteApeart.Application.PasteDefaultHelper._dtoTypes">
             <summary>
              typeof(InputSearchBase).Assembly.GetTypes();
             </summary>
         </member>
-        <member name="F:PasteApeart.Application.PasteDefaultHelper._domainTypeScanner">
+        <member name="F:PasteApeart.Application.PasteDefaultHelper._entityTypes">
             <summary>
             typeof(RoleInfo).Assembly.GetTypes();
             </summary>
@@ -417,7 +787,7 @@
             LinqExtend的Type
             </summary>
         </member>
-        <member name="M:PasteApeart.Application.PasteDefaultHelper.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,System.Func{System.Type[]},System.Func{System.Type[]},System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.#ctor(Microsoft.Extensions.Caching.Memory.IMemoryCache,System.Type[],System.Type[],System.Type)">
             <summary>
             <![CDATA[services.AddSingleton(sp => new PasteApeartDefaultHelper(sp.GetRequiredService<IMemoryCache>(),() => typeof(RoleInfo).Assembly.GetTypes()))]]>
             </summary>

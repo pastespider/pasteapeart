@@ -167,7 +167,6 @@ function FuncFilexModel() {
         _apiget(`${auto_path()}/${_id}/readUpdateModel${location.search}`, true, (c, o) => {
             if (c == 200) {
                 loadHeader(o);
-
                 _global_data_properties = new Array();
                 //整合数据，整合字段信息用于显示UI
                 if (o.data) {
@@ -194,10 +193,7 @@ function FuncFilexModel() {
         _apiget(`${auto_path()}/readAddModel${location.search}`, true, (c, o) => {
             if (c == 200) {
                 loadHeader(o);
-
                 _global_data_properties = new Array();
-
-
                 //整合数据，整合字段信息用于显示UI
                 if (o.data) {
                     if (o.properties) {
@@ -629,225 +625,133 @@ function funcAfterAction(obj, _msg) {
     //已经是根基模式了，如何获得上一页的信息...
     //handlerUpdateRow
 
-
-
 }
 
+
+//以下2个函数已经迁移到form.js中 26.08.08
 // /**
 //  * 从父级查找对应的页面，然后吧值更新到页面中，这里针对的是table的行数据新增或者变更！
 //  * @param {} obj 
 //  * @returns 
 //  */
-// function findAndCallHandlerV2(obj) {
-//     var handlerUpdate = false;
-//     // 从根页面（父级）开始查找
-//     const rootWindow = window.top || window.parent;
+// function findAndCallHandler(obj) {
 
-//     //或许他们都是弹窗，则有
-//     const dialogIFrames = rootWindow.document.querySelectorAll(".layui-layer-iframe");
-//     for (let showIframe of dialogIFrames) {
-//         var handler = callUpdateRow(showIframe, obj);
-//         if (handler) {
-//             return true;
-//         }
-//     }
+//     // console.log('准备查找表格，更新数据');
 
-//     // 在根页面中查找所有显示的 .show_iframe 元素
-//     const showIframes = rootWindow.document.querySelectorAll('.show_iframe');
-//     for (let showIframe of showIframes) {
-//         var handler = callUpdateRow(showIframe, obj);
-//         if (handler) {
-//             return true;
-//         }
-//     }
-//     if (!handlerUpdate) {
-//         var toWin = window.parent;
-//         if (toWin) {
-//             if (typeof toWin.handlerUpdateRow === 'function') {
-//                 // 调用 handlerUpdateRow 并传入 obj
-//                 toWin.handlerUpdateRow(obj);
-//                 return true;
+//     // 定义一个内部查找函数，专门负责在指定的窗口(window)里找 iframe 并调用
+//     const searchInWindow = (targetWin) => {
+//         // 1. 优先找 layer 弹窗 (层级通常最高)
+//         // 注意：layer 的 iframe 类名通常是 layui-layer-iframe
+//         var iframes = targetWin.document.querySelectorAll('.layui-layer-iframe');
+
+//         // 2. 如果没找到，或者想兼容普通容器，再找 .show_iframe
+//         if (iframes.length === 0) {
+//             var containers = targetWin.document.querySelectorAll('.show_iframe');
+//             if (containers.length > 0) {
+//                 // 找到了容器，从容器里取 iframe
+//                 // 这里假设一个容器里只有一个主要 iframe，或者取第一个
+//                 iframes = containers[0].querySelectorAll('iframe');
 //             }
 //         }
-//     }
-//     console.log('未找到可用的 handlerUpdateRow 函数');
-//     return false;
-// }
 
-/**
- * 从父级查找对应的页面，然后吧值更新到页面中，这里针对的是table的行数据新增或者变更！
- * @param {} obj 
- * @returns 
- */
-function findAndCallHandler(obj) {
+//         // 3. 倒序遍历 (reverse)，确保最新打开的（显示在上面的）先被调用
+//         // 这一步替代了复杂的 z-index 计算
+//         var iframeList = Array.from(iframes).reverse();
 
-    // console.log('准备查找表格，更新数据');
-
-    // 定义一个内部查找函数，专门负责在指定的窗口(window)里找 iframe 并调用
-    const searchInWindow = (targetWin) => {
-        // 1. 优先找 layer 弹窗 (层级通常最高)
-        // 注意：layer 的 iframe 类名通常是 layui-layer-iframe
-        var iframes = targetWin.document.querySelectorAll('.layui-layer-iframe');
-
-        // 2. 如果没找到，或者想兼容普通容器，再找 .show_iframe
-        if (iframes.length === 0) {
-            var containers = targetWin.document.querySelectorAll('.show_iframe');
-            if (containers.length > 0) {
-                // 找到了容器，从容器里取 iframe
-                // 这里假设一个容器里只有一个主要 iframe，或者取第一个
-                iframes = containers[0].querySelectorAll('iframe');
-            }
-        }
-
-        // 3. 倒序遍历 (reverse)，确保最新打开的（显示在上面的）先被调用
-        // 这一步替代了复杂的 z-index 计算
-        var iframeList = Array.from(iframes).reverse();
-
-        // // 打印所有 iframe 的 z-index
-        // console.log('=== 所有 iframe 的 z-index ===');
-        // iframeList.forEach((iframe, index) => {
-        //     const zIndex = window.getComputedStyle(iframe).zIndex;
-        //     console.log(`iframe ${index}: z-index = ${zIndex}, id = ${iframe.id || '无id'}, class = ${iframe.className || '无class'}`);
-        // });
-
-        for (let iframe of iframeList) {
-
-            try {
-                if (iframe.contentWindow && typeof iframe.contentWindow.handlerUpdateRow === 'function') {
-                    console.log('找到并调用 handlerUpdateRow');
-                    iframe.contentWindow.handlerUpdateRow(obj);
-                    return true;
-                }
-            } catch (e) {
-                // 跨域或错误忽略
-            }
-        }
-        return false;
-    };
-
-    // ================= 核心逻辑判断 =================
-
-    var find = false;
-    // 情况 A：当前页面本身就是一个 iframe (比如 Page 5)
-    // 它的父级 (Page 4) 才是我们要找的目标容器
-    if (window.top !== window.self) {
-        // 这里的逻辑是：我在 Page 5，我要去 Page 4 (parent) 里找其他的兄弟 iframe
-        // 因为 Page 4 可能同时打开了 Page 5 和 Page 6
-        find = searchInWindow(window.top);
-    }
-    // 情况 B：当前页面是顶层窗口 (比如 Page 6，或者是直接用 window.open 打开的独立窗口)
-    else {
-        // 这里的逻辑是：我就是顶层，我要在我自己 (window) 里找所有的 iframe
-        find = searchInWindow(window);
-    }
-    const rootWindow = window.top || window.parent;
-    if (!find) {
-        find = searchInWindow(rootWindow);
-    }
-    if (!find) {
-
-        const dialogIFrames = rootWindow.document.querySelectorAll(".layui-layer-iframe");
-        var dialogArray = Array.from(dialogIFrames).reverse();
-        for (let showIframe of dialogArray) {
-            var handler = callUpdateRow(showIframe, obj);
-            if (handler) {
-                return true;
-            }
-        }
-
-        // findAndCallHandlerV2(obj);
-        const showIframes = rootWindow.document.querySelectorAll('.show_iframe');
-        for (let showIframe of showIframes) {
-            var handler = callUpdateRow(showIframe, obj);
-            if (handler) {
-                return true;
-            }
-        }
-    }
-}
-
-
-/**
- * 查找iframe并执行函数 handlerUpdateRow 当前这个版本即将删除，请使用非V2版本
- * @param {*} showIframe 
- * @returns 
- */
-function callUpdateRow(showIframe, obj) {
-    try {
-        // 检查 .show_iframe 是否可见
-        const style = window.getComputedStyle(showIframe);
-        if (style.display !== 'none' && style.visibility !== 'hidden') {
-            // 在显示的 .show_iframe 中查找 iframe
-            const iframes = showIframe.querySelectorAll('iframe');
-            for (let iframe of iframes) {
-                try {
-                    const iframeStyle = window.getComputedStyle(iframe);
-                    // 检查 iframe 是否可见且已加载
-                    if (iframeStyle.display !== 'none' && iframeStyle.visibility !== 'hidden' && iframe.contentWindow) {
-                        const iframeWindow = iframe.contentWindow;
-                        // 检查是否存在 handlerUpdateRow 函数
-                        if (typeof iframeWindow.handlerUpdateRow === 'function') {
-                            // 调用 handlerUpdateRow 并传入 obj
-                            iframeWindow.handlerUpdateRow(obj);
-                            // handlerUpdate = true;
-                            return true;
-                        }
-                    }
-                } catch (error) {
-                    // 处理跨域限制等情况
-                    console.warn('无法访问 iframe 内容:', error);
-                }
-            }
-        }
-    } catch (error) {
-        console.warn('无法访问 .show_iframe 元素:', error);
-    }
-    return false;
-}
-
-// /**
-//  * 查找iframe并执行函数 handlerUpdateRow
-//  * @param {*} obj 
-//  * @returns 
-//  */
-// function callUpdateRowV3(showIframe, obj) {
-//     const executeInIframes = (iframeList) => {
 //         for (let iframe of iframeList) {
+
 //             try {
-//                 if (!iframe.contentWindow) continue;
-//                 if (typeof iframe.contentWindow.handlerUpdateRow === 'function') {
+//                 if (iframe.contentWindow && typeof iframe.contentWindow.handlerUpdateRow === 'function') {
+//                     // console.log('找到并调用 handlerUpdateRow');
 //                     iframe.contentWindow.handlerUpdateRow(obj);
 //                     return true;
 //                 }
-//             } catch (e) { }
+//             } catch (e) {
+//                 // 跨域或错误忽略
+//             }
 //         }
 //         return false;
 //     };
 
-//     // 规则1：有父级，找父级
+//     // ================= 核心逻辑判断 =================
+
+//     var find = false;
+//     // 情况 A：当前页面本身就是一个 iframe (比如 Page 5)
+//     // 它的父级 (Page 4) 才是我们要找的目标容器
 //     if (window.top !== window.self) {
-//         const parentContainer = window.parent.document.querySelector('.show_iframe');
-//         if (parentContainer) {
-//             const style = window.parent.getComputedStyle(parentContainer);
-//             if (style.display !== 'none' && style.visibility !== 'hidden') {
-//                 return executeInIframes(parentContainer.querySelectorAll('iframe'));
+//         // 这里的逻辑是：我在 Page 5，我要去 Page 4 (parent) 里找其他的兄弟 iframe
+//         // 因为 Page 4 可能同时打开了 Page 5 和 Page 6
+//         find = searchInWindow(window.top);
+//     }
+//     // 情况 B：当前页面是顶层窗口 (比如 Page 6，或者是直接用 window.open 打开的独立窗口)
+//     else {
+//         // 这里的逻辑是：我就是顶层，我要在我自己 (window) 里找所有的 iframe
+//         find = searchInWindow(window);
+//     }
+//     const rootWindow = window.top || window.parent;
+//     if (!find) {
+//         find = searchInWindow(rootWindow);
+//     }
+//     if (!find) {
+
+//         const dialogIFrames = rootWindow.document.querySelectorAll(".layui-layer-iframe");
+//         var dialogArray = Array.from(dialogIFrames).reverse();
+//         for (let showIframe of dialogArray) {
+//             var handler = callUpdateRow(showIframe, obj);
+//             if (handler) {
+//                 return true;
 //             }
 //         }
-//         return false;
+
+//         // findAndCallHandlerV2(obj);
+//         const showIframes = rootWindow.document.querySelectorAll('.show_iframe');
+//         for (let showIframe of showIframes) {
+//             var handler = callUpdateRow(showIframe, obj);
+//             if (handler) {
+//                 return true;
+//             }
+//         }
 //     }
-
-//     // 规则2：顶层，找所有 iframe
-//     const allIframes = Array.from(window.top.document.querySelectorAll('iframe'));
-
-//     // 【核心修改】：放弃 z-index 排序，直接反转数组！
-//     // 因为 DOM 中后出现的元素通常层级更高（显示在上方），所以我们要倒着遍历
-//     allIframes.reverse();
-
-//     return executeInIframes(allIframes);
 // }
 
-// 使用示例
-// findAndCallHandler({id: 123, name: 'example'});
+
+// /**
+//  * 查找iframe并执行函数 handlerUpdateRow 当前这个版本即将删除，请使用非V2版本
+//  * @param {*} showIframe 
+//  * @returns 
+//  */
+// function callUpdateRow(showIframe, obj) {
+//     try {
+//         // 检查 .show_iframe 是否可见
+//         const style = window.getComputedStyle(showIframe);
+//         if (style.display !== 'none' && style.visibility !== 'hidden') {
+//             // 在显示的 .show_iframe 中查找 iframe
+//             const iframes = showIframe.querySelectorAll('iframe');
+//             for (let iframe of iframes) {
+//                 try {
+//                     const iframeStyle = window.getComputedStyle(iframe);
+//                     // 检查 iframe 是否可见且已加载
+//                     if (iframeStyle.display !== 'none' && iframeStyle.visibility !== 'hidden' && iframe.contentWindow) {
+//                         const iframeWindow = iframe.contentWindow;
+//                         // 检查是否存在 handlerUpdateRow 函数
+//                         if (typeof iframeWindow.handlerUpdateRow === 'function') {
+//                             // 调用 handlerUpdateRow 并传入 obj
+//                             iframeWindow.handlerUpdateRow(obj);
+//                             // handlerUpdate = true;
+//                             return true;
+//                         }
+//                     }
+//                 } catch (error) {
+//                     // 处理跨域限制等情况
+//                     console.warn('无法访问 iframe 内容:', error);
+//                 }
+//             }
+//         }
+//     } catch (error) {
+//         console.warn('无法访问 .show_iframe 元素:', error);
+//     }
+//     return false;
+// }
 
 /**
  * 删除一个组

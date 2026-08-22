@@ -1524,3 +1524,13 @@ public class UserInfoListDto{
     3.修复 handlerMicroString handlerBuildDynamicData(后续用handlerMicroString) handlerBuildDynamicUrl 基于当前表单，然后
     4.添加对数组的支持，比如ids=1&ids=2&ids=3这样传递
     
+## 26.08.02
+    1.findAndCallHandler变更，允许传入urlKey表示对应页面的URL的关键字，用于追踪
+    2.findAndCallHandler添加对当前窗口和父级窗口的支持，主要是不一定是iframe
+    3.extendBind添加对findAndCallHandler的支持，这个需要API端返回对应的ListDto，当前或者父级都可，看需求,单单state的话不需要，200就会变更反状态
+    4.daterange之前的比如2026-03-01 至 2026-06-01 返回的数据不好含06-01 一般的我们希望包含，你可以在配置中进行配置index.js中的config.next_end_date
+    5.findAndCallHandler迁移到form.js中了，之前是只在view.js中
+    
+## 26.08.03
+    1.修复关于多层打开后select_num的叠加问题，由数字转数组了
+    

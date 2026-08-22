@@ -194,6 +194,8 @@ function open_window(title, url, _w, _h, endcallback) {
     // }
 }
 
+//可以再来一个 右侧往左弹出的，用于特殊地方！
+
 /**
  * 打开一个对话框,并等待选择结果
  * @param {*} _title 标题
@@ -213,10 +215,13 @@ function open_select(_title, _url, _w, _h, callback) {
     //         _url = '?'+_linkquery.substring(1);
     //     }
     // }
+    // console.log( "line.218",_url);
     //补充linkquery
     _url = handlerAutoQueryIncludeLinkQuery(_url);
+    // console.log( "line.221",_url);
     //补充表单{{:=item.xxx}}动态参数
     _url = handlerBuildDynamicUrl(_url);
+    // console.log( "line.224",_url);
 
     if (!_w) {
         _w = '80%';
@@ -414,7 +419,7 @@ function funcOuterOpenSelect(title, className, num, callback) {
     if (_url.indexOf("/") == -1) {
         _url = `${handlerPasteFormPath()}index.html?path=${_url}`;
     }
-    open_select(title, _url + '&pf_num=' + num, "", "", callback);
+    open_select(title, _url + '&select_num=' + num, "", "", callback);
 }
 
 /**
@@ -488,7 +493,7 @@ function isJsFile(str, suffix) {
 }
 
 /**
- * 载入js或者css等 当前残缺的版本 请使用loadResource
+ * 载入js或者css等 当前残缺的版本 请使用 loadResource
  * @param {*} src 
  * @param {*} func 
  */
@@ -561,7 +566,12 @@ function loadLibFile(src, func) {
 }
 
 
-// 异步加载资源的函数
+/**
+ * 异步加载资源的函数
+ * @param {*} src 
+ * @param {*} func 
+ * @returns 
+ */
 async function loadResource(src, func) {
     try {
         if (isJsFile(src, ".js")) {
@@ -886,20 +896,29 @@ async function LoadModelProperity(properties) {
         registry_group_click_event();
 
         //绑定图片拖拽功能
+        let boolBreak = false;
         for (let pro of _global_data_properties) {
             if (pro.attributes) {
-                pro.attributes.forEach(la => {
+                for (let la of pro.attributes) {
                     if (la.name == "image" && la.args1) {
                         let numCount = parseInt(la.args1);
                         if (numCount > 1) {
-                            if ($(`.drag_${pro.name}`).length > 0) {
-                                let dragdom = $(`.drag_${pro.name}`).dragSort({})
-                                const dragSort = dragdom.data('dragSort');
-                                pro.dragimages = dragSort;
+                            if (typeof $.fn.dragSort === 'function') {
+                                if ($(`.drag_${pro.name}`).length > 0) {
+                                    let dragdom = $(`.drag_${pro.name}`).dragSort({})
+                                    pro.dragimages = dragdom.data('dragSort');
+                                }
+                            } else {
+                                loadLibFile("./lib/img_drag.js", 'privateBindImgDrag');
+                                boolBreak = true;
+                                break;
                             }
                         }
                     }
-                });
+                };
+            }
+            if (boolBreak) {
+                break;
             }
         }
 
@@ -907,6 +926,32 @@ async function LoadModelProperity(properties) {
 
     if (location.search.indexOf("model=sunobj") == -1) {
         $(".paste-btn-submit").fadeIn();
+    }
+}
+
+/**
+ * 载入图片拖拽功能的支持 绑定图片的拖拽功能
+ * 字符串在其他地方引用了，不能修改名称
+ */
+function privateBindImgDrag() {
+    for (let pro of _global_data_properties) {
+        if (pro.attributes) {
+            pro.attributes.forEach(la => {
+                if (la.name == "image" && la.args1) {
+                    let numCount = parseInt(la.args1);
+                    if (numCount > 1) {
+                        if (typeof $.fn.dragSort === 'function') {
+                            if ($(`.drag_${pro.name}`).length > 0) {
+                                let dragdom = $(`.drag_${pro.name}`).dragSort({})
+                                pro.dragimages = dragdom.data('dragSort');
+                            }
+                        } else {
+                            console.log('载入img_drag.js失败了？');
+                        }
+                    }
+                }
+            });
+        }
     }
 }
 
@@ -1070,8 +1115,14 @@ function FuncHandlerParseFormValue(_info) {
                                                 setValueToSameLevel(item.name, _info, _attribute.args1, _start);
                                             }
                                             if (_attribute.args2) {
-                                                // _info[_attribute.args2] = _end;
-                                                setValueToSameLevel(item.name, _info, _attribute.args2, _end);
+                                                if (_config.next_end_date) {
+                                                    let _next_end = new Date(_end);
+                                                    _next_end.setDate(_next_end.getDate() + 1);
+                                                    let _next_end_str = `${_next_end.getFullYear()}-${(_next_end.getMonth() + 1).toString().padStart(2, '0')}-${_next_end.getDate().toString().padStart(2, '0')} 00:00:00`;
+                                                    setValueToSameLevel(item.name, _info, _attribute.args2, _next_end_str);
+                                                } else {
+                                                    setValueToSameLevel(item.name, _info, _attribute.args2, _end);
+                                                }
                                             }
 
                                             if (_attribute.args4) {
@@ -2046,7 +2097,7 @@ function funcLinkOuterOpenSelect(_title, _className, num, callback) {
         _url = `${handlerPasteFormPath()}index.html?model=select&path=${_className}`;
     }
     _url = handlerBuildDynamicUrl(_url);
-    open_select(_title, _url + '&pf_num=' + num, "", "", callback);
+    open_select(_title, _url + '&select_num=' + num, "", "", callback);
 }
 
 /**
@@ -2268,19 +2319,11 @@ function getAllUrlParams() {
  * 从当前url中获取对应的参数
  * 25.04.13 适配array模式 注意Object的要自己实现，建议使用sessionStorage的方式
  * @param {string} key - 要获取的参数名
+ * @param {string} [urlStr=window.location.search] - 可选的URL字符串，默认为当前页面的查询字符串
  * @returns {Array<string>} 参数值数组，如果未找到则返回空数组
  */
-function readQueryFromSearch(key) {
-    // const url = window.location.search;
-    // const reg = new RegExp(`(^|&)${key}=([^&]*)(&|$)`, 'g');
-    // const results = [];
-    // let match;
-    // while ((match = reg.exec(url)) !== null) {
-    //     results.push(decodeURIComponent(match[2]));
-    // }
-    // return results;
-    //修复?开头的 奇怪以前是咋可以的？？？
-    const url = window.location.search;
+function readQueryFromSearch(key, urlStr) {
+    const url = urlStr || window.location.search;
     const reg = new RegExp(`[?&]${key}=([^&]*)`, 'g');
     const results = [];
     let match;
@@ -2288,6 +2331,23 @@ function readQueryFromSearch(key) {
         results.push(decodeURIComponent(match[1]));
     }
     return results;
+}
+
+/**
+ * 从字符串或者当前地址中获取某一个参数，会返回第一个，如果是需要返回数组用另外一个函数readQueryFromSearch
+ * @param {*} key 
+ * @param {*} urlStr 
+ * @returns 
+ */
+function readFirstQueryFromSearch(key, urlStr) {
+    const url = urlStr || window.location.search;
+    const reg = new RegExp(`[?&]${key}=([^&]*)`, 'g');
+    const results = [];
+    let match;
+    while ((match = reg.exec(url)) !== null) {
+        results.push(decodeURIComponent(match[1]));
+    }
+    return results.length == 0 ? null : results[0];
 }
 
 
@@ -4318,6 +4378,166 @@ function handler_replace_item(item) {
     } else {
         $(".paste-form-body").append(_vhtml);
     }
+}
+
+
+/**
+ * 从父级查找对应的页面，然后吧值更新到页面中，这里针对的是table的行数据新增或者变更！
+ * 查找并更新数据行，一般用于表格数据行需要变动的时候
+ * @param {*} obj 导入的数据，可能是单行的ListDto也可能是ListDto数组
+ * @param {*} urlKey 可选参数，表示url需要匹配这个关键字，一般用path的内容做找寻
+ * @returns 
+ */
+function findAndCallHandler(obj, urlKey) {
+    // 定义一个内部查找函数，专门负责在指定的窗口(window)里找 iframe 并调用
+    const searchInWindow = (targetWin) => {
+        // 1. 优先找 layer 弹窗 (层级通常最高)
+        // 注意：layer 的 iframe 类名通常是 layui-layer-iframe
+        var iframes = targetWin.document.querySelectorAll('.layui-layer-iframe iframe');
+
+        // 2. 如果没找到，或者想兼容普通容器，再找 .show_iframe
+        if (iframes.length === 0) {
+            // var containers = targetWin.document.querySelectorAll('.show_iframe');
+            // if (containers.length > 0) {
+            //     // 找到了容器，从容器里取 iframe
+            //     // 这里假设一个容器里只有一个主要 iframe，或者取第一个
+            //     iframes = containers[0].querySelectorAll('iframe');
+            // }
+            iframes = targetWin.document.querySelectorAll('.show_iframe iframe');
+        }
+        if (iframes.length === 0) {
+            console.log('searchInWindow: 没有找到任何 iframe');
+            //没有iframe 可能就是当前自己
+            return false;
+        }
+        // 3. 倒序遍历 (reverse)，确保最新打开的（显示在上面的）先被调用
+        // 这一步替代了复杂的 z-index 计算
+        var iframeList = Array.from(iframes).reverse();
+        for (let iframe of iframeList) {
+            if (!iframe.contentWindow) {
+                console.warn('iframe.contentWindow 不存在，跳过', iframe.src);
+                continue;
+            }
+            if (urlKey) {
+                var iframeBaseURI = iframe.contentWindow.location.href;
+                if (iframeBaseURI.indexOf(urlKey) == -1) {
+                    // console.log('callUpdateRow iframe.src不匹配', iframeBaseURI, urlKey);
+                    continue;
+                }
+                // console.log('callUpdateRow iframe.src匹配', iframeBaseURI, urlKey);
+            }
+            try {
+                if (iframe.contentWindow && typeof iframe.contentWindow.handlerUpdateRow == 'function') {
+                    // console.log('找到并调用 handlerUpdateRow');
+                    iframe.contentWindow.handlerUpdateRow(obj);
+                    return true;
+                }
+            } catch (e) {
+                // 跨域或错误忽略
+                console.log(e);
+            }
+        }
+        return false;
+    };
+
+    // ================= 核心逻辑判断 =================
+    var find = false;
+    if (window.top !== window.self) {
+        const rootWindow = window.top;;
+        // 针对/page/index.html中的页面框架的内页 工作台页面找
+        const showIframes = rootWindow.document.querySelectorAll('.show_iframe');
+        for (let showIframe of showIframes) {
+            var handler = callUpdateRow(showIframe, obj, urlKey);
+            if (handler) {
+                return true;
+            }
+        }
+        find = searchInWindow(window.top);
+        if (find) {
+            return true;
+        }
+    }
+
+    if (window.parent != window.self) {
+        const rootWindow = window.parent;
+        // 针对/page/index.html中的页面框架的内页 工作台页面找
+        const showIframes = rootWindow.document.querySelectorAll('.show_iframe');
+        for (let showIframe of showIframes) {
+            var handler = callUpdateRow(showIframe, obj, urlKey);
+            if (handler) {
+                return true;
+            }
+        }
+        find = searchInWindow(window.top);
+        if (find) {
+            return true;
+        }
+    }
+
+    //都没有找到 可能是父级页面
+    if (window.parent !== window.self) {
+        var currwin = window.parent;
+        if (currwin) {
+            if (typeof currwin.handlerUpdateRow === 'function') {
+                currwin.handlerUpdateRow(obj);
+                return true;
+            }
+        }
+    } else {
+        var currwin = window;//就是自己当前页面
+        if (currwin) {
+            if (typeof currwin.handlerUpdateRow === 'function') {
+                currwin.handlerUpdateRow(obj);
+                return true;
+            }
+        }
+    }
+}
+
+
+/**
+ * 主要的作用是从工作台找到对应的页面，然后更新表格的数据行，单行或者多行
+ * @param {*} showIframe 
+ * @returns 
+ */
+function callUpdateRow(showIframe, obj, pathName) {
+    try {
+        // 检查 .show_iframe 是否可见
+        const style = window.getComputedStyle(showIframe);
+        if (style.display !== 'none' && style.visibility !== 'hidden') {
+            // 在显示的 .show_iframe 中查找 iframe
+            const iframes = showIframe.querySelectorAll('iframe');
+            for (let iframe of iframes) {
+                if (pathName) {
+                    var iframeBaseURI = iframe.contentWindow.location.href;
+                    if (iframeBaseURI.indexOf(pathName) == -1) {
+                        console.log('callUpdateRow iframe.src不匹配', iframeBaseURI, pathName);
+                        continue;
+                    }
+                    console.log('callUpdateRow iframe.src匹配', iframeBaseURI, pathName);
+                }
+                try {
+                    const iframeStyle = window.getComputedStyle(iframe);
+                    // 检查 iframe 是否可见且已加载
+                    if (iframeStyle.display !== 'none' && iframeStyle.visibility !== 'hidden' && iframe.contentWindow) {
+                        const iframeWindow = iframe.contentWindow;
+                        // 检查是否存在 handlerUpdateRow 函数
+                        if (typeof iframeWindow.handlerUpdateRow === 'function') {
+                            // 调用 handlerUpdateRow 并传入 obj
+                            iframeWindow.handlerUpdateRow(obj);
+                            return true;
+                        }
+                    }
+                } catch (error) {
+                    // 处理跨域限制等情况
+                    console.warn('无法访问 iframe 内容:', error);
+                }
+            }
+        }
+    } catch (error) {
+        console.warn('无法访问 .show_iframe 元素:', error);
+    }
+    return false;
 }
 
 

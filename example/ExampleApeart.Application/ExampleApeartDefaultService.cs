@@ -105,9 +105,9 @@ namespace ExampleApeart.Application
         /// <param name="entityName"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public override Task DefaultRemoveAsync(string entityName, string id)
+        public override Task DefaultAfterRemoveAsync(string entityName, string id)
         {
-            return base.DefaultRemoveAsync(entityName, id);
+            return base.DefaultAfterRemoveAsync(entityName, id);
         }
 
     }

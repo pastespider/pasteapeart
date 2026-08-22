@@ -225,7 +225,7 @@
                             <% if(item.mark){ %>
                                 <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
                             <% } %>
-                            <input type="text" class="inputword" name="<%:=item.name%>" readonly datas="" datae="" <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>" id="<%:=item.name%>">
+                            <input type="text" class="inputword drange" name="<%:=item.name%>" readonly datas="" datae="" <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>" id="<%:=item.name%>">
                         </div>
                     <% break; 
                     case "searchrange": %>
@@ -529,8 +529,8 @@
     <script type="text/javascript" src="../lib/pickerdaterange/dateRange.js"></script>
     <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css">
 
-    <script type="text/javascript" src="./form.js?v=260707"></script>
-    <script type="text/javascript" src="./index.js?v=260706"></script>
+    <script type="text/javascript" src="./form.js?v=260810"></script>
+    <script type="text/javascript" src="./index.js?v=260810"></script>
 
     <!-- 代码中按需载入 v25.04.27 -->
     <!-- <script type="text/javascript" src="../lib/echarts.min.js"></script> -->

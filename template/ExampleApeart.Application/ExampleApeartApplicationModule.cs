@@ -74,13 +74,8 @@ namespace $ext_safeprojectname$
             // 这里需要通过服务提供者获取
 
             //注入默认接口 承载add update detail list state 等
-            services.AddSingleton<IPasteDefaultHelper>(sp =>
-                new PasteDefaultHelper(
-                    sp.GetRequiredService<IMemoryCache>(),
-                    () => typeof(RoleInfo).Assembly.GetTypes(),
-                    () => typeof(RoleInfoDto).Assembly.GetTypes(),
-                    typeof(LinqExtend))
-            );
+            services.AddSingleton<IPasteDefaultHelper>(sp =>new PasteDefaultHelper(sp.GetRequiredService<IMemoryCache>(),typeof(RoleInfo).Assembly.GetTypes(),typeof(RoleInfoDto).Assembly.GetTypes(),typeof(LinqExtend)));
+            
             services.AddScoped<IPasteDefaultAppService>(sp =>
             {
                 //方式一  扩展函数Func的模式

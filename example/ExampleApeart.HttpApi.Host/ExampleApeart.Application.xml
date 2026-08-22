@@ -141,7 +141,7 @@
             <param name="entityName">管理端输入的TableName</param>
             <returns>Dbset的Name</returns>
         </member>
-        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultRemoveAsync(System.String,System.String)">
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultAfterRemoveAsync(System.String,System.String)">
             <summary>
             
             </summary>

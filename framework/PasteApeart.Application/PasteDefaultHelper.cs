@@ -25,16 +25,32 @@ namespace PasteApeart.Application
         /// <summary>
         ///  typeof(InputSearchBase).Assembly.GetTypes();
         /// </summary>
-        private readonly Func<Type[]> _dtoTypeScanner;
+        private readonly Type[] _dtoTypes;
+
         /// <summary>
         /// typeof(RoleInfo).Assembly.GetTypes();
         /// </summary>
-        private readonly Func<Type[]> _domainTypeScanner;
+        private readonly Type[] _entityTypes;
 
         /// <summary>
         /// LinqExtend的Type
         /// </summary>
         private readonly Type _linqExtendType;
+
+        ///// <summary>
+        ///// <![CDATA[services.AddSingleton(sp => new PasteApeartDefaultHelper(sp.GetRequiredService<IMemoryCache>(),() => typeof(RoleInfo).Assembly.GetTypes()))]]>
+        ///// </summary>
+        ///// <param name="memoryCache"></param>
+        ///// <param name="typeDomainScanner"></param>
+        ///// <param name="typeDtoScanner"></param>
+        ///// <param name="extendType"></param>
+        //public PasteDefaultHelper(IMemoryCache memoryCache, Func<Type[]> typeDomainScanner, Func<Type[]> typeDtoScanner, Type extendType)
+        //{
+        //    _memoryCache = memoryCache;
+        //    _domainTypeScanner = typeDomainScanner;
+        //    _dtoTypeScanner = typeDtoScanner;
+        //    _linqExtendType = extendType;
+        //}
 
         /// <summary>
         /// <![CDATA[services.AddSingleton(sp => new PasteApeartDefaultHelper(sp.GetRequiredService<IMemoryCache>(),() => typeof(RoleInfo).Assembly.GetTypes()))]]>
@@ -43,11 +59,11 @@ namespace PasteApeart.Application
         /// <param name="typeDomainScanner"></param>
         /// <param name="typeDtoScanner"></param>
         /// <param name="extendType"></param>
-        public PasteDefaultHelper(IMemoryCache memoryCache, Func<Type[]> typeDomainScanner, Func<Type[]> typeDtoScanner, Type extendType)
+        public PasteDefaultHelper(IMemoryCache memoryCache, Type[] typeDomainScanner, Type[] typeDtoScanner, Type extendType)
         {
             _memoryCache = memoryCache;
-            _domainTypeScanner = typeDomainScanner;
-            _dtoTypeScanner = typeDtoScanner;
+            _entityTypes = typeDomainScanner;
+            _dtoTypes = typeDtoScanner;
             _linqExtendType = extendType;
         }
 
@@ -159,12 +175,13 @@ namespace PasteApeart.Application
         /// <returns></returns>
         private Type[] ListDomainTypes()
         {
-            return _memoryCache.GetOrCreate("domain.types", entry =>
-            {
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(450);
-                //return typeof(RoleInfo).Assembly.GetTypes(); // 耗时的程序集扫描
-                return _domainTypeScanner();
-            });
+            //return _memoryCache.GetOrCreate("domain.types", entry =>
+            //{
+            //    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(450);
+            //    //return typeof(RoleInfo).Assembly.GetTypes(); // 耗时的程序集扫描
+            //    return _entityTypes();
+            //});
+            return _entityTypes;
         }
 
 
@@ -175,12 +192,13 @@ namespace PasteApeart.Application
         /// <returns></returns>
         private Type[] ListDtoTypes()
         {
-            return _memoryCache.GetOrCreate("dto.types", entry =>
-            {
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(450);
-                //return typeof(InputSearchBase).Assembly.GetTypes(); // 耗时的程序集扫描
-                return _dtoTypeScanner();
-            });
+            //return _memoryCache.GetOrCreate("dto.types", entry =>
+            //{
+            //    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(450);
+            //    //return typeof(InputSearchBase).Assembly.GetTypes(); // 耗时的程序集扫描
+            //    return _dtoTypes();
+            //});
+            return _dtoTypes;
         }
 
         /// <summary>
@@ -1169,7 +1187,7 @@ namespace PasteApeart.Application
         /// <param name="modelType"></param>
         /// <param name="IsListModel">针对枚举的备注过滤</param>
         /// <returns></returns>
-        public static VoloModelInfo ReadModelProperties(object model, Type modelType, bool IsListModel = false)
+        public VoloModelInfo ReadModelProperties(object model, Type modelType, bool IsListModel = false)
         {
             return BuilderHelper.AttributeReadModelProperty(model, modelType, IsListModel);
         }
@@ -1199,7 +1217,7 @@ namespace PasteApeart.Application
         /// <param name="modelType"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="PasteCodeException"></exception>
-        public static void ValidateModel(object model, Type modelType)
+        public void ValidateModel(object model, Type modelType)
         {
             if (model == null)
                 throw new ArgumentNullException(nameof(model));
@@ -2090,7 +2108,7 @@ namespace PasteApeart.Application
         /// <param name="query"></param>
         /// <param name="entityType"></param>
         /// <returns></returns>
-        public static async Task<int> ExecuteCountQuery(IQueryable query, Type entityType)
+        public async Task<int> ExecuteCountQuery(IQueryable query, Type entityType)
         {
             var countMethod = typeof(Queryable)
                 .GetMethods()

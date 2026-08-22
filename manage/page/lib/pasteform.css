@@ -278,3 +278,6 @@
   color: #11b2fd;
   background-color: #FFF;
 }
+.layui-layer-btn-focus {
+  border: 1px dashed #999;
+}

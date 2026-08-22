@@ -218,7 +218,7 @@ namespace PasteApeart.Application
             {
                 var search_model = Activator.CreateInstance(searchType);
                 //var searchModel = BuilderHelper.AttributeReadModelProperty(search_model);
-                var searchModel = PasteDefaultHelper.ReadModelProperties(search_model, searchType, true);
+                var searchModel = BuilderHelper.AttributeReadModelProperty(search_model, searchType, true);
                 if (searchModel != null)
                 {
                     listModel.QueryProperties = searchModel.Properties;
@@ -289,7 +289,7 @@ namespace PasteApeart.Application
 
             if (input.page == 1)
             {
-                pagedto.totalCount = await PasteDefaultHelper.ExecuteCountQuery(query, entityType);
+                pagedto.totalCount = await _defaultHelper.ExecuteCountQuery(query, entityType);
             }
 
             var isIncludeType = _defaultHelper.HasPasteIncludeProperties(entityType);
@@ -357,7 +357,7 @@ namespace PasteApeart.Application
             //var addDto = JsonConvert.DeserializeObject(inputString, addDtoType);
             //var addDto = Mapster.TypeAdapter(inputString,addDtoType);
             var addDto = JsonSerializer.Deserialize(inputString, addDtoType, JsonConfig.Options);
-            PasteDefaultHelper.ValidateModel(addDto, addDtoType);
+            _defaultHelper.ValidateModel(addDto, addDtoType);
 
             var mutexFind = await _defaultHelper.FilterFirstOrDefaultAsync(_dbContext, entityType, addDtoType, addDto, null);
             if (mutexFind != null && mutexFind != default)
@@ -422,7 +422,7 @@ namespace PasteApeart.Application
             var updateDto = JsonSerializer.Deserialize(inputString, updateDtoType, JsonConfig.Options);
 
             // 手动执行模型验证
-            PasteDefaultHelper.ValidateModel(updateDto, updateDtoType);
+            _defaultHelper.ValidateModel(updateDto, updateDtoType);
 
             // 获取ID属性值
             var id = _defaultHelper.GetPropertyValue(updateDto, "Id");
@@ -452,16 +452,6 @@ namespace PasteApeart.Application
 
             // 保存更改
             await _dbContext.SaveChangesAsync();
-
-            //return id; //旧版本，直接返回ID
-
-            ////反射 XXXListDto 返回给前端 新版本 用于更新table的行数据
-            //var listDtoType = _defaultHelper.FindDtoType(entityName, "ListDto");
-            //var listDto = Activator.CreateInstance(listDtoType);
-            //// xxx 转 xxxListDto
-            //_defaultHelper.MapProperties(entity, listDto, entityType, listDtoType);
-            //return listDto;
-            ////return id;
 
             return await ReadListDtoByIdAsync(entityType, entityName, id);
         }
@@ -723,7 +713,7 @@ namespace PasteApeart.Application
             // 保存更改
             await _dbContext.SaveChangesAsync();
 
-            await DefaultAfterRemoveAsync(entityName,id);
+            await DefaultAfterRemoveAsync(entityName, id);
 
             return "删除成功";
         }

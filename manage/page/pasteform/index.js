@@ -54,6 +54,7 @@ var _config = {
     // single_select: true,//选择模式下，是否是单选模式，默认是单选模式 弃用，已经使用数量模式了，默认1
     select_num: 1,//选中多少个后确定
     has_menu: true,//是否有操作按钮，默认为true
+    next_end_date: true,//时间区间，是否返回加一天的截至时间
     page_size: [20, 50, 100, 200],//分页的大小
     // page:1,//当前默认第几页，主要是为了传参覆盖 这个不能用，因为后端是第一页才会获取总量，统计等信息
     // page_default_size: 20,//默认的分页大小使用_pageSize
@@ -104,6 +105,11 @@ $(window).ready(function () {
         }
         // _config.expend_search_box = false;
     }
+
+    if (Array.isArray(_config.select_num)) {
+        _config.select_num = _config.select_num[(_config.select_num.length - 1)];
+    }
+
     if (_model == "bind") {
         // _config.expend_search_box = false;
     }
@@ -1510,7 +1516,7 @@ function handlerModelFieldcolumnProperty(properties) {
                     switch (_attribute.name) {
                         case "html":
                             {
-                                if(item.dataType!="menu"){
+                                if (item.dataType != "menu") {
                                     item.dataType = "html";
                                 }
                                 if (_attribute.args1) {
@@ -2352,7 +2358,15 @@ function handlerInputValue(_info) {
                                             }
                                             if (_attribute.args2) {
                                                 // _info[_attribute.args2] = _end;
-                                                setValueToSameLevel(item.name, _info, _attribute.args2, _end);
+                                                // setValueToSameLevel(item.name, _info, _attribute.args2, _end);
+                                                if (_config.next_end_date) {
+                                                    let _next_end = new Date(_end);
+                                                    _next_end.setDate(_next_end.getDate() + 1);
+                                                    let _next_end_str = `${_next_end.getFullYear()}-${(_next_end.getMonth() + 1).toString().padStart(2, '0')}-${_next_end.getDate().toString().padStart(2, '0')} 00:00:00`;
+                                                    setValueToSameLevel(item.name, _info, _attribute.args2, _next_end_str);
+                                                } else {
+                                                    setValueToSameLevel(item.name, _info, _attribute.args2, _end);
+                                                }
                                             }
 
                                             if (_attribute.args4) {
@@ -2532,7 +2546,7 @@ function funcLinkOuterOpenSelect(_title, _className, num, callback) {
         _url = `${handlerPasteFormPath()}index.html?model=select&path=${_className}`;
     }
     _url = handlerBuildDynamicUrl(_url);
-    open_select(_title, _url + '&pf_num=' + num, "", "", callback);
+    open_select(_title, _url + '&select_num=' + num, "", "", callback);
 }
 
 /**
@@ -2649,6 +2663,26 @@ function handlerSwitchUpload(elc) {
     _apipost(`${auto_path()}/updateState`, true, JSON.stringify(_info), (c, o) => {
         if (c != 200) {
             $(elc).prop('checked', !_value);
+        } else {
+            // 是否更新本行数据，如果是bind模式，则更新父级... .. .
+            if (_dataname == 'extendBind') {
+                //如果返回的是一个对象，可以是obj也可以是objs，则更新到父级页面中的数据行中
+                if (typeof (o) == "object") {
+                    // var fromPath = null;
+                    // var pages = sessionStorage.getItem('last_page');
+                    // //来源页面拆解path 这里有问题 上一个页面不一定是referrer
+                    // // var pageFrom = window.document.referrer;
+                    // if (pages) {
+                    //     var len = pages.length;
+                    //     if(len>0){
+                    //         fromPath = pages[len - 1];
+                    //     }
+                    //     console.log('来源页面path', fromPath);
+                    // }
+                    // findAndCallHandler(o, fromPath);
+                    findAndCallHandler(o);
+                }
+            }
         }
     });
 }
@@ -3005,28 +3039,38 @@ function handlerDisplayDataToUi(obj) {
  * @param {*} obj 
  */
 function handlerUpdateRow(input) {
-    // let objs = new Array();
-    // if (Array.isArray(input)) {
-    //     for (let oba of input) {
-    //         if (_config.exchange_id != 'id') {
-    //             if (oba.hasOwnProperty(_config.exchange_id)) {
-    //                 oba["id"] = oba[_config.exchange_id];
-    //             }
-    //         }
-    //         objs.push(oba);
-    //     }
-    // } else {
-    //     if (_config.exchange_id != 'id') {
-    //         if (input.hasOwnProperty(_config.exchange_id)) {
-    //             input["id"] = input[_config.exchange_id];
-    //         }
-    //     }
-    //     objs.push(input);
-    // }
-    // //更新列得对应显示等
-    // privateHandlerPageItemData(objs);
+    // console.log('handlerUpdateRow', input,location.href);
+
+    //这里先要执行格式校验，看看是否是这个表格的数据 对比的是字段，比如id name mark desc 等 包含率要大于50%
+    if (_global_list_properties) {
+        var mapFields = new Array();
+        for (var item of _global_list_properties) {
+            if (!item.hidden) {
+                if (item.name.indexOf(".") == -1) {
+                    mapFields.push(item.name);
+                }
+            }
+        }
+        var totalCount = mapFields.length;
+        var inputModel = input;
+        if (Array.isArray(input)) {
+            inputModel = input[0];
+        }
+        var findCount = 0;
+        for (var item of mapFields) {
+            if (inputModel.hasOwnProperty(item)) {
+                findCount++;
+            }
+        }
+        if (totalCount > 0) {
+            if (Number(findCount) / totalCount < 0.5) {
+                console.log("传入的数据格式不符 无法进行数据行更新", location.href, input);
+                return false;
+            }
+        }
+    }
+
     // //更新到绑定数据
-    // handlerAutoUpdateGlobalPageData(objs);
     var objs = handlerInsertOrUpdateRowData(input);
     //更新到UI
     for (let obj of objs) {
@@ -3044,7 +3088,7 @@ function handlerUpdateRow(input) {
                 existingTr.parentNode.replaceChild(newTr, existingTr);
             } else {
                 newTr.classList.add('hitline');//写入激活样式，这样用户可以发现新数据
-                // console.log('没有基于dataid='+obj.id+'找到需要替换的行');
+                // console.log('没有基于dataid='+obj.id+'找到需要替换的行'); 后续考虑换一个新的样式 而不是hitline
                 const table = document.querySelector('table');
                 if (table) {
                     const tbody = table.querySelector('tbody');
@@ -3061,6 +3105,7 @@ function handlerUpdateRow(input) {
             }
         }
     }
+    return true;
 }
 
 /**

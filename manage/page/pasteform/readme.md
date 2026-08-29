@@ -1534,3 +1534,8 @@ public class UserInfoListDto{
 ## 26.08.03
     1.修复关于多层打开后select_num的叠加问题，由数字转数组了
     
+
+## 26.08.04
+    1.添加对thclass的支持，主要用于表格头的大小拉升
+    2.handlerUpdateRow添加返回值，涉及格式校验，所以false的时候应该继续往下找
+    

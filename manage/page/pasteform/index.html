@@ -82,173 +82,170 @@
         <!-- 查询的信息模板，switch写法 -->
         <script type="text/html" id="template_search">
             <% list.forEach(item=>{ %>
-                <% switch(item.dataType) { 
-                    case "String": case "Guid": case "splitarray": %>
-                        <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <%if(item.hidden){%>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <input type="text" name="<%:=item.name%>" class="inputword" onkeyup="handler_keyup(event)" <% if(item.value && item.value != null ){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>">
-                            <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
-                            <%if(item.unit){%>
-                                <span class="unit"><%:=item.unit%></span>
-                            <%}%>
-                        </div>
-                    <% break; 
-                    case "Int32": case "Int64": %>
-                        <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <% if(item.hidden){ %>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <input type="number" name="<%:=item.name%>" class="inputword"  onkeyup="handler_keyup(event)"  <% if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>">
-                            <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
-                            <%if(item.unit){%>
-                                <span class="unit"><%:=item.unit%></span>
-                            <%}%>
-                        </div>
-                    <% break; 
-                    case "Boolean": %>
-                        <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <% if(item.hidden){ %>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <input type="checkbox" class="input-checkbox mui-switch mui-switch-anim" <% if(item.value){%>checked<%}%> name="<%:=item.name%>">
-                            <span class="placeholder"><%:=item?.placeholder || ''%></span>
-                        </div>
-                    <% break;
-                    case "Double": case "Decimal": case "Float": %>
-                        <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <% if(item.hidden){ %>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <input type="number" name="<%:=item.name%>" class="inputword" step="<%:=item.step || 0.0001%>"  onkeyup="handler_keyup(event)"  <% if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>">
-                            <%if(item.unit){%>
-                                <span class="unit"><%:=item.unit%></span>
-                            <%}%>
-                            <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
-                        </div>
-                    <% break; 
-                    case "outer": %>
-                        <div class="outer sitem <%if(item.class){%><%:=item.class%><%}%>" <% if(item.hidden){ %>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <% if(item.dataFrom=='Int32' || item.dataFrom=='Int64'){ %>
-                                <input type="number" class="outerid" style="display:none;" <% if(item.value){ %>value="<%:=item.value%>"<%}%> name="<%:=item.name%>">
-                            <%}else{%>
-                                <input type="text" class="outerid" style="display:none;" <% if(item.value && item.value != null){ %>value="<%:=item.value%>"<% } %> name="<%:=item.name%>">
-                            <%}%>
-                            <input type="text" class="outerdisplay" dataname="<%:=item.name%>" value="<%:=item.display%>" onclick="handler_outer_value(this)" readonly placeholder="<%:=item.placeholder%>" >
-                            <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchCleanOuterInput(this)"></span>
-                        </div>
-                    <% break; 
-                    case "select": %>
-                        <div  class="sitem <%if(item.class){%><%:=item.class%><%}%>" <% if(item.hidden){ %>style="display:none;"<% } %> >
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <select name="<%:=item.name%>" onchange="handler_select_change(this);">
-                                <% if(item.selects){ %>
-                                    <% item.selects.forEach(_select=>{ %>
-                                        <option value="<%:=_select.value%>" <% if(_select.value==item.value){%>selected<% } %>><%:=_select.name%></option>
-                                    <% }) %>
-                                <%}%>
-                            </select>
-                        </div>
-                    <% break; 
-                    case "lselect": %>
-                        <div  class="sitem <%if(item.class){%><%:=item.class%><%}%>" <% if(item.hidden){ %>style="display:none;"<%}%> >
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <ul class="ulitems lselect <%:=item.selects_max%>" name="<%:=item.name%>">
-                                <% if(item.selects){ %>
-                                    <% item.selects.forEach(_select=>{ %>
-                                        <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>"><%:=_select.name%></li>
-                                    <% }) %>
-                                <%}%>
-                            </ul>
-                        </div>
-                    <% break; 
-                    case "selects": %>
-                        <div  class="sitem <%if(item.class){%><%:=item.class%><%}%>" <%if(item.hidden){%>style="display:none;"<%}%> >
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <ul class="ulitems ulselects" name="<%:=item.name%>">
-                                <% if(item.selects){ %>
-                                    <% item.selects.forEach(_select=>{ %>
-                                        <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>"><%:=_select.name%></li>
-                                    <% }) %>
-                                <%}%>
-                            </ul>
-                        </div>
-                    <% break; 
-                    case "DateTime": %>
-                        <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <%if(item.hidden){%>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <input type="text" name="<%:=item.name%>" <%if(item.value){%>value="<%:=item.value%>"<%}%> class="inputword" onClick="WdatePicker({el:this,dateFmt:'<%:=item.format%>'})" placeholder="<%:=item.placeholder || ''%>">
-                            <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
-                        </div>
-                    <% break; 
-                    case "datalist": %>
-                        <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <%if(item.hidden){%>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <input type="text" name="<%:=item.name%>" class="inputword" list="<%:=item.name%>" placeholder="<%:=item.placeholder || ''%>">
-                            <% if(item.selects){ %>
-                                <datalist id="<%:=item.datalistid%>">
-                                    <% item.selects.forEach(_select=>{ %>
-                                        <option value="<%:=_select.value%>" ><%:=_select.name%>(<%:=_select.value%>)</option>
-                                    <% }) %>
-                                </datalist>
-                            <%}%>
-                            <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
-                        </div>
-                    <% break; 
-                    case "daterange": %>
-                        <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <%if(item.hidden){%>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <input type="text" class="inputword drange" name="<%:=item.name%>" readonly datas="" datae="" <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>" id="<%:=item.name%>">
-                        </div>
-                    <% break; 
-                    case "searchrange": %>
-                        <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <%if(item.hidden){%>style="display:none;"<%}%>>
-                            <span class="tl"><%:=item.title%>:</span>
-                            <% if(item.mark){ %>
-                                <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
-                            <% } %>
-                            <div class="range_input">
-                                <input type="number" step="<%:=item.range.step%>" class="inputword" placeholder="<%:=item.range.placeholder || ''%>" name="<%:=item.range.low_name%>">
-                                <span>-</span>
-                                <input type="number" step="<%:=item.range.step%>" class="inputword" placeholder="<%:=item.range.placeholder || ''%>" name="<%:=item.range.high_name%>">
-                            </div>
-                        </div>
-                    <% break; 
-                    case "html": %>
-                        <%:=item.html%>
-                    <% break; 
-                    default: %>
-                        <!--未处理的对象<%:=item.dataType%>-->
-                        <!-- 可根据需要添加默认处理逻辑 -->
-                    <% break; 
-                } %>
+                <% if(item.dataType == 'html'){%>
+                    <%:=item.html%>
+                <% }else{ %>
+                    <div class="sitem <%if(item.class){%><%:=item.class%><%}%>" <%if(item.hidden){%>style="display:none;"<%}%>>
+                        <span class="tl"><%:=item.title%>:</span>
+                        <!-- switch.start -->
+                            <% switch(item.dataType) { 
+                                case "String": case "Guid": case "splitarray": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <input type="text" name="<%:=item.name%>" class="inputword" onkeyup="handler_keyup(event)" <% if(item.value && item.value != null ){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>">
+                                        <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
+                                        <%if(item.unit){%>
+                                            <span class="unit"><%:=item.unit%></span>
+                                        <%}%>
+                                   
+                                <% break; 
+                                case "Int32": case "Int64": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <input type="number" name="<%:=item.name%>" class="inputword"  onkeyup="handler_keyup(event)"  <% if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>">
+                                        <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
+                                        <%if(item.unit){%>
+                                            <span class="unit"><%:=item.unit%></span>
+                                        <%}%>
+                                    
+                                <% break; 
+                                case "Boolean": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <input type="checkbox" class="input-checkbox mui-switch mui-switch-anim" <% if(item.value){%>checked<%}%> name="<%:=item.name%>">
+                                        <span class="placeholder"><%:=item?.placeholder || ''%></span>
+                                    
+                                <% break;
+                                case "Double": case "Decimal": case "Float": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <input type="number" name="<%:=item.name%>" class="inputword" step="<%:=item.step || 0.0001%>"  onkeyup="handler_keyup(event)"  <% if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>">
+                                        <%if(item.unit){%>
+                                            <span class="unit"><%:=item.unit%></span>
+                                        <%}%>
+                                        <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
+                                    
+                                <% break; 
+                                case "outer": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <% if(item.dataFrom=='Int32' || item.dataFrom=='Int64'){ %>
+                                            <input type="number" class="outerid" style="display:none;" <% if(item.value){ %>value="<%:=item.value%>"<%}%> name="<%:=item.name%>">
+                                        <%}else{%>
+                                            <input type="text" class="outerid" style="display:none;" <% if(item.value && item.value != null){ %>value="<%:=item.value%>"<% } %> name="<%:=item.name%>">
+                                        <%}%>
+                                        <input type="text" class="outerdisplay" dataname="<%:=item.name%>" value="<%:=item.display%>" onclick="handler_outer_value(this)" readonly placeholder="<%:=item.placeholder%>" >
+                                        <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchCleanOuterInput(this)"></span>
+                                  
+                                <% break; 
+                                case "select": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <select name="<%:=item.name%>" onchange="handler_select_change(this);">
+                                            <% if(item.selects){ %>
+                                                <% item.selects.forEach(_select=>{ %>
+                                                    <option value="<%:=_select.value%>" <% if(_select.value==item.value){%>selected<% } %>><%:=_select.name%></option>
+                                                <% }) %>
+                                            <%}%>
+                                        </select>
+                                    
+                                <% break; 
+                                case "lselect": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <ul class="ulitems lselect <%:=item.selects_max%>" name="<%:=item.name%>">
+                                            <% if(item.selects){ %>
+                                                <% item.selects.forEach(_select=>{ %>
+                                                    <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>"><%:=_select.name%></li>
+                                                <% }) %>
+                                            <%}%>
+                                        </ul>
+                                   
+                                <% break; 
+                                case "selects": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <ul class="ulitems ulselects" name="<%:=item.name%>">
+                                            <% if(item.selects){ %>
+                                                <% item.selects.forEach(_select=>{ %>
+                                                    <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>"><%:=_select.name%></li>
+                                                <% }) %>
+                                            <%}%>
+                                        </ul>
+                                    
+                                <% break; 
+                                case "DateTime": %>
+    
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <input type="text" name="<%:=item.name%>" <%if(item.value){%>value="<%:=item.value%>"<%}%> class="inputword" onClick="WdatePicker({el:this,dateFmt:'<%:=item.format%>'})" placeholder="<%:=item.placeholder || ''%>">
+                                        <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
+                                    
+                                <% break; 
+                                case "datalist": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <input type="text" name="<%:=item.name%>" class="inputword" list="<%:=item.name%>" placeholder="<%:=item.placeholder || ''%>">
+                                        <% if(item.selects){ %>
+                                            <datalist id="<%:=item.datalistid%>">
+                                                <% item.selects.forEach(_select=>{ %>
+                                                    <option value="<%:=_select.value%>" ><%:=_select.name%>(<%:=_select.value%>)</option>
+                                                <% }) %>
+                                            </datalist>
+                                        <%}%>
+                                        <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
+                                  
+                                <% break; 
+                                case "daterange": %>
+   
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <input type="text" class="inputword drange" name="<%:=item.name%>" readonly datas="" datae="" <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>" id="<%:=item.name%>">
+                                    
+                                <% break; 
+                                case "searchrange": %>
+
+                                        <% if(item.mark){ %>
+                                            <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
+                                        <% } %>
+                                        <div class="range_input">
+                                            <input type="number" step="<%:=item.range.step%>" class="inputword" placeholder="<%:=item.range.placeholder || ''%>" name="<%:=item.range.low_name%>">
+                                            <span>-</span>
+                                            <input type="number" step="<%:=item.range.step%>" class="inputword" placeholder="<%:=item.range.placeholder || ''%>" name="<%:=item.range.high_name%>">
+                                        </div>
+
+                                <% break; 
+                                default: %>
+                                    <!--未处理的对象<%:=item.dataType%>-->
+                                    <!-- 可根据需要添加默认处理逻辑 -->
+                                <% break; 
+                            } %>
+                        <!-- switch.end -->
+                        <%if(item.unit){%>
+                            <span class="unit"><%:=item.unit%></span>
+                        <%}%>
+                    </div>
+                <% } %>
             <% }) %>
         </script>    
 
@@ -279,7 +276,7 @@
                                 <% continue; %>
                             <% } %>
 
-                            <th data-column="<%:=item.name%>">
+                            <th data-column="<%:=item.name%>" <% if(item.thclass){ %>class="<%:=item.thclass%>"<% } %> >
                             <% if(config.drag_order_column){ %>
                                 <span class="drag-handle">::</span>
                             <% } %>
@@ -520,7 +517,7 @@
     <script type="text/javascript" src="../lib/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="../lib/layer/3.1.1/layer.js"></script>
     <script type="text/javascript" src="./lib/template.js"></script>
-    <script type="text/javascript" src="../lib/My97DatePicker/4.8/WdatePicker.js"></script>
+    <script type="text/javascript" src="./lib/My97DatePicker/4.8/WdatePicker.js"></script>
     <script type="text/javascript" src="../lib/api.js?v=251002"></script>
     
     <!-- <script type="text/javascript" src="../lib/page.min.js"></script> -->
@@ -529,8 +526,8 @@
     <script type="text/javascript" src="../lib/pickerdaterange/dateRange.js"></script>
     <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css">
 
-    <script type="text/javascript" src="./form.js?v=260810"></script>
-    <script type="text/javascript" src="./index.js?v=260810"></script>
+    <script type="text/javascript" src="./form.js?v=260811"></script>
+    <script type="text/javascript" src="./index.js?v=260811"></script>
 
     <!-- 代码中按需载入 v25.04.27 -->
     <!-- <script type="text/javascript" src="../lib/echarts.min.js"></script> -->

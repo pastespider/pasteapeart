@@ -1,0 +1,933 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleApeart.Application.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleApeart.Application.Contracts.eventmodels.EventDemoModel">
+            <summary>
+            案例
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.eventmodels.EventDemoModel.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.Application.Contracts.usermodels.TestBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestBase.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestBase.Age">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestBase.SubjectId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.Application.Contracts.usermodels.TestLevel2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestLevel2.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestLevel2.Age">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestLevel2.GroupId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.Application.Contracts.usermodels.TestDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestDto.Stype">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestDto.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.usermodels.TestDto.Desc">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.ExampleApeartApplicationContractsModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.PublicString">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.PublicString.TokenHeadName">
+            <summary>
+            Token在Header或者Cookie中的名称
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.PublicString.CacheImageHead">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.PublicString.TokenTimeOut">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.PublicString.TokenKey">
+            <summary>
+            注意 注意 这个是重点，如果是模板则用$guid1$这样创建的项目就行新的，或者改成手动赋值！
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeInfoAddDto">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.Code">
+            <summary>
+            代码
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.Name">
+            <summary>
+            名称 只要是系统内不重复即可，必填
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.Desc">
+            <summary>
+            描述 对这个角色的补充说明 64
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.Mark">
+            <summary>
+            备注 这个角色的内部备注，desc一般表示外部备注 64
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeInfoUpdateDto">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeInfoDto">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeInfoListDto">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoListDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoListDto.ExtendBind">
+            <summary>
+            绑定
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoListDto.Menu1">
+            <summary>
+            普通Menu模式
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoListDto.Menu11">
+            <summary>
+            普通Html模式
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoListDto.Menu3">
+            <summary>
+            权限模式
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoListDto.Menu31">
+            <summary>
+            条件模式
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoListDto.Menu32">
+            <summary>
+            条件权限模式 附带按钮权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoListDto.Menu2">
+            <summary>
+            直接渲染UI 
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeShort">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeShort.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeShort.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.InputQueryGradeInfo">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryGradeInfo.Name">
+            <summary>
+            名称 
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryGradeInfo.user_id">
+            <summary>
+            角色 用于为用户选择角色?
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeRoleAddDto">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleAddDto.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleAddDto.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeRoleUpdateDto">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleUpdateDto.ExtendRole">
+            <summary>
+             权限 表示接口的权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleUpdateDto.ExtendGrade">
+            <summary>
+             角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeRoleDto">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeRoleListDto">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleListDto.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleListDto.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleListDto.ExtendGrade">
+            <summary>
+             角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeRoleListDto.ExtendRole">
+            <summary>
+             权限 表示接口的权限
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.InputQueryGradeRole">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryGradeRole.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryGradeRole.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleInfoAddDto">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Id">
+            <summary>
+            用于备份恢复使用不做UI用
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Name">
+            <summary>
+            名称 权限的友好名称
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Icon">
+            <summary>
+            图标名称 一般表示样式名称,示例Hui-iconfont-menu
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Model">
+            <summary>
+            模块 权限的一个归集，示例:user,表示用户模块
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Role">
+            <summary>
+            权限 对应权限，示例:add，表示新增
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Sort">
+            <summary>
+            排序 排序基于层级和父级，横向排序，使用多层级排序规则
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.FatherId">
+            <summary>
+            父级 上一级是哪个，按需配置！
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Items">
+            <summary>
+            子集
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleInfoUpdateDto">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoUpdateDto.ExtendRole">
+            <summary>
+            扩展 父级信息
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleInfoDto">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoDto.ExtendRole">
+            <summary>
+            父级 为了给上一个字段FatherId显示使用，你也可以把FatherId隐藏，只显示这个字段，或者2个都显示
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoDto.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoDto.SortStr">
+            <summary>
+            排序串
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoDto.RootId">
+            <summary>
+            根级
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoDto.FatherStr">
+            <summary>
+            父级串
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleInfoListDto">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Model">
+            <summary>
+            模块 升序为Model，降序为Model desc
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Icon">
+            <summary>
+            图标名称 一般表示样式名称
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Info">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮,如何让前端支持这个显示
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.RoleTypeInt">
+            <summary>
+            权限类型
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.ExtendBind">
+            <summary>
+            绑定 扩展基于角色的时候是否拥有这个权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.FatherId">
+            <summary>
+            父级
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.ExtendFather">
+            <summary>
+            父级 信息，为了给上一个字段FatherId显示使用，你也可以把FatherId隐藏，只显示这个字段，或者2个都显示
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.SortStr">
+            <summary>
+            排序串
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Menu2">
+            <summary>
+            详情
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoListDto.Menu3">
+            <summary>
+            子项
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleMenuModel">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleMenuModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleMenuModel.Name">
+            <summary>
+            权限项
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleMenuModel.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleMenuModel.Icon">
+            <summary>
+            图标名称 一般表示样式名称
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleMenuModel.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleMenuModel.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleMenuModel.FatherId">
+            <summary>
+            父级ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleMenuModel.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleAuthDto">
+            <summary>
+            权限列表 这个作为登陆后权限缓存，其他的没必要缓存，用不上
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleAuthDto.Model">
+            <summary>
+            权限模块
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleAuthDto.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleShortModel">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleShortModel.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleShortModel.Model">
+            <summary>
+            权限模块
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleShortModel.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleShortModel.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleShortModel.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleShortModel.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleShort">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleShort.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleShort.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.InputQueryRoleInfo">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.FatherId">
+            <summary>
+            父级ID 基于父级ID查询
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.GradeId">
+            <summary>
+            角色ID 查询某一个角色拥有多少权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.role_type">
+            <summary>
+            权限类型 基于权限类型查询
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.orderby">
+            <summary>
+            排序 这个字段是隐藏的
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserGradeAddDto">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeAddDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeAddDto.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserGradeUpdateDto">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeUpdateDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeUpdateDto.ExtendUser">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeUpdateDto.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeUpdateDto.ExtendGrade">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserGradeDto">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeDto.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserGradeListDto">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeListDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeListDto.ExtendUser">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeListDto.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserGradeListDto.ExtendGrade">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.InputQueryUserGrade">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserInfoAddDto">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.PassWord">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.GradeIds">
+            <summary>
+            角色 包含的角色，这个暂未实现，应该会归纳到outers去
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserInfoUpdateDto">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoUpdateDto.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoUpdateDto.PassWord">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoUpdateDto.GradeId">
+            <summary>
+            角色 测试用的
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoUpdateDto.ExtendGrade">
+            <summary>
+            角色 测试用的
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoUpdateDto.Grades">
+            <summary>
+            扩展 包含的角色列表
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserInfoDto">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoDto.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserInfoListDto">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.Menu1">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserShort">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserShort.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserShort.Name">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserShort.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserShort.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserShortModel">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserShortModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserShortModel.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.UserShortModel.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.usermodels.InputQueryUserInfo">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryUserInfo.sdate">
+            <summary>
+            注册区间
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryUserInfo.edate">
+            <summary>
+            日期区间
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryUserInfo.email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryUserInfo.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+    </members>
+</doc>

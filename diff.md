@@ -1,9 +1,13 @@
 # PasteApeart和PasteForm的区别，看这一篇就够了
 
-> 如果说PasteForm是All in Dto
+> 如果说PasteForm1.0是All in Dto
 > 那么PasteApeart就是All in Dto and Handler
 
-所以，PasteApeart是PasteForm的升级版！
+所以，PasteApeart是PasteForm1.0的升级版！
+既然有PasteForm1.0那么就有PasteForm2.0
+其实PasteForm2.0和PasteApeart是保持功能一致的，区别在于PasteForm2.0基于ABP，而PasteApeart则没有基于其他框架纯原生!
+
+
 
 ## 项目模块
 
@@ -55,14 +59,24 @@ Project1.HttpApi.Host
 
 ## PasteForm和PasteApeart对比
 
-|模块|PasteForm.1|PasteForm.2|PasteApeart|
-|:--|:--|:--|:--|
-|Helper|PasteFormHelper|PasteApeart.Helper|PasteApeart.Helper|
+|模块|PasteForm.1|PasteForm.2|PasteApeart|说明|
+|:--|:--|:--|:--|--|
+|Helper|PasteFormHelper|PasteApeart.Helper|PasteApeart.Helper|实现Dto转元数据给管理端|
 |Domain||PasteForm.Domain|PasteApeart.Domain|
 |Dto||PasteForm.Application.Contracts|PasteApeart.Application.Contracts|
-|EF|||PasteApeart.Entityframework|
-|Handler||PasteForm.Handler|PasteApeart.Handler|
-|Application||PasteForm.Application|PasteApeart.Application|
+|EF|||PasteApeart.Entityframework|引入过滤，多租户等|
+|Handler||PasteForm.Handler|PasteApeart.Handler|Redis,RabbitMQ,IEventHandler等|
+|Application||PasteForm.Application|PasteApeart.Application|默认CRUD接口,IService转API|
+
+#### PasteApeart地址
+>https://gitee.com/pastecode/paste-apeart
+
+
+#### PasteForm地址
+
+>https://gitee.com/pastecode/paste-form
+
+**PasteForm.xxx继承于ABP，也就是Volo.Abp.xxx**
 
 |模块|说明|
 |--|--|
@@ -102,6 +116,8 @@ public async Task<PagedResultDto<UserInfoListDto>> Page([FromQuery] InputQueryUs
 ```
 
 这样路由/api/app/userInfo/page就会覆盖DefaultAppService默认提供的/api/app/{entityName}/page,因为DefaultAppService的Order(排序)更大，小的覆盖大的！
+
+
 
 
 

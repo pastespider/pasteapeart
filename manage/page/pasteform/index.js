@@ -145,9 +145,9 @@ $(window).ready(function () {
         readPageData(1);//直接基于这个查询第一页
     })
     if (_config.expend_search_box) {
-        $(".searcharea").fadeIn();
+        $(".searcharea").show();//不要动画
     } else {
-        $(".searcharea").fadeOut();
+        $(".searcharea").hide();//直接隐藏 不要动画，动画太慢了
     }
 
     //如果有传递进来size大小，则进行UI变更
@@ -1054,7 +1054,7 @@ async function handlerModelFormatConfig(obj, pageData) {
     if (obj.properties) {
         const hasIdProperty = findExistsPropertyByName(_global_list_properties, 'id');
         if (!hasIdProperty) {
-            _config.exchange_id = _global_list_properties[0]?.name;
+            _config.exchange_id = _global_list_properties[0]?.name;//占位，先用第一个字段
             const keyPropertyName = findKeyAttributeProperty(_global_list_properties);
             if (keyPropertyName) {
                 _config.exchange_id = keyPropertyName;
@@ -1532,6 +1532,13 @@ function handlerModelFieldcolumnProperty(properties) {
                                 item.hidden = true;
                             }
                             break;
+                        case "thclass":
+                            {
+                                if(_attribute.args1){
+                                    item.thclass = _attribute.args1;
+                                }
+                            }
+                            break;
                         case "htmltemplate":
                             {
                                 //后续这个删除，用上面的html替代
@@ -1695,7 +1702,10 @@ function handlerModelFieldcolumnProperty(properties) {
                         case "hidden":
                             {
                                 if (_attribute.args1) {
-                                    if (_config.model != _attribute.args1) {
+                                    // 将args1按逗号分割成数组，并去除前后空格
+                                    const argsArray = _attribute.args1.split(',').map(item => item.trim());
+                                    // 判断model是否在数组中
+                                    if (!argsArray.includes(_config.model)) {
                                         item.hidden = true;
                                     }
                                 } else {
@@ -2828,7 +2838,9 @@ async function readPageData(page) {
 
 
     //标识当前的最新选择，而不是上面的固定用来源
-    _info.show_type = _config.show_type;//强制传递显示类型，防止后端不传导致的显示问题
+    if (!_info.hasOwnProperty('show_type')) {
+        _info.show_type = _config.show_type;//强制传递显示类型，防止后端不传导致的显示问题
+    }
     _info.page = page;
     _info.size = _pageSize;
     _info.orderby = _orderby;
@@ -3007,9 +3019,13 @@ function handlerDisplayDataToUi(obj) {
             }
         }
         if (pageobject == null) {
+            var psize = _pageSize;
+            if (obj.size) {
+                psize = obj.size;
+            }
             pageobject = $('#pagenumarea').pagination({
                 current: page,  // 默认为1
-                pageSize: _pageSize,  // 默认为10
+                pageSize: psize,  // 默认为10
                 sizeArray: _config.page_size,//可以切换每页多少
                 total: obj.totalCount,  // 默认0
                 callback: function (pageIndex, pagination, pageSize) {

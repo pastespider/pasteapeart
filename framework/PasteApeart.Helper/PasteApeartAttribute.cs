@@ -335,6 +335,29 @@ namespace PasteApeart.Helper
     }
 
     /// <summary>
+    /// 针对表格头设计的样式，默认hresize表示列拖拽调整大小
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public class PasteThclassAttribute : ColumnDataTypeAttribute
+    {
+        /// <summary>
+        /// 针对表格头设计的样式，默认hresize表示列拖拽调整大小
+        /// </summary>
+        /// <param name="className">样式名称，默认为 hresize</param>
+        /// <param name="args2">备用</param>
+        /// <param name="args3">备用</param>
+        /// <param name="args4">备用</param>
+        public PasteThclassAttribute(string className = "hresize", string args2 = null, string args3 = null, string args4 = null)
+        {
+            base.Name = "thclass";
+            base.Args1 = className;
+            base.Args2 = args2;
+            base.Args3 = args3;
+            base.Args4 = args4;
+        }
+    }
+
+    /// <summary>
     /// 使用Switch开关来实现bool类型的显示和操作，替换默认的checkbox
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
@@ -366,7 +389,7 @@ namespace PasteApeart.Helper
         /// <summary>
         /// 表示是否隐藏
         /// </summary>
-        /// <param name="_unhidden_model">表示某一个模式不隐藏，如果为空表示所有模式都隐藏,在前端输入_config.model查看当前model是啥</param>
+        /// <param name="_unhidden_model">表示某一个模式不隐藏，如果为空表示所有模式都隐藏,在前端输入_config.model查看当前model是啥,支持,分割多个，比如view,bind</param>
         /// <param name="args2">备用</param>
         /// <param name="args3">备用</param>
         /// <param name="args4">备用</param>
@@ -417,7 +440,7 @@ namespace PasteApeart.Helper
     public class PasteHideAttribute : ColumnDataTypeAttribute
     {
         /// <summary>
-        /// 表示隐藏 完全隐藏，无法被唤醒的那种，而hidden是有可能被唤醒的
+        /// 表示隐藏 完全隐藏，无法被唤醒的那种(ui无数据)，而hidden是有可能被唤醒的(ui有数据)
         /// </summary>
         /// <param name="args1">备用</param>
         /// <param name="args2">备用</param>

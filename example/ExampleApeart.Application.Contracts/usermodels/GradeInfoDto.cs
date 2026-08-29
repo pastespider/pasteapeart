@@ -123,7 +123,7 @@ namespace ExampleApeart.usermodels
         public int Menu31 { get; }
 
         /// <summary>
-        /// 条件权限模式
+        /// 条件权限模式 附带按钮权限
         /// </summary>
         [PasteHidden]
         [PasteIfMenu("item.id == 2", "绑定权限", "open_window('绑定权限','pasteform/index.html?path=roleInfo&model=bind&grade_id={{:=item.id}}','80%','80%')", btnCode: "bind")]
@@ -133,7 +133,7 @@ namespace ExampleApeart.usermodels
         /// 直接渲染UI 
         /// </summary>
         [PasteMenuhtml]
-        public string Menu2 => IsEnable ? $"<a href=\"javascript:;\" onclick=\"open_window('{Name}的详细','./pasteform/detail.html?path=gradeInfo&id={Id}','','90%')\">{IsEnable}</a>" : $"";
+        public string Menu2 => IsEnable ? $"<a href=\"javascript:;\" onclick=\"open_left('{Name}的详细','./pasteform/detail.html?path=gradeInfo&id={Id}','','')\">详细</a>" : $"";
     }
 
 

@@ -1,0 +1,286 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleApeart.EntityFrameworkCore</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleApeart.MyAuditingDb">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.MyAuditingDb.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{ExampleApeart.MyAuditingDb})">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:ExampleApeart.MyAuditingDb.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="P:ExampleApeart.MyAuditingDb.ApAuditLog">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.MyAuditingDb.ApEntityChangeInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.MyAuditingDb.ApPropertyChangeInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.MyAuditingDbFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.MyAuditingDbFactory.CreateDbContext(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.CurrentUserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.CurrentQueryableUserId">
+            <summary>
+            假设需要基于查询获取
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.FilterQuery">
+            <summary>
+            是否要过滤
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.IsDesignModel">
+            <summary>
+            设计模式 add-migration
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{`0},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+            <param name="isDesign"></param>
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.FilterIQueryable(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.RoleInfo">
+            <summary>
+            权限信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.GradeInfo">
+            <summary>
+            角色信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.GradeRole">
+            <summary>
+            角色权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.CurrentUserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.CurrentQueryableUserId">
+            <summary>
+            假设需要基于查询获取
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.FilterQuery">
+            <summary>
+            是否要过滤
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.RoleInfo">
+            <summary>
+            权限信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.GradeInfo">
+            <summary>
+            角色信息
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.GradeRole">
+            <summary>
+            角色权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.EntityFrameworkCore.SqliteDb">
+            <summary>
+            表示使用Sqlite数据库
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.SqliteDb.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{ExampleApeart.EntityFrameworkCore.SqliteDb},System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+            <param name="isDesign"></param>
+        </member>
+        <member name="T:ExampleApeart.EntityFrameworkCore.Migrations.data_init_data">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.data_init_data.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.data_init_data.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.data_init_data.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ExampleApeart.EntityFrameworkCore.Migrations.MyAuditingDbMigrations.log_init_data">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.MyAuditingDbMigrations.log_init_data.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.MyAuditingDbMigrations.log_init_data.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.MyAuditingDbMigrations.log_init_data.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ExampleApeart.ExampleApeartDbContextModelCreatingExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartDbContextModelCreatingExtensions.ConfigureExampleApeart(Microsoft.EntityFrameworkCore.ModelBuilder,System.Action{ExampleApeart.ExampleApeartModelBuilderConfigurationOptions})">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+            <param name="optionsAction"></param>
+        </member>
+        <member name="T:ExampleApeart.ExampleApeartEntityFrameworkCoreModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartEntityFrameworkCoreModule.RegisterDbContext``1(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="services"></param>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartEntityFrameworkCoreModule.AddExampleApeartEntityFrameworkCoreModule(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartEntityFrameworkCoreModule._config">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartEntityFrameworkCoreModule.BuildConfiguration(System.String[])">
+            <summary>
+            构建配置信息 因为add-migration需要用，所以迁移到这里，大家一起用
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.ExampleApeartModelBuilderConfigurationOptions">
+            <summary>
+            配置表前缀 Schema等 按需配置
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartModelBuilderConfigurationOptions.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="tablePrefix"></param>
+            <param name="schema"></param>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartModelBuilderConfigurationOptions.TablePrefix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartModelBuilderConfigurationOptions.Schema">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.SqliteDbFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.SqliteDbFactory.CreateDbContext(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

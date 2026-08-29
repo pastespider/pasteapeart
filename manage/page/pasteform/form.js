@@ -194,6 +194,82 @@ function open_window(title, url, _w, _h, endcallback) {
     // }
 }
 
+/**
+ * 打开，从右侧打开到左侧
+ * @param {*} title 
+ * @param {*} url 
+ * @param {*} _w 
+ * @param {*} _h 
+ * @param {*} endcallback 
+ */
+function open_left(title, url, _w, _h, endcallback) {
+    if (url.indexOf('pasteform') >= 0) {
+        url = autoUrl(url);
+    }
+    if (!_w) {
+        _w = '50%';
+    }
+    if (!_h) {
+        _h = '100%';
+    }
+    var _th = '100%';
+    var _tw = '50%';
+    if (_w) {
+        var maxHeight = $(window).width();
+        if (_w.indexOf('px') >= 0) {
+            var _current_w = Number(_w.replace('px', ''));
+            if (_current_w <= maxHeight) {
+                _tw = _w;
+            } else {
+                console.log('target.width', _w, "max.width", maxHeight);
+            }
+        }
+        if (_w.indexOf("%") > 0) {
+            _tw = _w;
+        }
+    }
+    if (_h) {
+        var maxHeight = $(window).height();
+        if (_h.indexOf('px') >= 0) {
+            var _current_h = Number(_h.replace('px', ''));
+            if (_current_h <= maxHeight) {
+                _th = _h;
+            }
+        }
+        if (_h.indexOf("%") > 0) {
+            _th = _h;
+        }
+    }
+    window.layer.open({
+        type: 2,
+        area: [_tw, _th],
+        fix: false, //不固定
+        maxmin: false,
+        resize: false,
+        shadeClose: true,
+        shade: 0.2,
+        offset: 'r',
+        title: title,
+        anim: 'slideLeft',
+        skin: 'layui-layer-win10',
+        content: url,
+        success: function (layero, index) {
+        },
+        end: function () {
+            if (endcallback) {
+                endcallback();
+            }
+        }
+    });
+
+    //如果当前页面有回调函数，则先进行0透明 后面再显示
+    // if (window.top.set_dialog_height) {
+    //     window.top.set_dialog_height(_height, _index);
+    // } else {
+    //     console.log('没有在父级找到函数set_dialog_height');
+    // }
+}
+
 //可以再来一个 右侧往左弹出的，用于特殊地方！
 
 /**
@@ -824,6 +900,7 @@ async function LoadModelProperity(properties) {
         // } else {
         //     console.log('没有在父级找到函数set_dialog_height');
         // }
+        //这里有问题，如果是父级的呢 估计要多重扩展！
         if (window.top.set_dialog_height) {
             window.top.set_dialog_height(_height, _index);
         } else {
@@ -4424,13 +4501,14 @@ function findAndCallHandler(obj, urlKey) {
                     // console.log('callUpdateRow iframe.src不匹配', iframeBaseURI, urlKey);
                     continue;
                 }
-                // console.log('callUpdateRow iframe.src匹配', iframeBaseURI, urlKey);
             }
             try {
                 if (iframe.contentWindow && typeof iframe.contentWindow.handlerUpdateRow == 'function') {
                     // console.log('找到并调用 handlerUpdateRow');
-                    iframe.contentWindow.handlerUpdateRow(obj);
-                    return true;
+                    var result = iframe.contentWindow.handlerUpdateRow(obj);
+                    if (result) {
+                        return true;
+                    }
                 }
             } catch (e) {
                 // 跨域或错误忽略
@@ -4479,19 +4557,22 @@ function findAndCallHandler(obj, urlKey) {
         var currwin = window.parent;
         if (currwin) {
             if (typeof currwin.handlerUpdateRow === 'function') {
-                currwin.handlerUpdateRow(obj);
-                return true;
-            }
-        }
-    } else {
-        var currwin = window;//就是自己当前页面
-        if (currwin) {
-            if (typeof currwin.handlerUpdateRow === 'function') {
-                currwin.handlerUpdateRow(obj);
-                return true;
+                var result = currwin.handlerUpdateRow(obj);
+                if (result) {
+                    return true;
+                }
             }
         }
     }
+
+    var currwin = window;//就是自己当前页面
+    if (currwin) {
+        if (typeof currwin.handlerUpdateRow === 'function') {
+            currwin.handlerUpdateRow(obj);
+            return true;
+        }
+    }
+
 }
 
 
@@ -4524,8 +4605,10 @@ function callUpdateRow(showIframe, obj, pathName) {
                         // 检查是否存在 handlerUpdateRow 函数
                         if (typeof iframeWindow.handlerUpdateRow === 'function') {
                             // 调用 handlerUpdateRow 并传入 obj
-                            iframeWindow.handlerUpdateRow(obj);
-                            return true;
+                            let result = iframeWindow.handlerUpdateRow(obj);
+                            if (result) {
+                                return true;
+                            }
                         }
                     }
                 } catch (error) {

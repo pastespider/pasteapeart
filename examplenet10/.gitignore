@@ -1,0 +1,139 @@
+# ====================
+# Visual Studio / C# 
+# ====================
+
+# 编译输出
+bin/
+obj/
+out/
+publish/
+
+# 用户设置
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# 构建结果
+*.dll
+*.exe
+*.pdb
+*.so
+*.dylib
+*.nupkg
+*.snupkg
+
+# 测试覆盖
+*.coverage
+*.coveragexml
+*.trx
+*.TestResults
+*.VisualState.xml
+TestResults/
+
+# 日志
+*.log
+logs/
+
+# 配置文件（含敏感信息）
+appsettings.Development.json
+appsettings.Production.json
+appsettings.*.json
+*.secrets.json
+*.user.json
+*.local.json
+
+# 环境变量
+.env
+.env.*
+!.env.example
+
+# ====================
+# IDE 相关
+# ====================
+
+# Visual Studio
+.vs/
+*.vspscc
+*.vssscc
+_ReSharper*/
+*.resharper
+*.sln.ide
+*.swp
+*.swo
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Rider
+.idea/
+*.rider/
+*.iml
+
+# ====================
+# 系统文件
+# ====================
+
+# Windows
+Thumbs.db
+*.tmp
+*.bak
+desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*.pid
+*.lock
+*.socket
+
+# ====================
+# 依赖管理
+# ====================
+
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+*.lock.json
+
+# NuGet
+.nuget/
+*.nuget.props
+*.nuget.targets
+
+# ====================
+# Docker
+# ====================
+
+*.dockerignore
+.docker/
+*.docker.tar.gz
+
+# ====================
+# 发布包
+# ====================
+
+*.zip
+*.tar.gz
+*.7z
+*.rar
+
+# ====================
+# 其他
+# ====================
+
+# 备份文件
+*~
+*.orig
+*.old
+
+# 临时文件
+temp/
+tmp/
+*.cache

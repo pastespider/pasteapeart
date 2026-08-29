@@ -40,26 +40,17 @@
     <None Remove="upload\**" />
   </ItemGroup>
 
-	<ItemGroup>
-		<TrimmerRootAssembly Include="Volo.Abp.EntityFrameworkCore.Sqlite"></TrimmerRootAssembly>
-	</ItemGroup>
-		
   <ItemGroup>
-
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.19">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-
 	  <PackageReference Include="Autofac" Version="8.0.0" />
 	  <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-
   </ItemGroup>
 
   <ItemGroup>
-
     <ProjectReference Include="..\ExampleApeart.Application\ExampleApeart.Application.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,538 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleApeart.HttpApi.Host</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware">
+            <summary>
+            审计日志中间件
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware.#ctor(Microsoft.Extensions.Logging.ILogger{ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware},ExampleApeart.HttpApi.Host.auditmodels.IAuditLogProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.AuditingConfigOptions},Microsoft.AspNetCore.Mvc.Infrastructure.IActionDescriptorCollectionProvider)">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+            <param name="auditLogManager"></param>
+            <param name="config"></param>
+            <param name="actionDescriptorCollectionProvider"></param>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="_next"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware.Truncate(System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="maxLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware.SerializeHeaders(Microsoft.AspNetCore.Http.IHeaderDictionary)">
+            <summary>
+            记录header
+            </summary>
+            <param name="headers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware.ReadRequestBody(Microsoft.AspNetCore.Http.HttpRequest)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware.IsAuditingDisabled(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            检查是否有禁用特性
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware.IsTextContent(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="contentType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditMiddleware.ShouldSkipAudit(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.auditmodels.AuditServiceCollectionExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.AuditServiceCollectionExtensions.AddAuditLogging(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.auditmodels.IAuditLogProvider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.IAuditLogProvider.InsertAsync(PasteApeart.auditmodels.ApAuditLog)">
+            <summary>
+            
+            </summary>
+            <param name="auditLog"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.auditmodels.SqliteAuditLogProvider">
+            <summary>
+            入库 入库
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.SqliteAuditLogProvider.#ctor(ExampleApeart.MyAuditingDb)">
+            <summary>
+            
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.auditmodels.SqliteAuditLogProvider.InsertAsync(PasteApeart.auditmodels.ApAuditLog)">
+            <summary>
+            
+            </summary>
+            <param name="auditLog"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Controllers.TestController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.TestController.ReadEnumInfo(System.String)">
+            <summary>
+            获取所有枚举，或者某一个枚举数据的值
+            </summary>
+            <param name="enumName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.TestController.InputDate(ExampleApeart.HttpApi.Host.Controllers.InputDate)">
+            <summary>
+            测试时间 格式
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.TestController.TestAdaptAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.TestController.ReadTypePropertyInfo(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="dtoName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.TestController.ReadTypePropertyInfo(System.Type)">
+            <summary>
+            读取类型的 字段信息
+            </summary>
+            <param name="searchType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Controllers.InputDate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.InputDate.sdate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.InputDate.edate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Controllers.UploadController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UploadController.UploadImage(System.Int32,System.Int32)">
+            <summary>
+            富文本上传图片 控件
+            </summary>
+            <param name="typeid"></param>
+            <param name="objid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UploadController.UpImage(System.String,System.String)">
+            <summary>
+            上传图片
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UploadController.TestUpload(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            测试上传
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UploadController.CalculateMd5(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UploadController.UpFile(System.String)">
+            <summary>
+            上传文件
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UploadController.IsImageExtension(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Controllers.WangEditorUpload">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.WangEditorUpload.errno">
+            <summary>
+            有几个错误
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.WangEditorUpload.data">
+            <summary>
+            数据集
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Controllers.WangEditorUploadItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.WangEditorUploadItem.url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.WangEditorUploadItem.alt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.WangEditorUploadItem.href">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.WangEditorUploadItem.size">
+            <summary>
+            资源大小
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Controllers.UserController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UserController.Image(System.String)">
+            <summary>
+            获取验证码
+            </summary>
+            <param name="guid"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UserController.Login(ExampleApeart.HttpApi.Host.Controllers.InputLogin)">
+            <summary>
+            登入
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UserController.LoginOut">
+            <summary>
+            登出
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UserController.ReadInfo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.UserController.Now">
+            <summary>
+            结果缓存 需要添加app.UseResponseCaching();
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Controllers.InputLogin">
+            <summary>
+            登录的模型
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.InputLogin.Email">
+            <summary>
+            邮箱或者手机号码
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.InputLogin.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.InputLogin.code">
+            <summary>
+            图形验证码代码
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.HttpApi.Host.Controllers.InputLogin.guid">
+            <summary>
+            图形验证码串号
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.ExampleApeartHttpApiHostModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.HttpApi.Host.ExampleApeartHttpApiHostModule.DefaultCorsPolicyName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.ExampleApeartHttpApiHostModule.AddExampleApeartHttpApiHostModule(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="Services"></param>
+            <param name="Configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Services.AuthMiddleware">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Services.AuthMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.Controllers.IBaseController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Controllers.IBaseController.LazyServiceProvider">
+            <summary>
+            用了AUTOFACE所以这里要public
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Controllers.IBaseController.Logger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Controllers.IBaseController._dbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.Controllers.IBaseController.CurrentUserId">
+            <summary>
+            获取登录者UID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Controllers.IBaseController.CurrentUserToken">
+            <summary>
+            获取登录者UID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Program.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.StartHostedService">
+            <summary>
+            系统初始化
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.RabbitConfig},PasteApeart.Handler.rabbitmodel.RabbitMultiConsumerHandler,Microsoft.Extensions.Logging.ILogger{ExampleApeart.StartHostedService},PasteApeart.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleApeart.AppConfig})">
+            <summary>
+            
+            </summary>
+            <param name="serviceProvider"></param>
+            <param name="rabbitConfig"></param>
+            <param name="rabbitMultiConsumerHandler"></param>
+            <param name="logger"></param>
+            <param name="channelHelper"></param>
+            <param name="eventHandler"></param>
+            <param name="config"></param>
+        </member>
+        <member name="F:ExampleApeart.StartHostedService.cts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.StartHostedService.StartAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:ExampleApeart.StartHostedService.InstanceSystemDataUpdateAsync">
+            <summary>
+            初始化系统
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.StartHostedService.InitAuditDataUpdateAsync">
+            <summary>
+            初始化审计日志的数据库等
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.StartHostedService.ReahChannelEventModelAsync(System.Threading.CancellationToken)">
+            <summary>
+            处理Channel中的EventModel
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.StartHostedService.StopAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:ExampleApeart.StartHostedService.DisposeAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.Startup._configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:ExampleApeart.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:ExampleApeart.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type)">
+            <summary>
+            Generates a documentation comment ID for a type.
+            Example: T:Namespace.Outer+Inner`1 becomes T:Namespace.Outer.Inner`1
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.PropertyInfo)">
+            <summary>
+            Generates a documentation comment ID for a property.
+            Example: P:Namespace.ContainingType.PropertyName or for an indexer P:Namespace.ContainingType.Item(System.Int32)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Type,System.String)">
+            <summary>
+            Generates a documentation comment ID for a property given its container type and property name.
+            Example: P:Namespace.ContainingType.PropertyName
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.CreateDocumentationId(System.Reflection.MethodInfo)">
+            <summary>
+            Generates a documentation comment ID for a method (or constructor).
+            For example:
+              M:Namespace.ContainingType.MethodName(ParamType1,ParamType2)~ReturnType
+              M:Namespace.ContainingType.#ctor(ParamType)
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.GetTypeDocId(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Generates a documentation ID string for a type.
+            This method handles nested types (replacing '+' with '.'),
+            generic types, arrays, pointers, by-ref types, and generic parameters.
+            The <paramref name="includeGenericArguments"/> flag controls whether
+            constructed generic type arguments are emitted, while <paramref name="omitGenericArity"/>
+            controls whether the generic arity marker (e.g. "`1") is appended.
+            </summary>
+        </member>
+        <member name="M:Microsoft.AspNetCore.OpenApi.Generated.DocumentationCommentIdHelper.NormalizeDocId(System.String)">
+            <summary>
+            Normalizes a documentation comment ID to match the compiler-style format.
+            Strips the return type suffix for ordinary methods but retains it for conversion operators.
+            </summary>
+            <param name="docId">The documentation comment ID to normalize.</param>
+            <returns>The normalized documentation comment ID.</returns>
+        </member>
+    </members>
+</doc>

@@ -239,6 +239,7 @@ namespace ExampleApeart.usermodels
         /// </summary>
         [PasteHtml("<div class=\"title\">{{:=item.path}}</div><div class=\"desc\">{{:=item.model}} {{:=item.role}}</div>")]
         [PasteClass]
+        [ColumnDataType("thclass","hresize")]
         public string Info { get; set; }
 
         /// <summary>

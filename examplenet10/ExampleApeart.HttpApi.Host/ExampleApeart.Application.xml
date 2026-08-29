@@ -1,0 +1,574 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleApeart.Application</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleApeart.Application.DefaultApiAppService">
+             <summary>
+             默认读取 这个很关键，实现了统一的新增 更新 详细 列表规范读取 相当于兜底的!
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.#ctor(PasteApeart.Application.IPasteDefaultAppService)">
+            <summary>
+            
+            </summary>
+            <param name="appService"></param>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.ReadAddModel(System.String)">
+            <summary>
+            获取新增格式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.ReadUpdateModel(System.String,System.String)">
+            <summary>
+            获取更新数据
+            </summary>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.ReadDetailModel(System.String,System.String)">
+            <summary>
+            获取详细
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.ReadListModel(System.String,System.String)">
+            <summary>
+            获取列表格式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.Page(System.String,System.String)">
+            <summary>
+            获取列表数据
+            </summary>
+            <param name="entityName"></param>
+            <param name="searchName"></param>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.CreateItemAsync(System.String)">
+            <summary>
+            通用创建方法
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.UpdateItemAsync(System.String)">
+            <summary>
+            通用更新方法
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.UpdateState(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
+            <summary>
+            通用状态更新方法
+            </summary>
+            <param name="entityName"></param>
+            <param name="input"></param>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:ExampleApeart.Application.DefaultApiAppService.Remove(System.String,System.String)">
+            <summary>
+            通用删除 遵照ListDto的PasteDisable特性
+            </summary>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="T:ExampleApeart.Application.ExampleApeartDefaultService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.#ctor(PasteApeart.Application.IPasteDefaultHelper,PasteApeart.IChannelHelper,ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="defaultHelper"></param>
+            <param name="channelHelper"></param>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultAfterUpdateStateAsync(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
+            <summary>
+            修改状态后 包含 绑定
+            </summary>
+            <param name="entityName"></param>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
+            <summary>
+            生成元数据
+            </summary>
+            <param name="action"></param>
+            <param name="dto"></param>
+            <param name="dtoType"></param>
+            <param name="listModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultDataSetExtendAsync(System.Type,System.Object,System.String)">
+            <summary>
+            数据赋值后，主要用于比如是否可以编辑，是否可以新增等，也可以做默认数据的输入
+            </summary>
+            <param name="entityType"></param>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultFilterDataAsync(System.Type,System.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityType"></param>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultMapperEntityName(System.String)">
+            <summary>
+            自定义名称，比如UserInfo你要对外接口为member就在这里配置
+            </summary>
+            <param name="entityName">管理端输入的TableName</param>
+            <returns>Dbset的Name</returns>
+        </member>
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.DefaultAfterRemoveAsync(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.Application.PasteTransactionFilter">
+            <summary>
+            事务回滚
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.Application.PasteTransactionFilter._dbContext">
+            <summary>
+            注意这个要申明为Scop方式，不能用瞬时方式
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.Application.PasteTransactionFilter.#ctor(ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext)">
+            <summary>
+            
+            </summary>
+            <param name="dbContext"></param>
+        </member>
+        <member name="M:ExampleApeart.Application.PasteTransactionFilter.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.ExampleApeartApplicationModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartApplicationModule.AddExampleApeartApplicationModule(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.DefaultApiExtendHandler">
+            <summary>
+            默认接口的扩展
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.DefaultApiExtendHandler.AuthCheckAsync(System.String,System.Type,System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="type"></param>
+            <param name="dtoType"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.ExampleApeartAppService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartAppService.LazyServiceProvider">
+            <summary>
+            关键要public 不然autofac不会自动注入
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartAppService._dbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartAppService._userHelper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartAppService._httpContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.ReadCurrentUserId">
+            <summary>
+            获取登录用户的ID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.ReadCurrentUserIdThrwoException">
+            <summary>
+            获取登录用户的ID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.ReadCurrentAdminId">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.ReadCurrentUserToken">
+            <summary>
+            获取当前用户的密钥
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.IsRootAsync">
+            <summary>
+            是否是超级权限
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
+            <summary>
+            特殊的过滤 在UI中隐藏某些字段
+            </summary>
+            <param name="action"></param>
+            <param name="dto"></param>
+            <param name="dtoType"></param>
+            <param name="listModel">list模式，特别针对枚举类型</param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.DefaultAuthDataFilterAsync(System.Type,System.Object,System.String)">
+            <summary>
+            校验是否有执行权限 使用PasteDisableAttribute和PasteAuthAttribute进行标记
+            </summary>
+            <param name="entityType"></param>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.DefaultMapperEntityName(System.String)">
+            <summary>
+            名称映射设置
+            </summary>
+            <param name="entityName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.ExampleApeartAppService.DefaultSetDataExtendAsync(System.Type,System.Object,System.String)">
+            <summary>
+            进行默认值的写入，注意要判断当前是否有值
+            </summary>
+            <param name="entityType"></param>
+            <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.RoleAttribute">
+            <summary>
+            权限过滤 授权
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.RoleAttribute._role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.RoleAttribute._model">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.RoleAttribute._grade">
+            <summary>
+            角色 单个
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.RoleAttribute._userHelper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.RoleAttribute.#ctor(ExampleApeart.CacheHandler,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="cache"></param>
+            <param name="model">模块</param>
+            <param name="role">权限</param>
+            <param name="grade">角色</param>
+        </member>
+        <member name="M:ExampleApeart.RoleAttribute.OnAuthorizationAsync(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="T:ExampleApeart.PasteThrowExceptionAttribute">
+            <summary>
+            自定义全局错误处理，使用错误代码httpstatuscode
+            </summary>
+        </member>
+        <member name="F:ExampleApeart.PasteThrowExceptionAttribute._logger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.PasteThrowExceptionAttribute.#ctor(Microsoft.Extensions.Logging.ILogger{ExampleApeart.PasteThrowExceptionAttribute})">
+            <summary>
+            
+            </summary>
+            <param name="logger"></param>
+        </member>
+        <member name="M:ExampleApeart.PasteThrowExceptionAttribute.OnException(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:ExampleApeart.PasteThrowExceptionAttribute.OnExceptionAsync(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeInfoAppService">
+             <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.GradeInfoAppService.#ctor">
+             <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.GradeInfoAppService.ReadAddModel">
+            <summary>
+            读取AddDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.GradeInfoAppService.ReadUpdateModel(System.Int32)">
+            <summary>
+            读取UpdateDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.GradeInfoAppService.ReadDetailModel(System.Int32)">
+            <summary>
+            读取详细
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.GradeInfoAppService.ReadListModel">
+            <summary>
+            读取ListDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.GradeInfoAppService.Remove(System.Int32)">
+            <summary>
+            删除数据，不需要删除的话注意注释这个 ListDto中附带disable标注忽略删除
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.usermodels.GradeRoleAppService">
+             <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.GradeRoleAppService.#ctor">
+             <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.GradeRoleAppService.Page(ExampleApeart.usermodels.InputQueryGradeRole)">
+            <summary>
+            获取
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.usermodels.RoleInfoAppService">
+             <summary>
+             权限列表
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.ReadAddModel">
+            <summary>
+            读取AddDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.ReadUpdateModel(System.Int32)">
+            <summary>
+            读取UpdateDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.ReadDetailModel(System.Int32)">
+            <summary>
+            读取UpdateDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.ReadListModel">
+            <summary>
+            读取ListDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.Page(ExampleApeart.usermodels.InputQueryRoleInfo)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.Menus">
+            <summary>
+            返回当前登陆者的菜单列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.CreateItemAsync(ExampleApeart.usermodels.RoleInfoAddDto)">
+             <summary>
+             添加一个权限列表
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.UpdateItemAsync(ExampleApeart.usermodels.RoleInfoUpdateDto)">
+             <summary>
+             更新一个权限列表
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.RoleInfoAppService.Remove(System.Int32)">
+            <summary>
+            删除数据，不需要删除的话注意注释这个
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.usermodels.SingleAppService">
+             <summary>
+            用于动态渲染 什么时候最合适？ 比如多格式的图标模式
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.SingleAppService.ReadListModel">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.SingleAppService.readModel">
+            <summary>
+            读取数据模型
+            你也可以从实际Model中读取，然后调用动态删除，把不需要的删除即可
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.SingleAppService.Page(ExampleApeart.usermodels.InputQueryGradeInfo)">
+            <summary>
+            获取 测试单次返回模式，queryString中需要参数和值request=one
+            返回的数据要和上面的格式一致
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleApeart.usermodels.UserInfoAppService">
+             <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.UserInfoAppService.#ctor">
+             <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.UserInfoAppService.ReadAddModel">
+            <summary>
+            读取AddDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.UserInfoAppService.ReadUpdateModel(System.Int32)">
+            <summary>
+            读取UpdateDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.UserInfoAppService.ReadDetailModel(System.Int32)">
+            <summary>
+            读取UpdateDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.UserInfoAppService.CreateItemAsync(ExampleApeart.usermodels.UserInfoAddDto)">
+             <summary>
+             添加一个
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.UserInfoAppService.UpdateItemAsync(ExampleApeart.usermodels.UserInfoUpdateDto)">
+             <summary>
+             更新一个
+            </summary>
+             <param name="input"></param>
+             <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.usermodels.UserInfoAppService.UpdateState(PasteApeart.Application.Contracts.InputQueryUpdateState)">
+            <summary>
+            更新状态，或者更新绑定
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:ExampleApeart.usermodels.UserInfoAppService.Remove(System.Int32)">
+            <summary>
+            删除数据，不需要删除的话注意注释这个
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

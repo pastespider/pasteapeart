@@ -145,6 +145,11 @@ body {
 .table .tapmenu {
   user-select: none;
 }
+.table .hresize {
+  resize: horizontal;
+  overflow: auto;
+  min-width: 60px;
+}
 .tb_freeze {
   /* 首列固定/最后一列固定*/
   /* 表头首列和最后一列强制最顶层 */

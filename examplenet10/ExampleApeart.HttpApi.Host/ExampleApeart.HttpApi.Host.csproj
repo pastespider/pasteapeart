@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <!-- 添加这一行：支持多个平台 -->
+	  <Platforms>AnyCPU;x64;ARM64</Platforms>
+	  <!-- 启用确定性编译（关键） -->
+	  <Deterministic>true</Deterministic>
+	  <!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	  <SatelliteResourceLanguages>null</SatelliteResourceLanguages>
+	  <!--下面2个这样配置是低内存模式，不适合大并发啥的，注意！-->
+	  <ServerGarbageCollection>true</ServerGarbageCollection>
+	  <GarbageCollectionAdaptationMode>1</GarbageCollectionAdaptationMode>
+	  
+	  	  <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <RootNamespace>ExampleApeart.HttpApi.Host</RootNamespace>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <UserSecretsId>6d507da3-e5d7-43b5-8811-ad055c30a7fb</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DocumentationFile>..\ExampleApeart.HttpApi.Host\ExampleApeart.HttpApi.Host.xml</DocumentationFile>
+	<StartupObject>ExampleApeart.Program</StartupObject>
+  </PropertyGroup>
+
+	<!-- 添加这个属性组 -->
+
+  <ItemGroup>
+    <Compile Remove="data\**" />
+    <Compile Remove="logs\**" />
+    <Compile Remove="upload\**" />
+    <Content Remove="data\**" />
+    <Content Remove="logs\**" />
+    <Content Remove="upload\**" />
+    <EmbeddedResource Remove="data\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <EmbeddedResource Remove="upload\**" />
+    <None Remove="data\**" />
+    <None Remove="logs\**" />
+    <None Remove="upload\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Scalar.AspNetCore" Version="2.17.1" />
+
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExampleApeart.Application\ExampleApeart.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="font\font.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
+</Project>

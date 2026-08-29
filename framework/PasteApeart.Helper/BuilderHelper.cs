@@ -2352,39 +2352,73 @@ namespace PasteApeart.Helper
             return _memoryCache.GetOrCreate(typeName, entry =>
             {
                 // 这里的逻辑只会被一个线程执行（其他线程等待）
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1800); // 设置过期时间
-                                                                                    //return t.GetProperties(); // 耗时的反射操作
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(300); // 设置过期时间
+
                 var allProperties = searchType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
-                // 如果有属性被隐藏（new），才需要复杂处理
-                var hasDuplicates = allProperties.Length != allProperties.Select(p => p.Name).Distinct().Count();
+                // 辅助方法：计算类型的继承深度
+                int GetInheritanceDepth(Type type)
+                {
+                    int depth = 0;
+                    while (type.BaseType != null && type.BaseType != typeof(object))
+                    {
+                        depth++;
+                        type = type.BaseType;
+                    }
+                    return depth;
+                }
+
+                // 按继承深度从远到近排序
+                var sortedProperties = allProperties
+                    .OrderBy(p => GetInheritanceDepth(p.DeclaringType))
+                    .ToArray();
+
+                var hasDuplicates = sortedProperties.Length != sortedProperties.Select(p => p.Name).Distinct().Count();
                 if (!hasDuplicates)
                 {
-                    // 没有重复属性名，直接返回
-                    return allProperties;
+                    return sortedProperties;
                 }
-                // 有重复属性名，进行分组处理
-                var propertyGroups = allProperties.GroupBy(p => p.Name);
-                var result = new PropertyInfo[propertyGroups.Count()];
 
-                int index = 0;
-                foreach (var group in propertyGroups)
+                // 去重：保留最近的（后面的覆盖前面的）
+                var propertyDict = new Dictionary<string, PropertyInfo>();
+                foreach (var prop in sortedProperties)
                 {
-                    // 手动查找，避免 LINQ 的开销
-                    PropertyInfo selected = null;
-                    foreach (var prop in group)
-                    {
-                        if (prop.DeclaringType == searchType)
-                        {
-                            selected = prop;
-                            break;  // 找到当前类声明的，立即退出
-                        }
-                        selected ??= prop;  // 否则保留第一个
-                    }
-                    result[index++] = selected!;
+                    propertyDict[prop.Name] = prop;
                 }
 
-                return result;
+                return propertyDict.Values
+                    .OrderBy(p => GetInheritanceDepth(p.DeclaringType))
+                    .ToArray();
+
+                ////return t.GetProperties(); // 耗时的反射操作
+                //var allProperties = searchType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+                //// 如果有属性被隐藏（new），才需要复杂处理
+                //var hasDuplicates = allProperties.Length != allProperties.Select(p => p.Name).Distinct().Count();
+                //if (!hasDuplicates)
+                //{
+                //    // 没有重复属性名，直接返回
+                //    return allProperties;
+                //}
+                //// 有重复属性名，进行分组处理
+                //var propertyGroups = allProperties.GroupBy(p => p.Name);
+                //var result = new PropertyInfo[propertyGroups.Count()];
+                //int index = 0;
+                //foreach (var group in propertyGroups)
+                //{
+                //    // 手动查找，避免 LINQ 的开销
+                //    PropertyInfo selected = null;
+                //    foreach (var prop in group)
+                //    {
+                //        if (prop.DeclaringType == searchType)
+                //        {
+                //            selected = prop;
+                //            break;  // 找到当前类声明的，立即退出
+                //        }
+                //        selected ??= prop;  // 否则保留第一个
+                //    }
+                //    result[index++] = selected!;
+                //}
+                //return result;
             });
 
         }

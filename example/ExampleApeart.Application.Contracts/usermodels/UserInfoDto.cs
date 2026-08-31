@@ -135,7 +135,7 @@ namespace ExampleApeart.usermodels
     ///用户信息
     ///</summary>
     [Description("用户信息")]
-    [PasteEnable(0, 1, 0, 1)]
+    [PasteEnable(1, 1, 0, 1)]
     public class UserInfoListDto : EntityDto<int>
     {
         ///<summary>

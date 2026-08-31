@@ -14,6 +14,7 @@ namespace ExampleApeart.HttpApi.Host.Controllers
     /// 
     /// </summary>
     [ApiController]
+    [ApiExplorerSettings(GroupName = "v2")]
     [Route("/api/app/[controller]/[action]")]
     public class TestController : IBaseController
     {
@@ -102,7 +103,7 @@ namespace ExampleApeart.HttpApi.Host.Controllers
         //[TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "root", "root" })]
         public string ReadTypePropertyInfo(string dtoName = "TestDto")
         {
-            var dtoType = typeof(UserInfoDto).Assembly.GetTypes().FirstOrDefault(x=>x.Name ==dtoName);
+            var dtoType = typeof(UserInfoDto).Assembly.GetTypes().FirstOrDefault(x => x.Name == dtoName);
             if (dtoType == null)
             {
                 return $"没有找到这个类型{dtoName}";

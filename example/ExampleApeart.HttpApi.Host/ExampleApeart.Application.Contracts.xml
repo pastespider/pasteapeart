@@ -616,7 +616,7 @@
         </member>
         <member name="P:ExampleApeart.usermodels.UserGradeUpdateDto.UserId">
             <summary>
-            用户ID
+            用户
             </summary>
         </member>
         <member name="P:ExampleApeart.usermodels.UserGradeUpdateDto.ExtendUser">
@@ -626,7 +626,7 @@
         </member>
         <member name="P:ExampleApeart.usermodels.UserGradeUpdateDto.GradeId">
             <summary>
-            角色ID
+            角色
             </summary>
         </member>
         <member name="P:ExampleApeart.usermodels.UserGradeUpdateDto.ExtendGrade">

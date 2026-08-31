@@ -1,10 +1,11 @@
+using ExampleApeart.Application;
+using ExampleApeart.Handler;
+using ExampleApeart.Handler.eventmodels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PasteApeart;
 using PasteApeart.Application.Contracts;
 using PasteApeart.Helper;
-using ExampleApeart.Application;
-using ExampleApeart.Handler;
 using System.Linq.Dynamic.Core;
 
 namespace ExampleApeart.usermodels

@@ -70,6 +70,7 @@ namespace ExampleApeart.Application
             if (string.Equals(entityName, nameof(GradeInfo), StringComparison.OrdinalIgnoreCase))
             {
                 await _channelHelper.WriteAutoQueueAsync(new EventDemoModel { });
+
             }
             else
             {

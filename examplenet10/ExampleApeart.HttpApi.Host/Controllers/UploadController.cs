@@ -13,6 +13,7 @@ namespace ExampleApeart.HttpApi.Host.Controllers
     /// 
     /// </summary>
     [ApiController]
+    [ApiExplorerSettings(GroupName = "v3")]
     [Route("/api/app/[controller]/[action]")]
     public class UploadController : IBaseController
     {

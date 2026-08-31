@@ -35,30 +35,32 @@ namespace ExampleApeart.usermodels
     public class UserGradeUpdateDto : EntityDto<int>
     {
         ///<summary>
-        ///用户ID
+        ///用户
         ///</summary>
         [PasteOuter("userInfo", "extendUser", "id", "userName")]
-        [Description("用户ID")]
+        [Description("用户")]
+        [PasteShort("UserInfo", "ExtendUser", "ToUserShort()")]
         public int UserId { get; set; }
 
         /// <summary>
         /// 用户
         /// </summary>
-        [PasteHidden]
+        [PasteDisplay]
         [Description("用户")]
-        public UserShortModel ExtendUser { get; set; }
+        public UserShort ExtendUser { get; set; }
 
         ///<summary>
-        ///角色ID
+        ///角色
         ///</summary>
         [PasteOuter("gradeInfo", "extendGrade", "id", "name")]
-        [Description("角色ID")]
+        [Description("角色")]
+        [PasteShort("GradeInfo", "ExtendGrade", "ToGradeShort()")]
         public int GradeId { get; set; }
 
         /// <summary>
         /// 角色
         /// </summary>
-        [PasteHidden]
+        [PasteDisplay]
         [Description("角色")]
         public GradeShort ExtendGrade { get; set; }
 
@@ -87,7 +89,6 @@ namespace ExampleApeart.usermodels
     ///<summary>
     ///用户绑定角色 解绑的直接删除数据
     ///</summary>
-    [PasteEnable(0, 0, 1, 1)]
     [Description("用户绑定角色 解绑的直接删除数据")]
     public class UserGradeListDto : EntityDto<int>
     {

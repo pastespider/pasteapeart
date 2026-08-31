@@ -1,10 +1,10 @@
+using ExampleApeart.Controllers;
+using ExampleApeart.usermodels;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PasteApeart;
 using PasteApeart.Helper;
-using ExampleApeart.Controllers;
-using ExampleApeart.usermodels;
 using System.Text;
 
 namespace ExampleApeart.HttpApi.Host.Controllers
@@ -13,6 +13,7 @@ namespace ExampleApeart.HttpApi.Host.Controllers
     /// 
     /// </summary>
     [ApiController]
+    [ApiExplorerSettings(GroupName = "v2")]
     [Route("/api/app/[controller]/[action]")]
     public class TestController : IBaseController
     {

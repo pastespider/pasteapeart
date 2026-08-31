@@ -50,7 +50,9 @@ namespace ExampleApeart
 
             //services.AddApplication<ExampleApeartHttpApiHostModule>();
 
-            services.AddOpenApi();
+            services.AddOpenApi("v1");
+            services.AddOpenApi("v2");
+            services.AddOpenApi("v3");
         }
 
         /// <summary>
@@ -102,7 +104,12 @@ namespace ExampleApeart
             app.UseEndpoints(options =>
             {
 
-                options.MapScalarApiReference();
+                options.MapScalarApiReference(opa =>
+                {
+                    opa.AddDocument("v1", "API V1", "/openapi/v1.json");
+                    opa.AddDocument("v2", "API V2", "/openapi/v2.json");
+                    opa.AddDocument("v3", "API V3", "/openapi/v3.json");
+                });
                 options.MapOpenApi();
                 options.MapControllers();
             });

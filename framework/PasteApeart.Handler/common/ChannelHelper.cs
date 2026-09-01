@@ -13,34 +13,30 @@ namespace PasteApeart
     /// </summary>
     public class ChannelHelper : ISingletonDependency, IChannelHelper
     {
-
-        //private readonly Channel<ChannelNoticeModel> _channelnotice;
         private readonly Channel<IEventModel> _channelLocationQueue;
         private readonly ILogger<ChannelHelper> _logger;
-        //private readonly AppConfig _config;
         private readonly ConcurrentDictionary<long, List<IEventModel>> queueList;
         private readonly IRabbitMQProducer _producer;
         private readonly RabbitConfig _rabbitConfig;
-
         private readonly IAppCache _appCache;
 
         /// <summary>
         /// 
         /// </summary>
-        public ChannelHelper(
-            ILogger<ChannelHelper> logger,
-            IRabbitMQProducer producer,
-            IAppCache appCache,
-            IOptions<RabbitConfig> rabbitConfig
-            )
+        public ChannelHelper(ILogger<ChannelHelper> logger, IRabbitMQProducer producer, IAppCache appCache, IOptions<RabbitConfig> rabbitConfig)
         {
-            //_channelnotice = Channel.CreateBounded<ChannelNoticeModel>(1000);
-            _channelLocationQueue = Channel.CreateBounded<IEventModel>(10000);
             queueList = new ConcurrentDictionary<long, List<IEventModel>>();
             _logger = logger;
             _rabbitConfig = rabbitConfig.Value;
+            if (_rabbitConfig.ChannelCapacity <= 0)
+            {
+                _channelLocationQueue = Channel.CreateUnbounded<IEventModel>();
+            }
+            else
+            {
+                _channelLocationQueue = Channel.CreateBounded<IEventModel>(_rabbitConfig.ChannelCapacity);
+            }
             _appCache = appCache;
-            //_config = config.Value;
             if (!_rabbitConfig.RabbitQueue)
             {
                 _ = PeriodicTimerHandlerAsync(default);
@@ -49,17 +45,7 @@ namespace PasteApeart
             {
                 _producer = producer;
             }
-
         }
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="input"></param>
-        //public async Task Write(ChannelNoticeModel input)
-        //{
-        //    await _channelnotice.Writer.WriteAsync(input);
-        //}
 
         /// <summary>
         /// 自动写入最近的延迟队列 本地或者远端
@@ -72,6 +58,30 @@ namespace PasteApeart
             {
                 input.EventName = input.GetType().Name;
             }
+
+            if (input is AbsEventModel abModel)
+            {
+                if (!string.IsNullOrEmpty(abModel.MutexKey))
+                {
+                    if (string.IsNullOrEmpty(abModel.MutexVal))
+                    {
+                        await abModel.ToAutoStartTaskMutexAsync(_appCache, null, (int)(abModel.ExpireTime + 10));
+                    }
+                }
+                if (abModel.IsSubscribe)
+                {
+                    if (_rabbitConfig.SubscribeEnable)
+                    {
+                        await _producer.WriteSubscribeAsync(System.Text.Json.JsonSerializer.Serialize(input, input.GetType(), JsonConfig.Options));
+                    }
+                    else
+                    {
+                        _logger.LogError("没有配置广播模式，当前消息是发给广播模式的");
+                    }
+                    return;
+                }
+            }
+
             if (input.ExpireSecond <= 0)
             {
                 await SendQueueMessageAsync(input);
@@ -111,6 +121,7 @@ namespace PasteApeart
         /// <typeparam name="T"></typeparam>
         /// <param name="input"></param>
         /// <returns></returns>
+        [Obsolete("use WriteAutoQueueAsync before new MutexKey")]
         public async Task WriteMutexMQAsync<T>(T input) where T : IEventModel
         {
             if (input is AbsEventModel abs)
@@ -126,6 +137,7 @@ namespace PasteApeart
         /// <typeparam name="T"></typeparam>
         /// <param name="input"></param>
         /// <returns></returns>
+        [Obsolete("use WriteAutoQueueAsync before new MutexKey")]
         public async Task WriteMutexMQAsync<T>(T input, object id) where T : IEventModel
         {
             if (input is AbsEventModel abs)
@@ -251,14 +263,13 @@ namespace PasteApeart
             await _producer.SendWithRetryAsync(exchange, JsonSerializer.Serialize(info, info.GetType(), JsonConfig.Options), _rabbitConfig.ExpireRouteKey);
         }
 
-
-
         /// <summary>
         /// 写入广播事件
         /// </summary>
         /// <param name="input"></param>
         /// <param name="isremove"></param>
         /// <returns></returns>
+        [Obsolete("use WriteAutoQueueAsync before set IsSubscribe = true")]
         public async Task WriteBroadcastMessageAsync(IEventModel input, bool isremove)
         {
             if (input == null) { return; }
@@ -273,12 +284,6 @@ namespace PasteApeart
             }
         }
 
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //public Channel<ChannelNoticeModel> Notice { get { return _channelnotice; } }
-
         /// <summary>
         /// 
         /// </summary>
@@ -286,39 +291,4 @@ namespace PasteApeart
 
     }
 
-    ///// <summary>
-    ///// 
-    ///// </summary>
-    //public class ChannelNoticeModel
-    //{
-    //    /// <summary>
-    //    /// 内容
-    //    /// </summary>
-    //    public string body { get; set; }
-
-    //    /// <summary>
-    //    /// 动作名称 waitrevice:任务待领取 finish:任务完成 cannel:任务取消 waithand:待处理 waitreply:待反馈
-    //    /// </summary>
-    //    public string action { get; set; }
-
-    //    /// <summary>
-    //    /// 用户id
-    //    /// </summary>
-    //    public int userid { get; set; }
-
-    //    /// <summary>
-    //    /// 部门ID
-    //    /// </summary>
-    //    public int partid { get; set; }
-
-    //    /// <summary>
-    //    /// 整个项目组
-    //    /// </summary>
-    //    public int projectid { get; set; }
-
-    //    /// <summary>
-    //    /// 排除谁
-    //    /// </summary>
-    //    public int exceptuid { get; set; }
-    //}
 }

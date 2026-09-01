@@ -44,5 +44,10 @@ namespace PasteApeart.Application.Contracts
         /// 重试模型 比如5s 30s 1m 5m 30m 1h还是比如1h 4h 8h 24h等，也就是重试的时候下一次啥时候执行，用哪个模型结算
         /// </summary>
         public virtual string RetryModel { get; set; }
+
+        /// <summary>
+        /// 订阅模式 当前是否是订阅模式
+        /// </summary>
+        public virtual bool IsSubscribe { get; set; } = false;
     }
 }

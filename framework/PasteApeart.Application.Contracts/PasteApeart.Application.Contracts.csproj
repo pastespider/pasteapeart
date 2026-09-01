@@ -10,9 +10,9 @@
 	  <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>PasteApeart.Application.Contracts</RootNamespace>
 	    <DocumentationFile>PasteApeart.Application.Contracts.xml</DocumentationFile>
-	  <FileVersion>26.8.2</FileVersion>
-	  <VersionPrefix>26.8.2</VersionPrefix>
-	  <AssemblyVersion>26.8.2</AssemblyVersion>
+	  <FileVersion>26.9.1</FileVersion>
+	  <VersionPrefix>26.9.1</VersionPrefix>
+	  <AssemblyVersion>26.9.1</AssemblyVersion>
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>

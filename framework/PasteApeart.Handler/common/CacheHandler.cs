@@ -10,7 +10,6 @@ namespace PasteApeart
     public class CacheHandler : IScopedDependency, ICacheHandler
     {
         private readonly IAppCache _appCache;
-        //private readonly IObjectMapper _objectMapper;
         private readonly DbContext _dbContext;
 
         /// <summary>
@@ -23,7 +22,6 @@ namespace PasteApeart
         {
             _dbContext = serviceProvider;
             _appCache = cache;
-            //_objectMapper = map;
         }
 
         #region 通用缓存帮助
@@ -94,7 +92,7 @@ namespace PasteApeart
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
-        private static string GetCachePrefix<TEntity>()
+        public string GetCachePrefix<TEntity>()
         {
             return $"cache:item:{typeof(TEntity).Name.ToLower()}:";
         }

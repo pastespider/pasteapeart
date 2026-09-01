@@ -130,6 +130,11 @@ namespace PasteApeart
         /// </summary>
         public string SubscribeQueue { get; set; }
 
+        /// <summary>
+        /// 本地队列 如果是-1表示无限
+        /// </summary>
+        public int ChannelCapacity { get; set; } = 10000;
+
     }
 
     /// <summary>

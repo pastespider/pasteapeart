@@ -53,12 +53,6 @@ namespace PasteApeart.Handler
                 // 1. 只反序列化一次，使用 System.Text.Json 性能更好
                 using var jsonDoc = JsonDocument.Parse(msg);
                 var root = jsonDoc.RootElement;
-                //if (!root.TryGetProperty("EventName", out var eventNameProperty) ||
-                //    eventNameProperty.GetString() is not string eventName)
-                //{
-                //    _logger.LogError($"消息缺少 EventName 字段: {msg}");
-                //    return;
-                //}
                 JsonElement eventNameProperty;
                 // 使用不区分大小写的匹配，更健壮
                 if (!root.TryGetProperty("eventName", out eventNameProperty))
@@ -78,20 +72,13 @@ namespace PasteApeart.Handler
                     return typeof(AbsEventModel).Assembly.GetTypes()
                         .FirstOrDefault(t => t.Name == name);
                 });
-                //&& typeof(EventBaseModel).IsAssignableFrom(t)
                 if (modelType == null)
                 {
                     _logger.LogError($"未找到事件类型: {eventName}");
                     return;
                 }
                 // 3. 反序列化为具体类型
-                //var input = JsonSerializer.Deserialize(msg, modelType, new JsonSerializerOptions
-                //{
-                //    PropertyNameCaseInsensitive = true
-                //});
-                //input = JsonConvert.DeserializeObject(msg, modelType);
                 input = JsonSerializer.Deserialize(msg, modelType, JsonConfig.Options);
-                //var aaa = Newtonsoft.Json.JsonConvert.DeserializeObject(msg,);
                 if (input == null)
                 {
                     _logger.LogError($"无法将消息反序列化为类型 {eventName}: {msg}");
@@ -102,12 +89,10 @@ namespace PasteApeart.Handler
                 {
                     if (tryModel.ExpireSecond > 0)
                     {
-                        //var _channelHandler = scope.ServiceProvider.GetRequiredService<ChannelHelper>();
                         await _channelHelper.WriteAutoQueueAsync(tryModel);
                         return;
                     }
                 }
-                //EventTryHandler
                 // 4. 获取处理器信息（带缓存）
                 var (handlerType, handleMethod) = _handlerCache.GetOrAdd(modelType, type =>
                 {
@@ -156,15 +141,15 @@ namespace PasteApeart.Handler
                             await disposable1.DisposeAsync();
                         }
                     }
-                    catch
+                    catch (Exception exlDisposable)
                     {
-
+                        _logger.LogException(exlDisposable);
                     }
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"处理消息时发生错误: {msg}");
+                _logger.LogException(ex);
                 if (input != null)
                 {
                     //if (input is EventRetryModel emodel)
@@ -176,6 +161,7 @@ namespace PasteApeart.Handler
                     //        await _channelHelper.WriteAutoMQAsync(emodel);
                     //    }
                     //}
+
                 }
             }
         }
@@ -190,7 +176,7 @@ namespace PasteApeart.Handler
         /// <returns></returns>
         public async Task HanlderEventMessage(IEventModel read)
         {
-            _logger.LogWarning($"Event Msg:{read.EventName}");
+            _logger.LogInformation($"Event Msg:{read.EventName}");
             //read是一个IEventModel
             var typeName = read.GetType().Name;
             var eventType = read.GetType();
@@ -237,9 +223,9 @@ namespace PasteApeart.Handler
                         await disposable1.DisposeAsync();
                     }
                 }
-                catch
+                catch (Exception exl)
                 {
-
+                    _logger.LogException(exl);
                 }
             }
         }

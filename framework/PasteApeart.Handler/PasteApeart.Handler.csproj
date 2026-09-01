@@ -42,13 +42,17 @@
 		<PackageReference Include="StackExchange.Redis" Version="2.8.58" />
 		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
 	</ItemGroup>
-	
-  <ItemGroup>
-	  <PackageReference Include="PasteApeart.Domain" Version="26.7.6" />
-	  <PackageReference Include="PasteApeart.Application.Contracts" Version="26.7.1" />
-	  <PackageReference Include="PasteApeart.EntityFrameworkCore" Version="26.7.1" />
-    <!--<ProjectReference Include="..\PasteApeart.Application.Contracts\PasteApeart.Application.Contracts.csproj" />
-    <ProjectReference Include="..\PasteApeart.EntityFrameworkCore\PasteApeart.EntityFrameworkCore.csproj" />-->
-  </ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<ProjectReference Include="..\PasteApeart.Domain\PasteApeart.Domain.csproj" />
+		<ProjectReference Include="..\PasteApeart.Application.Contracts\PasteApeart.Application.Contracts.csproj" />
+		<ProjectReference Include="..\PasteApeart.EntityFrameworkCore\PasteApeart.EntityFrameworkCore.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="PasteApeart.Domain" Version="26.7.6" />
+		<PackageReference Include="PasteApeart.Application.Contracts" Version="26.9.1" />
+		<PackageReference Include="PasteApeart.EntityFrameworkCore" Version="26.7.1" />
+	</ItemGroup>
 
 </Project>

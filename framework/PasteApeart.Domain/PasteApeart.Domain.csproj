@@ -33,10 +33,12 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.19" />
 	</ItemGroup>
 	
-  <ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<ProjectReference Include="..\PasteApeart.Helper\PasteApeart.Helper.csproj" />
+	</ItemGroup>
 
-    <!--<PackageReference Include="Volo.Abp.Ddd.Domain" Version="8.3.4" />-->
-	  <PackageReference Include="PasteApeart.Helper" Version="26.7.1" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="PasteApeart.Helper" Version="26.7.1" />
+	</ItemGroup>
 
 </Project>

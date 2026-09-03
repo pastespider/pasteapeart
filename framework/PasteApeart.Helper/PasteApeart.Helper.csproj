@@ -11,9 +11,9 @@
 	<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<Description>贴代码框架使用的帮助类，包含特性和反射逻辑！</Description>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<FileVersion>26.8.2</FileVersion>
-	<VersionPrefix>26.8.2</VersionPrefix>
-	<AssemblyVersion>26.8.2</AssemblyVersion>
+	<FileVersion>26.9.1</FileVersion>
+	<VersionPrefix>26.9.1</VersionPrefix>
+	<AssemblyVersion>26.9.1</AssemblyVersion>
 	<NeutralLanguage>zh</NeutralLanguage>
 	<Company>https://soft.pastecode.cn/doc/form/</Company>
 	<Authors>pastecode.cn</Authors>

@@ -8,9 +8,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>PasteApeart.Application</RootNamespace>
 		<DocumentationFile>PasteApeart.Application.xml</DocumentationFile>
-		<FileVersion>26.8.5</FileVersion>
-		<VersionPrefix>26.8.5</VersionPrefix>
-		<AssemblyVersion>26.8.5</AssemblyVersion>
+		<FileVersion>26.9.1</FileVersion>
+		<VersionPrefix>26.9.1</VersionPrefix>
+		<AssemblyVersion>26.9.1</AssemblyVersion>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
@@ -22,8 +22,17 @@
 	</ItemGroup>
   <ItemGroup>
 	<PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
-	<PackageReference Include="PasteApeart.Helper" Version="26.7.1" />
-	<PackageReference Include="PasteApeart.Handler" Version="26.7.1" />
+
   </ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<ProjectReference Include="..\PasteApeart.Handler\PasteApeart.Handler.csproj" />
+		<ProjectReference Include="..\PasteApeart.Helper\PasteApeart.Helper.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="PasteApeart.Helper" Version="26.9.1" />
+		<PackageReference Include="PasteApeart.Handler" Version="26.9.1" />
+	</ItemGroup>
 
 </Project>

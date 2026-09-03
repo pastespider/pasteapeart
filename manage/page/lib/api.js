@@ -963,6 +963,37 @@ async function func_api_get(url) {
     }
 }
 
+/**
+ * 批量操作
+ * @param {*} elc 
+ * @returns 
+ */
+async function func_batch_action_demo(elc) {
+    var rows = getSelectedRowsData();
+    if (!rows) {
+        layer.msg("至少需要选择一行数据");
+        return;
+    }
+    var ids = new Array();
+    for (var row of rows) {
+        ids.push({
+            id: row.id,
+        });
+    }
+    var read = await apipostPromise('/api/app/userInfo/batchUpdate', info);
+    if (read.code == 200) {
+        if (typeof (read.info) == 'string') {
+            layer.msg(read.info);
+        } else {
+            //可能回传的是对应的ListDto支持单个或者数组，这样就可以更新表格的行数据
+            callUpdateRow(read.info);
+        }
+    }
+}
+
+/**
+ * 
+ */
 $(window).ready(function () {
     //新版本中form中有做这个了
     $(".table tbody").on('click', 'tr', function () {

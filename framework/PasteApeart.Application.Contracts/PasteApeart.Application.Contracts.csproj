@@ -22,10 +22,15 @@
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
 	</ItemGroup>
-  <ItemGroup>
-	  <PackageReference Include="PasteApeart.Helper" Version="26.8.1" />
-    <!--<ProjectReference Include="..\PasteApeart.Domain\PasteApeart.Domain.csproj" />-->
-	  <PackageReference Include="PasteApeart.Domain" Version="26.8.1" />
-  </ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<ProjectReference Include="..\PasteApeart.Domain\PasteApeart.Domain.csproj" />
+		<ProjectReference Include="..\PasteApeart.Helper\PasteApeart.Helper.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="PasteApeart.Helper" Version="26.8.1" />
+		<PackageReference Include="PasteApeart.Domain" Version="26.8.1" />
+	</ItemGroup>
 
 </Project>

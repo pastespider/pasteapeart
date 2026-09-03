@@ -323,6 +323,7 @@ namespace PasteApeart.Helper
         /// <param name="roles"></param>
         /// <param name="attrs"></param>
         /// <param name="model"></param>
+        [Obsolete("Use AutoEnableAttribute")]
         public static void AutoDisableAttribute(IEnumerable<IPasteAuthRole> roles, List<PasteAuthAttribute> attrs, VoloModelInfo model)
         {
             if (model.Attributes == null) { model.Attributes = new List<VoloModelAttribute>(); }

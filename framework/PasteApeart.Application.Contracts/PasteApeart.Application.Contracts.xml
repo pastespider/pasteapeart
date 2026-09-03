@@ -210,6 +210,11 @@
             重试模型 比如5s 30s 1m 5m 30m 1h还是比如1h 4h 8h 24h等，也就是重试的时候下一次啥时候执行，用哪个模型结算
             </summary>
         </member>
+        <member name="P:PasteApeart.Application.Contracts.AbsEventModel.IsSubscribe">
+            <summary>
+            订阅模式 当前是否是订阅模式
+            </summary>
+        </member>
         <member name="T:PasteApeart.Application.Contracts.IEventModel">
             <summary>
             
@@ -359,6 +364,11 @@
         <member name="P:PasteApeart.RabbitConfig.SubscribeQueue">
             <summary>
             广播模式的队列名称 每个容器不一样，动态赋值！！！
+            </summary>
+        </member>
+        <member name="P:PasteApeart.RabbitConfig.ChannelCapacity">
+            <summary>
+            本地队列 如果是-1表示无限
             </summary>
         </member>
         <member name="T:PasteApeart.RabbitExcepireItem">

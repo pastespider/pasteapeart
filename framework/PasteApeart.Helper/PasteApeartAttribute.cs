@@ -417,15 +417,15 @@ namespace PasteApeart.Helper
         /// <summary>
         /// 表示是否隐藏
         /// </summary>
-        /// <param name="_unhidden_model">表示某一个模式不隐藏，如果为空表示所有模式都隐藏,在前端输入_config.model查看当前model是啥</param>
+        /// <param name="unhiddenModel">不隐藏的model,支持用,分割多个</param>
         /// <param name="args2">备用</param>
         /// <param name="args3">备用</param>
         /// <param name="args4">备用</param>
         /// <param name="btnCode">权限代码 有权限的时候不下发hidden特性</param>
-        public PasteShowAttribute(string _unhidden_model = null, string args2 = null, string args3 = null, string args4 = null, string btnCode = null)
+        public PasteShowAttribute(string unhiddenModel = null, string args2 = null, string args3 = null, string args4 = null, string btnCode = null)
         {
             base.Name = "hidden";
-            base.Args1 = _unhidden_model;
+            base.Args1 = unhiddenModel;
             base.Args2 = args2;
             base.Args3 = args3;
             base.Args4 = args4;
@@ -434,7 +434,7 @@ namespace PasteApeart.Helper
     }
 
     /// <summary>
-    /// 完全隐藏 有点向jsonignore,不过这个会把数据返回给UI，但是不会回传，也就是回传是api端的默认值
+    /// 完全隐藏 有点像jsonignore,不过这个会把数据返回给UI，但是不会回传，也就是回传是api端的默认值
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class PasteHideAttribute : ColumnDataTypeAttribute

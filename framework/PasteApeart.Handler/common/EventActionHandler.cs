@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PasteApeart.Application.Contracts;
-using PasteApeart.Handler.eventmodels;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text.Json;

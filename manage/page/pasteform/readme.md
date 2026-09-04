@@ -1539,3 +1539,9 @@ public class UserInfoListDto{
     1.添加对thclass的支持，主要用于表格头的大小拉升
     2.handlerUpdateRow添加返回值，涉及格式校验，所以false的时候应该继续往下找
     
+## 26.09.01
+    1.由于特性的读取的顺序有时候会变，引入了tempConfigButtonAdd,去报特性顺序无关的修改add按钮
+    2.基于1的问题，后续将引入特性顺序Order的支持！仅仅作用于Class的特性生效
+
+    1.pasteTotal没返回的时候，下方清空
+    2.menuhtml，设置globalMenuCount++; 不然菜单列就被可能吃掉了

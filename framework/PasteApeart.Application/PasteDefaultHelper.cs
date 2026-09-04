@@ -15,7 +15,7 @@ namespace PasteApeart.Application
     /// <summary>
     /// 通用接口帮助类
     /// </summary>
-    public class PasteDefaultHelper : ISingletonDependency, IPasteDefaultHelper
+    public class PasteDefaultHelper : IPasteDefaultHelper
     {
         /// <summary>
         /// 

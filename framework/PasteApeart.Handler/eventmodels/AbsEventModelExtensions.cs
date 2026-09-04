@@ -1,5 +1,6 @@
 using PasteApeart.Application.Contracts;
 using PasteApeart.Handler;
+using PasteApeart.Handler.redis;
 using Serilog;
 
 namespace PasteApeart

@@ -12,7 +12,7 @@ namespace PasteApeart.Application
     /// <summary>
     /// 
     ///</summary>
-    public class PasteDefaultAppService : IScopedDependency, IPasteDefaultAppService
+    public class PasteDefaultAppService : IPasteDefaultAppService
     {
 
         /// <summary>

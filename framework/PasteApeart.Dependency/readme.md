@@ -1,0 +1,8 @@
+
+当前dll主要引入
+IScopeDependency
+ISingletonDependency
+ITransientDependency
+
+然后是查找程序集中继承这些接口的class
+然后按照上面的，适用不同的方式注入到IOC中

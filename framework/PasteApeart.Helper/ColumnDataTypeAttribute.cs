@@ -1,4 +1,4 @@
-﻿namespace PasteApeart.Helper
+namespace PasteApeart.Helper
 {
     /// <summary>
     /// 前端用数据类型 
@@ -40,6 +40,11 @@
         /// 服务端特性 是的话不需要返回给前端
         /// </summary>
         public bool IsServerAttribute { get; set; } = false;
+
+        /// <summary>
+        /// 排序 用于特性排序，从小大大
+        /// </summary>
+        public int Order { get; set; }
 
         /// <summary>
         /// 按照要求文档填写参数

@@ -30,7 +30,9 @@ namespace PasteApeart.Handler
             services.AddSingleton<IEventActionHandler, EventActionHandler>();
 
             services.AddScoped<CurrentUser>();
-            services.AddAutoDependencyInjection(typeof(PasteApeartHandlerModule).Assembly);
+
+            //services.AddAutoDependencyInjection(typeof(PasteApeartHandlerModule).Assembly);
+
             return services;
         }
 

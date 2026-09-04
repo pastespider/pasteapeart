@@ -341,7 +341,7 @@ namespace PasteApeart.Helper
                 _cpro.DataType = _property.PropertyType.Name;
                 //_cpro.Value = _property.GetValue(_new)?.ToString();
                 var attributes = _property.GetCustomAttributes<Attribute>();
-                var _attributes = HandlerAttribute(attributes, _cpro);
+                var _attributes = HandlerAttribute2(attributes, _cpro);
 
                 if (_attributes.Count > 0)
                 {
@@ -484,7 +484,7 @@ namespace PasteApeart.Helper
             }
 
             var class_attributes = _classType.GetCustomAttributes<Attribute>();
-            var _class_attribute = HandlerAttribute(class_attributes, null);
+            var _class_attribute = HandlerAttribute2(class_attributes, null);
             if (_class_attribute != null && _class_attribute.Count > 0)
             {
                 _classModel.Attributes = _class_attribute;
@@ -737,8 +737,8 @@ namespace PasteApeart.Helper
                 }
             }
             var classAttributes = _classType.GetCustomAttributes<Attribute>();
-            var voloAttributes = HandlerAttribute(classAttributes, null, _classModel);
-            if (voloAttributes != null && voloAttributes.Count > 0)
+            var voloAttributes = HandlerAttribute2(classAttributes, null, _classModel);
+            if (voloAttributes?.Any() == true)
             {
                 //转化AuthAttribute
 
@@ -909,7 +909,7 @@ namespace PasteApeart.Helper
                 }
                 proInfo.DataType = _property.PropertyType.Name;
                 var attributes = _property.GetCustomAttributes<Attribute>();
-                var _attributes = HandlerAttribute(attributes, proInfo);
+                var _attributes = HandlerAttribute2(attributes, proInfo);
                 if (_attributes.Count > 0)
                 {
                     proInfo.Attributes = _attributes;
@@ -1940,12 +1940,13 @@ namespace PasteApeart.Helper
         }
 
         /// <summary>
-        /// 获取属性列表
+        /// 获取特性列表
         /// </summary>
         /// <param name="attributes"></param>
         /// <param name="property">Property</param>
         /// <param name="model">Class</param>
         /// <returns></returns>
+        [Obsolete]
         private static List<VoloModelAttribute> HandlerAttribute(IEnumerable<Attribute> attributes, VoloModelProperty property, VoloModelInfo model = null)
         {
             var _attributes = new List<VoloModelAttribute>();
@@ -2017,8 +2018,8 @@ namespace PasteApeart.Helper
 
                     if (String.IsNullOrEmpty(_attri.Name))
                     {
-                        var _bute = _attribute as ColumnDataTypeAttribute;
-                        if (_bute != null)
+                        //var _bute = _attribute as ColumnDataTypeAttribute;
+                        if (_attribute is ColumnDataTypeAttribute _bute)
                         {
                             _attri.Name = _bute.Name;
                             _attri.Args1 = _bute.Args1;
@@ -2026,6 +2027,7 @@ namespace PasteApeart.Helper
                             _attri.Args3 = _bute.Args3;
                             _attri.Args4 = _bute.Args4;
                             _attri.Error = _bute.ErrorMessage;
+                            _attri.Order = _bute.Order;
                             if (_bute.IsServerAttribute)
                             {
                                 continue;
@@ -2095,7 +2097,7 @@ namespace PasteApeart.Helper
                     }
                 }
             }
-            return _attributes;
+            return _attributes?.Any() == true ? _attributes.OrderBy(x => x.Order).ToList() : null;
         }
 
         /// <summary>
@@ -2183,20 +2185,23 @@ namespace PasteApeart.Helper
                         _attri.Error = regularAttribute.ErrorMessage;
                     }
 
-                    if (_attribute is BtnCodeAttribute buttonAttribute)
+                    if (buttons != null)
                     {
-                        if (!PrivateButtonAuth(buttons, dtoName, buttonAttribute.Code))
+                        if (_attribute is BtnCodeAttribute buttonAttribute)
                         {
-                            continue;
+                            if (!PrivateButtonAuth(buttons, dtoName, buttonAttribute.Code))
+                            {
+                                continue;
+                            }
                         }
-                    }
-                    //如果是Hidden 有权限则隐藏 没权限则显示了... . .
-                    if (_attribute is PasteShowAttribute showAttribute)
-                    {
-                        if (PrivateButtonAuth(buttons, dtoName, showAttribute.Code))
+                        //如果是Hidden 有权限则隐藏 没权限则显示了... . .
+                        if (_attribute is PasteShowAttribute showAttribute)
                         {
-                            //这个特性不生效，也就是显示
-                            continue;
+                            if (PrivateButtonAuth(buttons, dtoName, showAttribute.Code))
+                            {
+                                //这个特性不生效，也就是显示
+                                continue;
+                            }
                         }
                     }
 
@@ -2211,6 +2216,7 @@ namespace PasteApeart.Helper
                             _attri.Args3 = _bute.Args3;
                             _attri.Args4 = _bute.Args4;
                             _attri.Error = _bute.ErrorMessage;
+                            _attri.Order = _bute.Order;
                             if (_bute.IsServerAttribute)
                             {
                                 continue;
@@ -2279,7 +2285,7 @@ namespace PasteApeart.Helper
                     }
                 }
             }
-            return _attributes;
+            return _attributes?.Any() == true ? _attributes.OrderBy(x => x.Order).ToList() : null;
         }
 
         /// <summary>
@@ -2349,77 +2355,79 @@ namespace PasteApeart.Helper
 
             var typeName = searchType.FullName;
             // 使用GetOrCreate替代TryGetValue+Set
-            return _memoryCache.GetOrCreate(typeName, entry =>
+            //return _memoryCache.GetOrCreate(typeName, entry =>
+            //{
+            //    // 这里的逻辑只会被一个线程执行（其他线程等待）
+            //    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(300); // 设置过期时间
+
+            var allProperties = searchType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            // 辅助方法：计算类型的继承深度
+            int GetInheritanceDepth(Type type)
             {
-                // 这里的逻辑只会被一个线程执行（其他线程等待）
-                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(300); // 设置过期时间
-
-                var allProperties = searchType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-                // 辅助方法：计算类型的继承深度
-                int GetInheritanceDepth(Type type)
+                int depth = 0;
+                while (type.BaseType != null && type.BaseType != typeof(object))
                 {
-                    int depth = 0;
-                    while (type.BaseType != null && type.BaseType != typeof(object))
-                    {
-                        depth++;
-                        type = type.BaseType;
-                    }
-                    return depth;
+                    depth++;
+                    type = type.BaseType;
                 }
+                return depth;
+            }
 
-                // 按继承深度从远到近排序
-                var sortedProperties = allProperties
-                    .OrderBy(p => GetInheritanceDepth(p.DeclaringType))
-                    .ToArray();
+            // 按继承深度从远到近排序
+            var sortedProperties = allProperties
+                .OrderBy(p => GetInheritanceDepth(p.DeclaringType))
+                .ToArray();
 
-                var hasDuplicates = sortedProperties.Length != sortedProperties.Select(p => p.Name).Distinct().Count();
-                if (!hasDuplicates)
-                {
-                    return sortedProperties;
-                }
+            var hasDuplicates = sortedProperties.Length != sortedProperties.Select(p => p.Name).Distinct().Count();
+            if (!hasDuplicates)
+            {
+                return sortedProperties;
+            }
 
-                // 去重：保留最近的（后面的覆盖前面的）
-                var propertyDict = new Dictionary<string, PropertyInfo>();
-                foreach (var prop in sortedProperties)
-                {
-                    propertyDict[prop.Name] = prop;
-                }
+            // 去重：保留最近的（后面的覆盖前面的）
+            var propertyDict = new Dictionary<string, PropertyInfo>();
+            foreach (var prop in sortedProperties)
+            {
+                propertyDict[prop.Name] = prop;
+            }
 
-                return propertyDict.Values
-                    .OrderBy(p => GetInheritanceDepth(p.DeclaringType))
-                    .ToArray();
+            return propertyDict.Values
+                .OrderBy(p => GetInheritanceDepth(p.DeclaringType))
+                .ToArray();
 
-                ////return t.GetProperties(); // 耗时的反射操作
-                //var allProperties = searchType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                //// 如果有属性被隐藏（new），才需要复杂处理
-                //var hasDuplicates = allProperties.Length != allProperties.Select(p => p.Name).Distinct().Count();
-                //if (!hasDuplicates)
-                //{
-                //    // 没有重复属性名，直接返回
-                //    return allProperties;
-                //}
-                //// 有重复属性名，进行分组处理
-                //var propertyGroups = allProperties.GroupBy(p => p.Name);
-                //var result = new PropertyInfo[propertyGroups.Count()];
-                //int index = 0;
-                //foreach (var group in propertyGroups)
-                //{
-                //    // 手动查找，避免 LINQ 的开销
-                //    PropertyInfo selected = null;
-                //    foreach (var prop in group)
-                //    {
-                //        if (prop.DeclaringType == searchType)
-                //        {
-                //            selected = prop;
-                //            break;  // 找到当前类声明的，立即退出
-                //        }
-                //        selected ??= prop;  // 否则保留第一个
-                //    }
-                //    result[index++] = selected!;
-                //}
-                //return result;
-            });
+            ////return t.GetProperties(); // 耗时的反射操作
+            //var allProperties = searchType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            //// 如果有属性被隐藏（new），才需要复杂处理
+            //var hasDuplicates = allProperties.Length != allProperties.Select(p => p.Name).Distinct().Count();
+            //if (!hasDuplicates)
+            //{
+            //    // 没有重复属性名，直接返回
+            //    return allProperties;
+            //}
+            //// 有重复属性名，进行分组处理
+            //var propertyGroups = allProperties.GroupBy(p => p.Name);
+            //var result = new PropertyInfo[propertyGroups.Count()];
+            //int index = 0;
+            //foreach (var group in propertyGroups)
+            //{
+            //    // 手动查找，避免 LINQ 的开销
+            //    PropertyInfo selected = null;
+            //    foreach (var prop in group)
+            //    {
+            //        if (prop.DeclaringType == searchType)
+            //        {
+            //            selected = prop;
+            //            break;  // 找到当前类声明的，立即退出
+            //        }
+            //        selected ??= prop;  // 否则保留第一个
+            //    }
+            //    result[index++] = selected!;
+            //}
+            //return result;
+
+
+            //});
 
         }
 

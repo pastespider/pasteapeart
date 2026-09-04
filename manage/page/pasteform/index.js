@@ -1206,7 +1206,10 @@ function removeEmptyLinesRegex(str, trimLines = true) {
 function _readpagedata(page) {
     readPageData(page);
 }
-
+/**
+ * 是否重新配置了添加按钮
+ */
+let tempConfigButtonAdd =false;
 /**
  * 处理类型的特性 比如按钮，批量操作等等
  * @param {*} o 
@@ -1260,6 +1263,9 @@ async function handlerQueryClassAttribute(o) {
                                 _config.disable_add = false;
                             } else {
                                 _config.disable_add = true;
+                            }
+                            if(tempConfigButtonAdd){
+                                _config.disable_add = false;
                             }
                         }
                         if (_config.disable_add) {
@@ -1331,6 +1337,7 @@ async function handlerQueryClassAttribute(o) {
                         if (_attribute.args3 == 'add') {
                             if (_attribute.args1) {
                                 $(".btnadd").val(_attribute.args1);
+                                tempConfigButtonAdd = true;
                             }
                             if (_attribute.args2) {
                                 //这里得让他支持宏
@@ -1530,6 +1537,7 @@ function handlerModelFieldcolumnProperty(properties) {
                             {
                                 item.dataType = "menuhtml";
                                 item.hidden = true;
+                                globalMenuCount++;
                             }
                             break;
                         case "thclass":
@@ -2591,7 +2599,7 @@ function handlerSearchClean(elc) {
  * @param {*} elc 
  */
 function handlerSearchCleanOuterInput(elc) {
-    var _parent = $(elc).parents('.outer');
+    var _parent = $(elc).parents('.sitem');
     if (_parent) {
         _parent.find('input,textarea').val('');
     }
@@ -2602,7 +2610,7 @@ function handlerSearchCleanOuterInput(elc) {
  * @param {*} elc 
  */
 function handlerCleanOuterInput(elc) {
-    var _parent = $(elc).parents('.outer');
+    var _parent = $(elc).parents('.sitem');
     if (_parent) {
         _parent.find('input,textarea').val('');
     }
@@ -2908,6 +2916,8 @@ function afterReadPageData(code, obj, page) {
                 });
                 $(".totalsum").html(ahtml);
             }
+        }else{
+            $(".totalsum").html('');
         }
 
         //判断是不是游标获取模式，游标模式不走页码，只走游标和页大小

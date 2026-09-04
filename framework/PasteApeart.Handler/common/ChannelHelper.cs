@@ -2,11 +2,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PasteApeart.Application.Contracts;
 using PasteApeart.Handler;
+using PasteApeart.Handler.rabbit;
+using PasteApeart.Handler.redis;
 using System.Collections.Concurrent;
 using System.Text.Json;
 using System.Threading.Channels;
 
-namespace PasteApeart
+namespace PasteApeart.Handler
 {
     /// <summary>
     /// 

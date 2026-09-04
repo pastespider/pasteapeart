@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using PasteApeart.Application.Contracts;
-using PasteApeart.Handler;
+using PasteApeart.Handler.redis;
 
-namespace PasteApeart
+namespace PasteApeart.Handler
 {
     /// <summary>
     /// 数据对象的缓存帮助类 注意当前是IScopedDependency周期
     /// </summary>
-    public class CacheHandler :  ICacheHandler
+    public class CacheHandler : ICacheHandler
     {
         private readonly IAppCache _appCache;
         private readonly DbContext _dbContext;

@@ -1,4 +1,6 @@
-﻿namespace PasteApeart.Helper
+using System.Text.Json.Serialization;
+
+namespace PasteApeart.Helper
 {
     /// <summary>
     /// 字段的属性规则
@@ -34,6 +36,12 @@
         /// 过滤器验证信息
         /// </summary>
         public string Error { get; set; } = "";
+
+        /// <summary>
+        /// 排序
+        /// </summary>
+        [JsonIgnore]
+        public int Order { get; set; }
     }
 
 }

@@ -25,29 +25,14 @@
 
 	<!-- 该组仅在 TargetFramework 为 net8.0 时生效 -->
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.4" />
-		<!--<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="10.0.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="10.0.0.0" />-->
 	</ItemGroup>
 
 	<!-- 该组仅在 TargetFramework 为 net8.0 时生效 -->
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-		<!--<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />-->
-
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.4" />
-		<!--<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="8.0.0.0" />-->
 	</ItemGroup>
 
 

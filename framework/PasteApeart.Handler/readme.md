@@ -1,4 +1,12 @@
 
+## 26.09.02
+    1.重大升级，剥离Dependency,这样PasteForm可以使用当前dll了，后续只要维护一套Handler
+    2.调整对应的CacheHandler,ChannelHelper,EventActionHandler等
+    3.规范命名控件namespace PasteApeart.Handler 防止引用乱跑啥的！
+    4.优化EventModel的发送，多合一,啥排重，广播，延迟，本地，远程等 都只要调用一个函数即可!
+    5.能接口化的全部接口话，便于三方自我实现
+
+
 ## 26.08.01
     1.MQ消费者的静默关闭
 

@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<!-- 启用确定性编译（关键） -->
+		<Deterministic>true</Deterministic>
+		<!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<FileVersion>26.9.2</FileVersion>
+		<VersionPrefix>26.9.2</VersionPrefix>
+		<AssemblyVersion>26.9.2</AssemblyVersion>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="readme.md" Pack="true" PackagePath="/" Visible="true" />
+	</ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
+	</ItemGroup>
+
+
+</Project>

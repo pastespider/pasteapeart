@@ -1,4 +1,4 @@
-﻿namespace PasteApeart
+namespace PasteApeart.Handler.rabbit
 {
     public interface IRabbitMQProducer
     {

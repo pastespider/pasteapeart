@@ -1,7 +1,13 @@
-﻿namespace PasteApeart.Handler
+namespace PasteApeart.Handler.redis
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class RedisConfig
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Enable { get; set; } = false;
 
         /// <summary>

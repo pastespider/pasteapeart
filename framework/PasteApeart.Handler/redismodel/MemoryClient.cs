@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using System.Text;
 using System.Text.Json;
 
-namespace PasteApeart.Handler
+namespace PasteApeart.Handler.redis
 {
     /// <summary>
     /// 本地缓存
@@ -12,16 +12,15 @@ namespace PasteApeart.Handler
     public class MemoryClient : IAppCache
     {
         private readonly IMemoryCache _memoryCache;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="memoryCache"></param>
         public MemoryClient(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
-
-            //key_val = new ConcurrentDictionary<string, string>();
-
-            //key_sort_set = new ConcurrentDictionary<string, List<SortScore>>();
-
             key_hash_set = new ConcurrentDictionary<string, ConcurrentDictionary<string, string>>();
-
             key_hash_num = new ConcurrentDictionary<string, ConcurrentDictionary<string, long>>();
         }
 

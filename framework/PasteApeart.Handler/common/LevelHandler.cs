@@ -5,7 +5,7 @@ namespace PasteApeart.Handler
     /// <summary>
     /// 多层级 非递归多层级新增和更新
     /// </summary>
-    public class LevelHandler : IScopedDependency
+    public class LevelHandler : ILevelHandler
     {
 
         private readonly DbContext _dbContext;

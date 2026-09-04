@@ -7,7 +7,7 @@ namespace PasteApeart
     /// <summary>
     /// 数据对象的缓存帮助类 注意当前是IScopedDependency周期
     /// </summary>
-    public class CacheHandler : IScopedDependency, ICacheHandler
+    public class CacheHandler :  ICacheHandler
     {
         private readonly IAppCache _appCache;
         private readonly DbContext _dbContext;

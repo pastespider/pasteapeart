@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using System.Text.Json;
 
-namespace PasteApeart.Handler
+namespace PasteApeart.Handler.redis
 {
     /// <summary>
     /// 封装 Redis 相关操作的方法类。

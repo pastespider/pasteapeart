@@ -11,7 +11,7 @@ namespace PasteApeart
     /// <summary>
     /// 
     /// </summary>
-    public class ChannelHelper : ISingletonDependency, IChannelHelper
+    public class ChannelHelper :  IChannelHelper
     {
         private readonly Channel<IEventModel> _channelLocationQueue;
         private readonly ILogger<ChannelHelper> _logger;

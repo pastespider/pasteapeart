@@ -1,11 +1,11 @@
-﻿using PasteApeart.Application.Contracts;
+using PasteApeart.Application.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PasteApeart.Handler.eventmodels
+namespace PasteApeart.Handler
 {
 
     /// <summary>

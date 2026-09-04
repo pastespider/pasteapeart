@@ -2,14 +2,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
-using System.Text;
 
-namespace PasteApeart
+namespace PasteApeart.Handler.rabbit
 {
     /// <summary>
     /// 
     /// </summary>
-    public class RabbitMQProducer : ISingletonDependency, IRabbitMQProducer
+    public class RabbitMQProducer : IRabbitMQProducer
     {
 
         // synchronization locks
@@ -350,6 +349,11 @@ namespace PasteApeart
                 _logger.LogException(exl);
             }
         }
+        private static readonly BasicProperties sharedProperties = new BasicProperties
+        {
+            DeliveryMode = DeliveryModes.Persistent,
+            Persistent = true
+        };
 
         /// <summary>
         /// 
@@ -374,27 +378,16 @@ namespace PasteApeart
                     _models[currentModelIndex] = model;
                     _properties[currentModelIndex] = null;
                 }
-                BasicProperties properties1;
-                //if (expiration == 0)
-                //{
-                properties1 = _properties[currentModelIndex];
-                if (properties1 == null)
-                {
-                    properties1 = new BasicProperties();
-                    properties1.DeliveryMode = DeliveryModes.Persistent;
-                    properties1.Persistent = true;
-                    _properties[currentModelIndex] = properties1;
-                }
-                //}
-                //else
+                //BasicProperties properties1;
+                //properties1 = _properties[currentModelIndex];
+                //if (properties1 == null)
                 //{
                 //    properties1 = new BasicProperties();
                 //    properties1.DeliveryMode = DeliveryModes.Persistent;
                 //    properties1.Persistent = true;
-                //    properties1.Expiration = expiration.ToString();
+                //    _properties[currentModelIndex] = properties1;
                 //}
-                var bytes = Encoding.UTF8.GetBytes(message);
-                await model.BasicPublishAsync(exchange, routingkey, false, properties1, System.Text.Encoding.UTF8.GetBytes(message));
+                await model.BasicPublishAsync(exchange, routingkey, false, sharedProperties, System.Text.Encoding.UTF8.GetBytes(message));
             }
             finally
             {

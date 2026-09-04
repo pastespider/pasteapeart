@@ -1,4 +1,4 @@
-﻿namespace PasteApeart.Handler
+namespace PasteApeart.Handler.redis
 {
     public class HashKeyValue
     {

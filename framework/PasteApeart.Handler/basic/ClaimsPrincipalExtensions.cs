@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace PasteApeart.Handler
+namespace PasteApeart
 {
     /// <summary>
     /// 

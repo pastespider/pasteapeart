@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PasteApeart.Application.Contracts;
-using PasteApeart.Handler.eventmodels;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Collections.Concurrent;
@@ -11,12 +10,12 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace PasteApeart.Handler.rabbitmodel
+namespace PasteApeart.Handler.rabbit
 {
     /// <summary>
     /// 多Channel的订阅者模式 - 优化版
     /// </summary>
-    public class RabbitMultiConsumerHandler : ISingletonDependency, IAsyncDisposable
+    public class RabbitMultiConsumerHandler : IAsyncDisposable, IRabbitMultiConsumerHandler
     {
         private readonly RabbitConfig _rabbitConfig;
         private readonly ILogger<RabbitMultiConsumerHandler> _logger;
@@ -332,7 +331,8 @@ namespace PasteApeart.Handler.rabbitmodel
                 }
 
                 _channels.Clear();
-            }catch(Exception exl)
+            }
+            catch (Exception exl)
             {
                 _logger.LogException(exl);
             }
@@ -434,7 +434,7 @@ namespace PasteApeart.Handler.rabbitmodel
                     return;
                 }
                 // 3. 反序列化为具体类型
-                input = JsonSerializer.Deserialize(msg,modelType,JsonConfig.Options);
+                input = JsonSerializer.Deserialize(msg, modelType, JsonConfig.Options);
                 if (input == null)
                 {
                     _logger.LogError($"无法将消息反序列化为类型 {eventName}: {msg}");

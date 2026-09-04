@@ -11,7 +11,7 @@ namespace PasteApeart.Handler
     /// <summary>
     /// 队列处理 可以被RabbitMQ或者Channel的消费者调用
     /// </summary>
-    public class EventActionHandler : ISingletonDependency, IEventActionHandler
+    public class EventActionHandler : IEventActionHandler
     {
 
         private readonly ILogger<EventActionHandler> _logger;

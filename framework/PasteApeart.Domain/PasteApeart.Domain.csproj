@@ -10,9 +10,9 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<RootNamespace>PasteApeart.Domain</RootNamespace>
 	<DocumentationFile>PasteApeart.Domain.xml</DocumentationFile>
-	<FileVersion>26.8.1</FileVersion>
-	<VersionPrefix>26.8.1</VersionPrefix>
-	<AssemblyVersion>26.8.1</AssemblyVersion>
+	<FileVersion>26.9.1</FileVersion>
+	<VersionPrefix>26.9.1</VersionPrefix>
+	<AssemblyVersion>26.9.1</AssemblyVersion>
 	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -38,7 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="PasteApeart.Helper" Version="26.7.1" />
+		<PackageReference Include="PasteApeart.Helper" Version="26.9.1" />
 	</ItemGroup>
 
 </Project>

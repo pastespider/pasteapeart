@@ -1,4 +1,4 @@
-﻿namespace PasteApeart
+namespace PasteApeart.Applciation.Contracts
 {
 
     /// <summary>

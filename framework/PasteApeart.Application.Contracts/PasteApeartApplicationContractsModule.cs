@@ -1,10 +1,10 @@
-﻿namespace PasteApeart
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    public class PasteApeartApplicationContractsModule
-    {
+//namespace PasteApeart
+//{
+//    /// <summary>
+//    /// 
+//    /// </summary>
+//    public class PasteApeartApplicationContractsModule
+//    {
 
-    }
-}
+//    }
+//}

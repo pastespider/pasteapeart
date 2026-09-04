@@ -6,5 +6,8 @@ namespace PasteApeart.Dependency
     {
 
     }
+    public interface ISingleton
+    {
 
+    }
 }

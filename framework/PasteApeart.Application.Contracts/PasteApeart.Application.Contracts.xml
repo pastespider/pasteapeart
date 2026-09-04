@@ -34,6 +34,26 @@
             没有数据
             </summary>
         </member>
+        <member name="T:PasteApeart.Application.Contracts.ExceptionModel">
+            <summary>
+            异常等返回的消息体
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.ExceptionModel.code">
+            <summary>
+            StatusCode
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.ExceptionModel.success">
+            <summary>
+            请求是否符合预期
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.ExceptionModel.message">
+            <summary>
+            附带的消息
+            </summary>
+        </member>
         <member name="T:PasteApeart.Application.Contracts.InputQueryUpdateState">
             <summary>
             一般发生于列表页面的switch开关触发的事件
@@ -165,6 +185,144 @@
             <param name="model"></param>
             <param name="role"></param>
         </member>
+        <member name="T:PasteApeart.Application.Contracts.RabbitConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.RabbitQueue">
+            <summary>
+            是否使用RabbitMQ 否则使用本地的Channel
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.HostName">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.Port">
+            <summary>
+            端口
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.VirtualHost">
+            <summary>
+            作用域
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.UserName">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.Durable">
+            <summary>
+            true:Durable(持久化) false:Transient(瞬时模式)
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.ExpireExchangeType">
+            <summary>
+            超时队列的交换机模型
+            direct
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.ExpireRouteKey">
+            <summary>
+            channel.expire 延迟队列发送的路由key
+            *:匹配一个单词
+            #:匹配多个单词，单词之间用.隔开
+            匹配模式的时候exchangetype需要为topic
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.ExpireTimeList">
+            <summary>
+            超时队列
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.ExpiredExchange">
+            <summary>
+            超时队列的exchange 过期后写入到待读取队列
+            talk_expire_exchange 写入到过期后的队列
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.ExpiredWatchQueue">
+            <summary>
+            超时队列的最终队列 这个队列的是过期后的数据
+            talk_expired_queue
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.ClientName">
+            <summary>
+            客户端名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.DeliveryMode">
+            <summary>
+            配送模式 1不持续模式 2持续模式
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.UseBackgroundThreadsForIO">
+            <summary>
+            是否启用后台线程处理IO
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.MaxChannelCount">
+            <summary>
+            写入通道数量
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.ReadChannelCount">
+            <summary>
+            读取Channel通道数
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.SubscribeEnable">
+            <summary>
+            使用广播模式
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.SubscribeExchange">
+            <summary>
+            广播模式的交换机名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.SubscribeQueue">
+            <summary>
+            广播模式的队列名称 每个容器不一样，动态赋值！！！
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitConfig.ChannelCapacity">
+            <summary>
+            本地队列 如果是-1表示无限
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Application.Contracts.RabbitExcepireItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitExcepireItem.ExpireExchange">
+            <summary>
+            超时队列的待超时队列 在这个队列中等待过期
+            talk_wait_hour_queue 这个是hour模式
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitExcepireItem.ExpireQueue">
+            <summary>
+            超时队列的待超时队列 在这个队列中等待过期
+            talk_wait_hour_queue 这个是hour模式
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.RabbitExcepireItem.ExpireSecond">
+            <summary>
+            超时时间 单位秒
+            </summary>
+        </member>
         <member name="T:PasteApeart.Application.Contracts.AbsEventModel">
             <summary>
             
@@ -235,192 +393,29 @@
             对象名称
             </summary>
         </member>
-        <member name="T:PasteApeart.ExceptionModel">
-            <summary>
-            异常等返回的消息体
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ExceptionModel.code">
-            <summary>
-            StatusCode
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ExceptionModel.success">
-            <summary>
-            请求是否符合预期
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ExceptionModel.message">
-            <summary>
-            附带的消息
-            </summary>
-        </member>
-        <member name="T:PasteApeart.RabbitConfig">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.RabbitQueue">
-            <summary>
-            是否使用RabbitMQ 否则使用本地的Channel
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.HostName">
-            <summary>
-            地址
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.Port">
-            <summary>
-            端口
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.VirtualHost">
-            <summary>
-            作用域
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.UserName">
-            <summary>
-            账号
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.Password">
-            <summary>
-            密码
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.Durable">
-            <summary>
-            true:Durable(持久化) false:Transient(瞬时模式)
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.ExpireExchangeType">
-            <summary>
-            超时队列的交换机模型
-            direct
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.ExpireRouteKey">
-            <summary>
-            channel.expire 延迟队列发送的路由key
-            *:匹配一个单词
-            #:匹配多个单词，单词之间用.隔开
-            匹配模式的时候exchangetype需要为topic
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.ExpireTimeList">
-            <summary>
-            超时队列
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.ExpiredExchange">
-            <summary>
-            超时队列的exchange 过期后写入到待读取队列
-            talk_expire_exchange 写入到过期后的队列
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.ExpiredWatchQueue">
-            <summary>
-            超时队列的最终队列 这个队列的是过期后的数据
-            talk_expired_queue
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.ClientName">
-            <summary>
-            客户端名称
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.DeliveryMode">
-            <summary>
-            配送模式 1不持续模式 2持续模式
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.UseBackgroundThreadsForIO">
-            <summary>
-            是否启用后台线程处理IO
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.MaxChannelCount">
-            <summary>
-            写入通道数量
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.ReadChannelCount">
-            <summary>
-            读取Channel通道数
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.SubscribeEnable">
-            <summary>
-            使用广播模式
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.SubscribeExchange">
-            <summary>
-            广播模式的交换机名称
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.SubscribeQueue">
-            <summary>
-            广播模式的队列名称 每个容器不一样，动态赋值！！！
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitConfig.ChannelCapacity">
-            <summary>
-            本地队列 如果是-1表示无限
-            </summary>
-        </member>
-        <member name="T:PasteApeart.RabbitExcepireItem">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitExcepireItem.ExpireExchange">
-            <summary>
-            超时队列的待超时队列 在这个队列中等待过期
-            talk_wait_hour_queue 这个是hour模式
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitExcepireItem.ExpireQueue">
-            <summary>
-            超时队列的待超时队列 在这个队列中等待过期
-            talk_wait_hour_queue 这个是hour模式
-            </summary>
-        </member>
-        <member name="P:PasteApeart.RabbitExcepireItem.ExpireSecond">
-            <summary>
-            超时时间 单位秒
-            </summary>
-        </member>
-        <member name="T:PasteApeart.EntityDto`1">
+        <member name="T:PasteApeart.Applciation.Contracts.EntityDto`1">
             <summary>
             
             </summary>
             <typeparam name="TKey"></typeparam>
         </member>
-        <member name="P:PasteApeart.EntityDto`1.Id">
+        <member name="P:PasteApeart.Applciation.Contracts.EntityDto`1.Id">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PasteApeart.EntityDto`1.Equals(System.Object)">
+        <member name="M:PasteApeart.Applciation.Contracts.EntityDto`1.Equals(System.Object)">
             <summary>
             
             </summary>
             <param name="obj"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.EntityDto`1.GetHashCode">
+        <member name="M:PasteApeart.Applciation.Contracts.EntityDto`1.GetHashCode">
             <summary>
             
             </summary>
             <returns></returns>
-        </member>
-        <member name="T:PasteApeart.PasteApeartApplicationContractsModule">
-            <summary>
-            
-            </summary>
         </member>
     </members>
 </doc>

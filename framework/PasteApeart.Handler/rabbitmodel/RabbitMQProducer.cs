@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using PasteApeart.Application.Contracts;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 

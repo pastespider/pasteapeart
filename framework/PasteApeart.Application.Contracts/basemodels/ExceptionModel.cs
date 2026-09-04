@@ -1,4 +1,4 @@
-namespace PasteApeart
+namespace PasteApeart.Application.Contracts
 {
     /// <summary>
     /// 异常等返回的消息体

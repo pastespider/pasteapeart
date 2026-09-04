@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace PasteApeart
+namespace PasteApeart.Application.Contracts
 {
     /// <summary>
     /// 

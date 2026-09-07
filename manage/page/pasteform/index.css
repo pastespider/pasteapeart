@@ -407,6 +407,15 @@ body {
 .searcharea .searchbox .range_input .inputword:focus {
   border: none;
 }
+.searcharea .searchbox .placeholder {
+  padding: 8px;
+  font-size: 12px;
+  color: #888;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+  text-wrap: nowrap;
+}
 .searcharea .searchbox .tl {
   padding: 8px;
   color: #888;

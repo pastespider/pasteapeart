@@ -3,7 +3,6 @@ WORKDIR /app
 EXPOSE 80
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 # RUN apk add --no-cache tzdata
-# �ؼ�������ȫ�򻯲���ģʽ
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
 ENV TZ="Asia/Shanghai"
 ENV LANG C.UTF-8

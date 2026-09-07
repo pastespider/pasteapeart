@@ -525,7 +525,7 @@ function _showpagedata(datas) {
 
     //显示合计数据到UI
     // console.log(globalSumMap);
-    hanlderDisplaySumData();
+    // hanlderDisplaySumData();
 
     if (_config.drag_order_column) {
         if (typeof ColumnDragSorter != "undefined") {
@@ -534,7 +534,7 @@ function _showpagedata(datas) {
                 $(".btn_clear_order_column").fadeIn();
             } else {
                 global_table_column_order_handler.rebind();
-                console.log('1111执行重新加载顺序... .. .');
+                // console.log('1111执行重新加载顺序... .. .');
             }
         }
     }
@@ -2888,6 +2888,20 @@ function afterReadPageData(code, obj, page) {
         //后续要用，表示当前是第几页数据
         obj.page = page;
 
+        //渲染总计 pasteTotal [name value ] 都是字符串格式
+        if (obj.pasteTotal) {
+            if (obj.pasteTotal.length > 0) {
+                //组合成信息到ui
+                var ahtml = '综合：';
+                obj.pasteTotal.forEach(va => {
+                    ahtml += ` ${va.name}:${va.value}   `;
+                });
+                $(".totalsum").html(ahtml);
+            }
+        }else{
+            $(".totalsum").html('');
+        }
+
         //如果是有模型，且是第一页，这样可以防止重复渲染模型 如果是chart模式... ..  是否有渲染过模型???...
         if (obj.pasteModel && page == 1) {
             //有数据格式 ...
@@ -2905,20 +2919,7 @@ function afterReadPageData(code, obj, page) {
             handlerDisplayDataToUi(obj);
         }
 
-        //渲染总计 pasteTotal [name value ] 都是字符串格式
-        if (obj.pasteTotal) {
 
-            if (obj.pasteTotal.length > 0) {
-                //组合成信息到ui
-                var ahtml = '综合：';
-                obj.pasteTotal.forEach(va => {
-                    ahtml += ` ${va.name}:${va.value}   `;
-                });
-                $(".totalsum").html(ahtml);
-            }
-        }else{
-            $(".totalsum").html('');
-        }
 
         //判断是不是游标获取模式，游标模式不走页码，只走游标和页大小
         if (_config.next != null) {
@@ -3016,7 +3017,13 @@ function handlerDisplayDataToUi(obj) {
 
         //判断类型
         if (_config.show_type == 'table') {
+
             _showpagedata(datas);
+            //综合数据权重大于本页
+            if(!obj.pasteTotal){
+                hanlderDisplaySumData();
+            }
+
         } else {
             if (echarts_loaded) {
                 showPageChart(datas);

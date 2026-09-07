@@ -8,9 +8,9 @@
 	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <ImplicitUsings>enable</ImplicitUsings>
 
-	  <FileVersion>26.9.2</FileVersion>
-	  <VersionPrefix>26.9.2</VersionPrefix>
-	  <AssemblyVersion>26.9.2</AssemblyVersion>
+	  <FileVersion>26.9.3</FileVersion>
+	  <VersionPrefix>26.9.3</VersionPrefix>
+	  <AssemblyVersion>26.9.3</AssemblyVersion>
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
@@ -61,8 +61,8 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="PasteApeart.Domain" Version="26.8.1" />
-		<PackageReference Include="PasteApeart.Application.Contracts" Version="26.9.1" />
+		<PackageReference Include="PasteApeart.Domain" Version="26.9.1" />
+		<PackageReference Include="PasteApeart.Application.Contracts" Version="26.9.2" />
 		<!--<PackageReference Include="PasteApeart.EntityFrameworkCore" Version="26.7.1" />-->
 	</ItemGroup>
 

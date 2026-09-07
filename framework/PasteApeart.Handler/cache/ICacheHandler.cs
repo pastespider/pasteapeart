@@ -1,5 +1,5 @@
 
-namespace PasteApeart
+namespace PasteApeart.Handler.cache
 {
     public interface ICacheHandler
     {

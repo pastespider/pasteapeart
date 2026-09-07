@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PasteApeart.Application.Contracts;
 using PasteApeart.Handler.redis;
 
-namespace PasteApeart.Handler
+namespace PasteApeart.Handler.cache
 {
     /// <summary>
     /// 数据对象的缓存帮助类 注意当前是IScopedDependency周期

@@ -1545,3 +1545,7 @@ public class UserInfoListDto{
 
     1.pasteTotal没返回的时候，下方清空
     2.menuhtml，设置globalMenuCount++; 不然菜单列就被可能吃掉了
+
+## 26.09.02
+    1.本页数据和综合的问题，读取数据后，重置
+    2.综合数据权重大于本页

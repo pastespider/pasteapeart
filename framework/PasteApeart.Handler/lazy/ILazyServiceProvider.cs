@@ -1,4 +1,4 @@
-﻿namespace PasteApeart
+namespace PasteApeart.Handler.lazy
 {
 
     /// <summary>

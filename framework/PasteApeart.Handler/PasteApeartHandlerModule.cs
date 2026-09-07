@@ -1,8 +1,7 @@
-using Autofac;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PasteApeart.Handler.lazy;
 using PasteApeart.Handler.rabbit;
-using System.Collections.Concurrent;
 
 namespace PasteApeart.Handler
 {
@@ -20,12 +19,13 @@ namespace PasteApeart.Handler
         public static IServiceCollection AddPasteApeartHandlerModule(this IServiceCollection services, IConfiguration configuration = null)
         {
             services.AddTransient<ILazyServiceProvider, LazyServiceProvider>();
-            
+
             services.AddSingleton<IRabbitMQProducer, RabbitMQProducer>();
             services.AddSingleton<IRabbitMultiConsumerHandler, RabbitMultiConsumerHandler>();
-            
-            services.AddScoped<ICacheHandler, CacheHandler>();
-            
+
+            //由于和IEntity绑定 所以一般是按照项目自定义 也便于扩展
+            //services.AddScoped<ICacheHandler, CacheHandler>();
+
             services.AddSingleton<IChannelHelper, ChannelHelper>();
             services.AddSingleton<IEventActionHandler, EventActionHandler>();
 

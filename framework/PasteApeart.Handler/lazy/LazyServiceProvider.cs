@@ -1,7 +1,7 @@
 using Autofac;
 using System.Collections.Concurrent;
 
-namespace PasteApeart
+namespace PasteApeart.Handler.lazy
 {
 
     /// <summary>

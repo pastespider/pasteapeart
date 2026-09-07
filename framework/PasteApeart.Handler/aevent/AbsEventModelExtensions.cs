@@ -1,9 +1,8 @@
 using PasteApeart.Application.Contracts;
-using PasteApeart.Handler;
 using PasteApeart.Handler.redis;
 using Serilog;
 
-namespace PasteApeart
+namespace PasteApeart.Handler
 {
     /// <summary>
     /// 事件模型的扩展

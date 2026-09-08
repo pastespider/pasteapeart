@@ -393,25 +393,25 @@
             对象名称
             </summary>
         </member>
-        <member name="T:PasteApeart.Applciation.Contracts.EntityDto`1">
+        <member name="T:PasteApeart.Applciation.Contracts.PasteEntityDto`1">
             <summary>
             
             </summary>
             <typeparam name="TKey"></typeparam>
         </member>
-        <member name="P:PasteApeart.Applciation.Contracts.EntityDto`1.Id">
+        <member name="P:PasteApeart.Applciation.Contracts.PasteEntityDto`1.Id">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PasteApeart.Applciation.Contracts.EntityDto`1.Equals(System.Object)">
+        <member name="M:PasteApeart.Applciation.Contracts.PasteEntityDto`1.Equals(System.Object)">
             <summary>
             
             </summary>
             <param name="obj"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Applciation.Contracts.EntityDto`1.GetHashCode">
+        <member name="M:PasteApeart.Applciation.Contracts.PasteEntityDto`1.GetHashCode">
             <summary>
             
             </summary>

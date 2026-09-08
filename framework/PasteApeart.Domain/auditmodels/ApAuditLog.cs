@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using PasteApeart.Domain;
+using System.ComponentModel.DataAnnotations;
 
 namespace PasteApeart.auditmodels
 {
@@ -6,7 +7,7 @@ namespace PasteApeart.auditmodels
     /// <summary>
     /// 审计日志
     /// </summary>
-    public class ApAuditLog : Entity<long>
+    public class ApAuditLog : PasteEntity<long>
     {
 
         /// <summary>

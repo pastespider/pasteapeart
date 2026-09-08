@@ -34,7 +34,7 @@ namespace PasteApeart.Handler.cache
         /// <param name="id"></param>
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
-        public async Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class, IEntity
+        public async Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class
         {
             var cachePrefix = GetCachePrefix<TEntity>();
             var cacheKey = $"{cachePrefix}{id}";
@@ -61,7 +61,7 @@ namespace PasteApeart.Handler.cache
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
         /// <exception cref="PasteCodeException"></exception>
-        public async Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class, IEntity
+        public async Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class
         {
             var read = await DtoAsync<TEntity, TDto>(id, expireSeconds);
             if (read != null)

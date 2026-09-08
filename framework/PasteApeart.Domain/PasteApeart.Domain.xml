@@ -19,36 +19,36 @@
             
             </summary>
         </member>
-        <member name="T:PasteApeart.Entity">
+        <member name="T:PasteApeart.Domain.Entity.Entity">
             <summary>
             
             </summary>
         </member>
-        <member name="T:PasteApeart.Entity`1">
+        <member name="T:PasteApeart.Domain.Entity.Entity`1">
             <summary>
             
             </summary>
             <typeparam name="TKey"></typeparam>
         </member>
-        <member name="P:PasteApeart.Entity`1.Id">
+        <member name="P:PasteApeart.Domain.Entity.Entity`1.Id">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PasteApeart.Entity`1.Equals(System.Object)">
+        <member name="M:PasteApeart.Domain.Entity.Entity`1.Equals(System.Object)">
             <summary>
             
             </summary>
             <param name="obj"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Entity`1.GetHashCode">
+        <member name="M:PasteApeart.Domain.Entity.Entity`1.GetHashCode">
             <summary>
             
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Entity`1.op_Equality(PasteApeart.Entity{`0},PasteApeart.Entity{`0})">
+        <member name="M:PasteApeart.Domain.Entity.Entity`1.op_Equality(PasteApeart.Domain.Entity.Entity{`0},PasteApeart.Domain.Entity.Entity{`0})">
             <summary>
             
             </summary>
@@ -56,7 +56,7 @@
             <param name="right"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Entity`1.op_Inequality(PasteApeart.Entity{`0},PasteApeart.Entity{`0})">
+        <member name="M:PasteApeart.Domain.Entity.Entity`1.op_Inequality(PasteApeart.Domain.Entity.Entity{`0},PasteApeart.Domain.Entity.Entity{`0})">
             <summary>
             
             </summary>
@@ -64,20 +64,112 @@
             <param name="right"></param>
             <returns></returns>
         </member>
-        <member name="T:PasteApeart.IEntity">
+        <member name="T:PasteApeart.Domain.Entity.IEntity">
             <summary>
             
             </summary>
         </member>
-        <member name="T:PasteApeart.IEntity`1">
+        <member name="T:PasteApeart.Domain.Entity.IEntity`1">
             <summary>
             
             </summary>
             <typeparam name="TKey"></typeparam>
         </member>
-        <member name="P:PasteApeart.IEntity`1.Id">
+        <member name="P:PasteApeart.Domain.Entity.IEntity`1.Id">
             <summary>
             
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Domain.IPasteEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Domain.IPasteEntity`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TKey"></typeparam>
+        </member>
+        <member name="P:PasteApeart.Domain.IPasteEntity`1.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Domain.PasteEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Domain.PasteEntity`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="TKey"></typeparam>
+        </member>
+        <member name="P:PasteApeart.Domain.PasteEntity`1.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PasteApeart.Domain.PasteEntity`1.Equals(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Domain.PasteEntity`1.GetHashCode">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Domain.PasteEntity`1.op_Equality(PasteApeart.Domain.PasteEntity{`0},PasteApeart.Domain.PasteEntity{`0})">
+            <summary>
+            
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Domain.PasteEntity`1.op_Inequality(PasteApeart.Domain.PasteEntity{`0},PasteApeart.Domain.PasteEntity{`0})">
+            <summary>
+            
+            </summary>
+            <param name="left"></param>
+            <param name="right"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PasteApeart.Domain.ILevelEntity`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="Tkey"></typeparam>
+        </member>
+        <member name="P:PasteApeart.Domain.ILevelEntity`1.SortStr">
+            <summary>
+            排序串 一层最高999，那就是6层？
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Domain.ILevelEntity`1.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Domain.ILevelEntity`1.Sort">
+            <summary>
+            排序 层级内排序
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Domain.ILevelEntity`1.FatherId">
+            <summary>
+            父级
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Domain.ILevelEntity`1.FatherStr">
+            <summary>
+            父级串 替换递归查询用
             </summary>
         </member>
         <member name="T:PasteApeart.auditmodels.ApAuditLog">
@@ -313,52 +405,6 @@
         <member name="P:PasteApeart.IUserIdEntiry.UserId">
             <summary>
             
-            </summary>
-        </member>
-        <member name="T:PasteApeart.ILevelEntity`1">
-            <summary>
-            
-            </summary>
-            <typeparam name="Tkey"></typeparam>
-        </member>
-        <member name="P:PasteApeart.ILevelEntity`1.SortStr">
-            <summary>
-            排序串 一层最高999，那就是6层？
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ILevelEntity`1.Level">
-            <summary>
-            层级
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ILevelEntity`1.Sort">
-            <summary>
-            排序 层级内排序
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ILevelEntity`1.FatherId">
-            <summary>
-            父级
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ILevelEntity`1.FatherStr">
-            <summary>
-            父级串 替换递归查询用
-            </summary>
-        </member>
-        <member name="T:PasteApeart.ReadOnlyOption">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ReadOnlyOption.CurrentMainStringName">
-            <summary>
-            当前主链接名称
-            </summary>
-        </member>
-        <member name="P:PasteApeart.ReadOnlyOption.CurrentReadStringName">
-            <summary>
-            当前只读链接名称
             </summary>
         </member>
     </members>

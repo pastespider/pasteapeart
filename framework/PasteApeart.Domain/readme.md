@@ -1,4 +1,9 @@
 
+
+## 26.09.03
+	1.为了和ABP不冲突，把底层的Entity改成对应的PasteEntity，比如IEntity=>IPasteEntity,Entity<int>=>PasteEntity<int>以此类推
+
+
 ## 文件列表
 
 ```

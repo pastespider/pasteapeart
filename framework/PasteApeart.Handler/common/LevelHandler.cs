@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PasteApeart.Domain;
 
 namespace PasteApeart.Handler
 {

@@ -1,3 +1,5 @@
+using PasteApeart.Domain;
+
 namespace PasteApeart.Handler
 {
     public interface ILevelHandler

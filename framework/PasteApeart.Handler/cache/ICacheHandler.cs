@@ -11,7 +11,7 @@ namespace PasteApeart.Handler.cache
         /// <param name="id"></param>
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
-        Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class, IEntity;
+        Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class;
 
         /// <summary>
         /// 读取缓存 不存在则会抛出异常
@@ -21,7 +21,7 @@ namespace PasteApeart.Handler.cache
         /// <param name="id"></param>
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
-        Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class, IEntity;
+        Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : class;
 
         /// <summary>
         /// 移除某一个对象的缓存

@@ -1,10 +1,10 @@
-namespace PasteApeart
+namespace PasteApeart.Domain
 {
     /// <summary>
     /// 
     /// </summary>
     /// <typeparam name="Tkey"></typeparam>
-    public interface ILevelEntity<Tkey> : IEntity<Tkey>
+    public interface ILevelEntity<Tkey> : IPasteEntity<Tkey>
     {
 
         /// <summary>

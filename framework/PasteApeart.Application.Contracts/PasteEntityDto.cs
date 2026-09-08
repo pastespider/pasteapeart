@@ -1,3 +1,5 @@
+using PasteApeart.Domain;
+
 namespace PasteApeart.Applciation.Contracts
 {
 
@@ -5,7 +7,7 @@ namespace PasteApeart.Applciation.Contracts
     /// 
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    public abstract class EntityDto<TKey> : IEntity<TKey>
+    public abstract class PasteEntityDto<TKey> : IPasteEntity<TKey>
     {
         /// <summary>
         /// 
@@ -19,7 +21,7 @@ namespace PasteApeart.Applciation.Contracts
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if (obj is not Entity<TKey> other)
+            if (obj is not PasteEntityDto<TKey> other)
                 return false;
 
             if (ReferenceEquals(this, other))

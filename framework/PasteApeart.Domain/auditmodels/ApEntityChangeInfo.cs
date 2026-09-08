@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+using PasteApeart.Domain;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PasteApeart.auditmodels
 {
     /// <summary>
     /// 数据库变更
     /// </summary>
-    public class ApEntityChangeInfo:Entity<long>
+    public class ApEntityChangeInfo : PasteEntity<long>
     {
         /// <summary>
         /// 日志ID 用于关联查询

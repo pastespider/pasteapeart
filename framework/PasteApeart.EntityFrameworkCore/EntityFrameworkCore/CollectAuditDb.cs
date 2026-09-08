@@ -265,20 +265,20 @@ namespace PasteApeart.EntityFrameworkCore
         /// </summary>
         private void AutoWrite()
         {
-            foreach (var entry in ChangeTracker.Entries())
-            {
-                // 处理 UserId（你原来的逻辑）
-                if (entry.State == EntityState.Added)
-                {
-                    if (entry.Entity is IUserIdEntiry userEntity)
-                    {
-                        if (userEntity.UserId == 0)
-                        {
-                            //userEntity.UserId = _currentUser?.Id ?? 0;
-                        }
-                    }
-                }
-            }
+            //foreach (var entry in ChangeTracker.Entries())
+            //{
+            //    // 处理 UserId（你原来的逻辑）
+            //    if (entry.State == EntityState.Added)
+            //    {
+            //        if (entry.Entity is IUserIdEntiry userEntity)
+            //        {
+            //            if (userEntity.UserId == 0)
+            //            {
+            //                //userEntity.UserId = _currentUser?.Id ?? 0;
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         /// <summary>

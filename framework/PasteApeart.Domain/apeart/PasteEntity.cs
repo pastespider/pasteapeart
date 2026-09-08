@@ -1,17 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PasteApeart
+namespace PasteApeart.Domain
 {
+    
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public abstract class PasteEntity
+    {
+
+    }
 
     /// <summary>
     /// 
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    public abstract class Entity<TKey> : IEntity
+    public abstract class PasteEntity<TKey> : IPasteEntity
     {
         /// <summary>
         /// 
@@ -25,7 +34,7 @@ namespace PasteApeart
         /// <returns></returns>
         public override bool Equals(object obj)
         {
-            if (obj is not Entity<TKey> other)
+            if (obj is not PasteEntity<TKey> other)
                 return false;
 
             if (ReferenceEquals(this, other))
@@ -52,7 +61,7 @@ namespace PasteApeart
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator ==(Entity<TKey> left, Entity<TKey> right)
+        public static bool operator ==(PasteEntity<TKey> left, PasteEntity<TKey> right)
         {
             return Equals(left, right);
         }
@@ -63,11 +72,10 @@ namespace PasteApeart
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        public static bool operator !=(Entity<TKey> left, Entity<TKey> right)
+        public static bool operator !=(PasteEntity<TKey> left, PasteEntity<TKey> right)
         {
             return !Equals(left, right);
         }
     }
-
 
 }

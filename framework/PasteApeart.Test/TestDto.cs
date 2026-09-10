@@ -1,11 +1,12 @@
 using PasteApeart;
+using PasteApeart.Applciation.Contracts;
 
 namespace PasteApeart.Test
 {
     /// <summary>
     /// 
     /// </summary>
-    public class TestBase : EntityDto<int>
+    public class TestBase : PasteEntityDto<int>
     {
         /// <summary>
         /// 

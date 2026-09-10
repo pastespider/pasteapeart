@@ -240,6 +240,7 @@ namespace ExampleApeart.usermodels
         [PasteHtml("<div class=\"title\">{{:=item.path}}</div><div class=\"desc\">{{:=item.model}} {{:=item.role}}</div>")]
         [PasteClass]
         [ColumnDataType("thclass","hresize")]
+        [Description("信息")]
         public string Info { get; set; }
 
         /// <summary>
@@ -562,6 +563,20 @@ namespace ExampleApeart.usermodels
         [Description("权限类型 基于权限类型查询")]
         [PasteField("RoleType")]
         public EnumRoleType role_type { get; set; } = EnumRoleType.All;
+
+        ///// <summary>
+        ///// 地位
+        ///// </summary>
+        //[PasteFenToYuan]
+        //[Description("地位")]
+        //public int lowSort { get; set; } = 11;
+
+        ///// <summary>
+        ///// 高位
+        ///// </summary>
+        //[PasteFenToYuan]
+        //[Description("高位")]
+        //public int HighSort { get; set; }
 
         /// <summary>
         /// 排序 这个字段是隐藏的

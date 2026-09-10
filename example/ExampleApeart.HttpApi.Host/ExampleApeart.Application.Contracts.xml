@@ -589,6 +589,16 @@
             权限类型 基于权限类型查询
             </summary>
         </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.lowSort">
+            <summary>
+            地位
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.HighSort">
+            <summary>
+            高位
+            </summary>
+        </member>
         <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.orderby">
             <summary>
             排序 这个字段是隐藏的

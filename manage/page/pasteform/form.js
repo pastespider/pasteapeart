@@ -2118,6 +2118,11 @@ function handler_outer_value(elc) {
                                 _global_expend_object[_attribute.args2] = obj;
                             }
                             handlerLoaditem(find);
+                            if(_config.search_after_selected){
+                                if(typeof readPageData == 'function'){
+                                    readPageData(1);
+                                }
+                            }
                         }
                     });
                 }

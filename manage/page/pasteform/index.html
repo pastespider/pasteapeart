@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="../lib/Hui-iconfont/1.0.8/iconfont.css" />
     <!-- <link rel="stylesheet" type="text/css" href="./style.css" /> 改成下面的 ../lib/pasteform.css -->
 
-    <link rel="stylesheet" type="text/css" href="./index.css?v=260613">
+    <link rel="stylesheet" type="text/css" href="./index.css?v=260902">
     <!-- <link href="../lib/page.min.css" rel="stylesheet" type="text/css" /> -->
     <link href="../lib/jquery.pagination.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../lib/pasteform.css">
@@ -112,6 +112,10 @@
                                             <span class="unit"><%:=item.unit%></span>
                                         <%}%>
                                     
+                                <% break; 
+                                case "fentoyuan": %>
+                                    <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                    <span class="unit">元</span>
                                 <% break; 
                                 case "Boolean": %>
 
@@ -271,7 +275,7 @@
                         <% if(!item.hidden){ %>
                             <% if(item.name =="extendBind"){ %>
                                 <th data-column="<%:=item.name%>">
-                                    <input type="checkbox" class="input-checkbox mui-switch mui-switch-anim batch-bind-switch" onchange="handler_batch_switch(this)">
+                                    <input type="checkbox" class="input-checkbox batch-bind-switch" onchange="handler_batch_switch(this)">全选/取消
                                 </th>
                                 <% continue; %>
                             <% } %>
@@ -526,8 +530,8 @@
     <script type="text/javascript" src="../lib/pickerdaterange/dateRange.js"></script>
     <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css">
 
-    <script type="text/javascript" src="./form.js?v=260901"></script>
-    <script type="text/javascript" src="./index.js?v=260901"></script>
+    <script type="text/javascript" src="./form.js?v=260903"></script>
+    <script type="text/javascript" src="./index.js?v=260903"></script>
 
     <!-- 代码中按需载入 v25.04.27 -->
     <!-- <script type="text/javascript" src="../lib/echarts.min.js"></script> -->

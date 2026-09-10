@@ -910,7 +910,7 @@ namespace PasteApeart.Helper
                 proInfo.DataType = _property.PropertyType.Name;
                 var attributes = _property.GetCustomAttributes<Attribute>();
                 var _attributes = HandlerAttribute2(attributes, proInfo);
-                if (_attributes.Count > 0)
+                if (_attributes?.Count > 0)
                 {
                     proInfo.Attributes = _attributes;
                 }

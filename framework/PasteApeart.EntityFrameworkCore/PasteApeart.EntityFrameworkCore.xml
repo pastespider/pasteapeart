@@ -316,7 +316,7 @@
             
             </summary>
         </member>
-        <member name="M:PasteApeart.EntityFrameworkCore.ReadWriteSplitInterceptor.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Options.IOptions{PasteApeart.ReadOnlyOption})">
+        <member name="M:PasteApeart.EntityFrameworkCore.ReadWriteSplitInterceptor.#ctor(Microsoft.AspNetCore.Http.IHttpContextAccessor,Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Options.IOptions{PasteApeart.Domain.ReadOnlyOption})">
             <summary>
             
             </summary>

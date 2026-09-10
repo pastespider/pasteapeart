@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using PasteApeart.Domain;
 using System.Data.Common;
 
 namespace PasteApeart.EntityFrameworkCore

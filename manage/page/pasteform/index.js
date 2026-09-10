@@ -62,6 +62,7 @@ var _config = {
     empty_create: false,//查询没有数据的时候是否打开创建
     expend_search_box: true,//加载后是否展开搜索区域，这个主要针对默认搜索区域关闭的情况，比如select/bind模式下
     freeze: true,//是否冻结表头
+    search_after_selected: true,//搜索区域outer选择后，是否直接查询
     trclass: null,//表格中trclass的字段名称，实际中这个值中去获取
     batch: false//是否启用批量操作
 };
@@ -1209,7 +1210,7 @@ function _readpagedata(page) {
 /**
  * 是否重新配置了添加按钮
  */
-let tempConfigButtonAdd =false;
+let tempConfigButtonAdd = false;
 /**
  * 处理类型的特性 比如按钮，批量操作等等
  * @param {*} o 
@@ -1264,7 +1265,7 @@ async function handlerQueryClassAttribute(o) {
                             } else {
                                 _config.disable_add = true;
                             }
-                            if(tempConfigButtonAdd){
+                            if (tempConfigButtonAdd) {
                                 _config.disable_add = false;
                             }
                         }
@@ -1542,7 +1543,7 @@ function handlerModelFieldcolumnProperty(properties) {
                             break;
                         case "thclass":
                             {
-                                if(_attribute.args1){
+                                if (_attribute.args1) {
                                     item.thclass = _attribute.args1;
                                 }
                             }
@@ -2181,6 +2182,14 @@ function HandlerQueryItem(listproperties, pageData) {
                             }
                         }
                         break;
+                    case "fentoyuan":
+                        {
+                            if (item.value) {
+                                item.value = (parseFloat(item.value) / 100).toFixed(2);//(parseFloat(item.value) / 100).toFixed(2);
+                            }
+                            item.dataType = "fentoyuan";
+                        }
+                        break;
                     default:
                         {
                             // console.log('属性', _attribute.name, '未处理');
@@ -2499,6 +2508,14 @@ function handlerInputValue(_info) {
                                 delete _info[item.name];
                             }
 
+                        }
+                    }
+                    break;
+                case "fentoyuan":
+                    {
+                        var _value = _info[item.name];
+                        if (_value) {
+                            _info[item.name] = Number((_value * 100).toFixed(2));// Number(Math.fround(_value * 100));
                         }
                     }
                     break;
@@ -2898,7 +2915,7 @@ function afterReadPageData(code, obj, page) {
                 });
                 $(".totalsum").html(ahtml);
             }
-        }else{
+        } else {
             $(".totalsum").html('');
         }
 
@@ -3020,7 +3037,7 @@ function handlerDisplayDataToUi(obj) {
 
             _showpagedata(datas);
             //综合数据权重大于本页
-            if(!obj.pasteTotal){
+            if (!obj.pasteTotal) {
                 hanlderDisplaySumData();
             }
 

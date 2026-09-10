@@ -172,6 +172,21 @@
             父级串 替换递归查询用
             </summary>
         </member>
+        <member name="T:PasteApeart.Domain.ReadOnlyOption">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Domain.ReadOnlyOption.CurrentMainStringName">
+            <summary>
+            当前主链接名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Domain.ReadOnlyOption.CurrentReadStringName">
+            <summary>
+            当前只读链接名称
+            </summary>
+        </member>
         <member name="T:PasteApeart.auditmodels.ApAuditLog">
             <summary>
             审计日志

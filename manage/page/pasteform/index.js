@@ -1,3 +1,4 @@
+"use strict";
 var pageobject = null;
 // var isselect = false;
 var _classPath = "";

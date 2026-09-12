@@ -1,4 +1,5 @@
 
+"use strict";
 /**
  * 
  */
@@ -1012,5 +1013,4 @@ function funcDialogSelectImage(elc, url, query) {
             //是否是mediaid的模式
         }
     });
-
 }

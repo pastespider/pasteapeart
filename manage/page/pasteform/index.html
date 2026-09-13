@@ -184,8 +184,8 @@
                                         <% if(item.mark){ %>
                                             <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
                                         <% } %>
-                                        <input type="text" name="<%:=item.name%>__sval" onclick="funcChangeSelectArea(this)" <%if(item.__selected_values){%>value="<%:=item.__selected_values%>"<%}%> class="inputword" placeholder="<%:=item.placeholder || ''%>" readonly>
-                                        <ul class="ulitems ulselects" name="<%:=item.name%>">
+                                        <input type="text" class="ishand" name="<%:=item.name%>__sval" onclick="funcChangeSelectArea(this)" <%if(item.__selected_values){%>value="<%:=item.__selected_values%>"<%}%> class="inputword" placeholder="<%:=item.placeholder || ''%>" readonly>
+                                        <ul class="ulitems ulselects" name="<%:=item.name%>" onmouseleave="$(this).toggle();">
                                             <% if(item.selects){ %>
                                                 <% item.selects.forEach(_select=>{ %>
                                                     <li class="selectli <%if(_select.selected){%>selected<%}%>" value="<%:=_select.value%>"><%:=_select.name%></li>

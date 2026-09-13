@@ -527,7 +527,7 @@ function FuncFilexModel() {
             // }
             DetailLoadModelProperity(_global_data_properties);
             if (o.title) {
-                this.document.title = "查看" + o.title;
+                document.title = "查看" + o.title;
             }
         }
     });

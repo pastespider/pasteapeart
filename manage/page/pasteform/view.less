@@ -354,32 +354,6 @@ body {
         padding-inline-start: 0px;
     }
 
-    .ulselects {
-        position: fixed;
-        display: none;
-        background-color: #fff;
-        border: 1px solid #e0e0e0;
-        z-index: 10000;
-        padding: 8px;
-        border-radius: 2px;
-        box-shadow: 0px 0px 5px 1px #c6c6c6;
-
-        li {
-            padding: 8px;
-            cursor: pointer;
-            position: relative;
-            border-bottom: 1px solid #f2f2f2;
-        }
-
-        .selected::after {
-            content: '√';
-            font-size: 16px;
-            position: absolute;
-            color: #3bb4f2;
-            right: 0px;
-        }
-    }
-
     .lselect {
         display: flex;
         flex-direction: row;
@@ -828,9 +802,9 @@ textarea {
 
 @media (max-width: 768px) {
 
-    .newform {
-        padding: 80px 0;
-    }
+    // .newform {
+    //     padding: 80px 0;
+    // }
 
     .row {
         width: 100% !important;

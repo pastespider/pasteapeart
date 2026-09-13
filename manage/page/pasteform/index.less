@@ -179,7 +179,7 @@ body {
         user-select: none;
     }
 
-    .hresize{
+    .hresize {
         resize: horizontal;
         overflow: auto;
         min-width: 60px;
@@ -187,7 +187,7 @@ body {
 }
 
 //冻结表头和首列的样式
-.tb_freeze{
+.tb_freeze {
 
     thead tr td:first-child {
         z-index: 100;
@@ -499,7 +499,7 @@ body {
             }
         }
 
-        .unit{
+        .unit {
             position: absolute;
             right: 14px;
             top: 17px;
@@ -507,7 +507,7 @@ body {
             color: #5a98de;
         }
 
-        .placeholder{
+        .placeholder {
             padding: 8px;
             font-size: 12px;
             color: #888;
@@ -555,7 +555,9 @@ body {
             user-select: all;
             flex: 1;
             box-sizing: border-box;
-
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
             &:focus {
                 border: 1px solid #888;
             }
@@ -638,22 +640,7 @@ body {
             padding-inline-start: 0px;
         }
 
-        .ulselects {
-            li {
-                padding: 8px;
-                cursor: pointer;
-                position: relative;
-                border-bottom: 1px solid #f2f2f2;
-            }
 
-            .selected::after {
-                content: '√';
-                font-size: 16px;
-                position: absolute;
-                color: #3bb4f2;
-                right: 0px;
-            }
-        }
 
         .lselect {
             display: flex;
@@ -873,7 +860,7 @@ body {
 
     .a-del {
         color: #e13f3f;
-        border:1px solid #e13f3f;
+        border: 1px solid #e13f3f;
     }
 
     a {
@@ -884,10 +871,11 @@ body {
         outline: none;
         cursor: pointer;
         transition: all 0.3s;
-        border:none;
+        border: none;
+
         &:hover {
             color: #3a40c1;
-            border:none;
+            border: none;
         }
     }
 
@@ -905,18 +893,20 @@ body {
             border-radius: 16px;
             user-select: none;
             transition: all 0.3s;
-            border:1px solid #EEF2F7;
+            border: 1px solid #EEF2F7;
+
             &:hover {
                 border: 1px solid #999;
                 background-color: #3a40c1;
                 transition: all 0.3s;
-                color:#fff;
+                color: #fff;
             }
+
             &:focus {
                 color: #3a40c1;
             }
         }
-        
+
         .a-del {
             color: #e13f3f;
         }
@@ -926,7 +916,8 @@ body {
         background-color: #3a40c1 !important;
         color: #dcd0d0 !important;
         border: 1px solid #3a40c1 !important;
-        &:hover{
+
+        &:hover {
             background-color: #2f36ba !important;
             color: #fff !important;
         }
@@ -986,11 +977,12 @@ body {
         background: #f2f2f2;
         border-radius: 50% 50%;
         font-size: 12px;
-        padding:0 4px;
+        padding: 0 4px;
         user-select: none;
         cursor: pointer;
         transition: all 0.5s;
-        &:hover{
+
+        &:hover {
             background-color: #fff;
             color: #3a40c1;
         }
@@ -1018,18 +1010,6 @@ body {
     .outerdisplay {
         text-align: left;
     }
-}
-
-
-.ulselects{
-    position: fixed;
-    display: none;
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    z-index: 10000;
-    padding: 8px;
-    border-radius: 2px;
-    box-shadow: 0px 0px 5px 1px #c6c6c6;
 }
 
 .show_type {
@@ -1241,6 +1221,7 @@ body {
     top: 5px;
     flex-direction: row;
     transition: all 0.3s;
+
     a {
         display: inline-block;
         text-decoration: none;

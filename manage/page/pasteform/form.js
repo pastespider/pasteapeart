@@ -1045,22 +1045,106 @@ function updateSelectText($ul, namePro) {
 }
 
 /**
- * 打开和收缩多选区域 selects
+ * 点击selects或者lselect时，弹出选择区域
  * @param {*} elc 
  */
 function funcChangeSelectArea(elc) {
     var $panel = $(elc).parent().find('.ulitems');
     var rect = elc.getBoundingClientRect();
+    var panel = $panel[0];
 
+    var GAP = 5;          // 面板与触发元素的间距
+    var MAX_HEIGHT = 300; // 面板最大高度
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+
+    // ---------- 1. 量面板实际高度（用 max-height 限制后的） ----------
+    // 先让它可测量：display 保持，用 visibility:hidden + fixed 量高度
+    var prevDisplay = panel.style.display;
+    var prevVisibility = panel.style.visibility;
+    var prevMaxHeight = panel.style.maxHeight;
+
+    // 临时显示但不被看到
+    panel.style.display = 'block';
+    panel.style.visibility = 'hidden';
+    panel.style.maxHeight = MAX_HEIGHT + 'px';
+
+    // 量高度（此时如果内容多，会被 max-height 限制）
+    var panelHeight = panel.offsetHeight || MAX_HEIGHT;
+    // 如果内容超过 max-height，offsetHeight 会是 300；不够 300 就是实际高度
+    var panelWidth = panel.offsetWidth || rect.width;
+
+    // 恢复
+    panel.style.display = prevDisplay;
+    panel.style.visibility = prevVisibility;
+    panel.style.maxHeight = prevMaxHeight;
+
+    // ---------- 2. 垂直方向：优先下方 ----------
+    var spaceBelow = vh - rect.bottom - GAP;
+    var spaceAbove = rect.top - GAP;
+
+    var top, finalHeight = Math.min(panelHeight, MAX_HEIGHT);
+
+    if (spaceBelow >= finalHeight) {
+        // 下方够 → 放下方
+        top = rect.bottom + GAP;
+    } else if (spaceAbove >= finalHeight) {
+        // 下方不够，上方够 → 放上方（面板底边贴触发元素顶边）
+        top = rect.top - GAP - finalHeight;
+    } else {
+        // 上下都不够 → 选空间大的一边，并把高度压到该空间
+        if (spaceBelow >= spaceAbove) {
+            top = rect.bottom + GAP;
+            finalHeight = Math.max(0, spaceBelow);
+        } else {
+            finalHeight = Math.max(0, spaceAbove);
+            top = rect.top - GAP - finalHeight;
+        }
+    }
+
+    // 防止 top 出视口
+    if (top < GAP) top = GAP;
+    if (top + finalHeight > vh - GAP) {
+        finalHeight = vh - GAP - top;
+    }
+
+    // ---------- 3. 水平方向：默认左对齐，右边不够就往左挪 ----------
+    var left = rect.left;
+    if (left + panelWidth > vw - GAP) {
+        // 超出右边 → 右对齐触发元素
+        left = rect.right - panelWidth;
+    }
+    if (left < GAP) left = GAP;
+
+    // ---------- 4. 应用 ----------
     $panel.css({
-        top: rect.bottom + 5 + 'px',
-        left: rect.left + 'px',
-        width: rect.width + 'px'
+        top: top + 'px',
+        left: left + 'px',
+        width: rect.width + 'px',      // 宽度还是跟触发元素对齐
+        maxHeight: finalHeight + 'px', // 关键：动态限制高度
+        overflowY: 'auto'              // 内容多时面板内部滚动
     });
 
-    // 用 display 切换，简单可靠
     $panel.toggle();
 }
+
+// /**
+//  * 打开和收缩多选区域 selects
+//  * @param {*} elc 
+//  */
+// function funcChangeSelectArea(elc) {
+//     var $panel = $(elc).parent().find('.ulitems');
+//     var rect = elc.getBoundingClientRect();
+
+//     $panel.css({
+//         top: rect.bottom + 5 + 'px',
+//         left: rect.left + 'px',
+//         width: rect.width + 'px'
+//     });
+
+//     // 用 display 切换，简单可靠
+//     $panel.toggle();
+// }
 
 /**
  * 载入图片拖拽功能的支持 绑定图片的拖拽功能

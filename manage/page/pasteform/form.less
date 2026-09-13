@@ -1,0 +1,30 @@
+.ulselects {
+    position: fixed;
+    display: none;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    z-index: 10000;
+    padding: 8px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 5px 1px #c6c6c6;
+    max-height: 300px;
+    overflow-y: auto;
+
+    li {
+        padding: 8px 8px 8px 12px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        border-bottom: 1px solid #f2f2f2;
+    }
+
+    .selected::before {
+        content: '√';
+        font-size: 16px;
+        position: absolute;
+        color: #3bb4f2;
+        left: 0px;
+    }
+}

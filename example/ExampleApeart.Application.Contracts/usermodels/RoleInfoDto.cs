@@ -102,7 +102,7 @@ namespace ExampleApeart.usermodels
         /// 多选一
         /// </summary>
         [Description("多选一 使用数组模式提交")]
-        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
+        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b使用数组模式提交使用数组模式提交\",\"value\":2},{\"name\":\"c\",\"value\":3},{\"name\":\"d使用数组模式提交\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
         public int[] vals1 { get; set; }
 
         /// <summary>
@@ -582,14 +582,14 @@ namespace ExampleApeart.usermodels
         /// 多选一
         /// </summary>
         [Description("多选一 使用数组模式提交")]
-        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
+        [PasteSelects("[{\"name\":\"a使用数组模式提交使用数组模式提交使用数组模式提交\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c使用数组模式提交使用数组模式提交\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
         public int[] vals1 { get; set; } = new int[] { 2, 4 };
 
         /// <summary>
         /// 多选二
         /// </summary>
         [Description("多选二 使用,模式分割多选")]
-        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
+        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c使用数组模式提交\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
         public string vals2 { get; set; }
 
         ///// <summary>

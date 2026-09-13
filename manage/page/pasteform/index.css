@@ -459,6 +459,9 @@ body {
   user-select: all;
   flex: 1;
   box-sizing: border-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .searcharea .searchbox input[type=text]:focus,
 .searcharea .searchbox input[type=number]:focus {
@@ -530,19 +533,6 @@ body {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   padding-inline-start: 0px;
-}
-.searcharea .searchbox .ulselects li {
-  padding: 8px;
-  cursor: pointer;
-  position: relative;
-  border-bottom: 1px solid #f2f2f2;
-}
-.searcharea .searchbox .ulselects .selected::after {
-  content: '√';
-  font-size: 16px;
-  position: absolute;
-  color: #3bb4f2;
-  right: 0px;
 }
 .searcharea .searchbox .lselect {
   display: flex;
@@ -853,16 +843,6 @@ body {
 }
 .table .outerdisplay {
   text-align: left;
-}
-.ulselects {
-  position: fixed;
-  display: none;
-  background-color: #fff;
-  border: 1px solid #e0e0e0;
-  z-index: 10000;
-  padding: 8px;
-  border-radius: 2px;
-  box-shadow: 0px 0px 5px 1px #c6c6c6;
 }
 .show_type {
   position: relative;

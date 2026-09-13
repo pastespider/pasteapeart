@@ -304,6 +304,16 @@
             父级 上一级是哪个，按需配置！
             </summary>
         </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.vals1">
+            <summary>
+            多选一
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.vals2">
+            <summary>
+            多选二
+            </summary>
+        </member>
         <member name="P:ExampleApeart.usermodels.RoleInfoAddDto.Items">
             <summary>
             子集
@@ -589,14 +599,14 @@
             权限类型 基于权限类型查询
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.lowSort">
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.vals1">
             <summary>
-            地位
+            多选一
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.HighSort">
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.vals2">
             <summary>
-            高位
+            多选二
             </summary>
         </member>
         <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.orderby">

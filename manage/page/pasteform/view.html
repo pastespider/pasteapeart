@@ -314,6 +314,7 @@
                                 </ul>
                             <% break; 
                             case "selects": %>
+                                <input type="text" name="<%:=item.name%>__sval" onclick="funcChangeSelectArea(this)" <%if(item.__selected_values){%>value="<%:=item.__selected_values%>"<%}%> class="inputword" placeholder="<%:=item.placeholder || ''%>" readonly>
                                 <ul class="ulitems ulselects" name="<%:=item.name%>">
                                     <% if(item.selects){ %>
                                         <% item.selects.forEach(_select=>{ %>
@@ -374,8 +375,8 @@
     <!-- <script type="text/javascript" src="../lib/editor.md/editormd.min.js"></script> -->
     <!-- 添加对md的c+v粘贴图片的支持 已经迁移到../lib/api.js中 -->
     <!-- <script type="text/javascript" async src="../lib/editor.md/md.paste.js"></script> -->
-    <script type="text/javascript" src="./form.js?v=260810"></script>
-    <script type="text/javascript" src="./view.js?v=260810"></script>
+    <script type="text/javascript" src="./form.js?v=260905"></script>
+    <script type="text/javascript" src="./view.js?v=260905"></script>
     <!--/请在上方写此页面业务相关的脚本-->
 
 </body>

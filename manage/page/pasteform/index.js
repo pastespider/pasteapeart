@@ -1042,7 +1042,7 @@ function handlerEditClean(elc) {
 async function handlerModelFormatConfig(obj, pageData) {
     if (obj.title) {
         $(".ppbody .st").find(".sn").html(obj.title);
-        this.document.title = obj.title;
+        document.title = obj.title;
     }
     if (obj.desc) {
         $(".ppbody .st").find(".idesc").html(obj.desc);
@@ -2139,7 +2139,18 @@ function HandlerQueryItem(listproperties, pageData) {
                                             }
                                             break;
                                     }
-
+                                }
+                                if (item.selects) {
+                                    if (_attribute.name == "selects") {
+                                        //name value selected
+                                        var selectedItems = item.selects.filter(function (o) {
+                                            return o.selected;
+                                        });
+                                        if (selectedItems.length > 0) {
+                                            item.__selected_values = '(' + selectedItems.length + ')'
+                                                + selectedItems.map(function (o) { return o.name; }).join(' ');
+                                        }
+                                    }
                                 }
                             } catch (err) {
                                 console.log(item.name, "属性 select 的值 args1 配置错误", err);
@@ -2307,48 +2318,49 @@ function InitUiData() {
         });
 
         if ($(".ulitems").length > 0) {
-            /**
-     * selects lselect 下面逻辑有问题！
-     */
             $(".ulitems").on('click', 'li', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');
                 } else {
                     $(this).addClass('selected');
                 }
-                var _name = $(this).parents(".ulitems").attr('name');
+                var nameElc = $(this).parents(".ulitems");
+                var _name = nameElc.attr('name');
                 if (_name) {
                     var _pro = funcFindPropertry(_name);
                     if (_pro) {
-                        var _maxnum = 0;
+                        var maxNum = 0;
                         var _attribute = funcFindAttribute(_pro.attributes, "selects");
                         if (_attribute) {
                             if (_attribute.args4) {
-                                _maxnum = Number(_attribute.args4);
+                                maxNum = Number(_attribute.args4);
                             }
                         } else {
                             _attribute = funcFindAttribute(_pro.attributes, "lselect");
                             if (_attribute) {
                                 if (_attribute.args4) {
-                                    _maxnum = Number(_attribute.args4);
+                                    maxNum = Number(_attribute.args4);
                                 }
                             }
                         }
-                        if (_maxnum > 0) {
-                            if (_maxnum == 1) {
+                        if (maxNum > 0) {
+                            if (maxNum == 1) {
                                 $(this).siblings().removeClass('selected');
                             }
-                            var _selnum = $(this).parents(".ulitems").find(".selected").length;
-                            if (_selnum > _maxnum) {
-                                // $(this).siblings().removeClass('selected');
+                            var _selnum = nameElc.find(".selected").length;
+                            if (_selnum > maxNum) {
                                 $(this).removeClass('selected');
-                                if (_maxnum > 1) {
-                                    layer.msg(`限定最多选择${_maxnum}项`);
+                                if (maxNum > 1) {
+                                    layer.msg(`限定最多选择${maxNum}项`);
                                 }
                             }
-                            if (_maxnum == 1 && _selnum > 0) {
+                            if (maxNum == 1 && _selnum > 0) {
                                 readPageData(1);
                             }
+                        }
+                        if (_attribute.name == "selects") {
+                            //从ui中获取选中得 使用比如{name value }
+                            updateSelectText(nameElc, _pro);
                         }
                     }
                 }
@@ -2356,8 +2368,6 @@ function InitUiData() {
         }
     }
 }
-
-
 
 
 

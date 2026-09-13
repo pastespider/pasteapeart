@@ -1553,3 +1553,7 @@ public class UserInfoListDto{
 ## 26.09.03
     1.表格搜索区域，添加对fentoyuan的支持
     
+## 26.09.05
+    1.selects改版，之前是一个区域，选择，新版本改成一个浮层，显示的地方是(x) name1 name2 这样可以直接看到选择了哪几个！！！
+    可以说就是lselect的改版，支持更多的多选！！！
+    

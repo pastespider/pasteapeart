@@ -915,7 +915,8 @@ async function LoadModelProperity(properties) {
             } else {
                 $(this).addClass('selected');
             }
-            var _name = $(this).parents(".ulitems").attr('name');
+            let nameElc = $(this).parents(".ulitems");
+            var _name = nameElc.attr('name');
             if (_name) {
                 var _pro = funcFindPropertry(_name);
                 if (_pro) {
@@ -934,11 +935,13 @@ async function LoadModelProperity(properties) {
                         }
                     }
                     if (_maxnum > 0) {
-                        var _selnum = $(this).parents(".ulitems").find(".selected").length;
+                        var _selnum = nameElc.find(".selected").length;
                         if (_selnum > _maxnum) {
-                            $(this).siblings().removeClass('selected');
                             if (_maxnum > 1) {
+                                $(this).removeClass('selected');
                                 layer.msg(`限定最多选择${_maxnum}项`);
+                            } else {
+                                $(this).siblings().removeClass('selected');
                             }
                         }
                         if (_maxnum == 1) {
@@ -954,6 +957,10 @@ async function LoadModelProperity(properties) {
                             //     handlerBuildNewUrlToLoad(_name, _val);
                             // }
                         }
+                    }
+                    if (_attribute.name == "selects") {
+                        //从ui中获取选中得 使用比如{name value }
+                        updateSelectText(nameElc, _pro);
                     }
                     handlerLoaditem(_pro);
                 }
@@ -1004,6 +1011,55 @@ async function LoadModelProperity(properties) {
     if (location.search.indexOf("model=sunobj") == -1) {
         $(".paste-btn-submit").fadeIn();
     }
+}
+
+/**
+ * 把多选的结果渲染到UI中
+ * @param {*} $ul 
+ * @param {*} namePro 
+ * @returns 
+ */
+function updateSelectText($ul, namePro) {
+    var name = $ul.attr('name');
+    if (!name) return;
+
+    var $input = $('input[name="' + name + '__sval"]');
+    if (!$input.length) return;
+
+    var $selected = $ul.find('.selectli.selected');
+    var count = $selected.length;
+
+    if (count === 0) {
+        $input.val('');
+        return;
+    }
+
+    var texts = $selected.map(function () {
+        return $(this).text().trim();
+    }).get();
+
+    let sval = '(' + count + ')' + texts.join(' ');
+
+    $input.val(sval);
+    namePro.__selected_values = sval;
+}
+
+/**
+ * 打开和收缩多选区域 selects
+ * @param {*} elc 
+ */
+function funcChangeSelectArea(elc) {
+    var $panel = $(elc).parent().find('.ulitems');
+    var rect = elc.getBoundingClientRect();
+
+    $panel.css({
+        top: rect.bottom + 5 + 'px',
+        left: rect.left + 'px',
+        width: rect.width + 'px'
+    });
+
+    // 用 display 切换，简单可靠
+    $panel.toggle();
 }
 
 /**
@@ -2118,8 +2174,8 @@ function handler_outer_value(elc) {
                                 _global_expend_object[_attribute.args2] = obj;
                             }
                             handlerLoaditem(find);
-                            if(_config.search_after_selected){
-                                if(typeof readPageData == 'function'){
+                            if (_config.search_after_selected) {
+                                if (typeof readPageData == 'function') {
                                     readPageData(1);
                                 }
                             }
@@ -3765,7 +3821,6 @@ function handlerExchangeItemToUIData(item) {
                 case "lselect":
                     {
                         try {
-
                             item.selects_max = "lsingle";
                             if (_attribute.args4) {
                                 if (_attribute.args4 != "1") {
@@ -3846,9 +3901,20 @@ function handlerExchangeItemToUIData(item) {
                                         }
                                         break;
                                 }
-
                             }
                             item.dataType = _attribute.name;
+                            if (item.selects) {
+                                if (_attribute.name == "selects") {
+                                    //name value selected
+                                    var selectedItems = item.selects.filter(function (o) {
+                                        return o.selected;
+                                    });
+                                    if (selectedItems.length > 0) {
+                                        item.__selected_values = '(' + selectedItems.length + ')'
+                                            + selectedItems.map(function (o) { return o.name; }).join(' ');
+                                    }
+                                }
+                            }
                         } catch (err) {
                             console.log(item.name, "属性 select 的值 args1 配置错误", err);
                         }

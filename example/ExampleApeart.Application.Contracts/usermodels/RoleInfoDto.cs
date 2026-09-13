@@ -99,6 +99,20 @@ namespace ExampleApeart.usermodels
         public int FatherId { get; set; }
 
         /// <summary>
+        /// 多选一
+        /// </summary>
+        [Description("多选一 使用数组模式提交")]
+        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
+        public int[] vals1 { get; set; }
+
+        /// <summary>
+        /// 多选二
+        /// </summary>
+        [Description("多选二 使用分隔符提交字符串")]
+        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
+        public string vals2 { get; set; } = "1,3";
+
+        /// <summary>
         /// 子集
         /// </summary>
         [PasteHidden]
@@ -239,7 +253,7 @@ namespace ExampleApeart.usermodels
         /// </summary>
         [PasteHtml("<div class=\"title\">{{:=item.path}}</div><div class=\"desc\">{{:=item.model}} {{:=item.role}}</div>")]
         [PasteClass]
-        [ColumnDataType("thclass","hresize")]
+        [ColumnDataType("thclass", "hresize")]
         [Description("信息")]
         public string Info { get; set; }
 
@@ -563,6 +577,20 @@ namespace ExampleApeart.usermodels
         [Description("权限类型 基于权限类型查询")]
         [PasteField("RoleType")]
         public EnumRoleType role_type { get; set; } = EnumRoleType.All;
+
+        /// <summary>
+        /// 多选一
+        /// </summary>
+        [Description("多选一 使用数组模式提交")]
+        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
+        public int[] vals1 { get; set; } = new int[] { 2, 4 };
+
+        /// <summary>
+        /// 多选二
+        /// </summary>
+        [Description("多选二 使用,模式分割多选")]
+        [PasteSelects("[{\"name\":\"a\",\"value\":1},{\"name\":\"b\",\"value\":2},{\"name\":\"c\",\"value\":3},{\"name\":\"d\",\"value\":4},{\"name\":\"e\",\"value\":5}]", ",", "", 3)]
+        public string vals2 { get; set; }
 
         ///// <summary>
         ///// 地位

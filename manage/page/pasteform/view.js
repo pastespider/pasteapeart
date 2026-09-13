@@ -226,7 +226,7 @@ function FuncFilexModel() {
                     }
                 }
                 if (o.title) {
-                    this.document.title = "新增" + o.title;
+                    document.title = "新增" + o.title;
                 }
                 LoadModelProperity(_global_data_properties);
             }

@@ -181,10 +181,10 @@
                                    
                                 <% break; 
                                 case "selects": %>
-
                                         <% if(item.mark){ %>
                                             <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
                                         <% } %>
+                                        <input type="text" name="<%:=item.name%>__sval" onclick="funcChangeSelectArea(this)" <%if(item.__selected_values){%>value="<%:=item.__selected_values%>"<%}%> class="inputword" placeholder="<%:=item.placeholder || ''%>" readonly>
                                         <ul class="ulitems ulselects" name="<%:=item.name%>">
                                             <% if(item.selects){ %>
                                                 <% item.selects.forEach(_select=>{ %>
@@ -530,8 +530,8 @@
     <script type="text/javascript" src="../lib/pickerdaterange/dateRange.js"></script>
     <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css">
 
-    <script type="text/javascript" src="./form.js?v=260903"></script>
-    <script type="text/javascript" src="./index.js?v=260903"></script>
+    <script type="text/javascript" src="./form.js?v=260905"></script>
+    <script type="text/javascript" src="./index.js?v=260905"></script>
 
     <!-- 代码中按需载入 v25.04.27 -->
     <!-- <script type="text/javascript" src="../lib/echarts.min.js"></script> -->

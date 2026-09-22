@@ -1,3 +1,5 @@
+using PasteApeart.Helper;
+
 namespace PasteApeart.Application.Contracts
 {
     /// <summary>
@@ -8,11 +10,13 @@ namespace PasteApeart.Application.Contracts
         /// <summary>
         /// 延迟 秒
         /// </summary>
+        [PasteUnit("s")]
         public long ExpireSecond { get; set; }
 
         /// <summary>
         /// 截止 时间戳秒
         /// </summary>
+        [PasteHidden]
         public long ExpireTime { get; set; }
 
         /// <summary>
@@ -33,10 +37,11 @@ namespace PasteApeart.Application.Contracts
         /// <summary>
         /// 当前次数 每次运行的时候++
         /// </summary>
+        [PasteHidden]
         public int RetryTime { get; set; }
 
         /// <summary>
-        /// 最大重试次数 0表示一次性任务，一般都是一次性任务
+        /// 最大次数 最大重试次数，0表示一次性任务，一般都是一次性任务
         /// </summary>
         public virtual int MaxRetryTime { get; set; }
 

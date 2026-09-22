@@ -1,0 +1,237 @@
+page{
+  background: #f7f7f7;
+}
+.memberBox .headBox {
+  padding-top: 0;
+  padding-bottom: 72.72rpx;
+  background-image: url("https://jhsmart.oss-cn-shenzhen.aliyuncs.com/vue/images/common/bg.png");
+  background-size: cover;
+  background-position: center;
+  background-color: #FF5738;
+  color: #ffffff;
+  padding-top:88px;
+}
+
+.center_banner{
+  box-sizing: border-box;
+  padding:10px;
+  margin-top:-52rpx;
+  margin-bottom: 48rpx;
+
+  .banner_img{
+    width:100%;
+    height: 180rpx;
+    border:1px solid #f2f2f2;
+    border-radius: 12px;
+    background-color: #fff;
+  }
+}
+
+
+.memberBox .headBox .user-info-box {
+  padding-top: 30rpx;
+}
+.memberBox .headBox .user-info-box .login-user-view {
+  position: relative;
+  text-align: center;
+}
+.memberBox .headBox .user-info-box .login-user-view .login-user-avatar-view {
+  position: relative;
+  margin-bottom: 18.18rpx;
+}
+.memberBox .headBox .user-info-tip-box {
+  position: relative;
+  margin: 18.18rpx 27.27rpx;
+  border-radius: 9.09rpx;
+  padding: 18.18rpx 27.27rpx;
+}
+.memberBox .headBox .user-info-tip-box .u-line-1 {
+  padding-right: 45.45rpx;
+}
+.memberBox .headBox .user-info-tip-box .icon {
+  position: absolute;
+  right: 27.27rpx;
+  top: 23.63rpx;
+}
+.vontent {
+  padding: 0 20rpx 50rpx;
+  margin-top: -60rpx;
+}
+.content_box {
+  border-radius: 18.18rpx; 
+  background-color: #ffffff;
+  color: #666666;
+  padding: 10rpx !important;
+}
+.ser_title {
+  font-weight: bold;
+  color: #333333;
+  padding: 20rpx !important;
+  font-size: 30rpx;
+}
+.content_margin_top {
+    margin-top: 30rpx;
+}
+.vontent .coreshop-user-info-order-box .coreshop-list.grid.no-border {
+  padding: 0;
+}
+.vontent .coreshop-user-info-order-box .coreshop-list.grid.no-border > .coreshop-list-item {
+  padding-bottom: 9.09rpx;
+}
+.vontent .coreshop-user-info-order-box .transactionNumber {
+  font-size: 40rpx;
+  margin-bottom: 4rpx;
+  color: #303133;
+}
+.vontent .coreshop-list.grid > .coreshop-list-item text {
+  color: inherit;
+}
+.vontent .coreshop-user-info-tools-box {
+  border-radius: 18.18rpx;
+}
+.vontent .coreshop-user-info-tools-box .tools-view {
+  position: relative;
+}
+.vontent .coreshop-user-info-tools-box .tools-view .tools-title {
+  padding-right: 81.81rpx;
+}
+.vontent .coreshop-user-info-tools-box .tools-view .tools-right {
+  position: absolute;
+  right: 9.09rpx;
+  bottom: 23.63rpx;
+}
+.text-border-x {
+  margin-right: 25.45rpx;
+  position: relative;
+}
+.text-border-x:after {
+  position: absolute;
+  background: #dddddd;
+  top: 10.45rpx;
+  width: 1.81rpx;
+  right: -12.72rpx;
+  height: 16.36rpx;
+  content: " ";
+}
+.u-tips-color {
+  color: #909399;
+}
+.userItem {
+  padding: 16rpx 10rpx 0rpx 10rpx;
+  height: 140rpx;
+  flex:1;
+  justify-content: flex-end;
+  align-items: center;
+}
+.account-face {
+  height: 60px;
+  width: 60px;
+  flex: 0 0 60px;
+  border-radius: 500px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #606266;
+  border-radius: 10px;
+  position: relative;
+}
+.grid-text {
+  font-size: 28rpx;
+  margin-top: 14rpx;
+  color: #909399;
+}
+button {
+  margin: 0;
+  padding: 0;
+  line-height: initial;
+  border-color: none;
+  background-color: transparent;
+}
+button::after {
+  border: none;
+}
+.grid_msg {
+  position: absolute;
+  right: 10rpx;
+  top: 10rpx;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background-color: #D51E30;
+}
+.copyright {
+  text-align: center;
+  padding-bottom: 30rpx;
+}
+.copyright text {
+  display: block;
+  color: #666;
+  font-size: 26rpx;
+}
+
+
+.u-border-bottom::after {
+    position: relative !important;
+}
+.u-grid-item-box {
+    position: relative;
+}
+
+.grid_box {
+  width: 100%;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.grid_item {
+  width: 25%;
+  box-sizing: border-box;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-direction: column;
+  position: relative;
+  float: left;
+}
+.item_box {
+  padding: 15px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+.item_text {
+  font-size: 28rpx;
+  margin-top: 14rpx;
+  color: #909399;
+}
+.icon-box-img {
+    display: inline-block;
+}
+.avatar_img {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 50%;
+    margin-right: 20rpx;
+    border:1px solid #999;
+}
+.process{
+  margin-top:16rpx;
+}
+.avatar-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20rpx 100rpx 20rpx 80rpx;
+}.idesc{
+  font-size: 24rpx;
+  color:#a9a9a9;
+}

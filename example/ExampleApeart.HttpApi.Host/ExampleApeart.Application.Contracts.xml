@@ -4,6 +4,36 @@
         <name>ExampleApeart.Application.Contracts</name>
     </assembly>
     <members>
+        <member name="T:ExampleApeart.Application.Contracts.eventmodels.EventAfterGradeCreateModel">
+            <summary>
+            角色创建后 案例事件，角色创建后
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.eventmodels.EventAfterGradeCreateModel.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.eventmodels.EventAfterGradeCreateModel.CreateUserId">
+            <summary>
+            创建者
+            </summary>
+        </member>
+        <member name="T:ExampleApeart.Application.Contracts.eventmodels.EventAfterUserCreateModel">
+            <summary>
+            用户创建后 案例，用户创建后
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.eventmodels.EventAfterUserCreateModel.UserId">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Application.Contracts.eventmodels.EventAfterUserCreateModel.CreateUserId">
+            <summary>
+            创建者
+            </summary>
+        </member>
         <member name="T:ExampleApeart.Application.Contracts.eventmodels.EventDemoModel">
             <summary>
             案例
@@ -72,6 +102,16 @@
         <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.IsEnable">
             <summary>
             状态
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.ids">
+            <summary>
+            int 模拟输入多个int,使用,分割
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.dates">
+            <summary>
+            DateTime 模拟输入多个DateTime,使用;分割
             </summary>
         </member>
         <member name="T:ExampleApeart.usermodels.GradeInfoUpdateDto">
@@ -359,11 +399,6 @@
             排序串
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.RoleInfoDto.RootId">
-            <summary>
-            根级
-            </summary>
-        </member>
         <member name="P:ExampleApeart.usermodels.RoleInfoDto.FatherStr">
             <summary>
             父级串
@@ -599,6 +634,11 @@
             权限类型 基于权限类型查询
             </summary>
         </member>
+        <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.role_type_array">
+            <summary>
+            多类型查询
+            </summary>
+        </member>
         <member name="P:ExampleApeart.usermodels.InputQueryRoleInfo.vals1">
             <summary>
             多选一
@@ -714,7 +754,7 @@
             密码
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.UserName">
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.Name">
             <summary>
             用户名
             </summary>
@@ -724,7 +764,7 @@
             描述
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.UserHead">
+        <member name="P:ExampleApeart.usermodels.UserInfoAddDto.Head">
             <summary>
             头像
             </summary>
@@ -764,11 +804,6 @@
             角色 测试用的
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserInfoUpdateDto.Grades">
-            <summary>
-            扩展 包含的角色列表
-            </summary>
-        </member>
         <member name="T:ExampleApeart.usermodels.UserInfoDto">
             <summary>
             用户信息
@@ -784,12 +819,12 @@
             用户信息
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserInfoListDto.UserName">
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.Name">
             <summary>
             用户名
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserInfoListDto.UserHead">
+        <member name="P:ExampleApeart.usermodels.UserInfoListDto.Head">
             <summary>
             头像
             </summary>
@@ -834,12 +869,7 @@
             用户名
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserShort.UserName">
-            <summary>
-            用户名
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.usermodels.UserShort.UserHead">
+        <member name="P:ExampleApeart.usermodels.UserShort.Head">
             <summary>
             头像
             </summary>
@@ -854,12 +884,12 @@
             
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserShortModel.UserName">
+        <member name="P:ExampleApeart.usermodels.UserShortModel.Name">
             <summary>
             用户名
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserShortModel.UserHead">
+        <member name="P:ExampleApeart.usermodels.UserShortModel.Head">
             <summary>
             头像
             </summary>

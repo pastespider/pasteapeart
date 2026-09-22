@@ -909,64 +909,69 @@ async function LoadModelProperity(properties) {
         /**
          * selects lselect paste-form-body
          */
-        $(".paste-form-body").on('click', '.ulitems li', function () {
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            } else {
-                $(this).addClass('selected');
-            }
-            let nameElc = $(this).parents(".ulitems");
-            var _name = nameElc.attr('name');
-            if (_name) {
-                var _pro = funcFindPropertry(_name);
-                if (_pro) {
-                    var _maxnum = 0;
-                    var _attribute = funcFindAttribute(_pro.attributes, "selects");
-                    if (_attribute) {
-                        if (_attribute.args4) {
-                            _maxnum = Number(_attribute.args4);
-                        }
-                    } else {
-                        _attribute = funcFindAttribute(_pro.attributes, "lselect");
-                        if (_attribute) {
-                            if (_attribute.args4) {
-                                _maxnum = Number(_attribute.args4);
-                            }
-                        }
-                    }
-                    if (_maxnum > 0) {
-                        var _selnum = nameElc.find(".selected").length;
-                        if (_selnum > _maxnum) {
-                            if (_maxnum > 1) {
-                                $(this).removeClass('selected');
-                                layer.msg(`限定最多选择${_maxnum}项`);
-                            } else {
-                                $(this).siblings().removeClass('selected');
-                            }
-                        }
-                        if (_maxnum == 1) {
-                            var _val = $(this).attr('value');
-                            handlerReloadReplace(_pro.attributes, _name, _val);
-                            handlerChangeUi(_pro.attributes, _val);
-                            // var _attribute = funcFindAttribute(_pro.attributes, "reload");
-                            // if (_attribute) {
-                            //     var _val = $(this).attr('value');
-                            //     if (_attribute.args1) {
-                            //         _name = _attribute.args1;
-                            //     }
-                            //     handlerBuildNewUrlToLoad(_name, _val);
-                            // }
-                        }
-                    }
-                    if (_attribute.name == "selects") {
-                        //从ui中获取选中得 使用比如{name value }
-                        updateSelectText(nameElc, _pro);
-                    }
-                    handlerLoaditem(_pro);
-                }
-            }
 
-        });
+        //合并改版 旧版本
+        // $(".paste-form-body").on('click', '.ulitems li', function () {
+        //     if ($(this).hasClass('selected')) {
+        //         $(this).removeClass('selected');
+        //     } else {
+        //         $(this).addClass('selected');
+        //     }
+        //     let nameElc = $(this).parents(".ulitems");
+        //     var _name = nameElc.attr('name');
+        //     if (_name) {
+        //         var _pro = funcFindPropertry(_name);
+        //         if (_pro) {
+        //             var _maxnum = 0;
+        //             var _attribute = funcFindAttribute(_pro.attributes, "selects");
+        //             if (_attribute) {
+        //                 if (_attribute.args4) {
+        //                     _maxnum = Number(_attribute.args4);
+        //                 }
+        //             } else {
+        //                 _attribute = funcFindAttribute(_pro.attributes, "lselect");
+        //                 if (_attribute) {
+        //                     if (_attribute.args4) {
+        //                         _maxnum = Number(_attribute.args4);
+        //                     }
+        //                 }
+        //             }
+        //             if (_maxnum > 0) {
+        //                 var _selnum = nameElc.find(".selected").length;
+        //                 if (_selnum > _maxnum) {
+        //                     if (_maxnum > 1) {
+        //                         $(this).removeClass('selected');
+        //                         layer.msg(`限定最多选择${_maxnum}项`);
+        //                     } else {
+        //                         $(this).siblings().removeClass('selected');
+        //                     }
+        //                 }
+        //                 if (_maxnum == 1) {
+        //                     var _val = $(this).attr('value');
+        //                     handlerReloadReplace(_pro.attributes, _name, _val);
+        //                     handlerChangeUi(_pro.attributes, _val);
+        //                     // var _attribute = funcFindAttribute(_pro.attributes, "reload");
+        //                     // if (_attribute) {
+        //                     //     var _val = $(this).attr('value');
+        //                     //     if (_attribute.args1) {
+        //                     //         _name = _attribute.args1;
+        //                     //     }
+        //                     //     handlerBuildNewUrlToLoad(_name, _val);
+        //                     // }
+        //                 }
+        //             }
+        //             if (_attribute.name == "selects") {
+        //                 //从ui中获取选中得 使用比如{name value }
+        //                 updateSelectText(nameElc, _pro);
+        //             }
+        //             handlerLoaditem(_pro);
+        //         }
+        //     }
+        // });
+
+        //合并改版 新版本
+        register_ulitems_click_event();
+
         // //分组的开关
         // $(".paste-form-body").on('click','.btngroup',function(){
         //     if($(this).hasClass("Hui-iconfont-arrow2-top")){
@@ -1014,6 +1019,67 @@ async function LoadModelProperity(properties) {
 }
 
 /**
+ * 点击或者选择ulitems的li事件 比如lselect selects select等
+ * 合并改版 新版本
+ */
+function register_ulitems_click_event() {
+    $(".ulitems").on('click', 'li', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        } else {
+            $(this).addClass('selected');
+        }
+        let nameElc = $(this).parents(".ulitems");
+        var _name = nameElc.attr('name');
+        if (_name) {
+            var _pro = funcFindPropertry(_name);
+            if (_pro) {
+                var _maxnum = 0;
+                var _attribute = funcFindAttribute(_pro.attributes, "selects");
+                if (_attribute) {
+                    if (_attribute.args4) {
+                        _maxnum = Number(_attribute.args4);
+                    }
+                } else {
+                    _attribute = funcFindAttribute(_pro.attributes, "lselect");
+                    if (_attribute) {
+                        if (_attribute.args4) {
+                            _maxnum = Number(_attribute.args4);
+                        }
+                    }
+                }
+                if (_maxnum > 0) {
+                    var _selnum = nameElc.find(".selected").length;
+                    if (_selnum > _maxnum) {
+                        if (_maxnum > 1) {
+                            $(this).removeClass('selected');
+                            layer.msg(`限定最多选择${_maxnum}项`);
+                        } else {
+                            $(this).siblings().removeClass('selected');
+                        }
+                    }
+                    if (_maxnum == 1) {
+                        var _val = $(this).attr('value');
+                        handlerReloadReplace(_pro.attributes, _name, _val);
+                        handlerChangeUi(_pro.attributes, _val);
+                    }
+                    if (_maxnum == 1 && _selnum > 0) {
+                        if (typeof readPageData === 'function') {
+                            readPageData(1);
+                        }
+                    }
+                }
+                if (_attribute.name == "selects") {
+                    //从ui中获取选中得 使用比如{name value }
+                    updateSelectText(nameElc, _pro);
+                }
+                handlerLoaditem(_pro);
+            }
+        }
+    });
+}
+
+/**
  * 把多选的结果渲染到UI中
  * @param {*} $ul 
  * @param {*} namePro 
@@ -1038,7 +1104,7 @@ function updateSelectText($ul, namePro) {
         return $(this).text().trim();
     }).get();
 
-    let sval = '(' + count + ')' + texts.join(' ');
+    let sval = count > 1 ? '(' + count + ')' + texts.join(' ') : texts.join(' ');
 
     $input.val(sval);
     namePro.__selected_values = sval;
@@ -2745,10 +2811,22 @@ function LoadQuery(properties) {
                                     break;
                                 default:
                                     {
-                                        if (item.dataType.indexOf("[]") >= 0) {
-                                            item.value = queryValArray;
+                                        if (item.dataType.indexOf("Enum") == 0) {
+                                            if (item.dataType.indexOf("[]") >= 0) {
+                                                let _varray = new Array();
+                                                for (let a of queryValArray) {
+                                                    _varray.push(Number(a));
+                                                }
+                                                item.value = _varray;
+                                            } else {
+                                                item.value = Number(queryValArray[0]);
+                                            }
                                         } else {
-                                            item.value = queryValArray[0];
+                                            if (item.dataType.indexOf("[]") >= 0) {
+                                                item.value = queryValArray;
+                                            } else {
+                                                item.value = queryValArray[0];
+                                            }
                                         }
                                     }
                                     break;
@@ -3680,6 +3758,13 @@ function handlerExchangeItemToUIData(item) {
                         item.hidden = true;//可以被changeui唤醒
                     }
                     break;
+                case "valuetype":
+                    {
+                        item.valueType = _attribute.args1;
+                        // item.hide = true;//始终隐藏
+                        // item.hidden = true;//可以被changeui唤醒
+                    }
+                    break;
                 case "required":
                     {
                         item.required = true;
@@ -3925,8 +4010,11 @@ function handlerExchangeItemToUIData(item) {
                                     _typeof = typeof (item.value);
                                     valMap.set(item.value, true);
                                 }
-                                // var _typeof = typeof (item.value);
-                                item.valueType = _typeof;
+                                if (item.valueType) {
+                                    _typeof = item.valueType;
+                                } else {
+                                    item.valueType = _typeof;
+                                }
                                 switch (_typeof) {
                                     case "string":
                                         {
@@ -3954,12 +4042,6 @@ function handlerExchangeItemToUIData(item) {
                                     case "object":
                                         {
                                             if (Array.isArray(item.value)) {
-                                                // item.selects.forEach(ii => {
-                                                //     if (item.value.indexOf(ii.value) >= 0) {
-                                                //         ii.selected = true;
-                                                //     }
-                                                //     // typeof(ii);
-                                                // });
                                                 for (const ii of item.selects) {
                                                     item.dataFrom = `${typeof (ii.value)}[]`;
                                                     if (item.value.indexOf(ii.value) >= 0) {
@@ -3969,11 +4051,6 @@ function handlerExchangeItemToUIData(item) {
                                                 }
                                             } else {
                                                 var _vals = item.value.toString();
-                                                // item.selects.forEach(ii => {
-                                                //     if (_vals.indexOf(ii.value.toString()) >= 0) {
-                                                //         ii.selected = true;
-                                                //     }
-                                                // });
                                                 for (const ii of item.selects) {
                                                     item.dataFrom = `${typeof (ii.value)}[]`;
                                                     if (_vals.indexOf(ii.value.toString()) >= 0) {
@@ -3993,9 +4070,9 @@ function handlerExchangeItemToUIData(item) {
                                     var selectedItems = item.selects.filter(function (o) {
                                         return o.selected;
                                     });
-                                    if (selectedItems.length > 0) {
-                                        item.__selected_values = '(' + selectedItems.length + ')'
-                                            + selectedItems.map(function (o) { return o.name; }).join(' ');
+                                    var selNum = selectedItems.length;
+                                    if (selNum > 0) {
+                                        item.__selected_values = (selNum > 1 ? '(' + selNum + ')' : '') + selectedItems.map(function (o) { return o.name; }).join(' ');
                                     }
                                 }
                             }
@@ -4233,6 +4310,9 @@ function handlerExchangeItemToUIData(item) {
                     break;
                 case "datetime":
                     {
+                        if (item.dataType && item.dataType == "daterange") {
+                            return;
+                        }
                         item.dataType = "datetime";
                         var _format = "yyyy-MM-dd HH:mm:ss";
                         if (_attribute.args1) {
@@ -4675,6 +4755,16 @@ function findAndCallHandler(obj, urlKey) {
 
     // ================= 核心逻辑判断 =================
     var find = false;
+
+    //先从顶级页面找
+    if (window.top !== window.self) {
+        find = searchInWindow(window.top);
+        if (find) {
+            return true;
+        }
+    }
+
+    //然后找顶级页面的工作台
     if (window.top !== window.self) {
         const rootWindow = window.top;;
         // 针对/page/index.html中的页面框架的内页 工作台页面找
@@ -4691,6 +4781,15 @@ function findAndCallHandler(obj, urlKey) {
         }
     }
 
+    //从父级页面找
+    if (window.parent !== window.self) {
+        find = searchInWindow(window.parent);
+        if (find) {
+            return true;
+        }
+    }
+
+    //从父级页面的工作台找
     if (window.parent != window.self) {
         const rootWindow = window.parent;
         // 针对/page/index.html中的页面框架的内页 工作台页面找
@@ -4707,18 +4806,18 @@ function findAndCallHandler(obj, urlKey) {
         }
     }
 
-    //都没有找到 可能是父级页面
-    if (window.parent !== window.self) {
-        var currwin = window.parent;
-        if (currwin) {
-            if (typeof currwin.handlerUpdateRow === 'function') {
-                var result = currwin.handlerUpdateRow(obj);
-                if (result) {
-                    return true;
-                }
-            }
-        }
-    }
+    // //都没有找到 可能是父级页面
+    // if (window.parent !== window.self) {
+    //     var currwin = window.parent;
+    //     if (currwin) {
+    //         if (typeof currwin.handlerUpdateRow === 'function') {
+    //             var result = currwin.handlerUpdateRow(obj);
+    //             if (result) {
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    // }
 
     var currwin = window;//就是自己当前页面
     if (currwin) {

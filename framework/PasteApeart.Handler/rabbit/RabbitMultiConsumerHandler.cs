@@ -1,14 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PasteApeart.Application.Contracts;
+using PasteApeart.Handler.Extensions;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Reflection;
 using System.Text;
-using System.Text.Json;
 
 namespace PasteApeart.Handler.rabbit
 {
@@ -27,6 +24,8 @@ namespace PasteApeart.Handler.rabbit
         private readonly IServiceProvider _serviceProvider;
         private readonly IChannelHelper _channelHelper;
 
+        private readonly IEventActionHandler _eventActionHandler;
+
         /// <summary>
         /// 
         /// </summary>
@@ -37,10 +36,12 @@ namespace PasteApeart.Handler.rabbit
             IServiceProvider serviceProvider,
             ILogger<RabbitMultiConsumerHandler> logger,
             IChannelHelper channelHelper,
+            IEventActionHandler eventActionHandler,
             IOptions<RabbitConfig> rabbitConfig)
         {
             _serviceProvider = serviceProvider;
             _logger = logger;
+            _eventActionHandler = eventActionHandler;
             _channelHelper = channelHelper;
             _rabbitConfig = rabbitConfig.Value;
             _channelCount = _rabbitConfig.ReadChannelCount;
@@ -232,7 +233,8 @@ namespace PasteApeart.Handler.rabbit
                     msg = Encoding.UTF8.GetString(e.Body.ToArray());
                     if (!string.IsNullOrEmpty(msg))
                     {
-                        await HandlerEventMessage(msg);
+                        //await HandlerEventMessage(msg);
+                        await _eventActionHandler.ActionMessageAsync(msg);
                     }
                     // ✅ 处理完成
                     _channelCompletionSources[channelNumber].TrySetResult(true);
@@ -381,134 +383,134 @@ namespace PasteApeart.Handler.rabbit
         }
 
 
-        private readonly ConcurrentDictionary<string, Type> _eventTypeCache = new();
-        private readonly ConcurrentDictionary<Type, (Type HandlerType, MethodInfo HandleMethod)> _handlerCache = new();
+        //private readonly ConcurrentDictionary<string, Type> _eventTypeCache = new();
+        //private readonly ConcurrentDictionary<Type, (Type HandlerType, MethodInfo HandleMethod)> _handlerCache = new();
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        private async Task HandlerEventMessage(string msg)
-        {
-            if (string.IsNullOrWhiteSpace(msg))
-            {
-                return;
-            }
-            object input = null;
-            try
-            {
-                // 1. 只反序列化一次，使用 System.Text.Json 性能更好
-                using var jsonDoc = JsonDocument.Parse(msg);
-                var root = jsonDoc.RootElement;
-                //if (!root.TryGetProperty("EventName", out var eventNameProperty) ||
-                //    eventNameProperty.GetString() is not string eventName)
-                //{
-                //    _logger.LogError($"消息缺少 EventName 字段: {msg}");
-                //    return;
-                //}
-                JsonElement eventNameProperty;
-                // 使用不区分大小写的匹配，更健壮
-                if (!root.TryGetProperty("eventName", out eventNameProperty))
-                {
-                    root.TryGetProperty("EventName", out eventNameProperty);
-                }
-                // 获取字符串值并验证
-                string eventName = eventNameProperty.GetString();
-                if (string.IsNullOrEmpty(eventName))
-                {
-                    _logger.LogError($"EventName 字段值为空: {msg}");
-                    return;
-                }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="msg"></param>
+        ///// <returns></returns>
+        //private async Task HandlerEventMessage(string msg)
+        //{
+        //    if (string.IsNullOrWhiteSpace(msg))
+        //    {
+        //        return;
+        //    }
+        //    object input = null;
+        //    try
+        //    {
+        //        // 1. 只反序列化一次，使用 System.Text.Json 性能更好
+        //        using var jsonDoc = JsonDocument.Parse(msg);
+        //        var root = jsonDoc.RootElement;
+        //        //if (!root.TryGetProperty("EventName", out var eventNameProperty) ||
+        //        //    eventNameProperty.GetString() is not string eventName)
+        //        //{
+        //        //    _logger.LogError($"消息缺少 EventName 字段: {msg}");
+        //        //    return;
+        //        //}
+        //        JsonElement eventNameProperty;
+        //        // 使用不区分大小写的匹配，更健壮
+        //        if (!root.TryGetProperty("eventName", out eventNameProperty))
+        //        {
+        //            root.TryGetProperty("EventName", out eventNameProperty);
+        //        }
+        //        // 获取字符串值并验证
+        //        string eventName = eventNameProperty.GetString();
+        //        if (string.IsNullOrEmpty(eventName))
+        //        {
+        //            _logger.LogError($"EventName 字段值为空: {msg}");
+        //            return;
+        //        }
 
-                // 2. 获取事件类型（带缓存）
-                var modelType = _eventTypeCache.GetOrAdd(eventName, name =>
-                {
-                    return typeof(AbsEventModel).Assembly.GetTypes()
-                        .FirstOrDefault(t => t.Name == name);
-                });
-                //&& typeof(EventBaseModel).IsAssignableFrom(t)
-                if (modelType == null)
-                {
-                    _logger.LogError($"未找到事件类型: {eventName}");
-                    return;
-                }
-                // 3. 反序列化为具体类型
-                input = JsonSerializer.Deserialize(msg, modelType, JsonConfig.Options);
-                if (input == null)
-                {
-                    _logger.LogError($"无法将消息反序列化为类型 {eventName}: {msg}");
-                    return;
-                }
-                using var scope = _serviceProvider.CreateScope();
-                if (input is IEventModel tryModel)
-                {
-                    if (tryModel.ExpireSecond > 0)
-                    {
-                        //var _channelHandler = scope.ServiceProvider.GetRequiredService<ChannelHelper>();
-                        await _channelHelper.WriteAutoQueueAsync(tryModel);
-                        return;
-                    }
-                }
+        //        // 2. 获取事件类型（带缓存）
+        //        var modelType = _eventTypeCache.GetOrAdd(eventName, name =>
+        //        {
+        //            return typeof(AbsEventModel).Assembly.GetTypes()
+        //                .FirstOrDefault(t => t.Name == name);
+        //        });
+        //        //&& typeof(EventBaseModel).IsAssignableFrom(t)
+        //        if (modelType == null)
+        //        {
+        //            _logger.LogError($"未找到事件类型: {eventName}");
+        //            return;
+        //        }
+        //        // 3. 反序列化为具体类型
+        //        input = JsonSerializer.Deserialize(msg, modelType, JsonConfig.Options);
+        //        if (input == null)
+        //        {
+        //            _logger.LogError($"无法将消息反序列化为类型 {eventName}: {msg}");
+        //            return;
+        //        }
+        //        using var scope = _serviceProvider.CreateScope();
+        //        if (input is IEventModel tryModel)
+        //        {
+        //            if (tryModel.ExpireSecond > 0)
+        //            {
+        //                //var _channelHandler = scope.ServiceProvider.GetRequiredService<ChannelHelper>();
+        //                await _channelHelper.WriteAutoQueueAsync(tryModel);
+        //                return;
+        //            }
+        //        }
 
-                _logger.LogWarning($"begin handler {eventName}");
+        //        _logger.LogWarning($"begin handler {eventName}");
 
-                //EventTryHandler
-                // 4. 获取处理器信息（带缓存）
-                var (handlerType, handleMethod) = _handlerCache.GetOrAdd(modelType, type =>
-                {
-                    var hType = typeof(IEventHandler<>).MakeGenericType(type);
-                    var method = hType.GetMethod("HandleEventAsync");
-                    return (hType, method);
-                });
-                if (handleMethod == null)
-                {
-                    _logger.LogError($"处理器 {handlerType.Name} 没有 HandleEventAsync 方法");
-                    return;
-                }
-                var handler = scope.ServiceProvider.GetRequiredService(handlerType);
-                if (handler == null)
-                {
-                    _logger.LogError($"没有找到 {eventName} 的 IEventHandler 实现");
-                    return;
-                }
-                // 5. 执行处理
-                var task = handleMethod.Invoke(handler, new[] { input }) as Task;
-                if (task != null)
-                {
-                    await task;
-                }
-                else
-                {
-                    _logger.LogError($"无法调用 {eventName} 的处理方法");
-                }
-                if (handler is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
-                if (handler is IAsyncDisposable disposable1)
-                {
-                    await disposable1.DisposeAsync();
-                }
+        //        //EventTryHandler
+        //        // 4. 获取处理器信息（带缓存）
+        //        var (handlerType, handleMethod) = _handlerCache.GetOrAdd(modelType, type =>
+        //        {
+        //            var hType = typeof(IEventHandler<>).MakeGenericType(type);
+        //            var method = hType.GetMethod("HandleEventAsync");
+        //            return (hType, method);
+        //        });
+        //        if (handleMethod == null)
+        //        {
+        //            _logger.LogError($"处理器 {handlerType.Name} 没有 HandleEventAsync 方法");
+        //            return;
+        //        }
+        //        var handler = scope.ServiceProvider.GetRequiredService(handlerType);
+        //        if (handler == null)
+        //        {
+        //            _logger.LogError($"没有找到 {eventName} 的 IEventHandler 实现");
+        //            return;
+        //        }
+        //        // 5. 执行处理
+        //        var task = handleMethod.Invoke(handler, new[] { input }) as Task;
+        //        if (task != null)
+        //        {
+        //            await task;
+        //        }
+        //        else
+        //        {
+        //            _logger.LogError($"无法调用 {eventName} 的处理方法");
+        //        }
+        //        if (handler is IDisposable disposable)
+        //        {
+        //            disposable.Dispose();
+        //        }
+        //        if (handler is IAsyncDisposable disposable1)
+        //        {
+        //            await disposable1.DisposeAsync();
+        //        }
 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"处理消息时发生错误: {msg}");
-                //if (input != null)
-                //{
-                //    if (input is AbsEventModel emodel)
-                //    {
-                //        if (emodel.LimitTime > 0 && emodel.CurrentTime < emodel.LimitTime)
-                //        {
-                //            emodel.CurrentTime++;
-                //            emodel.ExpireSecond = EventHandlerExtensions.NextSecond(emodel.CurrentTime);
-                //            await _channelHelper.WriteAutoQueueAsync(emodel);
-                //        }
-                //    }
-                //}
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex, $"处理消息时发生错误: {msg}");
+        //        //if (input != null)
+        //        //{
+        //        //    if (input is AbsEventModel emodel)
+        //        //    {
+        //        //        if (emodel.LimitTime > 0 && emodel.CurrentTime < emodel.LimitTime)
+        //        //        {
+        //        //            emodel.CurrentTime++;
+        //        //            emodel.ExpireSecond = EventHandlerExtensions.NextSecond(emodel.CurrentTime);
+        //        //            await _channelHelper.WriteAutoQueueAsync(emodel);
+        //        //        }
+        //        //    }
+        //        //}
+        //    }
+        //}
 
         /// <summary>
         /// 

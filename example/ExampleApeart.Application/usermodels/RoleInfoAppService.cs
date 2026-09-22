@@ -1,10 +1,12 @@
 using ExampleApeart.Application;
 using ExampleApeart.Handler;
-using ExampleApeart.Handler.eventmodels;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PasteApeart;
 using PasteApeart.Application.Contracts;
+using PasteApeart.Handler;
+using PasteApeart.Handler.Extensions;
 using PasteApeart.Helper;
 using System.Linq.Dynamic.Core;
 
@@ -103,7 +105,7 @@ namespace ExampleApeart.usermodels
                              SortStr = a.SortStr,
                              FatherStr = a.FatherStr,
                              Level = a.Level,
-                             RootId = a.RootId,
+                             //RootId = a.RootId,
                              Sort = a.Sort,
                              ExtendRole = rol != null ? new RoleShortModel
                              {
@@ -302,10 +304,15 @@ namespace ExampleApeart.usermodels
         /// <returns></returns>
         [HttpPost]
         [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "root", "root" })]
-        public async Task<RoleInfoDto> CreateItemAsync(RoleInfoAddDto input)
+        public async Task<RoleInfoListDto> CreateItemAsync(RoleInfoAddDto input)
         {
-            //return await _userHandler.RoleAdd(_dbContext, input);
-            return await LevelHandler.RoleAdd(_dbContext, input);
+            var info = input.Adapt<RoleInfo>();
+            _dbContext.Add(info);
+            await _dbContext.SaveChangesAsync();
+            var _levelHandler = LazyServiceProvider.GetRequiredService<ILevelHandler>();
+            await _levelHandler.AfterAddAsync<RoleInfo, int>(info);
+            await _dbContext.SaveChangesAsync();
+            return info.Adapt<RoleInfoListDto>();
         }
 
         /// <summary>
@@ -315,11 +322,19 @@ namespace ExampleApeart.usermodels
         /// <returns></returns>
         [HttpPost]
         [TypeFilter(typeof(RoleAttribute), Arguments = new object[] { "root", "root" })]
-        public async Task<RoleInfoDto> UpdateItemAsync(RoleInfoUpdateDto input)
+        public async Task<RoleInfoListDto> UpdateItemAsync(RoleInfoUpdateDto input)
         {
-            //return await _userHandler.RoleUpdate(_dbContext, input);
+            var info = await _dbContext.RoleInfo.Where(x => x.Id == input.Id).FirstOrDefaultAsync();
+            if (info == null) { return null; }
+            var oldFatherStr = info.FatherStr;
+            var oldLevel = info.Level;
+            input.Adapt(info);
+            await _dbContext.SaveChangesAsync();
+            var _levelHandler = LazyServiceProvider.GetRequiredService<ILevelHandler>();
+            await _levelHandler.AfterUpdateAsync<RoleInfo, int>(info, oldFatherStr, oldLevel);
+            await _dbContext.SaveChangesAsync();
+            return info.Adapt<RoleInfoListDto>();
 
-            return await LevelHandler.RoleUpdate(_dbContext, input);
         }
 
         ///// <summary>

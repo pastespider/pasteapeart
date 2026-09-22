@@ -8,9 +8,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>PasteApeart.EntityFrameworkCore</RootNamespace>
 		<DocumentationFile>PasteApeart.EntityFrameworkCore.xml</DocumentationFile>
-		<FileVersion>26.8.1</FileVersion>
-		<VersionPrefix>26.8.1</VersionPrefix>
-		<AssemblyVersion>26.8.1</AssemblyVersion>
+
 		<Platforms>AnyCPU;ARM64;x64</Platforms>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -36,12 +34,9 @@
 	</ItemGroup>
 
 
-	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+	<ItemGroup >
 		<ProjectReference Include="..\PasteApeart.Domain\PasteApeart.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="PasteApeart.Domain" Version="26.7.6" />
-	</ItemGroup>
 	
 </Project>

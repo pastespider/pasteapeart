@@ -1,0 +1,47 @@
+<!--pages/form/index/index.wxml-->
+
+<view class="lpage">
+  <!-- 检索区域 -->
+  <view class="dsearch p-flex-h">
+    <view class="sitem p-flex-h" wx:for="{{queryList}}" wx:for-item="item" wx:key="item">
+      <block wx:if="{{!item.hidden}}">
+        <view class="stitle">
+          {{item.title}}
+        </view>
+        <block wx:if="{{item.dataType=='text'}}">
+          <input type="text" class="input" value="{{item.value}}" placeholder="{{item.placeholder}}"></input>
+        </block>
+        <block wx:if="{{item.dataType=='number'}}">
+          <input type="number" class="input" value="{{item.value}}" placeholder="{{item.placeholder}}"></input>
+        </block>
+      </block>
+    </view>
+    <view class="searchbtns">
+      <button class="btn btnsearch">查询</button>
+    </view>
+  </view>
+  <!-- 内容区域 -->
+  <view class="dbody">
+    <block wx:for="{{dataList}}" wx:key="item" wx:for-item="item">
+      <view class="section p-flex-h" bind:tap="handlerSectionTap" data-info="{{item}}">
+        <block wx:for="{{item}}" wx:for-item="iline" wx:key="iline">
+          <view class="item">
+            <view class="iname">{{iline.title}}</view>
+            <view class="ibody">
+              <block wx:if="{{iline.dataType =='image'}}">
+                <image class="img" src="{{iline.value}}"></image>
+              </block>
+              <block wx:else>
+                <view class="ivalue">
+                  <block wx:if="iline.prefix">{{iline.prefix}}</block>
+                  {{iline.value}}
+                  <block wx:if="iline.unit">{{iline.unit}}</block>
+                </view>
+              </block>
+            </view>
+          </view>
+        </block>
+      </view>
+    </block>
+  </view>
+</view>

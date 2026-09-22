@@ -1,0 +1,392 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleForm.HttpApi.Host</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleForm.AuthTagDescriptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.AuthTagDescriptions.Apply(Microsoft.OpenApi.Models.OpenApiDocument,Swashbuckle.AspNetCore.SwaggerGen.DocumentFilterContext)">
+            <summary>
+            
+            </summary>
+            <param name="swaggerDoc"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:ExampleForm.Controllers.IBaseController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Controllers.IBaseController._dbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.Controllers.IBaseController.CurrentUserId">
+            <summary>
+            获取登录者UID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.Controllers.IBaseController.CurrentUserToken">
+            <summary>
+            获取登录者UID
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.Controllers.QuickHandlerController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.QuickHandlerController.#ctor(PasteApeart.Handler.common.IEventQuickActionHandler)">
+            <summary>
+            
+            </summary>
+            <param name="eventActionHandler"></param>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.QuickHandlerController.ReadAddModel(System.String)">
+            <summary>
+            读取AddDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.QuickHandlerController.ReadListModel">
+            <summary>
+            读取ListDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.QuickHandlerController.Page(PasteApeart.Application.Contracts.InputSearchBase)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.QuickHandlerController.CreateItemAsync(PasteApeart.Handler.IEventActionHandler)">
+             <summary>
+             执行一个
+            </summary>
+             <param name="handler"></param>
+             <returns></returns>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.Controllers.TestController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.TestController.ReadEnumInfo(System.String)">
+            <summary>
+            获取所有枚举，或者某一个枚举数据的值
+            </summary>
+            <param name="enumName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.Controllers.UploadController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UploadController.UploadImage(System.Int32,System.Int32)">
+            <summary>
+            富文本上传图片 控件
+            </summary>
+            <param name="typeid"></param>
+            <param name="objid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UploadController.UpImage(System.String,System.String)">
+            <summary>
+            上传图片
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UploadController.CalculateMd5(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            
+            </summary>
+            <param name="file"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UploadController.UpFile(System.String)">
+            <summary>
+            上传文件
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UploadController.Images(PasteApeart.Application.Contracts.InputSearchBase)">
+            <summary>
+            读取图片库 用于历史图片选择
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UploadController.IsImageExtension(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.Controllers.WangEditorUpload">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.WangEditorUpload.errno">
+            <summary>
+            有几个错误
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.WangEditorUpload.data">
+            <summary>
+            数据集
+            </summary>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.Controllers.WangEditorUploadItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.WangEditorUploadItem.url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.WangEditorUploadItem.alt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.WangEditorUploadItem.href">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.WangEditorUploadItem.size">
+            <summary>
+            资源大小
+            </summary>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.Controllers.UserController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UserController.Image(System.String)">
+            <summary>
+            获取验证码
+            </summary>
+            <param name="guid"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UserController.Login(ExampleForm.HttpApi.Host.Controllers.InputLogin)">
+            <summary>
+            登入
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UserController.LoginOut">
+            <summary>
+            登出
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UserController.ReadInfo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+            <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UserController.ReadEnumInfo(System.String)">
+            <summary>
+            获取所有枚举，或者某一个枚举数据的值
+            针对文档返回的枚举各种作妖，这里直接这样操作
+            </summary>
+            <param name="enumName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Controllers.UserController.Now">
+            <summary>
+            结果缓存 需要添加app.UseResponseCaching();
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.Controllers.InputLogin">
+            <summary>
+            登录的模型
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.InputLogin.Email">
+            <summary>
+            邮箱或者手机号码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.InputLogin.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.InputLogin.code">
+            <summary>
+            图形验证码代码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.HttpApi.Host.Controllers.InputLogin.guid">
+            <summary>
+            图形验证码串号
+            </summary>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.efhandler.DbReadonlyMiddleware">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.efhandler.DbReadonlyMiddleware.#ctor(Microsoft.AspNetCore.Http.RequestDelegate,ExampleForm.EntityFrameworkCore.IConnectionStringSelector)">
+            <summary>
+            
+            </summary>
+            <param name="next"></param>
+            <param name="selector"></param>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.efhandler.DbReadonlyMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.HttpApi.Host.Services.AuthMiddleware">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.HttpApi.Host.Services.AuthMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.ExampleFormHttpApiHostModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.ExampleFormHttpApiHostModule.ConfigureServices(Volo.Abp.Modularity.ServiceConfigurationContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:ExampleForm.ExampleFormHttpApiHostModule.OnApplicationInitialization(Volo.Abp.ApplicationInitializationContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ExampleForm.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Program.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.StartHostedService">
+            <summary>
+            系统初始化
+            </summary>
+        </member>
+        <member name="M:ExampleForm.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.Application.Contracts.RabbitConfig},Microsoft.Extensions.Logging.ILogger{ExampleForm.StartHostedService},PasteApeart.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleForm.AppConfig})">
+            <summary>
+            
+            </summary>
+            <param name="serviceProvider"></param>
+            <param name="rabbitConfig"></param>
+            <param name="logger"></param>
+            <param name="channelHelper"></param>
+            <param name="eventHandler"></param>
+            <param name="config"></param>
+        </member>
+        <member name="F:ExampleForm.StartHostedService.cts">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.StartHostedService.StartAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:ExampleForm.StartHostedService.SystemInitMigrationUpdateAsync">
+            <summary>
+            初始化系统
+            </summary>
+        </member>
+        <member name="M:ExampleForm.StartHostedService.ReahChannelEventModelAsync(System.Threading.CancellationToken)">
+            <summary>
+            处理Channel中的EventModel
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.StartHostedService.StopAsync(System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:ExampleForm.StartHostedService.DisposeAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.Startup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:ExampleForm.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.Extensions.Logging.ILoggerFactory)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+            <param name="loggerFactory"></param>
+        </member>
+    </members>
+</doc>

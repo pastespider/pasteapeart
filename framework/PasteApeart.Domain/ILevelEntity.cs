@@ -1,4 +1,6 @@
-namespace PasteApeart.Domain
+using PasteApeart.Domain.PasteEntity;
+
+namespace PasteApeart.Domain.Entity
 {
     /// <summary>
     /// 

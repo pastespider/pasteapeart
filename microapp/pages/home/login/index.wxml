@@ -1,0 +1,27 @@
+<view class="vpage">
+
+<view class="hflex">
+<view class="ititle">账号</view>
+<input type="text"  class="iinput" bindinput="inputEmail" value="{{input_email}}"></input>
+</view>
+
+<view class="hflex">
+<view class="ititle">密码</view>
+<input type="password"  class="iinput" bindinput="inputPass" value="{{input_pass}}"></input>
+</view>
+
+<view class="hflex">
+<view class="ititle">验证码</view>
+<image class="imgcode" bind:tap="btnRefreshImage" src="{{img_url}}"></image>
+<input class="icode" bindinput="inputCode" v-model="{{input_code}}" value="{{input_code}}"></input>
+</view>
+
+<view class="hflex">
+  <button class="ibtn" bind:tap="btnLogin">登录</button>
+</view>
+
+<view class="hflex">
+  <view class="vinfo">{{user_token}}</view>
+</view>
+
+</view>

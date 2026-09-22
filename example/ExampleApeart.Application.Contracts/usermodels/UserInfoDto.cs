@@ -1,4 +1,4 @@
-using PasteApeart;
+using PasteApeart.Applciation.Contracts.EntityDto;
 using PasteApeart.Application.Contracts;
 using PasteApeart.Helper;
 using System.ComponentModel;
@@ -36,7 +36,7 @@ namespace ExampleApeart.usermodels
         [MaxLength(32)]
         [Required]
         [Description("用户名")]
-        public string UserName { get; set; } = "";
+        public string Name { get; set; } = "";
 
         ///<summary>
         ///描述
@@ -51,7 +51,7 @@ namespace ExampleApeart.usermodels
         [MaxLength(128)]
         [PasteImage(1, "head", "60*60")]
         [Description("头像")]
-        public string UserHead { get; set; } = "";
+        public string Head { get; set; } = "";
 
         ///<summary>
         ///状态
@@ -108,12 +108,12 @@ namespace ExampleApeart.usermodels
         #endregion
 
 
-        /// <summary>
-        /// 扩展 包含的角色列表
-        /// </summary>
-        [PasteHidden]
-        [Description("扩展 包含的角色列表")]
-        public List<GradeInfoListDto> Grades { get; set; }
+        ///// <summary>
+        ///// 扩展 包含的角色列表
+        ///// </summary>
+        //[PasteHidden]
+        //[Description("扩展 包含的角色列表")]
+        //public List<GradeInfoListDto> Grades { get; set; }
 
     }
 
@@ -143,14 +143,14 @@ namespace ExampleApeart.usermodels
         ///</summary>
         [PasteSearch]
         [Description("用户名")]
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
         ///<summary>
         ///头像
         ///</summary>
         [PasteImage]
         [Description("头像")]
-        public string UserHead { get; set; }
+        public string Head { get; set; }
 
         ///<summary>
         ///创建日期
@@ -199,23 +199,17 @@ namespace ExampleApeart.usermodels
         /// </summary>
         public int Id { get; set; }
 
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        [Description("用户名")]
-        public string Name { get { return UserName; } }
-
         ///<summary>
         ///用户名
         ///</summary>
         [Description("用户名")]
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
         ///<summary>
         ///头像
         ///</summary>
         [Description("头像")]
-        public string UserHead { get; set; }
+        public string Head { get; set; }
 
     }
 
@@ -234,13 +228,13 @@ namespace ExampleApeart.usermodels
         ///用户名
         ///</summary>
         [Description("用户名")]
-        public string UserName { get; set; }
+        public string Name { get; set; }
 
         ///<summary>
         ///头像
         ///</summary>
         [Description("头像")]
-        public string UserHead { get; set; }
+        public string Head { get; set; }
 
     }
 

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.WebEncoders.Testing;
 using PasteApeart;
 using PasteApeart.Application;
+using PasteApeart.Dependency;
 using PasteApeart.Handler;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -75,20 +76,14 @@ namespace ExampleApeart
 
 
             //注入默认接口 承载add update detail list state 等
-            services.AddSingleton<IPasteDefaultHelper>(sp =>new PasteDefaultHelper(sp.GetRequiredService<IMemoryCache>(),typeof(RoleInfo).Assembly.GetTypes(),typeof(RoleInfoDto).Assembly.GetTypes(),typeof(LinqExtend)));
-            
+            services.AddSingleton<IPasteDefaultHelper>(sp => new PasteDefaultHelper(
+                sp.GetRequiredService<IMemoryCache>(),
+                typeof(RoleInfo).Assembly.GetTypes(),
+                typeof(RoleInfoDto).Assembly.GetTypes(),
+                typeof(LinqExtend)));
+
             services.AddScoped<IPasteDefaultAppService>(sp =>
             {
-                //方式一  扩展函数Func的模式
-                //var defaultExtend = sp.GetRequiredService<DefaultApiExtendHandler>();
-                //var defaultService = new PasteDefaultAppService(
-                //    sp.GetRequiredService<PasteDefaultHelper>(),
-                //    (sp.GetRequiredService<IExampleApeartDbContext>() as DbContext)
-                //)
-                //{
-                //    //自定义扩展
-                //    FuncFilterData = async (tuple) => { await defaultExtend.AuthCheckAsync(tuple.actionName, tuple.entityType, tuple.entityObject); },
-                //};
                 //方式二 你可以自己写一个，继承PasteApeartDefaultAppService
                 var defaultService = new ExampleApeartDefaultService(
                     sp.GetRequiredService<IPasteDefaultHelper>(),
@@ -120,24 +115,4 @@ namespace ExampleApeart
         }
     }
 
-    /// <summary>
-    /// 默认接口的扩展
-    /// </summary>
-    public class DefaultApiExtendHandler : IScopedDependency
-    {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
-        /// <param name="dtoType"></param>
-        /// <returns></returns>
-        public async Task AuthCheckAsync(string name, Type type, object dtoType)
-        {
-            //业务代码实现
-            await Task.CompletedTask;
-        }
-
-        //其他的扩展实现
-    }
 }

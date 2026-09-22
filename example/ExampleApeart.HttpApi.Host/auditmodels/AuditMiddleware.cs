@@ -177,7 +177,7 @@ namespace ExampleApeart.HttpApi.Host.auditmodels
                 }
                 catch (Exception exl)
                 {
-                    //Console.WriteLine(exl.ToString());
+                    Console.WriteLine(exl.ToString());
                 }
             }
         }

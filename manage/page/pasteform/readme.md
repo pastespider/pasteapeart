@@ -1556,4 +1556,22 @@ public class UserInfoListDto{
 ## 26.09.05
     1.selects改版，之前是一个区域，选择，新版本改成一个浮层，显示的地方是(x) name1 name2 这样可以直接看到选择了哪几个！！！
     可以说就是lselect的改版，支持更多的多选！！！
+
+## 26.09.06
+    1.合并index.js和form.js的部分代码，也就是代码复用！
+    2.修复表格数据行更新逻辑，先从顶级-顶级工作台 父级-父级工作台 自己 按照这个顺序，然后引入了数据格式，需要大于60%(update_row_min_match_rate),支持配置
+
+## 26.09.07
+    1.约定Enum开头的枚举，是number类型，这个放生在比如EnumRoleType[] types 默认值为Null 这个时候没办法推测是啥类型，估计后续要引入一个特性
+    2.比如你传参role_type=5,如果不按照1来，可以能会推测出这个是字符串！，我们知道Enum一般是int类型，所以做一个约定！
+    3.引入特性[PasteValuetype],最好是使用这个，如果你得枚举命名不合规的话
+
+## 26.09.08
+    1.修复之前的[]的selects的query问题，单个的时候直接显示，不显示数量(1) 多个的时候才显示！
+    2.datetime,如果已经有daterange的时候，则不进行datetime的处理，其实PasteDaterange和PasteDate是互斥的！
+
+## 26.09.09
+    1.调整页面的页面区域的样式border-raduis:4px;
+    2.修复1中的宽度问题，不知道啥时候设置的margin-right:100px;
+    
     

@@ -114,6 +114,19 @@
         "sort": 900,
         "fatherId": 121,
         "items": null
+      },
+      {
+        "name": "事件控制台",
+        "model": "",
+        "role": "",
+        "icon": "Hui-iconfont-pifu",
+        "path": "./pasteform/index.html?path=quickHandler",
+        "roleType": 1,
+        "desc": "",
+        "isEnable": true,
+        "sort": 800,
+        "fatherId": 121,
+        "items": null
       }
     ]
   }

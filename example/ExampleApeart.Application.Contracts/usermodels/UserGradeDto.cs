@@ -1,4 +1,5 @@
 using PasteApeart;
+using PasteApeart.Applciation.Contracts.EntityDto;
 using PasteApeart.Application.Contracts;
 using PasteApeart.Helper;
 using System.ComponentModel;

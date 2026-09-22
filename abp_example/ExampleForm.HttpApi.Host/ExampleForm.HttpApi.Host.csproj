@@ -1,0 +1,68 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <!-- 启用确定性编译（关键） -->
+	  <Deterministic>true</Deterministic>
+	  <!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	  <SatelliteResourceLanguages>null</SatelliteResourceLanguages>
+	  <ServerGarbageCollection>false</ServerGarbageCollection>
+	  <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+	  	  <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <RootNamespace>ExampleForm.HttpApi.Host</RootNamespace>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <UserSecretsId>6d507da3-e5d7-43b5-8811-ad055c30a7fb</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<DocumentationFile>..\ExampleForm.HttpApi.Host\ExampleForm.HttpApi.Host.xml</DocumentationFile>
+	<Platforms>AnyCPU</Platforms>
+  </PropertyGroup>
+
+	<!-- 添加这个属性组 -->
+
+  <ItemGroup>
+    <Compile Remove="data\**" />
+    <Compile Remove="logs\**" />
+    <Compile Remove="upload\**" />
+    <Content Remove="data\**" />
+    <Content Remove="logs\**" />
+    <Content Remove="upload\**" />
+    <EmbeddedResource Remove="data\**" />
+    <EmbeddedResource Remove="logs\**" />
+    <EmbeddedResource Remove="upload\**" />
+    <None Remove="data\**" />
+    <None Remove="logs\**" />
+    <None Remove="upload\**" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<TrimmerRootAssembly Include="Volo.Abp.EntityFrameworkCore.Sqlite"></TrimmerRootAssembly>
+	</ItemGroup>
+
+  <ItemGroup>
+
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.19">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <PackageReference Include="Volo.Abp.Autofac" Version="8.3.4" />
+    <PackageReference Include="Volo.Abp.Swashbuckle" Version="8.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExampleForm.Application\ExampleForm.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="font\font.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
+</Project>

@@ -1,8 +1,10 @@
+using ExampleApeart.Application.Contracts.eventmodels;
 using Microsoft.Extensions.Logging;
 using PasteApeart;
+using PasteApeart.Dependency;
 using PasteApeart.Handler;
-using PasteApeart.Handler.eventmodels;
-using ExampleApeart.Application.Contracts.eventmodels;
+using PasteApeart.Handler.Extensions;
+using PasteApeart.Handler.redis;
 
 namespace ExampleApeart.Handler.eventmodels
 {
@@ -15,7 +17,7 @@ namespace ExampleApeart.Handler.eventmodels
 
         private readonly ILogger<EventDemoModelHandler> _logger;
 
-        private readonly ChannelHelper _channelHelper;
+        private readonly IChannelHelper _channelHelper;
 
         /// <summary>
         /// 
@@ -23,7 +25,7 @@ namespace ExampleApeart.Handler.eventmodels
         /// <param name="appCache"></param>
         /// <param name="logger"></param>
         /// <param name="channelHelper"></param>
-        public EventDemoModelHandler(IAppCache appCache, ILogger<EventDemoModelHandler> logger, ChannelHelper channelHelper)
+        public EventDemoModelHandler(IAppCache appCache, ILogger<EventDemoModelHandler> logger, IChannelHelper channelHelper)
         {
             _appCache = appCache;
             _logger = logger;

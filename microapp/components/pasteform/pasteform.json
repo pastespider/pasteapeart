@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "datetime-picker":"../paste-picker/datetime",
+    "dateplan-picker":"../paste-picker/dateplan",
+    "paste-rich":"../paste-rich/rich"
+  }
+}

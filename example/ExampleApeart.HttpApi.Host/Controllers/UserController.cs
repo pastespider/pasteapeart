@@ -7,6 +7,8 @@ using PasteApeart.Handler;
 using ExampleApeart.Controllers;
 using ExampleApeart.usermodels;
 using System.ComponentModel.DataAnnotations;
+using PasteApeart.Handler.redis;
+using PasteApeart.Handler.Extensions;
 
 namespace ExampleApeart.HttpApi.Host.Controllers
 {
@@ -157,7 +159,7 @@ namespace ExampleApeart.HttpApi.Host.Controllers
                 base.Response.Cookies.Append(PublicString.TokenHeadName, token, new Microsoft.AspNetCore.Http.CookieOptions() { Path = "/", Expires = DateTimeOffset.Now.AddSeconds(PublicString.TokenTimeOut), Secure = false });
                 return new
                 {
-                    name = user.UserName,
+                    name = user.Name,
                     token = token
                 };
             }

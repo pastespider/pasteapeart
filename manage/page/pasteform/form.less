@@ -1,6 +1,21 @@
-
+@charset "UTF-8";
 .ishand{
     cursor:pointer;
+}
+
+iframe{
+    background-color: #fff;
+}
+html,body{
+    height:100%;
+    margin:0;
+    padding:0;
+}
+
+.page-container{
+    height:100%;
+    overflow:auto;
+    background-color: #fff;
 }
 
 .ulselects {
@@ -37,4 +52,40 @@
         color: #3bb4f2;
         left: 0px;
     }
+}
+
+.ul_version_area {
+    position: absolute;
+    width: 100px;
+    background: #ffffff;
+    box-shadow: 0px 0px 8px 3px #d5d1d1;
+    border-radius: 4px;
+    padding: 30px;
+    transition: all 0.5s;
+    right:0;
+
+    li {
+        cursor: pointer;
+        padding: 8px;
+        &:hover {
+            background-color: #5eb95e;
+            color: white;
+        }
+    }
+    a {
+        position: absolute;
+        right: -6px;
+        top: 4px;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 50% 50%;
+        line-height: 16px;
+        cursor: pointer;
+    }
+}
+
+.hidden,.hide{
+    display:none;
 }

@@ -21,5 +21,16 @@ namespace PasteApeart.Test
             Assert.NotNull(read);
         }
 
+        /// <summary>
+        /// 测试继承的顺序
+        /// </summary>
+        [Fact]
+        public void TestBasePropertySort2()
+        {
+            var read = BuilderHelper.AttributeReadModelProperty2(new TestDto(),null);
+            Console.WriteLine(JsonSerializer.Serialize(read));
+            Assert.NotNull(read);
+        }
+
     }
 }

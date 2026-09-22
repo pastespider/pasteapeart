@@ -1,0 +1,162 @@
+using Volo.Abp.Application.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using Volo.Abp.Domain.Entities;
+using PasteApeart.Helper;
+using {{ Namespace }}.Application.Contracts;
+
+namespace {{ Namespace }}.{{ DirName }}
+{
+
+    ///<summary>
+    ///{{ DisplayStr }}
+    ///</summary>
+    public class {{ Name }}AddDto
+    {
+        {%- for classProperty in AddPropertys -%}
+
+        ///<summary>
+        ///{{classProperty.property_display_str}}
+        ///</summary>
+                {%- if classProperty.class_attributes != null -%}
+                    {%- for classAttribute in classProperty.class_attributes -%}
+        {{ classAttribute.name_value }}
+                    {%- endfor -%}
+                {%- endif -%}
+                {%- if classProperty.bool_other_model == true -%}
+        public {{ classProperty.Name }}AddDto {{ classProperty.Name -}} { get; set; }
+                {%- else -%}
+        public {{ classProperty.property_type }} {{ classProperty.Name }} { get; set; }{%- if classProperty.default_value != null -%} = {{ classProperty.default_value }};{%- endif %}
+                {%- endif -%}
+        {%- endfor -%}
+    }
+
+    ///<summary>
+    ///{{ DisplayStr }}
+    ///</summary>
+    public class {{ Name }}UpdateDto:{{ Name }}AddDto
+    {
+
+        ///<summary>
+        ///ID
+        ///</summary>
+        [PasteHidden]
+        public {{ EntityType | replace:'"',"" }} Id { get; set; }
+
+        {%- for classProperty in UpdateExceptAddPropertys -%}
+        ///<summary>
+        ///{{classProperty.property_display_str}}
+        ///</summary>
+                {%- if classProperty.class_attributes != null -%}
+                    {%- for classAttribute in classProperty.class_attributes -%}
+        {{ classAttribute.name_value }}
+                    {%- endfor -%}
+                {%- endif -%}
+                {%- if classProperty.bool_other_model == true -%}
+        public {{ classProperty.Name }}UpdateDto {{ classProperty.Name -}} { get; set; }
+                {%- else -%}
+        public {{ classProperty.property_type }} {{ classProperty.Name }} { get; set; }
+                {%- endif -%}
+
+        {%- endfor -%}
+    }
+
+    ///<summary>
+    ///{{ DisplayStr }}
+    ///</summary>
+    public class {{ Name }}Dto:EntityDto<{{ EntityType | replace:'"',"" }}>
+    {
+        {%- for classProperty in DetailPropertys -%}
+        ///<summary>
+        ///{{classProperty.property_display_str}}
+        ///</summary>
+                {%- if classProperty.class_attributes != null -%}
+                    {%- for classAttribute in classProperty.class_attributes -%}
+        {{ classAttribute.name_value }}
+                    {%- endfor -%}
+                {%- endif -%}
+                {%- if classProperty.bool_other_model == true -%}
+        public {{ classProperty.Name }}Dto {{ classProperty.Name -}} { get; set; }
+                {%- else -%}
+        public {{ classProperty.property_type }} {{ classProperty.Name }} { get; set; }
+                {%- endif -%}
+
+        {%- endfor -%}
+    }
+
+    ///<summary>
+    ///{{ DisplayStr }}
+    ///</summary>
+    public class {{ Name }}ListDto:EntityDto<{{ EntityType | replace:'"',"" }}>
+    {
+        {%- for classProperty in ListPropertys -%}
+        ///<summary>
+        ///{{classProperty.property_display_str}}
+        ///</summary>
+                {%- if classProperty.class_attributes != null -%}
+                    {%- for classAttribute in classProperty.class_attributes -%}
+        {{ classAttribute.name_value }}
+                    {%- endfor -%}
+                {%- endif -%}
+                {%- if classProperty.bool_other_model == true -%}
+        public {{ classProperty.Name }}ListDto {{ classProperty.Name -}} { get; set; }
+                {%- else -%}
+        public {{ classProperty.property_type }} {{ classProperty.Name }} { get; set; }
+                {%- endif -%}
+
+        {%- endfor -%}
+    }
+
+
+    {%- if ClassAttributes != null -%}
+        {%- for item in ClassAttributes -%}
+            {% if item.name =="PasteShortModel" %}
+    ///<summary>
+    ///{{ DisplayStr }}
+    ///</summary>
+    public class {{ item.args1 }}
+    {
+
+        ///<summary>
+        ///ID
+        ///</summary>
+        public {{ EntityType | replace:'"',"" }} {{ item.args3 }} { get; set; }
+
+        ///<summary>
+        ///Name
+        ///</summary>
+        public string {{ item.args4 }} { get; set; }
+    }
+            {% endif %}
+        {%- endfor -%}
+    {%- endif -%}
+
+	
+	///<summary>
+	/// 查询
+	///</summary>
+	public class InputQuery{{ Name }}:InputSearchBase{
+        {%- for classProperty in ListPropertys -%}
+            {%- if classProperty.class_attributes != null -%}
+                {%- for classAttribute in classProperty.class_attributes -%}
+                    {%- if classAttribute.name == "PasteQuery" or classAttribute.name == "PasteSearch" -%}
+
+                        ///<summary>
+                        ///{{classProperty.property_display_str}}
+                        ///</summary>
+                        {%- for ca in classProperty.class_attributes -%}
+                        {%- if ca.name !="PasteSearch" and ca.name !="Required" and ca.name != "PasteShort" -%}
+                        {{ ca.name_value }}
+                        {%- endif -%}
+                        {%- endfor -%}
+                         public {{ classProperty.property_type }} {{ classProperty.Name }} { get; set; }{%- if classProperty.default_value != null -%} = {{ classProperty.default_value }};{%- endif %}
+                    {%- endif -%}
+                {%- endfor -%}
+            {%- endif -%}
+        {%- endfor -%}
+	}
+
+ }

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *::-webkit-scrollbar {
   /*滚动条整体样式*/
   width: 8px;
@@ -218,7 +219,6 @@ body {
   overflow: hidden;
   margin-top: 8px !important;
   line-height: 30px;
-  margin-right: 100px;
 }
 .page_foot .totalsum {
   min-width: 100px;
@@ -241,6 +241,12 @@ body {
 }
 .page_foot .totalsum .name::after {
   content: ':';
+}
+.page_foot .pagination-select {
+  border-radius: 4px;
+}
+.page_foot li {
+  border-radius: 4px;
 }
 .pagenumarea {
   width: auto;
@@ -294,16 +300,14 @@ body {
   text-decoration: none;
   text-align: center;
   font-weight: 900;
-  color: #444;
-  padding-top: 3px;
+  color: #828282;
   box-sizing: border-box;
 }
 .st .btnautoarea {
   text-decoration: none;
   text-align: center;
   font-weight: 900;
-  color: #444;
-  padding-top: 3px;
+  color: #828282;
   box-sizing: border-box;
   transition: all 0.5s;
 }

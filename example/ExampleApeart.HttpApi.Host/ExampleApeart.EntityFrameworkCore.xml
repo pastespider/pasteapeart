@@ -58,12 +58,17 @@
             
             </summary>
         </member>
-        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.CurrentQueryableUserId">
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.QueryUserId">
             <summary>
-            假设需要基于查询获取
+            当前权限用户集
             </summary>
         </member>
-        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.FilterQuery">
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.UserId">
+            <summary>
+            当前登录用户
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.EntityFrameworkCore.AbsFilterDbContext`1.EnableFilter">
             <summary>
             是否要过滤
             </summary>
@@ -133,12 +138,12 @@
             
             </summary>
         </member>
-        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.CurrentQueryableUserId">
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.QueryUserId">
             <summary>
             假设需要基于查询获取
             </summary>
         </member>
-        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.FilterQuery">
+        <member name="P:ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext.EnableFilter">
             <summary>
             是否要过滤
             </summary>
@@ -190,6 +195,18 @@
             <inheritdoc />
         </member>
         <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.database_init.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ExampleApeart.EntityFrameworkCore.Migrations.add_new_column">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.add_new_column.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.add_new_column.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleApeart.EntityFrameworkCore.Migrations.add_new_column.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:ExampleApeart.EntityFrameworkCore.Migrations.MyAuditingDbMigrations.audit_data_init">

@@ -1,0 +1,363 @@
+<view class="p-form-group">
+  <view class="form-cell-line p-form-line" wx:for="{{modelData}}" wx:item="item" wx:index="index" wx:key="name">
+    <!-- 文本输入模式 bindblur="handlerBlur" bind:touchstart="handlerTouch"  -->
+    <block wx:if="{{item.dataType=='text' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <input class="p-input p-input-text" type="text" focus="{{item.focus}}" maxlength="{{item.maxlength}}" value="{{item.value}}" placeholder="{{item.placeholder}}" bindinput="handlerAreaInput" id="{{item.name}}" placeholder-class="p-placeholder" />
+          <block wx:if="{{item.maxlength}}">
+            <view aria-role="option" class="p-textarea-counter"><span>{{item.currentlength}}</span>/{{item.maxlength}}</view>
+          </block>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 文本输入模式 bindblur="handlerBlur" bind:touchstart="handlerTouch"  -->
+    <block wx:if="{{item.dataType=='location' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <input class="p-input p-input-text" type="text" focus="{{item.focus}}" maxlength="{{item.maxlength}}" value="{{item.display || item.value}}" placeholder="{{item.placeholder}}" bind:tap="handlerChooseLocation" id="{{item.name}}" placeholder-class="p-placeholder" />
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 数字输入模式 -->
+    <block wx:if="{{item.dataType=='number' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content p-flex-h">
+          <input class="p-input p-input-number" type="number" maxlength="9" value="{{item.value || ''}}" placeholder="{{item.placeholder}}" bindblur="handlerBlur" bind:touchstart="handlerTouch" id="{{item.name}}" placeholder-class="p-placeholder" />
+          <block wx:if="{{item.unit}}">
+            <view class="p-unit">{{item.unit}}</view>
+          </block>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+    <!-- 单选框模式 -->
+    <block wx:if="{{item.dataType =='select' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <picker aria-role="combobox" class="p-input" bindchange="handlerRadioChange" id="{{item.name}}" range="{{item.array}}">
+            <input class="" type="text" focus="{{item.focus}}" placeholder="{{item.placeholder}}" disabled="true" value="{{item.display || item.value}}" placeholder-class="p-placeholder" />
+          </picker>
+        </view>
+        <view class="iconfont icon-you" style="padding:16px;color:#999;">
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+    <!-- 多选框模式 -->
+    <block wx:if="{{item.dataType=='selects' && !item.hidden}}">
+      <view class="p-line-content p-flex-v">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <checkbox-group bindchange="checkboxChange" id="{{item.name}}">
+            <label class="p-flex-h p-checkbox-item" wx:for="{{item.items}}" wx:for-item="ione" wx:key="name">
+              <view class="p-input">
+                <checkbox class="p-checkbox check-input" aria-checked="{{ione.checked}}" value="{{ione.name}}" id="{{item.name}}{{ione.name}}" checked="{{ione.checked}}" disabled="{{ione.disabled}}" />
+                <label for="{{item.name}}{{ione.name}}" class="p-checkboxlabel"></label>
+                <i class="p_round_i">
+                  <i class="p_round_gou"></i>
+                </i>
+              </view>
+              <view class="p-form-label">{{ione.value}}</view>
+            </label>
+          </checkbox-group>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+
+    </block>
+    <!-- 开关模式 -->
+    <block wx:if="{{item.dataType=='switch' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content p-textalign-r p-flex-h">
+          <view class="placeholder">{{item.placeholder|| ''}}</view>
+          <switch type="switch" class="p-input" id="{{item.name}}" checked="{{item.value}}" bindchange="handlerSwitch" />
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+    <!-- 多文本模式 -->
+    <block wx:if="{{item.dataType=='textarea' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <textarea class="p-input p-textarea" focus="{{item.focus}}" placeholder="{{item.placeholder}}" id="{{item.name}}" bindinput="handlerAreaInput" placeholder-class="p-placeholder" rows="3"></textarea>
+          <block wx:if="{{item.maxlength}}">
+            <view aria-role="option" class="p-textarea-counter"><span>{{item.currentlength}}</span>/{{item.maxlength}}</view>
+          </block>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+
+    </block>
+
+    <!-- 跳转选择模式 为了获取id -->
+    <block wx:if="{{item.dataType=='outer' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head p-flex-h">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <navigator class="weui-cell weui-cell_access" id="{{item.name}}" hover-class="weui-cell_active" url="{{item.path}}">
+            <view class="vouter">
+              <input type="text" disabled="true" value="{{item.display || (item.value==0?'':item.value)}}" placeholder="{{item.placeholder}}" placeholder-class="p-placeholder" />
+            </view>
+          </navigator>
+        </view>
+        <view class="iconfont icon-you" style="padding:16px;color:#999;">
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 跳转model模式 为了获取对象 -->
+    <block wx:if="{{item.dataType=='object' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <navigator class="weui-cell weui-cell_access" id="{{item.name}}" hover-class="weui-cell_active" url="{{item.path}}">
+            <view class="">
+              <input type="text" disabled="true" value="{{item.display || item.value}}" placeholder="{{item.placeholder}}" placeholder-class="p-placeholder" />
+            </view>
+          </navigator>
+        </view>
+        <view class="iconfont icon-you" style="padding:16px;color:#999;">
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <block wx:if="{{item.dataType=='objects' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <navigator class="weui-cell weui-cell_access" id="{{item.name}}" hover-class="weui-cell_active" url="{{item.path}}">
+            <view class="">
+              <input type="text" disabled="true" class="p-placeholder" value="{{item.display || item.value}}" placeholder="{{item.placeholder}}" placeholder-class="p-placeholder" />
+            </view>
+          </navigator>
+
+          <view class="displayarea">
+            <block wx:if="{{(item.objects && item.objects.length>0)}}">
+              <view class="vitem" wx:for="{{item.objects}}" wx:for-item="ione" wx:key="ione">
+                <view class="ival">{{ione.__display}}</view>
+                <view class="ibtn" bind:tap="handlerRemoveItem" data-name="{{item.name}}" data-info="{{ione}}">X</view>
+              </view>
+            </block>
+          </view>
+
+
+
+        </view>
+        <view class="iconfont icon-you" style="padding:16px;color:#999;">
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 时间模式 date -->
+    <block wx:if="{{item.dataType=='date' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <picker mode="date" class="p-input" start="2000-01-01" end="2050-01-01" fields="day" header-text="选择日期" id="{{item.name}}" value="{{item.value}}" bindchange="handlerPickerChange">
+            <input type="text" disabled="true" value="{{item.display || item.value}}" placeholder="{{item.placeholder}}" placeholder-class="p-placeholder" />
+          </picker>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+    <!-- 时间模式 -->
+    <block wx:if="{{item.dataType=='time' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <picker mode="time" class="p-input" header-text="选择时间" id="{{item.name}}" value="{{item.value}}" bindchange="handlerPickerChange">
+            <input type="text" disabled="true" value="{{item.display || item.value}}" placeholder="{{item.placeholder}}" placeholder-class="p-placeholder" />
+          </picker>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+    <!-- 多图模式 -->
+    <block wx:if="{{item.dataType=='image' && item.num>1 && !item.hidden}}">
+      <view class="p-line-content p-flex-v">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <view class="p-form-images p-flex-h">
+            <block wx:if="{{item.value.length<item.num}}">
+              <view class="p-form-img-add" id="{{item.name}}" bindtap="handlerUploadImage">+</view>
+            </block>
+            <view class="p-form-imgitem" wx:for="{{item.value}}" wx:for-item="oimg" wx:for-index="oindex" wx:key="oimg">
+              <image class="p-form-img" src="{{oimg}}"></image>
+              <view class="p-img-close iconfont icon-close" data-name="{{item.name}}" data-index="{{oindex}}" bindtap="handlerRemoveImage"></view>
+            </view>
+          </view>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+<!-- 封面图 -->
+    <block wx:if="{{item.dataType=='cover' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <view class="p-form-images covers p-flex-h">
+            <image wx:for="{{imgs}}" wx:for-index="zindex" wx:key="img" wx:for-item="img" src="{{img}}" class='cimg {{imgindex == zindex ? "active":"" }}' data-index="{{zindex}}" bindtap="handlerTapCoverImage"></image>
+          </view>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 单图模式 icon head -->
+    <block wx:if="{{item.dataType=='image' && item.num<=1 && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <block wx:if="{{ !item.value}}">
+            <view class="p-form-head-add" id="{{item.name}}" bindtap="handlerUploadImage">+</view>
+          </block>
+          <block wx:else>
+            <image class="p-form-img-head" src="{{item.value}}" bindtap="handlerUploadImage"></image>
+          </block>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 日期时间模式 -->
+    <block wx:if="{{item.dataType=='datetime' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <input class="p-input" bindtap="handlerStartDateTimePicker" id="{{item.name}}" type="text" disabled="true" value="{{item.value}}" placeholder="{{item.placeholder}}" placeholder-class="p-placeholder" />
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 省市区选择器 -->
+    <block wx:if="{{item.dataType=='region' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <picker mode="region" class="p-input" header-text="选择地区" level="{{item.level}}" id="{{item.name}}" value="{{item.value}}" bindchange="handlerPickerChange">
+            <input type="text" disabled="true" value="{{item.display || item.value}}" placeholder="{{item.placeholder}}" placeholder-class="p-placeholder" />
+          </picker>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 密码框模式 -->
+    <block wx:if="{{item.dataType=='password' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <input class="p-input p-input-text" password="true" type="text" maxlength="{{item.maxlength}}" value="{{item.value}}" placeholder="{{item.placeholder}}" bindblur="handlerBlur" bind:touchstart="handlerTouch" id="{{item.name}}" placeholder-class="p-placeholder" />
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 日期班次选择 -->
+    <block wx:if="{{item.dataType=='dateplan' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content">
+          <input class="p-input" bindtap="handlerStartDatePlanPicker" id="{{item.name}}" type="text" disabled="true" value="{{item.display || item.value}}" placeholder="{{item.placeholder}}" placeholder-class="p-placeholder" />
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 带小数点的模式 -->
+    <block wx:if="{{item.dataType=='double' && !item.hidden}}">
+      <view class="p-line-content p-flex-h">
+        <view class="p-form-head">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+        </view>
+        <view class="p-form-content p-flex-h">
+          <input class="p-input p-input-number" type="digit" maxlength="9" value="{{item.value || ''}}" placeholder="{{item.placeholder}}" bindblur="handlerBlur" bind:touchstart="handlerTouch" id="{{item.name}}" placeholder-class="p-placeholder" />
+          <block wx:if="{{item.unit}}">
+            <view class="p-unit">{{item.unit}}</view>
+          </block>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+    <!-- 正文富文本 -->
+    <block wx:if="{{item.dataType=='richtext' && !item.hidden}}">
+      <view class="p-line-content p-flex-v">
+        <view class="p-form-head p-flex-h">
+          <label class="p-form-label">{{item.title}}<span class="p-form-need" wx:if="{{ item.required }}">*</span></label>
+          <view class="placeholder">{{item.placeholder || ''}}</view>
+        </view>
+        <view class="p-form-content">
+          <paste-rich id="{{item.name}}" placeholder="{{item.placeholder}}" bind:onEditorReady="richHandlerReady" bind:insertImageEvent="richHandlerInsertImage" placeholder-class="p-placeholder"></paste-rich>
+        </view>
+        <view class="p-form-warning">{{item.error}}</view>
+      </view>
+    </block>
+
+  </view>
+  <!-- 日期时间选择器 -->
+  <datetime-picker bind:submit='handlerSelectedDateTime' showDatePickerPlus='{{datetimePickerShow}}' initDate="{{datetimePickerDate}}" pickerName="{{datetimePickerName}}"></datetime-picker>
+  <!-- 班次选择器 -->
+  <dateplan-picker bind:submit='handlerSelectedDatePlan' showDatePickerPlus='{{dateplanPickerShow}}' initDate="{{dateplanPickerDate}}" pickerName="{{dateplanPickerName}}"></dateplan-picker>
+
+  <block wx:if="{{showButton==true}}">
+    <button bindtap="funcSubmitForm" style="margin-top:100rpx;" class="form-submit" type="primary">确定</button>
+  </block>
+
+<view style="height: 100rpx;"></view>
+
+</view>

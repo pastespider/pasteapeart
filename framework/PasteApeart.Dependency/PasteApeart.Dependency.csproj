@@ -8,9 +8,6 @@
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 		<ImplicitUsings>enable</ImplicitUsings>
 
-		<FileVersion>26.9.5</FileVersion>
-		<VersionPrefix>26.9.5</VersionPrefix>
-		<AssemblyVersion>26.9.5</AssemblyVersion>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>

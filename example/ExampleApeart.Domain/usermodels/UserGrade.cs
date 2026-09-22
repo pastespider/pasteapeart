@@ -1,5 +1,6 @@
 using PasteApeart.Helper;
 using PasteApeart;
+using PasteApeart.Domain.Entity;
 
 namespace ExampleApeart.usermodels
 {

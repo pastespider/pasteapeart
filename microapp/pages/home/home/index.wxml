@@ -1,0 +1,28 @@
+<!--pages/home/home/index.wxml-->
+<view>
+  <!-- banner区域 -->
+  <view class="top_banner">
+    <swiper class="listbox">
+      <block wx:for="{{bannerList}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+        <swiper-item >
+        <image class="bannerimg" src="{{item.image}}"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+<!-- 公告区域 -->
+<view class="top_notice">
+  <view></view>
+</view>
+<!-- 菜单区域 -->
+<view class="top_menus">
+  <block wx:for="{{menuList}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+      <view class="imenu">
+    <navigator url="{{item.path}}">
+      <image class="simg" src="{{item.image}}"></image>
+      <view class="iname">{{item.name}}</view>
+    </navigator>
+      </view>
+  </block>
+</view>
+</view>

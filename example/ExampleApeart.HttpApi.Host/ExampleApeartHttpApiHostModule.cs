@@ -9,6 +9,9 @@ using ExampleApeart.HttpApi.Host.auditmodels;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using PasteApeart.Handler.redis;
+using PasteApeart.Dependency;
+using PasteApeart.Handler.Extensions;
 
 namespace ExampleApeart.HttpApi.Host
 {

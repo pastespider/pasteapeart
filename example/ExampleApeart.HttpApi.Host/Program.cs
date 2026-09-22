@@ -3,6 +3,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Serilog;
 using PasteApeart;
+using PasteApeart.Handler.lazy;
 
 //using Serilog.Sinks.RabbitMQ;
 
@@ -96,13 +97,33 @@ namespace ExampleApeart
             }
         }
 
+        /// <summary>
+        /// 配置autofac
+        /// </summary>
+        /// <param name="containerBuilder"></param>
         private static void ConfigureAutofac(ContainerBuilder containerBuilder)
         {
-            // 获取程序集
-            var applicationAssembly = typeof(ExampleApeartApplicationModule).Assembly;
 
+            /*
+                var host = Host.CreateDefaultBuilder(args)
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                .ConfigureContainer<ContainerBuilder>(containerBuilder =>
+                {
+                // Autofac 配置
+                ConfigureAutofac(containerBuilder);
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                webBuilder.UseConfiguration(Configuration);
+                webBuilder.UseStartup<Startup>();
+                })
+                .UseSerilog()
+                .Build();
+             */
+
+            // 获取程序集
             // 1. 注册所有 AppService（启用属性注入）
-            containerBuilder.RegisterAssemblyTypes(applicationAssembly)
+            containerBuilder.RegisterAssemblyTypes(typeof(ExampleApeartApplicationModule).Assembly)
                 .Where(t => t.IsClass && !t.IsAbstract && typeof(IAppService).IsAssignableFrom(t))
                 .AsSelf()
                 .AsImplementedInterfaces()
@@ -140,7 +161,6 @@ namespace ExampleApeart
 
         internal static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseConfiguration(Configuration);

@@ -1,8 +1,8 @@
+using ExampleApeart.Domain;
 using ExampleApeart.usermodels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Linq.Expressions;
 using PasteApeart;
 using PasteApeart.EntityFrameworkCore;
 
@@ -30,14 +30,19 @@ namespace ExampleApeart.EntityFrameworkCore
         //private bool FilterUserId { get; set; } = true;
 
         /// <summary>
-        /// 假设需要基于查询获取
+        /// 当前权限用户集
         /// </summary>
-        public IQueryable<int> CurrentQueryableUserId { get; set; }
+        public IQueryable<int> QueryUserId { get; set; }
+
+        /// <summary>
+        /// 当前登录用户
+        /// </summary>
+        public int UserId { get; set; }
 
         /// <summary>
         /// 是否要过滤
         /// </summary>
-        public bool FilterQuery { get; set; } = true;
+        public bool EnableFilter { get; set; } = true;
 
         ///// <summary>
         ///// 基于当前用户查询得有权限对象
@@ -80,16 +85,16 @@ namespace ExampleApeart.EntityFrameworkCore
 
             if (CurrentUserId > 1)
             {
-                FilterQuery = true;
+                EnableFilter = true;
                 //这里模拟查询 实际情况可以用类似this.UserGrade.Where(x => x.GradeId == CurrentUserId).Select(x => x.UserId);
                 var uid = new int[] { 1, 2 };
-                CurrentQueryableUserId = uid.AsQueryable();
+                QueryUserId = uid.AsQueryable();
             }
             else
             {
-                FilterQuery = false;
+                EnableFilter = false;
                 var uid = new int[] { 10, 20, 30 };
-                CurrentQueryableUserId = uid.AsQueryable();
+                QueryUserId = uid.AsQueryable();
             }
             //Console.WriteLine($"Current UserId:{CurrentUserId} Filter:{FilterQuery}");
         }
@@ -128,45 +133,79 @@ namespace ExampleApeart.EntityFrameworkCore
         /// <param name="modelBuilder"></param>
         private void FilterIQueryable(ModelBuilder modelBuilder)
         {
-            if (CurrentQueryableUserId == null || !FilterQuery)
+            if (QueryUserId == null || !EnableFilter)
             {
                 return;
             }
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
-                if (typeof(IUserIdEntiry).IsAssignableFrom(entityType.ClrType))
-                {
-                    var entityParam = Expression.Parameter(entityType.ClrType, "e");
-                    var userIdProperty = Expression.Property(entityParam, nameof(IUserIdEntiry.UserId));
+                #region  实现类似多个个多租户的过滤 !EnableFilter || QueryGroupId.Any(x.UserId)
+                //// !EnableFilter || QueryGroupId.Any(x.UserId)
+                //if (typeof(IUserIdEntiry).IsAssignableFrom(entityType.ClrType))
+                //{
+                //    var entityParam = Expression.Parameter(entityType.ClrType, "e");
+                //    var userIdProperty = Expression.Property(entityParam, nameof(IUserIdEntiry.UserId));
+                //    var userIdType = userIdProperty.Type;
+                //    // 关键：获取 UserIds 的查询表达式
+                //    var userIdsQuery = Expression.Property(Expression.Constant(this), nameof(QueryUserId));
 
-                    // 关键：获取 UserIds 的查询表达式
-                    var userIdsQuery = Expression.Property(Expression.Constant(this), nameof(CurrentQueryableUserId));
+                //    // 使用 Any 方法：UserIds.Any(id => id == e.UserId)
+                //    var anyMethod = typeof(Queryable)
+                //        .GetMethods()
+                //        .First(m => m.Name == "Any" && m.GetParameters().Length == 2)
+                //        .MakeGenericMethod(userIdType);
 
-                    // 使用 Any 方法：UserIds.Any(id => id == e.UserId)
-                    var anyMethod = typeof(Queryable)
-                        .GetMethods()
-                        .First(m => m.Name == "Any" && m.GetParameters().Length == 2)
-                        .MakeGenericMethod(typeof(int));
+                //    var idParam = Expression.Parameter(userIdType, "id");
+                //    var equality = Expression.Equal(idParam, userIdProperty);
+                //    var anyLambda = Expression.Lambda(equality, idParam);
 
-                    var idParam = Expression.Parameter(typeof(int), "id");
-                    var equality = Expression.Equal(idParam, userIdProperty);
-                    var anyLambda = Expression.Lambda(equality, idParam);
+                //    // 构建 UserIds.Any(id => id == e.UserId)
+                //    var subquery = Expression.Call(
+                //        anyMethod,
+                //        userIdsQuery,           // IQueryable<int>
+                //        Expression.Quote(anyLambda) // Lambda 表达式
+                //    );
 
-                    // 构建 UserIds.Any(id => id == e.UserId)
-                    var subquery = Expression.Call(
-                        anyMethod,
-                        userIdsQuery,           // IQueryable<int>
-                        Expression.Quote(anyLambda) // Lambda 表达式
-                    );
+                //    // 加上开关
+                //    var filterSwitch = Expression.Property(Expression.Constant(this), nameof(EnableFilter));
+                //    var notFilter = Expression.Not(filterSwitch);
+                //    var body = Expression.OrElse(notFilter, subquery);
 
-                    // 加上开关
-                    var filterSwitch = Expression.Property(Expression.Constant(this), nameof(FilterQuery));
-                    var notFilter = Expression.Not(filterSwitch);
-                    var body = Expression.OrElse(notFilter, subquery);
+                //    var lambda = Expression.Lambda(body, entityParam);
+                //    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+                //}
+                #endregion
 
-                    var lambda = Expression.Lambda(body, entityParam);
-                    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(lambda);
-                }
+                #region 实现类似单个多租户的过滤 !EnableFilter || x.UserId == UserId
+                //// !EnableFilter || x.UserId == UserId
+                //if (typeof(IUserIdEntiry).IsAssignableFrom(entityType.ClrType))
+                //{
+                //    var idProperty = entityType.ClrType.GetProperty(nameof(IUserIdEntiry.UserId));
+                //    var keyType = idProperty.PropertyType; // 这里应为 int
+
+                //    var entityParam = Expression.Parameter(entityType.ClrType, "e");
+                //    var entityUserIdProperty = Expression.Property(entityParam, nameof(IUserIdEntiry.UserId));
+
+                //    // 当前对象上的 UserId 属性，例如 this.UserId
+                //    var currentUserIdProperty = Expression.Property(Expression.Constant(this), nameof(UserId));
+
+                //    // 开关: !EnableFilter
+                //    var filterSwitch = Expression.Property(Expression.Constant(this), nameof(EnableFilter));
+                //    var notFilter = Expression.Not(filterSwitch);
+
+                //    // 条件: x.UserId == UserId
+                //    var userEqualsCurrent = Expression.Equal(entityUserIdProperty, currentUserIdProperty);
+
+                //    // 组合条件: !EnableFilter || x.UserId == UserId
+                //    var body = Expression.OrElse(notFilter, userEqualsCurrent);
+
+                //    var lambda = Expression.Lambda(body, entityParam);
+                //    modelBuilder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+
+                //    continue;
+                //}
+                #endregion
+
             }
         }
 

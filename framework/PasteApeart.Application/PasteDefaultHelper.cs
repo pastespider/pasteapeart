@@ -226,7 +226,7 @@ namespace PasteApeart.Application
 
             foreach (var extendProperty in properties)
             {
-
+                //UserId  GradeId
                 var extendGradeId = extendProperty.GetValue(searchModel);
                 if (extendGradeId == null)
                 {

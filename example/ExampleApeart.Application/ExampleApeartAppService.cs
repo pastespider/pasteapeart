@@ -1,9 +1,9 @@
+using ExampleApeart.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using PasteApeart;
 using PasteApeart.Application.Contracts;
+using PasteApeart.Handler.lazy;
 using PasteApeart.Helper;
-using ExampleApeart.Application.Contracts;
-using ExampleApeart.EntityFrameworkCore;
 using System.Reflection;
 
 namespace ExampleApeart

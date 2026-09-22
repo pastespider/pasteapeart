@@ -16,10 +16,15 @@
   <ItemGroup>
 	<PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
 	<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	<PackageReference Include="PasteApeart.Application" Version="26.8.5" />
-	<PackageReference Include="PasteApeart.Helper" Version="26.8.1" />
-  </ItemGroup>
 
+  </ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<ProjectReference Include="..\..\framework\PasteApeart.Application\PasteApeart.Application.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="PasteApeart.Application" Version="26.9.16" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExampleApeart.Handler\ExampleApeart.Handler.csproj" />
   </ItemGroup>

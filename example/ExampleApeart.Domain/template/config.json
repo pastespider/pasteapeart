@@ -38,7 +38,7 @@
   "attribute": {
     "ignore": [ "Comment", "Display", "Decription", "Index", "DefaultValue", "Column", "NotMapped" ], //表示忽略哪些来自Domain的特性
     "all": {
-      "*:!list:UserId": "[PasteOuter(\"userInfo\",\"extendUser\",\"id\",\"userName\")]", //表示这个字段UserId需要添加这个特性多个之间用::隔开 示例：[PasteLeft]::[PasteHidden]
+      "*:!list:UserId": "[PasteOuter(\"userInfo\",\"extendUser\",\"id\",\"name\")]", //表示这个字段UserId需要添加这个特性多个之间用::隔开 示例：[PasteLeft]::[PasteHidden]
       "*:all:UserId": "[PasteShort(\"UserInfo\",\"ExtendUser\",\"ToUserShort()\",\"ToQueryUserShort()\")]", //表示这个字段UserId需要添加这个特性多个之间用::隔开 示例：[PasteLeft]::[PasteHidden]
       "*:!add:ExtendUser": "[PasteDisplay]",
       "*:list:UserId": "[PasteHidden]",

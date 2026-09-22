@@ -111,6 +111,43 @@
             <param name="auditLog"></param>
             <returns></returns>
         </member>
+        <member name="T:ExampleApeart.HttpApi.Host.Controllers.QuickHandlerController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.QuickHandlerController.#ctor(PasteApeart.Handler.common.IEventQuickActionHandler)">
+            <summary>
+            
+            </summary>
+            <param name="eventActionHandler"></param>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.QuickHandlerController.ReadAddModel(System.String)">
+            <summary>
+            读取AddDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.QuickHandlerController.ReadListModel">
+            <summary>
+            读取ListDto的数据模型
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.QuickHandlerController.Page(PasteApeart.Application.Contracts.InputSearchBase)">
+            <summary>
+            
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Controllers.QuickHandlerController.CreateItemAsync(PasteApeart.Handler.IEventActionHandler)">
+             <summary>
+             执行一个
+            </summary>
+             <param name="handler"></param>
+             <returns></returns>
+        </member>
         <member name="T:ExampleApeart.HttpApi.Host.Controllers.TestController">
             <summary>
             
@@ -396,12 +433,18 @@
             <param name="args"></param>
             <returns></returns>
         </member>
+        <member name="M:ExampleApeart.Program.ConfigureAutofac(Autofac.ContainerBuilder)">
+            <summary>
+            配置autofac
+            </summary>
+            <param name="containerBuilder"></param>
+        </member>
         <member name="T:ExampleApeart.StartHostedService">
             <summary>
             系统初始化
             </summary>
         </member>
-        <member name="M:ExampleApeart.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.RabbitConfig},PasteApeart.Handler.rabbitmodel.RabbitMultiConsumerHandler,Microsoft.Extensions.Logging.ILogger{ExampleApeart.StartHostedService},PasteApeart.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleApeart.AppConfig})">
+        <member name="M:ExampleApeart.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.Application.Contracts.RabbitConfig},PasteApeart.Handler.rabbit.IRabbitMultiConsumerHandler,Microsoft.Extensions.Logging.ILogger{ExampleApeart.StartHostedService},PasteApeart.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleApeart.AppConfig})">
             <summary>
             
             </summary>

@@ -1,0 +1,141 @@
+
+@import "/static/font/iconfont.wxss";
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+}
+
+.btnout{
+  width: 90% !important;
+  margin-top: 100rpx;
+  margin-bottom: 100rpx;
+}
+
+.form{
+  position:relative;
+  box-sizing: border-box;
+  padding:10rpx;
+
+  .item{
+    position:relative;
+  }
+  .fline{
+    position:relative;
+    box-sizing: border-box;
+    padding:10rpx 0 10rpx 0rpx;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  .uhead{
+    width:160rpx;
+    height: 160rpx;
+    border-radius: 50% 50%;
+    border:1px solid #f2f2f2;
+    display:block;
+    margin:auto;
+    margin-top:40rpx;
+    margin-bottom: 20rpx;
+  }
+  .hflex{
+    display:flex;
+    flex-direction: row;
+  }
+  .vflex{
+    display:flex;
+    flex-direction: column;
+  }
+  .label{
+    width:160rpx;
+    text-align: right;
+    line-height: 88rpx;
+    color:#444;
+    display:inline-block;
+    &::after{
+      content: ':';
+    }
+  }
+  .val{
+    padding-left:60rpx;
+    box-sizing: border-box;
+    font-size: 24rpx;
+    line-height: 88rpx;
+    display:inline-block;
+    color:#666;
+  }
+  .btnitem{
+    text-align: center;
+    position:relative;
+  }
+  .input-text{
+    height: 88rpx;
+    padding:0 10rpx 0 10rpx;
+  }
+  .iinput{
+    height: 88rpx;
+    width: 100%;
+    flex: 1;
+    box-sizing: border-box;
+    color: #666;
+    line-height: 88rpx;
+    padding-left:60rpx;
+    margin-right: 10rpx;
+  }
+
+}
+
+.u-tabs-scroll-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  position: relative;
+  z-index: 999;
+  background-color: #FFF;
+}
+.tab_item {
+  flex: 1;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  color: #303133;
+  font-size: 15px;
+  z-index: 3;
+  font-weight: normal;
+}
+.tab_select {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  color: #D51E2F;
+  font-size: 15px;
+  z-index: 3;
+  font-weight: bold;
+  position: relative;
+}
+.tab_select::after {
+  position: absolute;
+  content: "";
+  left: calc(50% - 10px);
+  bottom: 4rpx;
+  width: 20px;
+  height: 3px;
+  border-radius: 100px;
+  background-color: #D51E2F;
+}
+
+.p-flex-h{
+  display:flex;
+  flex-direction: row;
+}
+.p-flex-v{
+  display:flex;
+  flex-direction: column;
+}
+// @import 'weui-miniprogram/weui-wxss/dist/style/weui.wxss';

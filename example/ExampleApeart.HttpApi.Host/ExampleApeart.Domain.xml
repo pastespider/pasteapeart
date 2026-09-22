@@ -49,6 +49,21 @@
             使用读写分离
             </summary>
         </member>
+        <member name="T:ExampleApeart.Domain.CurrentUser">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Domain.CurrentUser.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.Domain.CurrentUser.Token">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ExampleApeart.EnumIsEnableState">
             <summary>
             状态枚举
@@ -97,46 +112,6 @@
         <member name="F:ExampleApeart.EnumRoleType.MiniMenu">
             <summary>
             小程序菜单
-            </summary>
-        </member>
-        <member name="T:ExampleApeart.ILevelEntity">
-            <summary>
-            支持 非递归多级查询，支持多级排序
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.ILevelEntity.Id">
-            <summary>
-            标识
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.ILevelEntity.SortStr">
-            <summary>
-            排序串
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.ILevelEntity.Level">
-            <summary>
-            层级
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.ILevelEntity.Sort">
-            <summary>
-            排序 层级内排序
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.ILevelEntity.FatherId">
-            <summary>
-            父级
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.ILevelEntity.FatherStr">
-            <summary>
-            父级串 替换递归查询用
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.ILevelEntity.RootId">
-            <summary>
-            根级 大块
             </summary>
         </member>
         <member name="T:ExampleApeart.ExampleApeartDbProperties">
@@ -211,7 +186,7 @@
         </member>
         <member name="T:ExampleApeart.usermodels.GradeRole">
             <summary>
-            角色绑定权限
+            角色权限
             </summary>
         </member>
         <member name="P:ExampleApeart.usermodels.GradeRole.GradeId">
@@ -269,6 +244,11 @@
             权限类型 0权限1菜单2按钮
             </summary>
         </member>
+        <member name="P:ExampleApeart.usermodels.RoleInfo.IsDefault">
+            <summary>
+            默认权限 是否是默认权限
+            </summary>
+        </member>
         <member name="P:ExampleApeart.usermodels.RoleInfo.IsEnable">
             <summary>
             状态
@@ -290,11 +270,6 @@
             </summary>
         </member>
         <member name="P:ExampleApeart.usermodels.RoleInfo.SortStr">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.usermodels.RoleInfo.RootId">
             <summary>
             
             </summary>
@@ -324,12 +299,12 @@
             用户信息
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserInfo.UserName">
+        <member name="P:ExampleApeart.usermodels.UserInfo.Name">
             <summary>
             用户名
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.UserInfo.UserHead">
+        <member name="P:ExampleApeart.usermodels.UserInfo.Head">
             <summary>
             头像
             </summary>

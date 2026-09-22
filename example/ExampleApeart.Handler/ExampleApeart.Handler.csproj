@@ -10,6 +10,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="PasteApeart.Dependency" Version="26.9.16" />
 		<PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
@@ -27,10 +28,16 @@
 		<PackageReference Include="StackExchange.Redis" Version="2.8.58" />
 
 		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
-		<PackageReference Include="PasteApeart.Handler" Version="26.8.3" />
+
 		<!--<PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="8.103.9.3" />-->
 	</ItemGroup>
-	
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<ProjectReference Include="..\..\framework\PasteApeart.Handler\PasteApeart.Handler.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="PasteApeart.Handler" Version="26.9.16" />
+	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExampleApeart.Application.Contracts\ExampleApeart.Application.Contracts.csproj" />
     <ProjectReference Include="..\ExampleApeart.EntityFrameworkCore\ExampleApeart.EntityFrameworkCore.csproj" />

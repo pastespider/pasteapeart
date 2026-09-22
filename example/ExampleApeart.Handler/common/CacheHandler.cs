@@ -1,10 +1,9 @@
-using PasteApeart;
-using PasteApeart.Application.Contracts;
-using PasteApeart.Handler;
-using ExampleApeart.Application.Contracts;
 using ExampleApeart.EntityFrameworkCore;
-using ExampleApeart.Handler;
 using ExampleApeart.usermodels;
+using PasteApeart.Application.Contracts;
+using PasteApeart.Dependency;
+using PasteApeart.Domain.Entity;
+using PasteApeart.Handler.redis;
 
 namespace ExampleApeart
 {
@@ -40,7 +39,7 @@ namespace ExampleApeart
         /// <param name="id"></param>
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
-        public async Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : Entity
+        public async Task<TDto> DtoAsync<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : Entity, IEntity, new()
         {
             var cachePrefix = GetCachePrefix<TEntity>();
             var cacheKey = $"{cachePrefix}{id}";
@@ -67,7 +66,7 @@ namespace ExampleApeart
         /// <param name="expireSeconds"></param>
         /// <returns></returns>
         /// <exception cref="PasteCodeException"></exception>
-        public async Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : Entity
+        public async Task<TDto> DtoAsyncThrowException<TEntity, TDto>(object id, int expireSeconds = 3600) where TEntity : Entity, IEntity, new()
         {
             var read = await DtoAsync<TEntity, TDto>(id, expireSeconds);
             if (read != null)

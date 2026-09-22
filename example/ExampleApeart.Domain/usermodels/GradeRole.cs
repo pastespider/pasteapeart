@@ -1,13 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using PasteApeart;
+using PasteApeart.Domain.Entity;
 using PasteApeart.Helper;
 
 namespace ExampleApeart.usermodels
 {
     /// <summary>
-    /// 角色绑定权限
+    /// 角色权限
     /// </summary>
-    [Comment("角色绑定权限")]
+    [Comment("角色权限")]
     public class GradeRole : Entity<int>
     {
         /// <summary>

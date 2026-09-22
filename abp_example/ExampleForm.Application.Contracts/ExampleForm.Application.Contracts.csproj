@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  <!-- 启用确定性编译（关键） -->
+	  <Deterministic>true</Deterministic>
+	  <!-- 用于CI环境，确保与本地编译一致（可选但推荐） -->
+	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	  <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ExampleForm.Application.Contracts</RootNamespace>
+	    <DocumentationFile>..\ExampleForm.HttpApi.Host\ExampleForm.Application.Contracts.xml</DocumentationFile>
+	    <Platforms>AnyCPU;ARM64;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="8.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\framework\PasteApeart.Application.Contracts\PasteApeart.Application.Contracts.csproj" />
+    <ProjectReference Include="..\ExampleForm.Domain\ExampleForm.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

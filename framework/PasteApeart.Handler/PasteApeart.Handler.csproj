@@ -8,9 +8,6 @@
 	  <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <ImplicitUsings>enable</ImplicitUsings>
 
-	  <FileVersion>26.9.5</FileVersion>
-	  <VersionPrefix>26.9.5</VersionPrefix>
-	  <AssemblyVersion>26.9.5</AssemblyVersion>
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
@@ -54,16 +51,10 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.4" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+	<ItemGroup>
 		<ProjectReference Include="..\PasteApeart.Domain\PasteApeart.Domain.csproj" />
 		<ProjectReference Include="..\PasteApeart.Application.Contracts\PasteApeart.Application.Contracts.csproj" />
-		<!--<ProjectReference Include="..\PasteApeart.EntityFrameworkCore\PasteApeart.EntityFrameworkCore.csproj" />-->
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="PasteApeart.Domain" Version="26.9.5" />
-		<PackageReference Include="PasteApeart.Application.Contracts" Version="26.9.5" />
-		<!--<PackageReference Include="PasteApeart.EntityFrameworkCore" Version="26.7.1" />-->
-	</ItemGroup>
 
 </Project>

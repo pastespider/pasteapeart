@@ -1,0 +1,1953 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleForm.Application.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleForm.Application.Contracts.ExampleFormString">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleForm.Application.Contracts.ExampleFormString.SelectRoleTypeQuery">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleForm.Application.Contracts.ExampleFormString.SelectRoleType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.Contracts.eventmodels.EventDemoModel">
+            <summary>
+            案例模型 案例模型，业务实现参考这个
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.Contracts.eventmodels.EventDemoModel.UserId">
+            <summary>
+            用户 这里是测试，表示输入一个用户UserId信息
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.Contracts.QuickHandlerModelDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.Contracts.QuickHandlerModelDto.Menu1">
+            <summary>
+            去执行
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.Contracts.SelectStringItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.Contracts.SelectStringItem.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.Contracts.SelectStringItem.value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.Contracts.SelectStringItem.selected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.Contracts.SelectIntItem">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.Contracts.SelectIntItem.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.Contracts.SelectIntItem.value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.Contracts.SelectIntItem.selected">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.SelectDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.SelectDto.ClassType">
+            <summary>
+            横向分类 这是一个Enum类型,而且使用了过滤，过滤掉-1和0的值的选项不返回前端
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.SelectDto.Actions">
+            <summary>
+            动作类型 由于过滤，UI只会显示1和4也就是正常和停止
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.StringDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Name">
+            <summary>
+            姓名 模拟短文本输入
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Desc">
+            <summary>
+            文本区域 模拟文本区域的输入
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Mark">
+            <summary>
+            文本 虽然长度限制256，不过还是以text的形式展示
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Text">
+            <summary>
+            文本区域 长度大于128则自动为textarea
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Html">
+            <summary>
+            内容 虽然设置了长度256，但还是会以富文本的形式展示
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Blog">
+            <summary>
+            富文本 模拟富文本，前端HTML的是使用wangEditv5,默认不配置maxlength的就是html
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Mark1">
+            <summary>
+            MarkDown 内容将提交给Mark1和MarkHtml 
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.MarkHtml">
+            <summary>
+            这个就是Mark1的Html代码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Name1">
+            <summary>
+            文本 这个可以编辑
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.StringDto.Name2">
+            <summary>
+            文本 这个不能编辑
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.DateTimeDto">
+            <summary>
+            时间案例
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DateTimeDto.Amount">
+            <summary>
+            金额
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DateTimeDto.m1">
+            <summary>
+            枚举一
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DateTimeDto.m2">
+            <summary>
+            枚举二
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DateTimeDto.obj2">
+            <summary>
+            子1
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DateTimeDto.sel2">
+            <summary>
+            子2 这种情况就是错误的，因为没有值，不会被渲染
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DateTimeDto.sel3">
+            <summary>
+            子3
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DateTimeDto.sel4">
+            <summary>
+            子4
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DateTimeDto.xitem">
+            <summary>
+            子5
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.Xavels">
+            <summary>
+            XY
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.Xavels.sel5">
+            <summary>
+            XX
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.ObjectDto">
+            <summary>
+            object outer 案例
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.Name">
+            <summary>
+            姓名 模拟短文本输入
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.Desc">
+            <summary>
+            文本区域 模拟文本区域的输入
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.Text">
+            <summary>
+            文本区域 长度大于128则自动为textarea
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.grade_ids">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.ExtendGrade">
+            <summary>
+            角色的扩展信息，编辑的时候显示用
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.date2">
+            <summary>
+            外表时间
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.str2">
+            <summary>
+            外表字符
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ObjectDto.mod1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.Model1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.Model1.Id">
+            <summary>
+            ID 这个用于排重
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.Model1.Name">
+            <summary>
+            名称 这个用于显示到UI
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.Model2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.Model2.Id">
+            <summary>
+            ID 这个用于排重
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.Model2.Mark">
+            <summary>
+            名称 这个用于显示到UI
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.Model2.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.ImageModel">
+            <summary>
+            图片案例
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ImageModel.Img1">
+            <summary>
+            图片1
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ImageModel.Img2">
+            <summary>
+            图片文字识别
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ImageModel.Img3">
+            <summary>
+            图片3
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.ImageModel.Img4">
+            <summary>
+            图片4
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.FileModel">
+            <summary>
+            上传文件案例
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.FileModel.File1">
+            <summary>
+            文件1 默认配置，使用默认的路径上传
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.FileModel.File2">
+            <summary>
+            文件2 定义存储路径
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.FileModel.File3">
+            <summary>
+            文件3 自定义上传地址,注意headers
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.FileModel.File4">
+            <summary>
+            文件4 自定义onchange函数
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.LinkQueryModel">
+            <summary>
+            query案例
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.LinkQueryModel.Name">
+            <summary>
+            姓名 模拟短文本输入
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.LinkQueryModel.Desc">
+            <summary>
+            文本区域 模拟文本区域的输入
+            </summary>
+        </member>
+        <member name="T:ExampleForm.Application.testmodels.DataFormat">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.Int1">
+            <summary>
+            Int
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.Int2">
+            <summary>
+            Int?
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.Long1">
+            <summary>
+            Long
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.Long2">
+            <summary>
+            Long?
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.Time1">
+            <summary>
+            Date TimeStamp
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.Time2">
+            <summary>
+            Date TimeStamp?
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.Time3">
+            <summary>
+            Date TimeStampms
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.Time4">
+            <summary>
+            Date TimeStampms?
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.state1">
+            <summary>
+            Enum[]
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.state2">
+            <summary>
+            long[]
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.state3">
+            <summary>
+            int[]
+            </summary>
+        </member>
+        <member name="P:ExampleForm.Application.testmodels.DataFormat.state4">
+            <summary>
+            uint32[]
+            </summary>
+        </member>
+        <member name="T:ExampleForm.ExampleFormApplicationContractsModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.GuidTest1AddDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1AddDto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1AddDto.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1AddDto.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1AddDto.RoleId">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1AddDto.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.GuidTest1UpdateDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1UpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.GuidTest1Dto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1Dto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1Dto.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1Dto.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1Dto.RoleId">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1Dto.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1Dto.ExtendUser">
+            <summary>
+             用户 表示管理者
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1Dto.ExtendGrade">
+            <summary>
+             角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1Dto.ExtendRole">
+            <summary>
+             权限 表示接口的权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.GuidTest1ListDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1ListDto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1ListDto.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1ListDto.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1ListDto.RoleId">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1ListDto.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1ListDto.ExtendUser">
+            <summary>
+             用户 表示管理者
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1ListDto.ExtendGrade">
+            <summary>
+             角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1ListDto.ExtendRole">
+            <summary>
+             权限 表示接口的权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.InputQueryGuidTest1">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.IncludeTableAddDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.IncludeTableAddDto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.IncludeTableAddDto.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.IncludeTableUpdateDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.IncludeTableUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.IncludeTableDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.IncludeTableListDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.InputQueryIncludeTable">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.MyTableAddDto">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableAddDto.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableAddDto.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableAddDto.Rate">
+            <summary>
+            占比
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableAddDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.MyTableUpdateDto">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.MyTableDto">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableDto.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableDto.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableDto.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableDto.Rate">
+            <summary>
+            占比
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.MyTableListDto">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.ExtendAge">
+            <summary>
+            扩展年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.RoleType">
+            <summary>
+            类型
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.role_val">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.ExtendStatus">
+            <summary>
+            扩展状态 所以要申明一个新的字段，转化成比如int，然后调用，否则会被UI默认转化成友好名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.Rate">
+            <summary>
+            占比
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTableListDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.InputQueryMyTable">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.status_val">
+            <summary>
+            状态 测试状态
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.age_val">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.Name">
+            <summary>
+            名称查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.less_range">
+            <summary>
+            小于 小于输入值
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.max_range">
+            <summary>
+            大于 大于输入值
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.minLimit">
+            <summary>
+            区间开始
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.maxLimit">
+            <summary>
+            区间截止
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.ages">
+            <summary>
+            可选多个
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryMyTable.age_array">
+            <summary>
+            年龄 多个年龄查询,多个之间使用,隔开
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.ParentTableAddDto">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableAddDto.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableAddDto.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableAddDto.Front">
+            <summary>
+            包含
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableAddDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.ParentTableUpdateDto">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.ParentTableDto">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableDto.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableDto.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableDto.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableDto.Front">
+            <summary>
+            包含
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.ParentTableListDto">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableListDto.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableListDto.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableListDto.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableListDto.Front">
+            <summary>
+            包含
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTableListDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.InputQueryParentTable">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.InputQueryParentTable.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestLinkIncludeAddDto">
+            <summary>
+            测试链接表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeAddDto.MyTable">
+            <summary>
+            外表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeAddDto.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeAddDto.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestLinkIncludeUpdateDto">
+            <summary>
+            测试链接表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeUpdateDto.MyTable">
+            <summary>
+            外表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeUpdateDto.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeUpdateDto.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeUpdateDto.ExtendUser">
+            <summary>
+            用户 表示管理者
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeUpdateDto.ExtendGrade">
+            <summary>
+            角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestLinkIncludeDto">
+            <summary>
+            测试链接表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeDto.MyTable">
+            <summary>
+            外表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeDto.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeDto.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeDto.ExtendUser">
+            <summary>
+            用户 表示管理者
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeDto.ExtendGrade">
+            <summary>
+            角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestLinkIncludeListDto">
+            <summary>
+            测试链接表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeListDto.MyTable">
+            <summary>
+            外表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeListDto.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeListDto.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeListDto.ExtendUser">
+            <summary>
+            用户 表示管理者
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkIncludeListDto.ExtendGrade">
+            <summary>
+            角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.InputQueryTestLinkInclude">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestTableBase">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableBase.Name">
+            <summary>
+            姓名 模拟短文本输入
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableBase.Head">
+            <summary>
+            头像 模拟图片上传
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableBase.Age">
+            <summary>
+            年龄 模拟输入number
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestTableAddDto">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableAddDto.DateStart">
+            <summary>
+            会员周期 会员生效区间
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableAddDto.DateEnd">
+            <summary>
+            会员周期 会员生效区间
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableAddDto.Balance">
+            <summary>
+            余额 数据库是分为单位，UI中是以元为单位
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestTableUpdateDto">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestTableDto">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestTableListDto">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableListDto.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTableListDto.Balance">
+            <summary>
+            余额 数据库是分为单位，UI中是以元为单位
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestShort">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestShort.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestShort.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.InputQueryTestTable">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.UintTest1AddDto">
+            <summary>
+            测试UINT
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1AddDto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1AddDto.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.UintTest1UpdateDto">
+            <summary>
+            测试UINT
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1UpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.UintTest1Dto">
+            <summary>
+            测试UINT
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1Dto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1Dto.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.UintTest1ListDto">
+            <summary>
+            测试UINT
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1ListDto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1ListDto.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.InputQueryUintTest1">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeInfoAddDto">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoAddDto.Code">
+            <summary>
+            代码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoAddDto.Name">
+            <summary>
+            名称 只要是系统内不重复即可，必填
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoAddDto.Desc">
+            <summary>
+            描述 对这个角色的补充说明 64
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoAddDto.Mark">
+            <summary>
+            备注 这个角色的内部备注，desc一般表示外部备注 64
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoAddDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeInfoUpdateDto">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeInfoDto">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeInfoListDto">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoListDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoListDto.ExtendBind">
+            <summary>
+            绑定
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfoListDto.Menu1">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeShort">
+            <summary>
+            角色信息 一个账号可以绑定多个角色,角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeShort.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeShort.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.InputQueryGradeInfo">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryGradeInfo.Name">
+            <summary>
+            角色名称 只要是系统内不重复即可，必填
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryGradeInfo.Code">
+            <summary>
+            角色代码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryGradeInfo.user_id">
+            <summary>
+            角色 用于为用户选择角色?
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeRoleAddDto">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleAddDto.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleAddDto.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeRoleUpdateDto">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleUpdateDto.ExtendRole">
+            <summary>
+             权限 表示接口的权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleUpdateDto.ExtendGrade">
+            <summary>
+             角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeRoleDto">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeRoleListDto">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleListDto.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleListDto.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleListDto.ExtendGrade">
+            <summary>
+             角色 表示权限的一个分组
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRoleListDto.ExtendRole">
+            <summary>
+             权限 表示接口的权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.InputQueryGradeRole">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryGradeRole.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryGradeRole.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleInfoAddDto">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Id">
+            <summary>
+            用于备份恢复使用不做UI用
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Name">
+            <summary>
+            名称 权限的友好名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Icon">
+            <summary>
+            图标名称 一般表示样式名称,示例Hui-iconfont-menu
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Model">
+            <summary>
+            模块 权限的一个归集，示例:user,表示用户模块
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Role">
+            <summary>
+            权限 对应权限，示例:add，表示新增
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Sort">
+            <summary>
+            排序 排序基于层级和父级，横向排序，使用多层级排序规则
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.FatherId">
+            <summary>
+            父级 上一级是哪个，按需配置！
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoAddDto.Items">
+            <summary>
+            子集
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleInfoUpdateDto">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoUpdateDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoUpdateDto.ExtendRole">
+            <summary>
+            扩展 父级信息
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleInfoDto">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoDto.ExtendRole">
+            <summary>
+            父级 为了给上一个字段FatherId显示使用，你也可以把FatherId隐藏，只显示这个字段，或者2个都显示
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoDto.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoDto.SortStr">
+            <summary>
+            排序串
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoDto.RootId">
+            <summary>
+            根级
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoDto.FatherStr">
+            <summary>
+            父级串
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleInfoListDto">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Model">
+            <summary>
+            模块 升序为Model，降序为Model desc
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Icon">
+            <summary>
+            图标名称 一般表示样式名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Info">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮,如何让前端支持这个显示
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.RoleTypeInt">
+            <summary>
+            权限类型
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.ExtendBind">
+            <summary>
+            绑定 扩展基于角色的时候是否拥有这个权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.FatherId">
+            <summary>
+            父级
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.ExtendFather">
+            <summary>
+            父级 信息，为了给上一个字段FatherId显示使用，你也可以把FatherId隐藏，只显示这个字段，或者2个都显示
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.SortStr">
+            <summary>
+            排序串
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Menu1">
+            <summary>
+            添加子权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Menu2">
+            <summary>
+            详情
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfoListDto.Menu3">
+            <summary>
+            查看子集
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleMenuModel">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleMenuModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleMenuModel.Name">
+            <summary>
+            权限项
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleMenuModel.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleMenuModel.Icon">
+            <summary>
+            图标名称 一般表示样式名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleMenuModel.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleMenuModel.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleMenuModel.FatherId">
+            <summary>
+            父级ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleMenuModel.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleAuthDto">
+            <summary>
+            权限列表 这个作为登陆后权限缓存，其他的没必要缓存，用不上
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleAuthDto.Model">
+            <summary>
+            权限模块
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleAuthDto.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleShortModel">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleShortModel.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleShortModel.Model">
+            <summary>
+            权限模块
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleShortModel.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleShortModel.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleShortModel.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleShortModel.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleShort">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleShort.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleShort.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.InputQueryRoleInfo">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.FatherId">
+            <summary>
+            父级ID 基于父级ID查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.GradeId">
+            <summary>
+            角色ID 查询某一个角色拥有多少权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.role_type">
+            <summary>
+            权限类型 基于权限类型查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.AuthType">
+            <summary>
+            授权类型
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.orderby">
+            <summary>
+            排序 这个字段是隐藏的
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserGradeAddDto">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeAddDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeAddDto.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserGradeUpdateDto">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeUpdateDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeUpdateDto.ExtendUser">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeUpdateDto.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeUpdateDto.ExtendGrade">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserGradeDto">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeDto.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserGradeListDto">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeListDto.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeListDto.ExtendUser">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeListDto.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGradeListDto.ExtendGrade">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.InputQueryUserGrade">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserInfoAddDto">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoAddDto.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoAddDto.PassWord">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoAddDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoAddDto.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoAddDto.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoAddDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoAddDto.GradeIds">
+            <summary>
+            角色 包含的角色，这个暂未实现，应该会归纳到outers去
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserInfoUpdateDto">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoUpdateDto.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoUpdateDto.PassWord">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoUpdateDto.GradeId">
+            <summary>
+            角色 测试用的
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoUpdateDto.ExtendGrade">
+            <summary>
+            角色 测试用的
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoUpdateDto.Grades">
+            <summary>
+            扩展 包含的角色列表
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserInfoDto">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoDto.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserInfoListDto">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoListDto.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoListDto.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoListDto.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoListDto.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoListDto.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoListDto.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfoListDto.Menu1">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserShort">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserShort.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserShort.Name">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserShort.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserShort.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserShortModel">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserShortModel.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserShortModel.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserShortModel.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.InputQueryUserInfo">
+            <summary>
+             查询
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryUserInfo.sdate">
+            <summary>
+            注册区间
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryUserInfo.edate">
+            <summary>
+            日期区间
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryUserInfo.email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryUserInfo.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+    </members>
+</doc>

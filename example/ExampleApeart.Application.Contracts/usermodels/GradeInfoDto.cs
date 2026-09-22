@@ -47,6 +47,19 @@ namespace ExampleApeart.usermodels
         ///</summary>
         [Description("状态")]
         public bool IsEnable { get; set; } = true;
+
+        /// <summary>
+        /// int 模拟输入多个int,使用,分割
+        /// </summary>
+        [PasteSplit(",")]
+        public int[] ids { get; set; }
+
+        /// <summary>
+        /// DateTime 模拟输入多个DateTime,使用;分割
+        /// </summary>
+        [PasteSplit(";")]
+        public DateTime[] dates { get; set; }
+
     }
 
     ///<summary>
@@ -171,7 +184,7 @@ namespace ExampleApeart.usermodels
         ///名称 
         ///</summary>
         [MaxLength(16)]
-        [PasteField("Name","()")]
+        [PasteField("Name", "()")]
         [Description("名称 基于名称查询")]
         public string Name { get; set; }
 

@@ -29,7 +29,7 @@ namespace PasteApeart.Handler
             services.AddSingleton<IChannelHelper, ChannelHelper>();
             services.AddSingleton<IEventActionHandler, EventActionHandler>();
 
-            services.AddScoped<CurrentUser>();
+            //services.AddScoped<CurrentUser>();
 
             //services.AddAutoDependencyInjection(typeof(PasteApeartHandlerModule).Assembly);
 

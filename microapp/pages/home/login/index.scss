@@ -1,0 +1,56 @@
+
+.vpage{
+  position:relative;
+
+}
+.hflex{
+  display: flex;
+  flex-direction: row;
+  margin-top: 120rpx;
+  box-sizing: border-box;
+  padding:0rpx 8rpx;
+}
+.ititle{
+  width:120rpx;
+  text-align: right;
+  padding:8px;
+  &::after{
+    content: ':';
+  }
+}
+.iinput{
+  outline: none;
+  border:1px solid #999;
+  border-radius: 6rpx;
+  padding:16rpx;
+  flex:1;
+  width:120rpx;
+}
+
+.imgcode{
+  width:220rpx;
+  border-radius: 4px;
+  height: 72rpx;
+  border: 1px solid #999;
+  overflow: hidden;
+  margin-right:4rpx;
+}
+
+.icode{
+  width:100rpx;
+  flex:1;
+  border:1px solid #999;
+  border-radius: 4px;
+  padding:16rpx;
+}
+
+.ibtn{
+  width:80vw;
+  margin:auto;
+}
+
+.vinfo{
+  padding:0 8px;
+  box-sizing: border-box;
+  color:#999;
+}

@@ -32,6 +32,18 @@ var _template_body_html = null;
  */
 var _global_list_properties = null;
 
+/**
+ * 是否需要载入richhtml
+ */
+var _global_need_loadrichhtml = false;
+
+
+/**
+ * 如果当前表单有outer则，标注最小高度应该大于600，以便承载index.html页面的选择
+ */
+var _has_outer = false;
+
+
 // /**
 //  * 当前主表的属性列表 迁移到form.js
 //  */
@@ -65,7 +77,10 @@ var _config = {
     freeze: true,//是否冻结表头
     search_after_selected: true,//搜索区域outer选择后，是否直接查询
     trclass: null,//表格中trclass的字段名称，实际中这个值中去获取
-    batch: false//是否启用批量操作
+    batch: false,//是否启用批量操作
+    orderby:"id",//排序
+    update_row_min_match_rate: 0.6,//更新行数据的时候，最小匹配率，低于这个值则不进行更新
+    bind_with_edit: false,//绑定模式下，是否启用编辑模式
 };
 
 /**
@@ -74,10 +89,6 @@ var _config = {
 
 
 //_config.next.key _config.next.type _config.next.map
-/**
- * 排序字段 需要查询对象有orderby字段
- */
-var _orderby = "id";
 
 /**
  * 初始化事件数据等
@@ -141,7 +152,7 @@ $(window).ready(function () {
     //localStorage.setItem(`${location.pathname}?path=${_classPath}`,pageSize);
     //切换排序 查询基于哪个排序基于哪个
     $(".table").on('click', '.ordersell', function () {
-        _orderby = $(this).attr('dataval');
+        _config.orderby = $(this).attr('dataval');
         $(".table").find(".ordersell").removeClass('ordered');
         $(this).addClass('ordered');
         readPageData(1);//直接基于这个查询第一页
@@ -1309,7 +1320,7 @@ async function handlerQueryClassAttribute(o) {
                     break;
                 case "batch":
                     {
-                        if (_config.model == "view") {
+                        if (_config.model == "view" || _config.bind_with_edit) {
                             //是否启用批量操作
                             _config.batch = true;
                             if (!_config.batchs) {
@@ -1413,6 +1424,7 @@ async function handlerQueryClassAttribute(o) {
                     }
                     break;
                 case "ui":
+                case "chartui":
                     {
                         if (_attribute.args2) {
                             $(".show_type").show();
@@ -1812,6 +1824,7 @@ function handlerModelFieldcolumnProperty(properties) {
                                         asc: _attribute.args1,
                                         desc: _attribute.args2
                                     };
+                                    
                                 }
                             }
                             break;
@@ -1894,326 +1907,328 @@ function HandlerQueryItem(listproperties, pageData) {
     listproperties.forEach(item => {
         item.dataFrom = item.dataType;
 
-        if (item.name == "show_type") {
-            console.log('注意 show_type是表格或者图标显示的参数，当前查询会受干扰');
-        }
-        if (item.name == "path") {
-            console.log('注意 path 是表格数据源标识，当前查询会受干扰');
-        }
-        if (item.name == "model") {
-            console.log('注意 model是当前页面的显示类型，当前查询会受干扰');
-        }
-        // if (item.name == "request") {
-        //     console.log('注意 request是当前页面的请求类型，当前查询会受干扰');
+        // if (item.name == "show_type") {
+        //     console.log('注意 show_type是表格或者图标显示的参数，当前查询会受干扰');
+        // }
+        // if (item.name == "path") {
+        //     console.log('注意 path 是表格数据源标识，当前查询会受干扰');
+        // }
+        // if (item.name == "model") {
+        //     console.log('注意 model是当前页面的显示类型，当前查询会受干扰');
         // }
 
-        if (item.attributes) {
-            item.attributes.forEach(_attribute => {
-                switch (_attribute.name) {
-                    case "select":
-                        {
-                            try {
-                                item.dataType = 'select';
-                                item.selects = JSON.parse(_attribute.args1);
-                                for (let sitem of item.selects) {
-                                    sitem.selected = false;//改版成值来命中
-                                }
-                                var _map = new Map();
-                                item.selects.forEach(ii => {
-                                    _map.set(ii.value, ii.name);
-                                });
-                                // gloablSelectMap.set(item.name, _map);    //搜索项不需要这个，不然会导致联动，也就是2变得名称不能一致
-                            } catch (err) {
-                                console.log(item.name, "属性 select 的值 args1 配置错误", err);
-                            }
-                        }
-                        break;
-                    case "datalist":
-                        {
-                            item.dataType = 'datalist';
-                            item.datalistid = item.name;
-                            if (_attribute.args1) {
-                                try {
-                                    item.selects = JSON.parse(_attribute.args1);
-                                    for (let sitem of item.selects) {
-                                        sitem.selected = false;//改版成值来命中
-                                    }
-                                } catch (err) {
-                                    console.log(item.name, "属性 datalist 的值 args1 配置错误", err);
-                                }
-                            } else {
-                                item.datalistid = _attribute.args2;
-                                if (_attribute.args3) {
-                                    try {
-                                        eval(_attribute.args3);
-                                    } catch (err) {
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case "hidden":
-                        {
-                            item.hidden = true;
-                            if (_attribute.args1) {
-                                if (_config.model == _attribute.args1) {
-                                    item.hidden = false;
-                                }
-                            }
-                        }
-                        break;
-                    case "mark":
-                        {
-                            var _mark = {
-                                model: _classPath,
-                                value: item.name
-                            };
-                            if (_attribute.args1) {
-                                _mark.model = _attribute.args1;
-                            }
-                            if (_attribute.args2) {
-                                _mark.value = _attribute.args2;
-                            }
-                            item.mark = _mark;
-                        }
-                        break;
-                    case "step":
-                        {
-                            if (_attribute.args1) {
-                                item.step = _attribute.args1;
-                            }
-                        }
-                        break;
-                    case "daterange":
-                        {
-                            item.dataType = "daterange";
-                            if (_attribute.args2) {
-                                var _target = funcFindExpendPropertry(_attribute.args2, item.name);
-                                if (_target) {
-                                    _target.hidden = true;
-                                }
-                            }
-                            //2个时间合并到一个去 注意要和js的保持一致 比如yyyy-MM-dd  至  yyyy-MM-dd
-                            var _start = "";
-                            var _end = "";
-                            if (_attribute.args1 == item.name) {
-                                _start = item.value;
-                            } else {
-                                if (_attribute.args1) {
-                                    var _arg1_obj = funcFindExpendPropertry(_attribute.args2, item.name);
-                                    if (_arg1_obj) {
-                                        if (_arg1_obj.value) {
-                                            _start = _arg1_obj.value;//默认为yyyy-MM-dd HH:mm:ss格式
-                                            //时间可能是时间戳格式
-                                            if (_attribute.args4) {
-                                                switch (_attribute.args4) {
-                                                    case "times":
-                                                        {
-                                                            _start = new Date(_start * 1000).Format('yyyy-MM-dd HH:mm:ss');
-                                                        }
-                                                        break;
-                                                    case "timems":
-                                                        {
-                                                            _start = new Date(_start * 1000).Format('yyyy-MM-dd HH:mm:ss');
-                                                        }
-                                                        break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            if (_start && _attribute.args2) {
-                                var _arg2_obj = funcFindExpendPropertry(_attribute.args2, item.name);
-                                if (_arg2_obj) {
-                                    if (_arg2_obj.value) {
-                                        _end = _arg2_obj.value;
-                                        if (_attribute.args4) {
-                                            switch (_attribute.args4) {
-                                                case "times":
-                                                    {
-                                                        _end = new Date(_end * 1000).Format('yyyy-MM-dd HH:mm:ss');
-                                                    }
-                                                    break;
-                                                case "timems":
-                                                    {
-                                                        _end = new Date(_end * 1000).Format('yyyy-MM-dd HH:mm:ss');
-                                                    }
-                                                    break;
-                                            }
-                                        }
-                                        var _fulldate = `${new Date(_start).Format('yyyy-MM-dd')}  至  ${new Date(_end).Format('yyyy-MM-dd')}`;
-                                        item.value = _fulldate;
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case "searchrange":
-                        {
-                            var step = "1";
-                            if (_attribute.args3) {
-                                step = _attribute.args3;
-                            }
-                            item.dataType = "searchrange";
-                            if (_attribute.args2) {
-                                var _target = funcFindExpendPropertry(_attribute.args2, item.name);
-                                if (_target) {
-                                    _target.hidden = true;
-                                }
-                            }
-                            var range = {
-                                low_name: _attribute.args1,
-                                step: step,
-                                placeholder: item.placeholder,
-                                high_name: _attribute.args2
-                            };
-                            item.range = range;
-                            //感觉这个要做好，还缺好多，比如输入值区间等
-                        }
-                        break;
-                    case "outer":
-                        {
-                            item.dataType = 'outer';
-                        }
-                        break;
-                    case "selects":
-                    case "lselect":
-                        {
-                            try {
-                                item.dataType = _attribute.name;
-                                item.selects = JSON.parse(_attribute.args1);
-                                item.selects_max = "lsingle";
-                                if (_attribute.args4) {
-                                    if (_attribute.args4 != "1") {
-                                        item.selects_max = "lbatch";
-                                    }
-                                }
-                                for (let sitem of item.selects) {
-                                    sitem.selected = false;//改版成值来命中
-                                }
-                                if (item.value || item.value == 0) {
+        //合并改版 旧版本
+        // if (item.attributes) {
+        //     item.attributes.forEach(_attribute => {
+        //         switch (_attribute.name) {
+        //             case "select":
+        //                 {
+        //                     try {
+        //                         item.dataType = 'select';
+        //                         item.selects = JSON.parse(_attribute.args1);
+        //                         for (let sitem of item.selects) {
+        //                             sitem.selected = false;//改版成值来命中
+        //                         }
+        //                         var _map = new Map();
+        //                         item.selects.forEach(ii => {
+        //                             _map.set(ii.value, ii.name);
+        //                         });
+        //                         // gloablSelectMap.set(item.name, _map);    //搜索项不需要这个，不然会导致联动，也就是2变得名称不能一致
+        //                     } catch (err) {
+        //                         console.log(item.name, "属性 select 的值 args1 配置错误", err);
+        //                     }
+        //                 }
+        //                 break;
+        //             case "datalist":
+        //                 {
+        //                     item.dataType = 'datalist';
+        //                     item.datalistid = item.name;
+        //                     if (_attribute.args1) {
+        //                         try {
+        //                             item.selects = JSON.parse(_attribute.args1);
+        //                             for (let sitem of item.selects) {
+        //                                 sitem.selected = false;//改版成值来命中
+        //                             }
+        //                         } catch (err) {
+        //                             console.log(item.name, "属性 datalist 的值 args1 配置错误", err);
+        //                         }
+        //                     } else {
+        //                         item.datalistid = _attribute.args2;
+        //                         if (_attribute.args3) {
+        //                             try {
+        //                                 eval(_attribute.args3);
+        //                             } catch (err) {
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //                 break;
+        //             case "hidden":
+        //                 {
+        //                     item.hidden = true;
+        //                     if (_attribute.args1) {
+        //                         if (_config.model == _attribute.args1) {
+        //                             item.hidden = false;
+        //                         }
+        //                     }
+        //                 }
+        //                 break;
+        //             case "mark":
+        //                 {
+        //                     var _mark = {
+        //                         model: _classPath,
+        //                         value: item.name
+        //                     };
+        //                     if (_attribute.args1) {
+        //                         _mark.model = _attribute.args1;
+        //                     }
+        //                     if (_attribute.args2) {
+        //                         _mark.value = _attribute.args2;
+        //                     }
+        //                     item.mark = _mark;
+        //                 }
+        //                 break;
+        //             case "step":
+        //                 {
+        //                     if (_attribute.args1) {
+        //                         item.step = _attribute.args1;
+        //                     }
+        //                 }
+        //                 break;
+        //             case "daterange":
+        //                 {
+        //                     item.dataType = "daterange";
+        //                     if (_attribute.args2) {
+        //                         var _target = funcFindExpendPropertry(_attribute.args2, item.name);
+        //                         if (_target) {
+        //                             _target.hidden = true;
+        //                         }
+        //                     }
+        //                     //2个时间合并到一个去 注意要和js的保持一致 比如yyyy-MM-dd  至  yyyy-MM-dd
+        //                     var _start = "";
+        //                     var _end = "";
+        //                     if (_attribute.args1 == item.name) {
+        //                         _start = item.value;
+        //                     } else {
+        //                         if (_attribute.args1) {
+        //                             var _arg1_obj = funcFindExpendPropertry(_attribute.args2, item.name);
+        //                             if (_arg1_obj) {
+        //                                 if (_arg1_obj.value) {
+        //                                     _start = _arg1_obj.value;//默认为yyyy-MM-dd HH:mm:ss格式
+        //                                     //时间可能是时间戳格式
+        //                                     if (_attribute.args4) {
+        //                                         switch (_attribute.args4) {
+        //                                             case "times":
+        //                                                 {
+        //                                                     _start = new Date(_start * 1000).Format('yyyy-MM-dd HH:mm:ss');
+        //                                                 }
+        //                                                 break;
+        //                                             case "timems":
+        //                                                 {
+        //                                                     _start = new Date(_start * 1000).Format('yyyy-MM-dd HH:mm:ss');
+        //                                                 }
+        //                                                 break;
+        //                                         }
+        //                                     }
+        //                                 }
+        //                             }
+        //                         }
+        //                     }
+        //                     if (_start && _attribute.args2) {
+        //                         var _arg2_obj = funcFindExpendPropertry(_attribute.args2, item.name);
+        //                         if (_arg2_obj) {
+        //                             if (_arg2_obj.value) {
+        //                                 _end = _arg2_obj.value;
+        //                                 if (_attribute.args4) {
+        //                                     switch (_attribute.args4) {
+        //                                         case "times":
+        //                                             {
+        //                                                 _end = new Date(_end * 1000).Format('yyyy-MM-dd HH:mm:ss');
+        //                                             }
+        //                                             break;
+        //                                         case "timems":
+        //                                             {
+        //                                                 _end = new Date(_end * 1000).Format('yyyy-MM-dd HH:mm:ss');
+        //                                             }
+        //                                             break;
+        //                                     }
+        //                                 }
+        //                                 var _fulldate = `${new Date(_start).Format('yyyy-MM-dd')}  至  ${new Date(_end).Format('yyyy-MM-dd')}`;
+        //                                 item.value = _fulldate;
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //                 break;
+        //             case "searchrange":
+        //                 {
+        //                     var step = "1";
+        //                     if (_attribute.args3) {
+        //                         step = _attribute.args3;
+        //                     }
+        //                     item.dataType = "searchrange";
+        //                     if (_attribute.args2) {
+        //                         var _target = funcFindExpendPropertry(_attribute.args2, item.name);
+        //                         if (_target) {
+        //                             _target.hidden = true;
+        //                         }
+        //                     }
+        //                     var range = {
+        //                         low_name: _attribute.args1,
+        //                         step: step,
+        //                         placeholder: item.placeholder,
+        //                         high_name: _attribute.args2
+        //                     };
+        //                     item.range = range;
+        //                     //感觉这个要做好，还缺好多，比如输入值区间等
+        //                 }
+        //                 break;
+        //             case "outer":
+        //                 {
+        //                     item.dataType = 'outer';
+        //                 }
+        //                 break;
+        //             case "selects":
+        //             case "lselect":
+        //                 {
+        //                     try {
+        //                         item.dataType = _attribute.name;
+        //                         item.selects = JSON.parse(_attribute.args1);
+        //                         item.selects_max = "lsingle";
+        //                         if (_attribute.args4) {
+        //                             if (_attribute.args4 != "1") {
+        //                                 item.selects_max = "lbatch";
+        //                             }
+        //                         }
+        //                         for (let sitem of item.selects) {
+        //                             sitem.selected = false;//改版成值来命中
+        //                         }
+        //                         if (item.value || item.value == 0) {
 
-                                    var _typeof = typeof (item.value);
-                                    switch (_typeof) {
-                                        case "string":
-                                            {
-                                                var _splitchar = ',';
-                                                if (_attribute.args2) {
-                                                    _splitchar = _attribute.args2;
-                                                }
-                                                var strs = item.value.split(_splitchar);
-                                                item.selects.forEach(ii => {
-                                                    if (strs.indexOf(ii.value) >= 0) {
-                                                        ii.selected = true;
-                                                    }
-                                                });
-                                            }
-                                            break;
-                                        case "number":
-                                            {
-                                                var _vals = item.value;
-                                                item.selects.forEach(ii => {
-                                                    if (_vals == (ii.value)) {
-                                                        ii.selected = true;
-                                                    }
-                                                });
-                                            }
-                                            break;
-                                        case "object":
-                                            {
-                                                if (Array.isArray(item.value)) {
-                                                    item.selects.forEach(ii => {
-                                                        if (item.value.indexOf(ii.value) >= 0) {
-                                                            ii.selected = true;
-                                                        }
-                                                    });
-                                                } else {
-                                                    var _vals = item.value.toString();
-                                                    item.selects.forEach(ii => {
-                                                        if (_vals.indexOf(ii.value.toString()) >= 0) {
-                                                            ii.selected = true;
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                            break;
-                                    }
-                                }
-                                if (item.selects) {
-                                    if (_attribute.name == "selects") {
-                                        //name value selected
-                                        var selectedItems = item.selects.filter(function (o) {
-                                            return o.selected;
-                                        });
-                                        if (selectedItems.length > 0) {
-                                            item.__selected_values = '(' + selectedItems.length + ')'
-                                                + selectedItems.map(function (o) { return o.name; }).join(' ');
-                                        }
-                                    }
-                                }
-                            } catch (err) {
-                                console.log(item.name, "属性 select 的值 args1 配置错误", err);
-                            }
-                        }
-                        break;
-                    case "next_key":
-                        {
-                            _config.next.key = item.name;
-                            if (item.dataType == "Int32" || item.dataType == "Int64" || item.dataType == "UInt32" || item.dataType == "UInt64") {
-                                _config.next.type = "number";
-                            } else {
-                                _config.next.type = "string";
-                            }
-                            if (_attribute.args1) {
-                                _config.next.key = _attribute.args1;
-                            }
-                            item.hidden = true;
-                        }
-                        break;
-                    case "splitarray":
-                        {
-                            // item.dataType="String";
-                            item.dataType = "splitarray";
-                            if (item.value) {
-                                if (_attribute.args1) {
-                                    item.value = item.value.join(_attribute.args1);//用其他字符分割
-                                } else {
-                                    item.value = item.value.toString();//使用,分割
-                                }
-                            } else {
-                                item.value = "";
-                            }
+        //                             var _typeof = typeof (item.value);
+        //                             switch (_typeof) {
+        //                                 case "string":
+        //                                     {
+        //                                         var _splitchar = ',';
+        //                                         if (_attribute.args2) {
+        //                                             _splitchar = _attribute.args2;
+        //                                         }
+        //                                         var strs = item.value.split(_splitchar);
+        //                                         item.selects.forEach(ii => {
+        //                                             if (strs.indexOf(ii.value) >= 0) {
+        //                                                 ii.selected = true;
+        //                                             }
+        //                                         });
+        //                                     }
+        //                                     break;
+        //                                 case "number":
+        //                                     {
+        //                                         var _vals = item.value;
+        //                                         item.selects.forEach(ii => {
+        //                                             if (_vals == (ii.value)) {
+        //                                                 ii.selected = true;
+        //                                             }
+        //                                         });
+        //                                     }
+        //                                     break;
+        //                                 case "object":
+        //                                     {
+        //                                         if (Array.isArray(item.value)) {
+        //                                             item.selects.forEach(ii => {
+        //                                                 if (item.value.indexOf(ii.value) >= 0) {
+        //                                                     ii.selected = true;
+        //                                                 }
+        //                                             });
+        //                                         } else {
+        //                                             var _vals = item.value.toString();
+        //                                             item.selects.forEach(ii => {
+        //                                                 if (_vals.indexOf(ii.value.toString()) >= 0) {
+        //                                                     ii.selected = true;
+        //                                                 }
+        //                                             });
+        //                                         }
+        //                                     }
+        //                                     break;
+        //                             }
+        //                         }
+        //                         if (item.selects) {
+        //                             if (_attribute.name == "selects") {
+        //                                 //name value selected
+        //                                 var selectedItems = item.selects.filter(function (o) {
+        //                                     return o.selected;
+        //                                 });
+        //                                 if (selectedItems.length > 0) {
+        //                                     item.__selected_values = '(' + selectedItems.length + ')'
+        //                                         + selectedItems.map(function (o) { return o.name; }).join(' ');
+        //                                 }
+        //                             }
+        //                         }
+        //                     } catch (err) {
+        //                         console.log(item.name, "属性 select 的值 args1 配置错误", err);
+        //                     }
+        //                 }
+        //                 break;
+        //             case "next_key":
+        //                 {
+        //                     _config.next.key = item.name;
+        //                     if (item.dataType == "Int32" || item.dataType == "Int64" || item.dataType == "UInt32" || item.dataType == "UInt64") {
+        //                         _config.next.type = "number";
+        //                     } else {
+        //                         _config.next.type = "string";
+        //                     }
+        //                     if (_attribute.args1) {
+        //                         _config.next.key = _attribute.args1;
+        //                     }
+        //                     item.hidden = true;
+        //                 }
+        //                 break;
+        //             case "splitarray":
+        //                 {
+        //                     // item.dataType="String";
+        //                     item.dataType = "splitarray";
+        //                     if (item.value) {
+        //                         if (_attribute.args1) {
+        //                             item.value = item.value.join(_attribute.args1);//用其他字符分割
+        //                         } else {
+        //                             item.value = item.value.toString();//使用,分割
+        //                         }
+        //                     } else {
+        //                         item.value = "";
+        //                     }
 
-                        }
-                        break;
-                    case "class":
-                        {
-                            if (_attribute.args1) {
-                                item.class = _attribute.args1;
-                            }
-                        }
-                        break;
-                    case "fentoyuan":
-                        {
-                            if (item.value) {
-                                item.value = (parseFloat(item.value) / 100).toFixed(2);//(parseFloat(item.value) / 100).toFixed(2);
-                            }
-                            item.dataType = "fentoyuan";
-                        }
-                        break;
-                    default:
-                        {
-                            // console.log('属性', _attribute.name, '未处理');
-                        }
-                        break;
-                }
-            });
-        }
+        //                 }
+        //                 break;
+        //             case "class":
+        //                 {
+        //                     if (_attribute.args1) {
+        //                         item.class = _attribute.args1;
+        //                     }
+        //                 }
+        //                 break;
+        //             case "fentoyuan":
+        //                 {
+        //                     if (item.value) {
+        //                         item.value = (parseFloat(item.value) / 100).toFixed(2);//(parseFloat(item.value) / 100).toFixed(2);
+        //                     }
+        //                     item.dataType = "fentoyuan";
+        //                 }
+        //                 break;
+        //             default:
+        //                 {
+        //                     // console.log('属性', _attribute.name, '未处理');
+        //                 }
+        //                 break;
+        //         }
+        //     });
+        // }
+
+        //合并改版 新版本
+        handlerExchangeItemToUIData(item);
+
 
         if (item.name == 'orderby') {
             if (item.value) {
-                _orderby = item.value;
+                _config.orderby = item.value;
             }
             item.hidden = true;
         }
@@ -2318,53 +2333,58 @@ function InitUiData() {
         });
 
         if ($(".ulitems").length > 0) {
-            $(".ulitems").on('click', 'li', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                } else {
-                    $(this).addClass('selected');
-                }
-                var nameElc = $(this).parents(".ulitems");
-                var _name = nameElc.attr('name');
-                if (_name) {
-                    var _pro = funcFindPropertry(_name);
-                    if (_pro) {
-                        var maxNum = 0;
-                        var _attribute = funcFindAttribute(_pro.attributes, "selects");
-                        if (_attribute) {
-                            if (_attribute.args4) {
-                                maxNum = Number(_attribute.args4);
-                            }
-                        } else {
-                            _attribute = funcFindAttribute(_pro.attributes, "lselect");
-                            if (_attribute) {
-                                if (_attribute.args4) {
-                                    maxNum = Number(_attribute.args4);
-                                }
-                            }
-                        }
-                        if (maxNum > 0) {
-                            if (maxNum == 1) {
-                                $(this).siblings().removeClass('selected');
-                            }
-                            var _selnum = nameElc.find(".selected").length;
-                            if (_selnum > maxNum) {
-                                $(this).removeClass('selected');
-                                if (maxNum > 1) {
-                                    layer.msg(`限定最多选择${maxNum}项`);
-                                }
-                            }
-                            if (maxNum == 1 && _selnum > 0) {
-                                readPageData(1);
-                            }
-                        }
-                        if (_attribute.name == "selects") {
-                            //从ui中获取选中得 使用比如{name value }
-                            updateSelectText(nameElc, _pro);
-                        }
-                    }
-                }
-            });
+
+                    //合并改版 新版本
+        register_ulitems_click_event();
+
+            // //合并改版 旧版本
+            // $(".ulitems").on('click', 'li', function () {
+            //     if ($(this).hasClass('selected')) {
+            //         $(this).removeClass('selected');
+            //     } else {
+            //         $(this).addClass('selected');
+            //     }
+            //     var nameElc = $(this).parents(".ulitems");
+            //     var _name = nameElc.attr('name');
+            //     if (_name) {
+            //         var _pro = funcFindPropertry(_name);
+            //         if (_pro) {
+            //             var maxNum = 0;
+            //             var _attribute = funcFindAttribute(_pro.attributes, "selects");
+            //             if (_attribute) {
+            //                 if (_attribute.args4) {
+            //                     maxNum = Number(_attribute.args4);
+            //                 }
+            //             } else {
+            //                 _attribute = funcFindAttribute(_pro.attributes, "lselect");
+            //                 if (_attribute) {
+            //                     if (_attribute.args4) {
+            //                         maxNum = Number(_attribute.args4);
+            //                     }
+            //                 }
+            //             }
+            //             if (maxNum > 0) {
+            //                 if (maxNum == 1) {
+            //                     $(this).siblings().removeClass('selected');
+            //                 }
+            //                 var _selnum = nameElc.find(".selected").length;
+            //                 if (_selnum > maxNum) {
+            //                     $(this).removeClass('selected');
+            //                     if (maxNum > 1) {
+            //                         layer.msg(`限定最多选择${maxNum}项`);
+            //                     }
+            //                 }
+            //                 if (maxNum == 1 && _selnum > 0) {
+            //                     readPageData(1);
+            //                 }
+            //             }
+            //             if (_attribute.name == "selects") {
+            //                 //从ui中获取选中得 使用比如{name value }
+            //                 updateSelectText(nameElc, _pro);
+            //             }
+            //         }
+            //     }
+            // });
         }
     }
 }
@@ -2372,7 +2392,8 @@ function InitUiData() {
 
 
 /**
- * 提交搜索前数据校验
+ * 提交搜索前数据校验 合并改版 旧版本
+ * 尝试用 FuncHandlerParseFormValue 替代？
  * @param {*} _info 
  */
 function handlerInputValue(_info) {
@@ -2562,7 +2583,6 @@ function handlerInputValue(_info) {
         });
     } else {
         //request=one模式下，可能会这样，则需要从query中拼接数据
-
     }
 }
 
@@ -2710,22 +2730,12 @@ function handlerSwitchUpload(elc) {
         if (c != 200) {
             $(elc).prop('checked', !_value);
         } else {
+            layer.tips(typeof(o)=='string'?o: '操作成功', elc, { tipsMore: true,time:2000, tips: [4, '#3a3a3a'] });
             // 是否更新本行数据，如果是bind模式，则更新父级... .. .
             if (_dataname == 'extendBind') {
+                //提示成功
                 //如果返回的是一个对象，可以是obj也可以是objs，则更新到父级页面中的数据行中
                 if (typeof (o) == "object") {
-                    // var fromPath = null;
-                    // var pages = sessionStorage.getItem('last_page');
-                    // //来源页面拆解path 这里有问题 上一个页面不一定是referrer
-                    // // var pageFrom = window.document.referrer;
-                    // if (pages) {
-                    //     var len = pages.length;
-                    //     if(len>0){
-                    //         fromPath = pages[len - 1];
-                    //     }
-                    //     console.log('来源页面path', fromPath);
-                    // }
-                    // findAndCallHandler(o, fromPath);
                     findAndCallHandler(o);
                 }
             }
@@ -2851,7 +2861,12 @@ async function readPageData(page) {
 
     var _info = $("#formsearch").parseForm();
     //这里要做输入结果的校验，转化等
-    handlerInputValue(_info);
+
+    //合并改版 旧版本
+    // handlerInputValue(_info);//这个是旧版本，新版本用下面的替换了
+
+    //合并改版 新版本
+    FuncHandlerParseFormValue(_info);
 
     //这里做合并 form表单的优先级更高，覆盖掉queryString的参数，queryString主要是为了携带一些固定参数或者特殊参数用的，form表单才是用户每次查询时输入的参数
     _info = Object.assign({}, infoSearch, _info);
@@ -2879,7 +2894,7 @@ async function readPageData(page) {
     }
     _info.page = page;
     _info.size = _pageSize;
-    _info.orderby = _orderby;
+    _info.orderby = _config.orderby;
 
     if (typeof apigetPromise == "function") {
         var read = await apigetPromise(`${auto_path()}/page`, _info);
@@ -3124,7 +3139,7 @@ function handlerUpdateRow(input) {
             }
         }
         if (totalCount > 0) {
-            if (Number(findCount) / totalCount < 0.5) {
+            if (Number(findCount) / totalCount < _config.update_row_min_match_rate) {
                 console.log("传入的数据格式不符 无法进行数据行更新", location.href, input);
                 return false;
             }

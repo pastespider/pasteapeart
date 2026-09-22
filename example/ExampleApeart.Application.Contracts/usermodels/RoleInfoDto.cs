@@ -1,4 +1,4 @@
-using PasteApeart;
+using PasteApeart.Applciation.Contracts.EntityDto;
 using PasteApeart.Application.Contracts;
 using PasteApeart.Helper;
 using System.ComponentModel;
@@ -175,11 +175,11 @@ namespace ExampleApeart.usermodels
         [Description("排序串")]
         public string SortStr { get; set; }
 
-        ///<summary>
-        ///根级
-        ///</summary>
-        [Description("根级")]
-        public int RootId { get; set; }
+        /////<summary>
+        /////根级
+        /////</summary>
+        //[Description("根级")]
+        //public int RootId { get; set; }
 
         ///<summary>
         ///父级串
@@ -579,6 +579,16 @@ namespace ExampleApeart.usermodels
         public EnumRoleType role_type { get; set; } = EnumRoleType.All;
 
         /// <summary>
+        /// 多类型查询
+        /// </summary>
+        [PasteField("RoleTye")]
+        [PasteValuetype]
+        [PasteQuery("type", false)]
+        [PasteSelects("", "", "0", 5)]
+        [Description("多类型查询 支持参数type导入")]
+        public EnumRoleType[] role_type_array { get; set; }
+
+        /// <summary>
         /// 多选一
         /// </summary>
         [Description("多选一 使用数组模式提交")]
@@ -610,6 +620,7 @@ namespace ExampleApeart.usermodels
         /// 排序 这个字段是隐藏的
         /// </summary>
         [PasteHidden]
+        [PasteQuery("orderby", true)]
         [Description("排序 这个字段是隐藏的")]
         public new string orderby { get; set; } = "SortStr";
 

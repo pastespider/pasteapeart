@@ -1,4 +1,6 @@
 
+## 26.09.10
+	1.整理namespace的关系,主要是为了不和ABP的冲突，这个估计后续还要调整！
 
 ## 26.09.03
 	1.为了和ABP不冲突，把底层的Entity改成对应的PasteEntity，比如IEntity=>IPasteEntity,Entity<int>=>PasteEntity<int>以此类推

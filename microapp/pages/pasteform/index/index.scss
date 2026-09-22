@@ -1,0 +1,91 @@
+/* pages/form/index/index.wxss */
+.dsearch{
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding:10px;
+  .sitem{
+    margin-bottom: 4px;
+  }
+  .stitle{
+    padding:8px;
+    font-weight: 500;
+    width:16vw;
+    overflow: hidden;
+    text-align: right;
+    &::after{
+      content: ':';
+      color: #444;
+    }
+  }
+  .input{
+    min-width: 40vw;
+    padding:8px;
+    border:1px solid #999;
+    border-radius: 4px;
+    color: #555;
+  }
+  .searchbtns{
+    display:block;
+    text-align: right;
+    padding-right: 10px;
+    width:100%;
+    box-sizing: border-box;
+    .btnsearch{
+      width:30vw;
+      text-align: center;
+      border-radius: 4px;
+      background-color: rgb(9, 37, 128);
+      color: #f2f2f2;
+      margin-right: 4px;
+      line-height: 1;
+      padding:8px;
+    }
+  }
+}
+
+.dbody{
+  box-sizing: border-box;
+  padding:8rpx;
+  background-color: #f2f2f2;
+
+  .section{
+    margin-bottom:10px;
+    box-sizing: border-box;
+    background-color: #fff;
+    padding:10px 4px;
+    flex-wrap: wrap;
+  }
+  .item{
+    display:flex;
+    padding:4px 4px;
+    box-sizing: border-box;
+    min-width: 50%;
+    .iname{
+      width:60px;
+      text-align: right;
+      font-weight: 600;
+      box-sizing: border-box;
+      padding-right: 6px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 12px;
+      padding:8px 0;
+      color:#444;
+      &::after{
+        content: ':';
+      }
+    }
+    .ibody{
+       flex:1;
+       width:100px;
+       color:#555;
+       .ivalue{
+         padding:4px;
+       }
+    }
+    .img{
+      height: 100rpx;
+      border-radius: 4px;
+    }
+  }
+}

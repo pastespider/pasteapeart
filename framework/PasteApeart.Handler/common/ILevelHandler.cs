@@ -1,4 +1,5 @@
 using PasteApeart.Domain;
+using PasteApeart.Domain.Entity;
 
 namespace PasteApeart.Handler
 {

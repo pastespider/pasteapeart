@@ -1,0 +1,493 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleForm.EntityFrameworkCore</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleForm.EntityFrameworkCore.AutoWriteInterceptor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.AutoWriteInterceptor.#ctor(Volo.Abp.Users.ICurrentUser)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.AutoWriteInterceptor.SavingChanges(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32})">
+            <summary>
+            
+            </summary>
+            <param name="eventData"></param>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.AutoWriteInterceptor.SavingChangesAsync(Microsoft.EntityFrameworkCore.Diagnostics.DbContextEventData,Microsoft.EntityFrameworkCore.Diagnostics.InterceptionResult{System.Int32},System.Threading.CancellationToken)">
+            <summary>
+            
+            </summary>
+            <param name="eventData"></param>
+            <param name="result"></param>
+            <param name="cancellationToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.AutoWriteInterceptor.SetReportDatesForAddedEntities(Microsoft.EntityFrameworkCore.DbContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ExampleForm.EntityFrameworkCore.Migrations.init_database">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.Migrations.init_database.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.Migrations.init_database.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.Migrations.init_database.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ExampleForm.EntityFrameworkCore.UseReadOnlyConnectionAttribute">
+            <summary>
+            标注使用只读链接串
+            </summary>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.IConnectionStringSelector.IsReadOnly">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.IConnectionStringSelector.SetReadOnly(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="isread"></param>
+        </member>
+        <member name="T:ExampleForm.EntityFrameworkCore.ConnectionStringSelector">
+            <summary>
+            返回当前上下文的链接串名称，注意是名称，不是链接字符串
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EntityFrameworkCore.ConnectionStringSelector._connectionStringName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.ConnectionStringSelector.GetConnectionStringName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:ExampleForm.EntityFrameworkCore.ConnectionStringSelector._readOnly">
+            <summary>
+            只读
+            </summary>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.ConnectionStringSelector.IsReadOnly">
+            <summary>
+            是否只读
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.ConnectionStringSelector.SetConnectionStringName(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.ConnectionStringSelector.SetReadOnly(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="isread"></param>
+        </member>
+        <member name="T:ExampleForm.EntityFrameworkCore.DynamicConnectionStringResolver">
+            <summary>
+            基于链接名称，返回对应的链接串
+            </summary>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.DynamicConnectionStringResolver.#ctor(Volo.Abp.Data.DefaultConnectionStringResolver,ExampleForm.EntityFrameworkCore.IConnectionStringSelector,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="defaultResolver"></param>
+            <param name="selector"></param>
+            <param name="configurationRoot"></param>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.DynamicConnectionStringResolver.ResolveAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="connectionStringName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.DynamicConnectionStringResolver.Resolve(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="connectionStringName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.EntityFrameworkCore.SequentialGuidValueGenerator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EntityFrameworkCore.SequentialGuidValueGenerator._guidGenerator">
+            <summary>
+            初始化的时候记得赋值
+            </summary>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.SequentialGuidValueGenerator.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.EntityFrameworkCore.SequentialGuidValueGenerator.Next(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)">
+            <summary>
+            
+            </summary>
+            <param name="entry"></param>
+            <returns></returns>
+        </member>
+        <member name="P:ExampleForm.EntityFrameworkCore.SequentialGuidValueGenerator.GeneratesTemporaryValues">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.ExampleFormDbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.ExampleFormDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{ExampleForm.ExampleFormDbContext},Volo.Abp.Users.ICurrentUser)">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+            <param name="currentUser"></param>
+        </member>
+        <member name="M:ExampleForm.ExampleFormDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:ExampleForm.ExampleFormDbContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="M:ExampleForm.ExampleFormDbContext.HandleExtraPropertiesOnSave(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)">
+            <summary>
+            
+            </summary>
+            <param name="entry"></param>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.RoleInfo">
+            <summary>
+            权限信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.GradeInfo">
+            <summary>
+            角色信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.GradeRole">
+            <summary>
+            角色权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.TestTable">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.IncludeTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.MyTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.GuidTest1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.UintTest1">
+            <summary>
+            测试UINT
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.ParentTable">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.UploadImageInfo">
+            <summary>
+            图片信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbContext.TestLinkInclude">
+            <summary>
+            测试链接表
+            </summary>
+        </member>
+        <member name="T:ExampleForm.ExampleFormDbContextFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.ExampleFormDbContextFactory.CreateDbContext(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.ExampleFormDbContextModelCreatingExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.ExampleFormDbContextModelCreatingExtensions.ConfigureExampleForm(Microsoft.EntityFrameworkCore.ModelBuilder,System.Action{ExampleForm.ExampleFormModelBuilderConfigurationOptions})">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+            <param name="optionsAction"></param>
+        </member>
+        <member name="T:ExampleForm.ExampleFormModelBuilderConfigurationOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.ExampleFormModelBuilderConfigurationOptions.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="tablePrefix"></param>
+            <param name="schema"></param>
+        </member>
+        <member name="T:ExampleForm.IExampleFormDbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.RoleInfo">
+            <summary>
+            权限信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.GradeInfo">
+            <summary>
+            角色信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.GradeRole">
+            <summary>
+            角色权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.TestTable">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.IncludeTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.MyTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.GuidTest1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.UintTest1">
+            <summary>
+            测试UINT
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.ParentTable">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.UploadImageInfo">
+            <summary>
+            图片信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.IExampleFormDbContext.TestLinkInclude">
+            <summary>
+            测试链接表
+            </summary>
+        </member>
+        <member name="T:ExampleForm.SqliteDbContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.SqliteDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{ExampleForm.SqliteDbContext},Volo.Abp.Users.ICurrentUser)">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+            <param name="currentUser"></param>
+        </member>
+        <member name="M:ExampleForm.SqliteDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="builder"></param>
+        </member>
+        <member name="M:ExampleForm.SqliteDbContext.OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="optionsBuilder"></param>
+        </member>
+        <member name="M:ExampleForm.SqliteDbContext.HandleExtraPropertiesOnSave(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry)">
+            <summary>
+            自动填充创建者等
+            </summary>
+            <param name="entry"></param>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.RoleInfo">
+            <summary>
+            权限信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.GradeInfo">
+            <summary>
+            角色信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.GradeRole">
+            <summary>
+            角色权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.TestTable">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.IncludeTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.MyTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.GuidTest1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.UintTest1">
+            <summary>
+            测试UINT
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.ParentTable">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.UploadImageInfo">
+            <summary>
+            图片信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.SqliteDbContext.TestLinkInclude">
+            <summary>
+            测试链接表
+            </summary>
+        </member>
+        <member name="T:ExampleForm.SqliteDbContextFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.SqliteDbContextFactory.CreateDbContext(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ExampleForm.ExampleFormEntityFrameworkCoreModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.ExampleFormEntityFrameworkCoreModule.ConfigureServices(Volo.Abp.Modularity.ServiceConfigurationContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:ExampleForm.ExampleFormEntityFrameworkCoreModule.PreConfigureServices(Volo.Abp.Modularity.ServiceConfigurationContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="P:ExampleForm.ExampleFormEntityFrameworkCoreModule._config">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>

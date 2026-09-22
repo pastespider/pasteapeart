@@ -186,20 +186,6 @@
             <param name="configuration"></param>
             <returns></returns>
         </member>
-        <member name="T:ExampleApeart.DefaultApiExtendHandler">
-            <summary>
-            默认接口的扩展
-            </summary>
-        </member>
-        <member name="M:ExampleApeart.DefaultApiExtendHandler.AuthCheckAsync(System.String,System.Type,System.Object)">
-            <summary>
-            
-            </summary>
-            <param name="name"></param>
-            <param name="type"></param>
-            <param name="dtoType"></param>
-            <returns></returns>
-        </member>
         <member name="T:ExampleApeart.ExampleApeartAppService">
             <summary>
             

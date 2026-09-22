@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "个人信息",
+  "enablePullDownRefresh":true,
+  "navigationBarBackgroundColor": "#D51E2F"
+}

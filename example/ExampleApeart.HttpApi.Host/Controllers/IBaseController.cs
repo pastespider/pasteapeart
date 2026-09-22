@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging.Abstractions;
 using PasteApeart;
 using ExampleApeart.EntityFrameworkCore;
+using PasteApeart.Handler.lazy;
 
 namespace ExampleApeart.Controllers
 {

@@ -140,3 +140,4 @@ project.lock.json
 temp/
 tmp/
 *.cache
+/framework/pack_upload.bat

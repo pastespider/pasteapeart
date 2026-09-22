@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "paste-form":"/components/pasteform/pasteform"
+  }
+}

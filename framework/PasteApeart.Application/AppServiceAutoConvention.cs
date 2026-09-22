@@ -122,7 +122,7 @@ namespace PasteApeart
                     }
 
                     // 设置 Action 路由
-                    var actionName = action.ActionName.Replace("Async", "");
+                    var actionName = action.ActionName.EndsWith("Async") ? action.ActionName.Replace("Async", "") : action.ActionName;
                     var routeTemplate = GetActionRouteTemplate(actionName, action.Parameters);
                     if (!string.IsNullOrEmpty(routeTemplate))
                     {

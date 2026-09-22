@@ -1,0 +1,26 @@
+<view class='modal-mask' wx:if="{{ showDatePickerPlus }}" bindtap='closeDatePickerPlus'></view>
+<view class='datepicker' wx:if="{{ showDatePickerPlus }}" animation="{{animationData}}">
+  <view class='datepicker-header'>
+    <view class='datepicker-header-left'  bindtap='closeDatePickerPlus'>取消</view>
+    <view class='datepicker-header-right' bindtap='submitSelectDate'>确定</view>
+  </view>
+  <view class='datepicker-content'>
+    <picker-view value="{{glDateMutiIndex}}" bindchange="bindDateGl">
+      <picker-view-column class="picker-view-column">
+        <view wx:for="{{glYears}}" wx:key="index">{{item}}</view>
+      </picker-view-column>
+      <view class="center_split"><span>-</span></view>
+      <picker-view-column class="picker-view-column">
+        <view wx:for="{{glMonths}}" wx:key="index">{{item}}</view>
+      </picker-view-column>
+      <view class="center_split"><span>-</span></view>
+      <picker-view-column class="picker-view-column">
+        <view wx:for="{{glDays}}" wx:key="index">{{item}}</view>
+      </picker-view-column>
+      <picker-view-column class="picker-view-column">
+        <view wx:for="{{glHours}}" wx:key="index">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+<!-- 调用案例   <datepicker-plus bind:submit='submit' showDatePickerPlus='{{show}}' initDate="2018-01-01"></datepicker-plus> -->

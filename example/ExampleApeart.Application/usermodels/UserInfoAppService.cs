@@ -49,13 +49,13 @@ namespace ExampleApeart.usermodels
             }
             //var dto = ObjectMapper.Map<UserInfo, UserInfoUpdateDto>(_info);
             var dto = _info.Adapt<UserInfoUpdateDto>();
-            var _query_gradeid = _dbContext.UserGrade.Where(x => x.UserId == _info.Id).Select(x => x.GradeId);
-            var grades = await _dbContext.GradeInfo.Where(x => _query_gradeid.Contains(x.Id)).AsNoTracking().ToListAsync();
-            if (grades != null && grades.Count > 0)
-            {
-                //dto.Grades = ObjectMapper.Map<List<GradeInfo>, List<GradeInfoListDto>>(grades);
-                dto.Grades = grades.Adapt<List<GradeInfoListDto>>();
-            }
+            //var _query_gradeid = _dbContext.UserGrade.Where(x => x.UserId == _info.Id).Select(x => x.GradeId);
+            //var grades = await _dbContext.GradeInfo.Where(x => _query_gradeid.Contains(x.Id)).AsNoTracking().ToListAsync();
+            //if (grades != null && grades.Count > 0)
+            //{
+            //    //dto.Grades = ObjectMapper.Map<List<GradeInfo>, List<GradeInfoListDto>>(grades);
+            //    dto.Grades = grades.Adapt<List<GradeInfoListDto>>();
+            //}
 
             dto.PassWord = "";//密码只有重置，没有修改
             var _dataModel = BuilderHelper.AttributeReadModelProperty<UserInfoUpdateDto>(dto);

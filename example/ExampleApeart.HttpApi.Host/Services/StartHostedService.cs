@@ -1,11 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using PasteApeart;
-using PasteApeart.Handler;
-using PasteApeart.Handler.rabbitmodel;
 using ExampleApeart.EntityFrameworkCore;
 using ExampleApeart.Handler;
 using ExampleApeart.usermodels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using PasteApeart;
+using PasteApeart.Application.Contracts;
+using PasteApeart.Handler;
+using PasteApeart.Handler.Extensions;
+using PasteApeart.Handler.rabbit;
 
 namespace ExampleApeart
 {
@@ -20,7 +22,7 @@ namespace ExampleApeart
         private readonly IChannelHelper _channelHelper;
         private readonly IEventActionHandler _eventHandler;
         private readonly AppConfig _config;
-        private readonly RabbitMultiConsumerHandler _rabbitReviceHandler;
+        private readonly IRabbitMultiConsumerHandler _rabbitReviceHandler;
         private readonly RabbitConfig _rabbitConfig;
 
         /// <summary>
@@ -33,7 +35,14 @@ namespace ExampleApeart
         /// <param name="channelHelper"></param>
         /// <param name="eventHandler"></param>
         /// <param name="config"></param>
-        public StartHostedService(IServiceProvider serviceProvider, IOptions<RabbitConfig> rabbitConfig, RabbitMultiConsumerHandler rabbitMultiConsumerHandler, ILogger<StartHostedService> logger, IChannelHelper channelHelper, IEventActionHandler eventHandler, IOptions<AppConfig> config)
+        public StartHostedService(
+            IServiceProvider serviceProvider,
+            IOptions<RabbitConfig> rabbitConfig,
+            IRabbitMultiConsumerHandler rabbitMultiConsumerHandler,
+            ILogger<StartHostedService> logger,
+            IChannelHelper channelHelper,
+            IEventActionHandler eventHandler,
+            IOptions<AppConfig> config)
         {
             _serviceProvider = serviceProvider;
             _logger = logger;
@@ -119,7 +128,7 @@ namespace ExampleApeart
                         await _dbContext.Database.BeginTransactionAsync();
                         var one = new UserInfo();
                         one.Email = config.RootAccount;
-                        one.UserName = "管理员";
+                        one.Name = "管理员";
                         one.CreateDate = DateTime.Now;
                         //one.Grade = "admin";
                         one.IsEnable = true;
@@ -145,7 +154,7 @@ namespace ExampleApeart
                         _dbContext.Add(new UserGrade() { GradeId = groupid, UserId = adminid });
                         await _dbContext.SaveChangesAsync();
 
-                        await UserHandler.LoadAsync(_dbContext, false);
+                        await RoleBackLoadHandler.LoadAsync(_dbContext, false);
                         await _dbContext.Database.CommitTransactionAsync();
                     }
                     catch (Exception exlinit)
@@ -205,7 +214,7 @@ namespace ExampleApeart
                     var read = await _channelHelper.ChannelEventModel.Reader.ReadAsync(token);
                     if (read != null)
                     {
-                        await _eventHandler.HanlderEventMessage(read);
+                        await _eventHandler.ActionMessageAsync(read);
                     }
                     else
                     {

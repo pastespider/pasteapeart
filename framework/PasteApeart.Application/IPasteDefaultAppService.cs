@@ -75,6 +75,18 @@ namespace PasteApeart.Application
         /// <param name="searchName"></param>
         /// <returns></returns>
         Task<dynamic> Page(string entityName, string queryString, string searchName = "");
+
+        /// <summary>
+        /// 复用 按页查询
+        /// </summary>
+        /// <param name="searchObject"></param>
+        /// <param name="entityType"></param>
+        /// <param name="searchType"></param>
+        /// <param name="input"></param>
+        /// <param name="listDtoType"></param>
+        /// <returns></returns>
+        Task<dynamic> DirectPageAsync(object searchObject, Type entityType, Type searchType, InputSearchBase input, Type listDtoType);
+
         /// <summary>
         /// 
         /// </summary>

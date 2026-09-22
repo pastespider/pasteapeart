@@ -343,7 +343,7 @@ namespace PasteApeart.Helper
                 var attributes = _property.GetCustomAttributes<Attribute>();
                 var _attributes = HandlerAttribute2(attributes, _cpro);
 
-                if (_attributes.Count > 0)
+                if (_attributes?.Any()==true)
                 {
                     _cpro.Attributes = _attributes;
                 }
@@ -1190,7 +1190,7 @@ namespace PasteApeart.Helper
                 proInfo.DataType = _property.PropertyType.Name;
                 var attributes = _property.GetCustomAttributes<Attribute>();
                 var _attributes = HandlerAttribute2(attributes, proInfo, null, dtoName, action, buttons);
-                if (_attributes.Count > 0)
+                if (_attributes?.Any() == true)
                 {
                     proInfo.Attributes = _attributes;
                 }

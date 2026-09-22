@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PasteApeart.Application.Contracts;
-using PasteApeart.Handler;
+using PasteApeart.Handler.Extensions;
 using PasteApeart.Handler.rabbit;
 using PasteApeart.Handler.redis;
 using System.Collections.Concurrent;
@@ -13,7 +13,7 @@ namespace PasteApeart.Handler
     /// <summary>
     /// 
     /// </summary>
-    public class ChannelHelper :  IChannelHelper
+    public class ChannelHelper : IChannelHelper
     {
         private readonly Channel<IEventModel> _channelLocationQueue;
         private readonly ILogger<ChannelHelper> _logger;

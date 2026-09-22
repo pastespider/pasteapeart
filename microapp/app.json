@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/home/home/index",
+    "pages/home/center/index",
+    "pages/home/login/index",
+    "pages/pasteform/view/index",
+    "pages/pasteform/index/index",
+    "pages/home/center/edit/index"
+  ],
+  "subpackages": [
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "Weixin",
+    "navigationBarBackgroundColor": "#D51E2F"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#333",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/home/home/index",
+        "text": "首页",
+        "iconPath": "static/images/indexMenus/index01.png",
+        "selectedIconPath": "static/images/indexMenus/index01_1.png"
+      },
+      {
+        "pagePath": "pages/home/login/index",
+        "text": "登录",
+        "iconPath": "static/images/indexMenus/index02.png",
+        "selectedIconPath": "static/images/indexMenus/index02_1.png"
+      },
+      {
+        "pagePath": "pages/home/center/index",
+        "text": "我的",
+        "iconPath": "static/images/indexMenus/index04.png",
+        "selectedIconPath": "static/images/indexMenus/index04_1.png"
+      }
+    ]
+  },
+  "usingComponents": {
+
+  },
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "requiredPrivateInfos": [
+  ],
+  "useExtendedLib": {
+    "weui": true
+  }
+}

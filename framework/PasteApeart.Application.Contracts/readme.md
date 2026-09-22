@@ -1,4 +1,9 @@
+## 26.09.12
+	1.为InputSearchBase的各个字段引入[PasteQuery]
 
+
+## 26.09.09
+	1.为了配合Handler，主要是引入了PastePagedResult
 
 ## 26.09.03
 	1.为了和ABP不冲突，把底层的Entity改成对应的PasteEntity，比如IEntity=>IPasteEntity,Entity<int>=>PasteEntity<int>以此类推

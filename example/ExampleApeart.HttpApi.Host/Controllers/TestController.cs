@@ -3,7 +3,7 @@ using ExampleApeart.usermodels;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PasteApeart;
+using PasteApeart.Handler;
 using PasteApeart.Helper;
 using System.Text;
 
@@ -38,7 +38,7 @@ namespace ExampleApeart.HttpApi.Host.Controllers
         {
             var enums = typeof(RoleInfo).Assembly.GetTypes()
                 .Where(x => x.IsEnum)
-                .WhereIf(!string.IsNullOrEmpty(enumName), x => x.Name == enumName)
+                .PasteWhereIf(!string.IsNullOrEmpty(enumName), x => x.Name == enumName)
                 .ToList();
             var sb = new StringBuilder("");
             if (enumName == "abc")
@@ -90,7 +90,7 @@ namespace ExampleApeart.HttpApi.Host.Controllers
             var newone = new UserInfo { };
             first.Adapt(newone);
             //注意ID会带出来.... ... 
-            return $"Id{newone.Id} UserName{newone.UserName}";
+            return $"Id{newone.Id} UserName{newone.Name}";
         }
 
 

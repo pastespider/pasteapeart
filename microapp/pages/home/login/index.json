@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "登录页面",
+  "usingComponents": {},
+  "onReachBottomDistance": 50,
+  "enablePullDownRefresh": true
+}

@@ -1,0 +1,81 @@
+<view class="memberBox ">
+  <view class="headBox coreshop-bg-red ">
+    <view class="user-info-box ">
+      <block wx:if="{{!userInfo.id}}">
+        <view class="login-user-view ">
+          <view class="login-user-avatar-view ">
+            <view class="account-face grace-box-shadow ">
+              <block wx:if="{{userInfo.head!=null}}">
+                <image src="{{userInfo.head}}" mode="circle" class="uhead"></image>
+              </block>
+            </view>
+          </view>
+        </view>
+      </block>
+      <block wx:else>
+        <view class="">
+          <view class="avatar-flex">
+            <view class="u-m-r-10 ">
+              <block wx:if="{{userInfo.head!=null}}">
+                <image class="avatar_img" src="{{userInfo.head}}" mode="circle"></image>
+              </block>
+            </view>
+            <view class="u-flex-1 userItem ">
+              <view class="u-font-34 u-p-b-20 "><text class="u-margin-right-30 ">{{userInfo.nickName}}</text></view>
+              <progress class="process" active-mode="backwards" percent="100" stroke-width="2" active="true" duration="10" border-radius="4" color="#a9a9a9"></progress>
+              <block wx:if="{{userInfo.createDate != null}}">
+                <view class="u-font-24 "><text class="idesc">{{"注册时间："+userInfo.createDate}}</text></view>
+              </block>
+            </view>
+            <!-- 认证技能列表 -->
+            <view class="skills">
+              <view class="skill" wx:for="{{skillList}}" wx:for-key="item" wx:key="item">
+                <image class="skill_icon" src="{{item.icon}}"></image>
+                <view class="skill_name">{{item.name}} {{item.level}}</view>
+              </view>
+            </view>
+            <navigator url="/pages/home/center/edit/index">
+              <view class="u-m-l-20 u-p-10" style="padding-left:20rpx;">
+                <van-icon name="arrow" color="#fff" size="16px" />
+              </view>
+            </navigator>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+  <!-- 我的数据 -->
+  <view class="vontent ">
+    <view class="content_box">
+      <view class="ser_title">我的数据</view>
+      <view class="grid_box">
+        <view class="grid_item" wx:for="{{dataList}}" wx:key="index" data-nav="{{item.state}}" bindtap="orderNavigateHandle">
+          <view class="item_box">
+            <view class="transactionNumber">{{ item.nums }}</view>
+            <view class="item_text">{{item.name}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 广告图信息 -->
+  <view class="center_banner">
+    <image class="banner_img" src="{{banner}}" mode="aspectFill"></image>
+  </view>
+  <!-- 我的服务 -->
+  <view class="vontent ">
+    <view class="content_box content_margin_top">
+      <view class="ser_title">我的服务</view>
+      <view class="coreshop-tools-list-box ">
+        <view class="grid_box">
+          <view class="grid_item" wx:for="{{serviceList}}" wx:for-item="item" wx:key="index">
+            <view class="item_box" bindtap="navigateToHandle" data-router="{{item.router}}" data-icon="{{item.icon}}">
+              <van-icon name="{{item.icon}}" size="25"></van-icon>
+              <view class="item_text">{{item.name}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

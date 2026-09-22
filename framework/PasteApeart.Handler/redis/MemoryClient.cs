@@ -525,8 +525,8 @@ namespace PasteApeart.Handler.redis
             {
                 var list = new List<RedisValue>();
                 var hits = _hash
-                    .WhereIf(start < stop, x => start <= x.Value && x.Value < stop)
-                    .WhereIf(start > stop, x => stop <= x.Value && x.Value < start)
+                    .PasteWhereIf(start < stop, x => start <= x.Value && x.Value < stop)
+                    .PasteWhereIf(start > stop, x => stop <= x.Value && x.Value < start)
                     .ToList();
                 foreach (var item in hits)
                 {
@@ -875,9 +875,9 @@ namespace PasteApeart.Handler.redis
                     }
                     pattern = pattern.Replace("*", "");
                     var vals = hash_key
-                        .WhereIf(position == 1, x => x.Key.EndsWith(pattern))
-                        .WhereIf(position == 2, x => x.Key.StartsWith(pattern))
-                        .WhereIf(position == 3, x => x.Key.Contains(pattern))
+                        .PasteWhereIf(position == 1, x => x.Key.EndsWith(pattern))
+                        .PasteWhereIf(position == 2, x => x.Key.StartsWith(pattern))
+                        .PasteWhereIf(position == 3, x => x.Key.Contains(pattern))
                         .OrderBy(x => x.Key)
                         .ToList();
                     var start = (page - 1) * size;
@@ -920,9 +920,9 @@ namespace PasteApeart.Handler.redis
                     }
                     pattern = pattern.Replace("*", "");
                     var vals = hash_key
-                        .WhereIf(position == 1, x => x.Key.StartsWith(pattern))
-                        .WhereIf(position == 2, x => x.Key.EndsWith(pattern))
-                        .WhereIf(position == 3, x => x.Key.Contains(pattern))
+                        .PasteWhereIf(position == 1, x => x.Key.StartsWith(pattern))
+                        .PasteWhereIf(position == 2, x => x.Key.EndsWith(pattern))
+                        .PasteWhereIf(position == 3, x => x.Key.Contains(pattern))
                         .OrderBy(x => x.Key)
                         .ToList();
                     var start = (page - 1) * size;

@@ -42,8 +42,8 @@ namespace ExampleApeart.Handler
             return new UserShort
             {
                 Id = user.Id,
-                UserHead = user.UserHead,
-                UserName = user.UserName,
+                Head = user.Head,
+                Name = user.Name,
             };
         }
 
@@ -98,8 +98,8 @@ namespace ExampleApeart.Handler
             return query.Select(x => new UserShort
             {
                 Id = x.Id,
-                UserHead = x.UserHead,
-                UserName = x.UserName
+                Head = x.Head,
+                Name = x.Name
             });
         }
 

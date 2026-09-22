@@ -1,0 +1,634 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ExampleForm.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:ExampleForm.AppConfig">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.AppConfig.RabbitQueue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.AppConfig.RootAccount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.AppConfig.RootPassword">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.EnumModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumModel.ok">
+            <summary>
+            成功
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumModel.fail">
+            <summary>
+            失败
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumModel.error">
+            <summary>
+            错误
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.ActionEnum">
+            <summary>
+            动作枚举
+            </summary>
+        </member>
+        <member name="F:ExampleForm.testmodels.ActionEnum.all">
+            <summary>
+            查看所有
+            </summary>
+        </member>
+        <member name="F:ExampleForm.testmodels.ActionEnum.start">
+            <summary>
+            正常
+            </summary>
+        </member>
+        <member name="F:ExampleForm.testmodels.ActionEnum.stop">
+            <summary>
+            停止
+            </summary>
+        </member>
+        <member name="F:ExampleForm.testmodels.ActionEnum.cannel">
+            <summary>
+            取消
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.GuidTest1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.GuidTest1.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.IncludeTable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.IncludeTable.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.IncludeTable.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.MyTable">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTable.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTable.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTable.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTable.Rate">
+            <summary>
+            占比
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.MyTable.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.ParentTable">
+            <summary>
+            测试表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTable.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTable.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTable.Age">
+            <summary>
+            年龄
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTable.Front">
+            <summary>
+            包含
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.ParentTable.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestLinkInclude">
+            <summary>
+            测试链接表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkInclude.MyTable">
+            <summary>
+            外表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkInclude.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestLinkInclude.GradeId">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.TestTable">
+            <summary>
+            测试表 用于测试CURD的表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTable.Name">
+            <summary>
+            姓名 模拟短文本输入
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTable.Head">
+            <summary>
+            头像 模拟图片上传
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTable.Age">
+            <summary>
+            年龄 模拟输入number
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTable.DateStart">
+            <summary>
+            会员周期 会员生效区间
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTable.DateEnd">
+            <summary>
+            会员周期 会员生效区间
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTable.Balance">
+            <summary>
+            余额 数据库是分为单位，UI中是以元为单位
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.TestTable.UserId">
+            <summary>
+            用户
+            </summary>
+        </member>
+        <member name="T:ExampleForm.testmodels.UintTest1">
+            <summary>
+            测试UINT
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.testmodels.UintTest1.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="T:ExampleForm.EnumAgeValue">
+            <summary>
+            年龄枚举测试
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumAgeValue.All">
+            <summary>
+            全部
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumAgeValue.Twen">
+            <summary>
+            12岁
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumAgeValue.Three">
+            <summary>
+            13岁
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumAgeValue.Four">
+            <summary>
+            14岁
+            </summary>
+        </member>
+        <member name="T:ExampleForm.EnumIsEnableState">
+            <summary>
+            状态枚举
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumIsEnableState.All">
+            <summary>
+            全部
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumIsEnableState.True">
+            <summary>
+            是
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumIsEnableState.False">
+            <summary>
+            否
+            </summary>
+        </member>
+        <member name="T:ExampleForm.EnumRoleType">
+            <summary>
+            权限类型
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumRoleType.All">
+            <summary>
+            全部
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumRoleType.Role">
+            <summary>
+            <![CDATA[<i_*_style="color:green;">权限</i>]]>
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumRoleType.Menu">
+            <summary>
+            菜单
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumRoleType.Button">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumRoleType.MiniMenu">
+            <summary>
+            小程序菜单
+            </summary>
+        </member>
+        <member name="T:ExampleForm.EnumStateQuery">
+            <summary>
+            一些状态的枚举
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumStateQuery.all">
+            <summary>
+            一般用于查询，表示忽略，直接查询所有
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumStateQuery.fail">
+            <summary>
+            一般表示禁用，不可用
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumStateQuery.ok">
+            <summary>
+            一般表示正常
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumStateQuery.cannel">
+            <summary>
+            一般表示取消
+            </summary>
+        </member>
+        <member name="F:ExampleForm.EnumStateQuery.deleted">
+            <summary>
+            一般表示删除
+            </summary>
+        </member>
+        <member name="T:ExampleForm.ExampleFormDbProperties">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbProperties.DbTablePrefix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.ExampleFormDbProperties.DbSchema">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ExampleForm.ExampleFormDbProperties.ConnectionStringName">
+            <summary>
+            Pgsql主库
+            </summary>
+        </member>
+        <member name="F:ExampleForm.ExampleFormDbProperties.ReadonlyConnectionStringName">
+            <summary>
+            Pgsql从库
+            </summary>
+        </member>
+        <member name="F:ExampleForm.ExampleFormDbProperties.SqliteConnectionStringName">
+            <summary>
+            Sqlite主库
+            </summary>
+        </member>
+        <member name="F:ExampleForm.ExampleFormDbProperties.SqliteReadOnlyConnectionStringName">
+            <summary>
+            Sqlite从库
+            </summary>
+        </member>
+        <member name="T:ExampleForm.ExampleFormDomainModule">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ExampleForm.ExampleFormDomainModule.ConfigureServices(Volo.Abp.Modularity.ServiceConfigurationContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ExampleForm.toolmodels.UploadImageInfo">
+            <summary>
+            图片信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.Dir">
+            <summary>
+            分类 存放在哪个大模块下,示例head/order/card等，最大8个字符
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.Path">
+            <summary>
+            路径 服务器上的文件路径，最大128字符
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.Url">
+            <summary>
+            访问地址 最大128字符
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.Md5">
+            <summary>
+            文件码 最大32字符
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.Size">
+            <summary>
+            文件大小
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.Extension">
+            <summary>
+            后缀 .png/.jpg等，最大8字符
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.Width">
+            <summary>
+            宽度 多少px
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.Height">
+            <summary>
+            高度 多少px
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.UploadCloud">
+            <summary>
+            上载云
+            </summary>
+        </member>
+        <member name="P:ExampleForm.toolmodels.UploadImageInfo.UserId">
+            <summary>
+            上传者
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeInfo">
+            <summary>
+            角色信息 一个账号可以绑定多个角色，角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfo.Name">
+            <summary>
+            角色名称 只要是系统内不重复即可，必填
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfo.Code">
+            <summary>
+            角色代码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfo.Desc">
+            <summary>
+            描述 对这个角色的补充说明 64
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfo.Mark">
+            <summary>
+            备注 这个角色的内部备注，desc一般表示外部备注 64
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.GradeRole">
+            <summary>
+            角色绑定权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRole.GradeId">
+            <summary>
+            角色ID 点击选择角色
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.GradeRole.RoleId">
+            <summary>
+            权限ID 点击选择权限
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.RoleInfo">
+            <summary>
+            权限列表
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Id">
+            <summary>
+            标识
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Model">
+            <summary>
+            模块
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Role">
+            <summary>
+            权限
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Icon">
+            <summary>
+            图标名称 一般表示样式名称
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Path">
+            <summary>
+            路径 作为菜单类型的路径
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.RoleType">
+            <summary>
+            权限类型 0权限1菜单2按钮
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Sort">
+            <summary>
+            排序
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.FatherId">
+            <summary>
+            父级
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.Level">
+            <summary>
+            层级
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.SortStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.RootId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.RoleInfo.FatherStr">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserGrade">
+            <summary>
+            用户绑定角色 解绑的直接删除数据
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGrade.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserGrade.GradeId">
+            <summary>
+            角色ID
+            </summary>
+        </member>
+        <member name="T:ExampleForm.usermodels.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfo.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfo.UserHead">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfo.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfo.Desc">
+            <summary>
+            描述
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfo.Email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfo.PassWord">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.UserInfo.IsEnable">
+            <summary>
+            状态
+            </summary>
+        </member>
+    </members>
+</doc>

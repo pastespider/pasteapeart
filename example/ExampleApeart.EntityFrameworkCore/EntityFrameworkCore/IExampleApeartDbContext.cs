@@ -17,12 +17,12 @@ namespace ExampleApeart.EntityFrameworkCore
         /// <summary>
         /// 假设需要基于查询获取
         /// </summary>
-        IQueryable<int> CurrentQueryableUserId { get; set; }
+        IQueryable<int> QueryUserId { get; set; }
 
         /// <summary>
         /// 是否要过滤
         /// </summary>
-        bool FilterQuery { get; set; }
+        bool EnableFilter { get; set; }
 
         ///// <summary>
         ///// 基于当前用户查询得有权限对象

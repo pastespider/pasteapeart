@@ -272,11 +272,14 @@ namespace PasteApeart.Application
             {
                 throw new PasteCodeException("没有检索到搜索Model,请确认InputSearchBase这个基础检索Model存在!");
             }
-            dynamic pagedto = new ExpandoObject();
+
 
             object searchObject = null;
             searchObject = Activator.CreateInstance(searchType);
             var input = _defaultHelper.MapperToQueryModel(queryString, searchType, searchObject);
+
+
+            dynamic pagedto = await DirectPageAsync(searchObject, entityType, searchType, input, listDtoType);
             if (input.page == 1)
             {
                 if (queryString.Contains("request=one"))
@@ -284,16 +287,80 @@ namespace PasteApeart.Application
                     pagedto.pasteModel = await ReadListQueryModel(entityName, searchName);
                 }
             }
+            return pagedto;
 
+            //dynamic pagedto = new ExpandoObject();
+            //if (input.page == 1)
+            //{
+            //    if (queryString.Contains("request=one"))
+            //    {
+            //        pagedto.pasteModel = await ReadListQueryModel(entityName, searchName);
+            //    }
+            //}
+            //IQueryable query = _defaultHelper.BuildDynamicQuery(_dbContext, entityType, searchType, searchObject);
+
+            //if (input.page == 1)
+            //{
+            //    pagedto.totalCount = await _defaultHelper.ExecuteCountQuery(query, entityType);
+            //}
+
+            //var isIncludeType = _defaultHelper.HasPasteIncludeProperties(entityType);
+
+            //if (isIncludeType)
+            //{
+            //    var includeQuery = _defaultHelper.ApplyAllPasteIncludes(query, entityType);
+            //    if (includeQuery != null)
+            //    {
+            //        query = includeQuery as IQueryable;
+            //    }
+            //}
+            //query = _defaultHelper.ApplyPagingAndSorting(query, entityType, searchType, searchObject);
+            //List<object> dtos;
+            //if (isIncludeType)
+            //{
+            //    dtos = await _defaultHelper.ExecuteProjectionQueryWithIncludes(query, entityType, listDtoType);
+            //}
+            //else
+            //{
+            //    dtos = await _defaultHelper.ExecuteProjectionQuery(query, entityType, listDtoType);
+            //}
+            //if (dtos == null) { return null; }
+            //if (dtos?.Any() == false)
+            //{
+            //    return null;
+            //}
+            ////Console.WriteLine($"line.315 {Newtonsoft.Json.JsonConvert.SerializeObject(dtos)}");
+            ////查询外表 并实现 这里是简单的外表ID的查询 如果有更复杂的，还需要实现
+            //await _defaultHelper.BuildOuterData(_dbContext, listDtoType, dtos);
+            //// 7. 设置结果并返回
+            ////pagedDto.Items = dtos.Cast<object>().ToList();
+            //pagedto.items = dtos;
+
+            ////计算ExtendBind的数据... ExtendBind=true
+            //await _defaultHelper.ReadExtendBind(_dbContext, listDtoType, dtos, searchType, searchObject);
+
+            //return pagedto;
+        }
+
+        /// <summary>
+        /// 直接获取页面数据 用于快捷开发
+        /// </summary>
+        /// <param name="searchObject"></param>
+        /// <param name="entityType"></param>
+        /// <param name="searchType"></param>
+        /// <param name="input"></param>
+        /// <param name="listDtoType"></param>
+        /// <returns></returns>
+        public async Task<dynamic> DirectPageAsync(object searchObject, Type entityType, Type searchType, InputSearchBase input, Type listDtoType)
+        {
+
+            dynamic pageDto = new ExpandoObject();
             IQueryable query = _defaultHelper.BuildDynamicQuery(_dbContext, entityType, searchType, searchObject);
-
             if (input.page == 1)
             {
-                pagedto.totalCount = await _defaultHelper.ExecuteCountQuery(query, entityType);
+                pageDto.totalCount = await _defaultHelper.ExecuteCountQuery(query, entityType);
             }
-
             var isIncludeType = _defaultHelper.HasPasteIncludeProperties(entityType);
-
             if (isIncludeType)
             {
                 var includeQuery = _defaultHelper.ApplyAllPasteIncludes(query, entityType);
@@ -317,17 +384,14 @@ namespace PasteApeart.Application
             {
                 return null;
             }
-            //Console.WriteLine($"line.315 {Newtonsoft.Json.JsonConvert.SerializeObject(dtos)}");
             //查询外表 并实现 这里是简单的外表ID的查询 如果有更复杂的，还需要实现
             await _defaultHelper.BuildOuterData(_dbContext, listDtoType, dtos);
             // 7. 设置结果并返回
             //pagedDto.Items = dtos.Cast<object>().ToList();
-            pagedto.items = dtos;
-
+            pageDto.items = dtos;
             //计算ExtendBind的数据... ExtendBind=true
             await _defaultHelper.ReadExtendBind(_dbContext, listDtoType, dtos, searchType, searchObject);
-
-            return pagedto;
+            return pageDto;
         }
 
         /// <summary>

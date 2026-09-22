@@ -1,0 +1,4 @@
+<!--pages/form/view/index.wxml-->
+<view class="add-from" >
+    <paste-form id="paste-form" bind:submit="handlerSubmit"></paste-form>
+  </view>

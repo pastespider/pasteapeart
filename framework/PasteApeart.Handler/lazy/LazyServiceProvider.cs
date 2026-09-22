@@ -88,6 +88,47 @@ namespace PasteApeart.Handler.lazy
                 new Lazy<object>(() => _componentContext.Resolve(serviceType)))
                 .Value;
         }
+
+        /// <summary>
+        /// 立即解析并返回指定类型的服务，找不到时抛出异常
+        /// </summary>
+        /// <typeparam name="T">服务类型</typeparam>
+        /// <returns>服务实例</returns>
+        public T GetRequiredService<T>() where T : class
+        {
+            return _componentContext.Resolve<T>();
+        }
+
+        /// <summary>
+        /// 立即解析并返回指定类型的服务，找不到时抛出异常
+        /// </summary>
+        /// <param name="serviceType">服务类型</param>
+        /// <returns>服务实例</returns>
+        public object GetRequiredService(Type serviceType)
+        {
+            return _componentContext.Resolve(serviceType);
+        }
+
+        /// <summary>
+        /// 立即解析并返回指定类型的服务，找不到时返回 null
+        /// </summary>
+        /// <typeparam name="T">服务类型</typeparam>
+        /// <returns>服务实例或 null</returns>
+        public T GetService<T>() where T : class
+        {
+            return _componentContext.ResolveOptional<T>();
+        }
+
+        /// <summary>
+        /// 立即解析并返回指定类型的服务，找不到时返回 null
+        /// </summary>
+        /// <param name="serviceType">服务类型</param>
+        /// <returns>服务实例或 null</returns>
+        public object GetService(Type serviceType)
+        {
+            return _componentContext.ResolveOptional(serviceType);
+        }
+
     }
 
 

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@vant/weapp": "^1.11.6",
+    "dc-vant-form": "^1.0.4",
+    "miniprogram-computed": "^5.0.0",
+    "weui-miniprogram": "^1.4.1"
+  }
+}

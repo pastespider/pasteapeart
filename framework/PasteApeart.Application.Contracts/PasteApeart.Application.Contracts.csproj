@@ -10,9 +10,7 @@
 	  <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>PasteApeart.Application.Contracts</RootNamespace>
 	    <DocumentationFile>PasteApeart.Application.Contracts.xml</DocumentationFile>
-	  <FileVersion>26.9.5</FileVersion>
-	  <VersionPrefix>26.9.5</VersionPrefix>
-	  <AssemblyVersion>26.9.5</AssemblyVersion>
+
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
@@ -23,14 +21,10 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App"></FrameworkReference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+	<ItemGroup>
 		<ProjectReference Include="..\PasteApeart.Domain\PasteApeart.Domain.csproj" />
 		<ProjectReference Include="..\PasteApeart.Helper\PasteApeart.Helper.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="PasteApeart.Helper" Version="26.9.5" />
-		<PackageReference Include="PasteApeart.Domain" Version="26.9.5" />
-	</ItemGroup>
 
 </Project>

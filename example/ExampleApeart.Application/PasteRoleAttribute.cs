@@ -5,6 +5,7 @@ using PasteApeart.Handler;
 using ExampleApeart.Handler;
 using System.Security.Claims;
 using System.Text.Json;
+using PasteApeart.Application.Contracts;
 
 namespace ExampleApeart
 {

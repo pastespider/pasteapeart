@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PasteApeart.Application.Contracts;
+using PasteApeart.Handler.Extensions;
 using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text.Json;
@@ -16,35 +17,74 @@ namespace PasteApeart.Handler
         private readonly ILogger<EventActionHandler> _logger;
         private readonly IServiceProvider _serviceProvider;
         private readonly IChannelHelper _channelHelper;
+        private readonly Type[] _dtoTypeArray = null;
 
         /// <summary>
-        /// 
+        /// 队列处理 可以被RabbitMQ或者Channel的消费者调用
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="serviceProvider"></param>
         /// <param name="channelHelper"></param>
-        public EventActionHandler(ILogger<EventActionHandler> logger, IServiceProvider serviceProvider, IChannelHelper channelHelper)
+        public EventActionHandler(ILogger<EventActionHandler> logger, IServiceProvider serviceProvider, IChannelHelper channelHelper, Type[] dtoTypes = null)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
             _channelHelper = channelHelper;
+            if (dtoTypes != null)
+            {
+                _dtoTypeArray = dtoTypes;
+            }
         }
 
 
         private readonly ConcurrentDictionary<string, Type> _eventTypeCache = new();
+
         private readonly ConcurrentDictionary<Type, (Type HandlerType, MethodInfo HandleMethod)> _handlerCache = new();
 
         /// <summary>
-        /// 
+        /// 主要适用于分布式队列 比如RabitMQ等
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public async Task HandlerEventMessage(string msg)
+        public async Task ActionMessageAsync(string msg)
         {
             if (string.IsNullOrWhiteSpace(msg))
             {
                 return;
             }
+
+            if (_dtoTypeArray?.Any() != true)
+            {
+                _logger.LogError("ActionMessageAsync 的string模式下，构造函数的dtoTypes是必传的，表示EventModel所在程序集的类型集合");
+                return;
+            }
+
+            await ActionAsync(msg, _dtoTypeArray);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="types"></param>
+        /// <returns></returns>
+        public async Task ActionMessageAsync(string msg, Type[] types)
+        {
+            if (string.IsNullOrWhiteSpace(msg))
+            {
+                return;
+            }
+            await ActionAsync(msg, types);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="types"></param>
+        /// <returns></returns>
+        private async Task ActionAsync(string msg, Type[] types)
+        {
             object input = null;
             object handler = null;
             try
@@ -68,8 +108,7 @@ namespace PasteApeart.Handler
                 // 2. 获取事件类型（带缓存）
                 var modelType = _eventTypeCache.GetOrAdd(eventName, name =>
                 {
-                    return typeof(AbsEventModel).Assembly.GetTypes()
-                        .FirstOrDefault(t => t.Name == name);
+                    return types.FirstOrDefault(x => x.Name == name);
                 });
                 if (modelType == null)
                 {
@@ -149,19 +188,6 @@ namespace PasteApeart.Handler
             catch (Exception ex)
             {
                 _logger.LogException(ex);
-                if (input != null)
-                {
-                    //if (input is EventRetryModel emodel)
-                    //{
-                    //    if (emodel.TryMaxTime > 0 && emodel.CurrentTime < emodel.TryMaxTime)
-                    //    {
-                    //        emodel.CurrentTime++;
-                    //        emodel.ExpireSecond = EventHandlerExtensions.NextSecond(emodel.CurrentTime);
-                    //        await _channelHelper.WriteAutoMQAsync(emodel);
-                    //    }
-                    //}
-
-                }
             }
         }
 
@@ -173,7 +199,29 @@ namespace PasteApeart.Handler
         /// </summary>
         /// <param name="read"></param>
         /// <returns></returns>
+        [Obsolete("Use ActionMessageAsync")]
         public async Task HanlderEventMessage(IEventModel read)
+        {
+            await ActionMessageAsync(read);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="read"></param>
+        /// <returns></returns>
+        [Obsolete("Use ActionMessageAsync")]
+        public async Task HanlderEventMessage(string read)
+        {
+            await ActionMessageAsync(read);
+        }
+
+        /// <summary>
+        /// 主要适用于本地Chennel模式
+        /// </summary>
+        /// <param name="read"></param>
+        /// <returns></returns>
+        public async Task ActionMessageAsync(IEventModel read)
         {
             _logger.LogInformation($"Event Msg:{read.EventName}");
             //read是一个IEventModel
@@ -189,8 +237,9 @@ namespace PasteApeart.Handler
                 return;
             }
             // 获取处理方法（带缓存）
-            var handleMethod = _handleMethodCache.GetOrAdd(eventType, t =>
-                handlerType.GetMethod("HandleEventAsync"));
+            //var handleMethod = _handleMethodCache.GetOrAdd(eventType, t =>
+            //    handlerType.GetMethod("HandleEventAsync"));
+            var handleMethod = _handleMethodCache.GetOrAdd(handlerType, t => t.GetMethod("HandleEventAsync"));
             if (handleMethod == null)
             {
                 _logger.LogError($"无法找到 {typeName} 的 HandleEventAsync 方法");

@@ -1,0 +1,9 @@
+var myextend=function(src){
+	// console.log(src,"src value");
+	return src;
+}
+var msg="hello word!";
+module.exports ={
+	myextend:myextend,
+	msg:msg
+}

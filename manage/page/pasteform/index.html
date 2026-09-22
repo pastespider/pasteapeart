@@ -89,7 +89,7 @@
                         <span class="tl"><%:=item.title%>:</span>
                         <!-- switch.start -->
                             <% switch(item.dataType) { 
-                                case "String": case "Guid": case "splitarray": %>
+                                case "String": case "Guid": case "splitarray": case "text":case "richtext":case "textarea": %>
 
                                         <% if(item.mark){ %>
                                             <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
@@ -101,7 +101,7 @@
                                         <%}%>
                                    
                                 <% break; 
-                                case "Int32": case "Int64": %>
+                                case "Int32": case "Int64":case "number": %>
 
                                         <% if(item.mark){ %>
                                             <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
@@ -117,7 +117,7 @@
                                     <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
                                     <span class="unit">元</span>
                                 <% break; 
-                                case "Boolean": %>
+                                case "Boolean":case "switch": %>
 
                                         <% if(item.mark){ %>
                                             <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
@@ -194,7 +194,7 @@
                                         </ul>
                                     
                                 <% break; 
-                                case "DateTime": %>
+                                case "DateTime": case "datetime": %>
     
                                         <% if(item.mark){ %>
                                             <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
@@ -287,12 +287,12 @@
                             <%:=item.title%>
                             <% if(item.orderby){ %>
                                 <span class="orderit">
-                                    <i class="ordersell" dataval="<%:=item.orderby.asc%>">
+                                    <i class="ordersell <%if(_config.orderby == item.orderby.asc){%>ordered<%}%>" dataval="<%:=item.orderby.asc%>">
                                         <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
                                             <path d="M8 4 L8 16" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
                                             <path d="M4 8 L8 4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
                                         </svg>
-                                    </i><i class="ordersell" dataval="<%:=item.orderby.desc%>">
+                                    </i><i class="ordersell <%if(_config.orderby == item.orderby.desc){%>ordered<%}%>" dataval="<%:=item.orderby.desc%>">
                                         <svg width="10" height="16" viewBox="0 0 10 16" fill="none">
                                             <path d="M2 4 L2 16" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
                                             <path d="M2 16 L7 11" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
@@ -527,11 +527,11 @@
     <!-- <script type="text/javascript" src="../lib/page.min.js"></script> -->
 
     <script type="text/javascript" src="../lib/jquery.pagination.js"></script>
-    <script type="text/javascript" src="../lib/pickerdaterange/dateRange.js"></script>
-    <link rel="stylesheet" href="../lib/pickerdaterange/dateRange.css">
+    <script type="text/javascript" src="./lib/pickerdaterange/dateRange.js"></script>
+    <link rel="stylesheet" href="./lib/pickerdaterange/dateRange.css">
 
     <script type="text/javascript" src="./form.js?v=260905"></script>
-    <script type="text/javascript" src="./index.js?v=260905"></script>
+    <script type="text/javascript" src="./index.js?v=260907"></script>
 
     <!-- 代码中按需载入 v25.04.27 -->
     <!-- <script type="text/javascript" src="../lib/echarts.min.js"></script> -->

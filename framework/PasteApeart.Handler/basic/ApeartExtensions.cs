@@ -7,6 +7,7 @@ namespace PasteApeart.Handler
     /// <summary>
     /// 
     /// </summary>
+    [Obsolete]
     public static class ApeartExtensions
     {
         /// <summary>
@@ -14,7 +15,8 @@ namespace PasteApeart.Handler
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="exl"></param>
-        public static void LogException(this ILogger logger, Exception exl)
+        [Obsolete("Use PasteApeart.Handler.Extensions")]
+        public static void PasteLogException(this ILogger logger, Exception exl)
         {
             logger.LogError(exl.ToString());
         }
@@ -25,7 +27,8 @@ namespace PasteApeart.Handler
         /// <param name="str"></param>
         /// <param name="head"></param>
         /// <returns></returns>
-        public static string RemovePostFix(this string str, string head)
+        [Obsolete("Use PasteApeart.Handler.Extensions")]
+        public static string PasteRemovePostFix(this string str, string head)
         {
             if (!String.IsNullOrEmpty(str))
             {
@@ -44,7 +47,7 @@ namespace PasteApeart.Handler
         /// <param name="source">A collection that contains the strings to concatenate.</param>
         /// <param name="separator">The string to use as a separator. separator is included in the returned string only if values has more than one element.</param>
         /// <returns>A string that consists of the members of values delimited by the separator string. If values has no members, the method returns System.String.Empty.</returns>
-        public static string JoinAsString(this IEnumerable<string> source, string separator)
+        public static string PasteJoinAsString(this IEnumerable<string> source, string separator)
         {
             return string.Join(separator, source);
         }
@@ -57,7 +60,7 @@ namespace PasteApeart.Handler
         /// <param name="separator">The string to use as a separator. separator is included in the returned string only if values has more than one element.</param>
         /// <typeparam name="T">The type of the members of values.</typeparam>
         /// <returns>A string that consists of the members of values delimited by the separator string. If values has no members, the method returns System.String.Empty.</returns>
-        public static string JoinAsString<T>(this IEnumerable<T> source, string separator)
+        public static string PasteJoinAsString<T>(this IEnumerable<T> source, string separator)
         {
             return string.Join(separator, source);
         }
@@ -69,7 +72,7 @@ namespace PasteApeart.Handler
         /// <param name="condition">A boolean value</param>
         /// <param name="predicate">Predicate to filter the enumerable</param>
         /// <returns>Filtered or not filtered enumerable based on <paramref name="condition"/></returns>
-        public static IEnumerable<T> WhereIf<T>(this IEnumerable<T> source, bool condition, Func<T, bool> predicate)
+        public static IEnumerable<T> PasteWhereIf<T>(this IEnumerable<T> source, bool condition, Func<T, bool> predicate)
         {
             return condition
                 ? source.Where(predicate)
@@ -83,7 +86,7 @@ namespace PasteApeart.Handler
         /// <param name="condition">A boolean value</param>
         /// <param name="predicate">Predicate to filter the enumerable</param>
         /// <returns>Filtered or not filtered enumerable based on <paramref name="condition"/></returns>
-        public static IEnumerable<T> WhereIf<T>(this IEnumerable<T> source, bool condition, Func<T, int, bool> predicate)
+        public static IEnumerable<T> PasteWhereIf<T>(this IEnumerable<T> source, bool condition, Func<T, int, bool> predicate)
         {
             return condition
                 ? source.Where(predicate)
@@ -93,18 +96,18 @@ namespace PasteApeart.Handler
         //
         // 摘要:
         //     Used for paging. Can be used as an alternative to Skip(...).Take(...) chaining.
-        public static IQueryable<T> PageBy<T>(this IQueryable<T> query, int skipCount, int maxResultCount)
+        public static IQueryable<T> PastePageBy<T>(this IQueryable<T> query, int skipCount, int maxResultCount)
         {
-            Check.NotNull(query, "query");
+            Check.PasteNotNull(query, "query");
             return query.Skip(skipCount).Take(maxResultCount);
         }
 
         //
         // 摘要:
         //     Used for paging. Can be used as an alternative to Skip(...).Take(...) chaining.
-        public static TQueryable PageBy<T, TQueryable>(this TQueryable query, int skipCount, int maxResultCount) where TQueryable : IQueryable<T>
+        public static TQueryable PastePageBy<T, TQueryable>(this TQueryable query, int skipCount, int maxResultCount) where TQueryable : IQueryable<T>
         {
-            Check.NotNull(query, "query");
+            Check.PasteNotNull(query, "query");
             return (TQueryable)query.Skip(skipCount).Take(maxResultCount);
         }
 
@@ -125,9 +128,9 @@ namespace PasteApeart.Handler
         //
         // 返回结果:
         //     Filtered or not filtered query based on condition
-        public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, bool>> predicate)
+        public static IQueryable<T> PasteWhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, bool>> predicate)
         {
-            Check.NotNull(query, "query");
+            Check.PasteNotNull(query, "query");
             if (!condition)
             {
                 return query;
@@ -153,9 +156,9 @@ namespace PasteApeart.Handler
         //
         // 返回结果:
         //     Filtered or not filtered query based on condition
-        public static TQueryable WhereIf<T, TQueryable>(this TQueryable query, bool condition, Expression<Func<T, bool>> predicate) where TQueryable : IQueryable<T>
+        public static TQueryable PasteWhereIf<T, TQueryable>(this TQueryable query, bool condition, Expression<Func<T, bool>> predicate) where TQueryable : IQueryable<T>
         {
-            Check.NotNull(query, "query");
+            Check.PasteNotNull(query, "query");
             if (!condition)
             {
                 return query;
@@ -181,9 +184,9 @@ namespace PasteApeart.Handler
         //
         // 返回结果:
         //     Filtered or not filtered query based on condition
-        public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, int, bool>> predicate)
+        public static IQueryable<T> PasteWhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, int, bool>> predicate)
         {
-            Check.NotNull(query, "query");
+            Check.PasteNotNull(query, "query");
             if (!condition)
             {
                 return query;
@@ -209,9 +212,9 @@ namespace PasteApeart.Handler
         //
         // 返回结果:
         //     Filtered or not filtered query based on condition
-        public static TQueryable WhereIf<T, TQueryable>(this TQueryable query, bool condition, Expression<Func<T, int, bool>> predicate) where TQueryable : IQueryable<T>
+        public static TQueryable PasteWhereIf<T, TQueryable>(this TQueryable query, bool condition, Expression<Func<T, int, bool>> predicate) where TQueryable : IQueryable<T>
         {
-            Check.NotNull(query, "query");
+            Check.PasteNotNull(query, "query");
             if (!condition)
             {
                 return query;

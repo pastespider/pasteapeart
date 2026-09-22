@@ -2535,6 +2535,7 @@ namespace PasteApeart.Helper
     /// <summary>
     /// 配置默认以图表显示还是表格显示，还是2个都可以显示 图表echarts显示数据还是表格显示数据 相关的是PasteChart...
     /// </summary>
+    [Obsolete("Use PasteChartui")]
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class PasteUIAttribute : ColumnDataTypeAttribute
     {
@@ -2545,6 +2546,7 @@ namespace PasteApeart.Helper
         /// <param name="sedond">可选方式，不能2个都一样，单个显示的时候这个参数留空 chart</param>
         /// <param name="args3"></param>
         /// <param name="args4"></param>
+        [Obsolete("Use PasteChartui")]
         public PasteUIAttribute(string first = "table", string sedond = null, string args3 = null, string args4 = null)
         {
             base.Name = "ui";
@@ -2552,6 +2554,47 @@ namespace PasteApeart.Helper
             base.Args2 = sedond;
             base.Args3 = args3;
             base.Args4 = args4;
+        }
+    }
+
+    /// <summary>
+    /// 配置默认以图表显示还是表格显示，还是2个都可以显示 图表echarts显示数据还是表格显示数据 相关的是PasteChart...
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    public class PasteChartuiAttribute : ColumnDataTypeAttribute
+    {
+        /// <summary>
+        /// 以什么方式显示数据 这个用于ListDto 谁写前面就默认用哪个显示，也可以使用query中的show_type来传值
+        /// </summary>
+        /// <param name="first">默认为table/chart表格形式</param>
+        /// <param name="sedond">可选方式，不能2个都一样，单个显示的时候这个参数留空 chart</param>
+        /// <param name="args3"></param>
+        /// <param name="args4"></param>
+        public PasteChartuiAttribute(string first = "table", string sedond = null, string args3 = null, string args4 = null)
+        {
+            base.Name = "chartui";
+            base.Args1 = first;
+            base.Args2 = sedond;
+            base.Args3 = args3;
+            base.Args4 = args4;
+        }
+    }
+
+    /// <summary>
+    /// 值类型，特别用于前端要推测类型的时候，比如EnumRoleType[] 这个时候没办法从value推测，因为可能为null，就需要这个辅助
+    /// 可选值有 number string 
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public class PasteValuetypeAttribute : ColumnDataTypeAttribute
+    {
+        /// <summary>
+        /// 值类型，特别用于前端要推测类型的时候，比如EnumRoleType[] 这个时候没办法从value推测，因为可能为null，就需要这个辅助
+        /// </summary>
+        /// <param name="valueType">值类型，是单个的，可选number/string/boolean</param>
+        public PasteValuetypeAttribute(string valueType = "number")
+        {
+            base.Name = "valuetype";
+            base.Args1 = valueType;
         }
     }
 

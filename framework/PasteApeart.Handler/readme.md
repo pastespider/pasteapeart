@@ -1,3 +1,18 @@
+## 26.09.09
+    1.之前的EventActionHandler，构造函数需要注入eventmodel的types，现在修改成可以不注入，主要用于本地模式的时候
+    2.对应的如果你是执行jsonString的格式的eventmodel，则你需要自己入参eventmodel的types
+    3.添加一个好玩的EventQuickActionHandler,也就是立马执行eventhandler
+    4.EventQuickActionHandler的主要作用是你可以随意的执行eventhandler,对应的eventmodel是表单形式的提交！！！
+
+## 26.09.08
+    1.EventActionHandler的入参types[]提交到构造中去，然后把IEventActionHandler并入到Rabbit的Consumer中去
+
+## 26.09.07
+    1.修复EventActionHandler的问题，主要是model所在types的问题，需要引入调用方的
+
+## 26.09.06
+    1.为了避免扩展WhereIf冲突，改成PasteWhereIf
+    2.同理PasteNotNull
 
 ## 26.09.02
     1.重大升级，剥离Dependency,这样PasteForm可以使用当前dll了，后续只要维护一套Handler

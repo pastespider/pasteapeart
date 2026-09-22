@@ -11,11 +11,21 @@
     <RootNamespace>ExampleApeart.Application.Contracts</RootNamespace>
 	    <DocumentationFile>..\ExampleApeart.HttpApi.Host\ExampleApeart.Application.Contracts.xml</DocumentationFile>
   </PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="PasteApeart.Application.Contracts" Version="26.8.2" />
+
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<ProjectReference Include="..\..\framework\PasteApeart.Application.Contracts\PasteApeart.Application.Contracts.csproj" />
 	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<PackageReference Include="PasteApeart.Application.Contracts" Version="26.9.16" />
+	</ItemGroup>
+	
   <ItemGroup>
     <ProjectReference Include="..\ExampleApeart.Domain\ExampleApeart.Domain.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="testmodels\" />
   </ItemGroup>
 
 </Project>

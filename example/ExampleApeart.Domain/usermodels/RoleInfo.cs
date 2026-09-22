@@ -1,4 +1,4 @@
-using PasteApeart;
+using PasteApeart.Domain.Entity;
 using PasteApeart.Helper;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,7 +9,7 @@ namespace ExampleApeart.usermodels
     /// </summary>
     [PasteAuth("*", "root", "root")]
     [PasteShortModel("RoleShort", "ToRoleShort", "Id", "Name")]
-    public class RoleInfo : ILevelEntity, ILevelEntity<int>
+    public class RoleInfo : ILevelEntity<int>, IEntity
     {
         /// <summary>
         /// 标识
@@ -55,7 +55,12 @@ namespace ExampleApeart.usermodels
         /// <summary>
         /// 权限类型 0权限1菜单2按钮
         /// </summary>
-        public EnumRoleType RoleType { get; set; }
+        public EnumRoleType RoleType { get; set; } = EnumRoleType.Menu;
+
+        /// <summary>
+        /// 默认权限 是否是默认权限
+        /// </summary>
+        public bool IsDefault { get; set; } = false;
 
         /// <summary>
         /// 状态
@@ -83,10 +88,10 @@ namespace ExampleApeart.usermodels
         [MaxLength(20)]
         public string SortStr { get; set; } = "";
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public int RootId { get; set; }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //public int RootId { get; set; }
 
         /// <summary>
         /// 

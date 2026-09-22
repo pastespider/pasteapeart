@@ -1,4 +1,6 @@
+using ExampleApeart.Domain;
 using PasteApeart;
+using PasteApeart.Dependency;
 using PasteApeart.EntityFrameworkCore;
 using System.Security.Claims;
 

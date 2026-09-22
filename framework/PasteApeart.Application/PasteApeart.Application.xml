@@ -250,6 +250,17 @@
             <param name="searchName"></param>
             <returns></returns>
         </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DirectPageAsync(System.Object,System.Type,System.Type,PasteApeart.Application.Contracts.InputSearchBase,System.Type)">
+            <summary>
+            复用 按页查询
+            </summary>
+            <param name="searchObject"></param>
+            <param name="entityType"></param>
+            <param name="searchType"></param>
+            <param name="input"></param>
+            <param name="listDtoType"></param>
+            <returns></returns>
+        </member>
         <member name="M:PasteApeart.Application.IPasteDefaultAppService.ReadAddModel(System.String)">
             <summary>
             
@@ -646,6 +657,17 @@
             <param name="searchName"></param>
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DirectPageAsync(System.Object,System.Type,System.Type,PasteApeart.Application.Contracts.InputSearchBase,System.Type)">
+            <summary>
+            直接获取页面数据 用于快捷开发
+            </summary>
+            <param name="searchObject"></param>
+            <param name="entityType"></param>
+            <param name="searchType"></param>
+            <param name="input"></param>
+            <param name="listDtoType"></param>
+            <returns></returns>
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.CreateItemAsync(System.String,System.String)">
             <summary>

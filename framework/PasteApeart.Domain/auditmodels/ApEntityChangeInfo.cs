@@ -1,4 +1,5 @@
 using PasteApeart.Domain;
+using PasteApeart.Domain.PasteEntity;
 using System.ComponentModel.DataAnnotations;
 
 namespace PasteApeart.auditmodels

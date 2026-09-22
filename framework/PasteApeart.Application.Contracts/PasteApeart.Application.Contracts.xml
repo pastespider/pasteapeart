@@ -360,7 +360,7 @@
         </member>
         <member name="P:PasteApeart.Application.Contracts.AbsEventModel.MaxRetryTime">
             <summary>
-            最大重试次数 0表示一次性任务，一般都是一次性任务
+            最大次数 最大重试次数，0表示一次性任务，一般都是一次性任务
             </summary>
         </member>
         <member name="P:PasteApeart.Application.Contracts.AbsEventModel.RetryModel">
@@ -393,25 +393,86 @@
             对象名称
             </summary>
         </member>
-        <member name="T:PasteApeart.Applciation.Contracts.PasteEntityDto`1">
+        <member name="T:PasteApeart.Application.Contracts.PastePagedResult`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.PastePagedResult`1.TotalCount">
+            <summary>
+            总数
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.PastePagedResult`1.Items">
+            <summary>
+            数据集
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.PastePagedResult`1.Page">
+            <summary>
+            当前页码
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.PastePagedResult`1.Size">
+            <summary>
+            页大小 用于特殊情况下修改UI端，比如显示当前数据，最多31，也就是一页！保持一页
+            </summary>
+        </member>
+        <member name="M:PasteApeart.Application.Contracts.PastePagedResult`1.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Application.Contracts.QuickHandlerPropertyInfo">
+            <summary>
+            事件归集 用于管理员模式直接执行任务
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.QuickHandlerPropertyInfo.Code">
+            <summary>
+            代码
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.QuickHandlerPropertyInfo.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.QuickHandlerPropertyInfo.Desc">
+            <summary>
+            说明
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.QuickHandlerPropertyInfo.FieldCount">
+            <summary>
+            字段数
+            </summary>
+        </member>
+        <member name="P:PasteApeart.Application.Contracts.QuickHandlerPropertyInfo.Menu1">
+            <summary>
+            去执行
+            </summary>
+        </member>
+        <member name="T:PasteApeart.Applciation.Contracts.EntityDto.EntityDto`1">
             <summary>
             
             </summary>
             <typeparam name="TKey"></typeparam>
         </member>
-        <member name="P:PasteApeart.Applciation.Contracts.PasteEntityDto`1.Id">
+        <member name="P:PasteApeart.Applciation.Contracts.EntityDto.EntityDto`1.Id">
             <summary>
             
             </summary>
         </member>
-        <member name="M:PasteApeart.Applciation.Contracts.PasteEntityDto`1.Equals(System.Object)">
+        <member name="M:PasteApeart.Applciation.Contracts.EntityDto.EntityDto`1.Equals(System.Object)">
             <summary>
             
             </summary>
             <param name="obj"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Applciation.Contracts.PasteEntityDto`1.GetHashCode">
+        <member name="M:PasteApeart.Applciation.Contracts.EntityDto.EntityDto`1.GetHashCode">
             <summary>
             
             </summary>

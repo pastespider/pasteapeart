@@ -1,0 +1,51 @@
+<view>
+  <view wx:if="{{user}}" class="form">
+
+    <image wx:if="{{user}}" class="uhead" src="{{user.head}}"></image>
+
+    <view class="uform">
+      <view class="fline hflex">
+        <label class="label">ID</label>
+        <view class="val">{{user.id}}</view>
+      </view>
+
+      <view class="fline hflex">
+        <label class="label">昵称</label>
+        <input class="iinput" model:value="{{nick}}" bindconfirm="tapModityNick" />
+      </view>
+
+      <view class="fline hflex">
+        <label class="label">签名</label>
+        <textarea class="itext" model:value="{{sign}}"></textarea>
+      </view>
+
+    </view>
+
+    <view class="fline hflex">
+      <label class="label">加入时间</label>
+      <view class="val">{{user.createDate}}</view>
+    </view>
+
+  </view>
+
+  <!-- 认证技能列表 -->
+  <view class="skills">
+    <view class="skill" wx:for="{{skillList}}" wx:for-key="item" wx:key="item">
+      <image class="skill_icon" src="{{item.icon}}"></image>
+      <view class="skill_name">{{item.name}} {{item.level}}</view>
+    </view>
+  </view>
+  <!-- 认证技能 -->
+  <view class="btnarea">
+    <button>认证技能</button>
+  </view>
+
+  <view style="margin-top:40rpx;">
+    <view style="text-align: center;font-size: 22rpx;color:#888;line-height: 88rpx;">{{version}}</view>
+  </view>
+
+  <view>
+    <button type="warn" class="btnout">退出登陆</button>
+  </view>
+
+</view>

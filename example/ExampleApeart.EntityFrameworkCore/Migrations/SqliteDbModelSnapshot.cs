@@ -24,7 +24,7 @@ namespace ExampleApeart.EntityFrameworkCore.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Code")
-                        .HasMaxLength(4)
+                        .HasMaxLength(8)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Desc")
@@ -67,7 +67,7 @@ namespace ExampleApeart.EntityFrameworkCore.Migrations
 
                     b.ToTable("PTGradeRole", null, t =>
                         {
-                            t.HasComment("角色绑定权限");
+                            t.HasComment("角色权限");
                         });
                 });
 
@@ -92,6 +92,9 @@ namespace ExampleApeart.EntityFrameworkCore.Migrations
                         .HasMaxLength(32)
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("INTEGER");
+
                     b.Property<bool>("IsEnable")
                         .HasColumnType("INTEGER");
 
@@ -115,9 +118,6 @@ namespace ExampleApeart.EntityFrameworkCore.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("RoleType")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RootId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Sort")
@@ -166,19 +166,19 @@ namespace ExampleApeart.EntityFrameworkCore.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsEnable")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("PassWord")
-                        .HasMaxLength(64)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("UserHead")
+                    b.Property<string>("Head")
                         .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserName")
+                    b.Property<bool>("IsEnable")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
                         .HasMaxLength(32)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PassWord")
+                        .HasMaxLength(64)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

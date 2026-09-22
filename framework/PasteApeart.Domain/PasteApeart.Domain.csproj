@@ -10,10 +10,8 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<RootNamespace>PasteApeart.Domain</RootNamespace>
 	<DocumentationFile>PasteApeart.Domain.xml</DocumentationFile>
-	<FileVersion>26.9.5</FileVersion>
-	<VersionPrefix>26.9.5</VersionPrefix>
-	<AssemblyVersion>26.9.5</AssemblyVersion>
-	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+
+	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	<PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
@@ -32,13 +30,15 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.19" />
 	</ItemGroup>
-	
-	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+	<ItemGroup>
 		<ProjectReference Include="..\PasteApeart.Helper\PasteApeart.Helper.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="PasteApeart.Helper" Version="26.9.5" />
+
+
+
+	<ItemGroup>
+	  <Folder Include="basicmodels\" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 
 namespace ExampleApeart
 {
@@ -9,29 +9,29 @@ namespace ExampleApeart
     public enum EnumRoleType
     {
         /// <summary>
-        /// 全部
+        /// 全部/无
         /// </summary>
-        [Description("全部")]
-        All = -1,
+        [Description("全部/无")]
+        All = 0,
         /// <summary>
         /// <![CDATA[<i_*_style="color:green;">权限</i>]]>
         /// </summary>
         [Description("权限")]
-        Role = 0,
+        Role = 1,
         /// <summary>
         /// 菜单
         /// </summary>
         [Description("<span_*_style=\"background:#f3f3f3;color:blue;\">菜单</span>")]
-        Menu = 1,
+        Menu = 2,
         /// <summary>
-        /// 权限
+        /// 按钮
         /// </summary>
         [Description("<span_*_style=\"color:red;\">按钮</span>")]
-        Button = 2,
+        Button = 3,
         /// <summary>
         /// 小程序菜单
         /// </summary>
         [Description("小程序菜单")]
-        MiniMenu = 3
+        MiniMenu = 4
     }
 }

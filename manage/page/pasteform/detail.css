@@ -36,7 +36,7 @@
   width: 50%;
 }
 .newform .singlerow {
-  width: 100%;
+  width: 100% !important;
 }
 .newform .itemrow {
   display: flex;

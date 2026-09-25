@@ -60,6 +60,11 @@ namespace ExampleApeart.usermodels
         [PasteSplit(";")]
         public DateTime[] dates { get; set; }
 
+        /// <summary>
+        /// 测试 测试全部/无的枚举功能
+        /// </summary>
+        public EnumRoleType roletype { get; set; } = EnumRoleType.Menu;
+
     }
 
     ///<summary>

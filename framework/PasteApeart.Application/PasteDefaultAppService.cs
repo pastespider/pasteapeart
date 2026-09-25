@@ -448,6 +448,8 @@ namespace PasteApeart.Application
             // 保存更改
             await _dbContext.SaveChangesAsync();
 
+            await DefaultAfterSaveAsync(entityType, entity, addDto, "add");
+
             var idProperty = _defaultHelper.ReadCurrentProperty(entityType, "Id");
             if (idProperty != null && idProperty != default)
             {
@@ -516,6 +518,8 @@ namespace PasteApeart.Application
 
             // 保存更改
             await _dbContext.SaveChangesAsync();
+
+            await DefaultAfterSaveAsync(entityType, entity, updateDto, "update");
 
             return await ReadListDtoByIdAsync(entityType, entityName, id);
         }
@@ -812,19 +816,15 @@ namespace PasteApeart.Application
         //public Func<(string actionName, Type entityType, object entityObject), Task> FuncFilterData { get; set; } = null;
 
         /// <summary>
-        /// 数据校验，判断权限等 需要在基Class定义AuthDataFilterAsync(Type,Entity)
+        /// 权限判断 就是这个
         /// </summary>
         /// <param name="entityType"></param>
-        /// <param name="obj"></param>
-        /// <param name="action"></param>
+        /// <param name="obj">可能为null比如add的时候</param>
+        /// <param name="action">add/update/remove/state/page/detail</param>
         /// <returns></returns>
         public virtual async Task DefaultFilterDataAsync(Type entityType, object obj, string action)
         {
-            //if (FuncFilterData != null)
-            //{
-            //    await FuncFilterData((action, entityType, obj));
-            //    return;
-            //}
+
         }
 
         ///// <summary>
@@ -888,11 +888,20 @@ namespace PasteApeart.Application
         /// <returns></returns>
         public virtual async Task DefaultDataSetExtendAsync(Type entityType, object obj, string action)
         {
-            //if (FuncDataSet != null)
-            //{
-            //    await FuncDataSet((action, entityType, obj));
-            //    return;
-            //}
+
+        }
+
+        /// <summary>
+        /// 数据保存后 比如新增 比如更新
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <param name="entityObject"></param>
+        /// <param name="inputObject"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public virtual async Task DefaultAfterSaveAsync(Type entityType, object entityObject, object inputObject, string action)
+        {
+
         }
 
         ///// <summary>

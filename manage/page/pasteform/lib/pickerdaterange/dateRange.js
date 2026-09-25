@@ -83,6 +83,12 @@ function pickerDateRange(inputId, options) {
 	this.inputId = inputId;
 	this.inputCompareId = inputId + 'Compare';
 	this.compareInputDiv = 'div_compare_' + inputId;
+
+		    // ===== 新增：注册实例 =====
+    window.__pickerRegistry = window.__pickerRegistry || {};
+    window.__pickerRegistry[inputId] = this;
+    // =========================
+
 	// 配置参数
 	this.mOpts = $.extend({}, defaults, options);
 	//默认日历参数最大是3
@@ -466,7 +472,41 @@ function pickerDateRange(inputId, options) {
 	$(document).bind('click', function () {
 		__method.close();
 	});
+
+
+
 };
+
+/**
+ * 
+ * @param {*} inputId 
+ * @param {*} start 
+ * @param {*} end 
+ * @returns 
+ */
+function setPickerDate(inputId, start, end) {
+    $('#' + inputId).val(start + '  至  ' + end);
+    $('#' + inputId).attr('datas', start);
+    $('#' + inputId).attr('datae', end);
+
+    var picker = window.__pickerRegistry && window.__pickerRegistry[inputId];
+    if (!picker) return;
+
+    // 用实例上真实的 id，不靠拼
+    $('#' + picker.startDateId).val(start);
+    $('#' + picker.endDateId).val(end);
+
+    // 提交隐藏域
+    $('#' + picker.mOpts.startDateId).val(start);
+    $('#' + picker.mOpts.endDateId).val(end);
+
+    // 同步 mOpts
+    picker.mOpts.startDate = start;
+    picker.mOpts.endDate   = end;
+}
+
+// // 调用
+// setPickerDate('sdate', '2024-03-01', '2024-03-15');
 
 /**
  * @description 日期选择器的初始化方法，对象原型扩展

@@ -413,6 +413,9 @@
                                                     <% }) %>
                                                 <% } %>
                                             <% } %>
+                                            <% if(item.dataType=='menuhtmlbox' ){ %>
+                                                {{:n=item.<%:n=item.name%>}}
+                                            <% } %>
                                             <% if(item.dataType=='tapbox' ){ %>
                                                 <% if(item.attributes){ %>
                                                     <% item.attributes.forEach(_attribute=>{ %>

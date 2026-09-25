@@ -1084,6 +1084,372 @@ namespace PasteApeart.Handler.redis
 
             return sb.ToString();
         }
+
+
+        //------------------------------------------------
+
+
+        //private readonly IMemoryCache _memoryCache;
+        private static readonly Random _random = new();
+
+        //public MemoryClient(IMemoryCache memoryCache)
+        //{
+        //    _memoryCache = memoryCache;
+        //}
+
+        //public bool IsRedis => false;
+
+        #region 同步方法
+
+        //public bool Delete(string key)
+        //{
+        //    _memoryCache.Remove(key);
+        //    return true;
+        //}
+
+        //public bool Exists(string key)
+        //{
+        //    return _memoryCache.TryGetValue(key, out _);
+        //}
+
+        //public string Get(string key)
+        //{
+        //    return _memoryCache.TryGetValue(key, out string? val) ? val ?? string.Empty : string.Empty;
+        //}
+
+        //public T GetObject<T>(string key)
+        //{
+        //    if (_memoryCache.TryGetValue(key, out string? val) && !string.IsNullOrEmpty(val))
+        //    {
+        //        return JsonConvert.DeserializeObject<T>(val);
+        //    }
+        //    return default;
+        //}
+
+        //public string GetStringValue(string key)
+        //{
+        //    return Get(key);
+        //}
+
+        public object TryGetValue(string key)
+        {
+            return _memoryCache.TryGetValue(key, out var val) ? val : null;
+        }
+
+        public T GetOrCreate<T>(string key, Func<ICacheEntry, T> factory, TimeSpan? expiration = null)
+        {
+            return _memoryCache.GetOrCreate(key, entry =>
+            {
+                SetCacheEntryOptions(entry, expiration);
+                return factory(entry);
+            });
+        }
+
+        //public bool Set(string key, string value, TimeSpan? expiry = null)
+        //{
+        //    using var entry = _memoryCache.CreateEntry(key);
+        //    entry.Value = value;
+        //    SetCacheEntryOptions(entry, expiry);
+        //    return true;
+        //}
+
+        //public bool Set(string key, string value, int seconds)
+        //{
+        //    return Set(key, value, TimeSpan.FromSeconds(seconds));
+        //}
+
+        //public bool Set(string key, string value)
+        //{
+        //    using var entry = _memoryCache.CreateEntry(key);
+        //    entry.Value = value;
+        //    return true;
+        //}
+
+        //public bool SetObject<T>(string key, T value, TimeSpan? expiry = null)
+        //{
+        //    return Set(key, JsonConvert.SerializeObject(value), expiry);
+        //}
+
+        //public bool SetObject<T>(string key, T value, int seconds)
+        //{
+        //    return Set(key, JsonConvert.SerializeObject(value), TimeSpan.FromSeconds(seconds));
+        //}
+
+        public bool CreateEntry(string key, object value, TimeSpan? expiry = null)
+        {
+            using var entry = _memoryCache.CreateEntry(key);
+            entry.Value = value;
+            SetCacheEntryOptions(entry, expiry);
+            return true;
+        }
+
+        //public bool SetValue(string key, string val, int second)
+        //{
+        //    return Set(key, val, second);
+        //}
+
+        //public bool SetValue(string key, string val)
+        //{
+        //    return Set(key, val);
+        //}
+
+        //public bool SetExpire(string key, TimeSpan? expiry)
+        //{
+        //    if (_memoryCache.TryGetValue(key, out string? val))
+        //    {
+        //        return Set(key, val ?? string.Empty, expiry);
+        //    }
+        //    return false;
+        //}
+
+        //public bool SetExpire(string key, int seconds)
+        //{
+        //    return SetExpire(key, TimeSpan.FromSeconds(seconds));
+        //}
+
+        //public bool Lock(string key, int seconds)
+        //{
+        //    // MemoryCache 不支持分布式锁，直接返回 true
+        //    return true;
+        //}
+
+        //public bool UnLock(string key)
+        //{
+        //    return true;
+        //}
+
+        #endregion
+
+        #region 异步方法（同步包装，返回 Task）
+
+        //public Task<bool> DeleteAsync(string key)
+        //{
+        //    Delete(key);
+        //    return Task.FromResult(true);
+        //}
+
+        public Task BatchRemoveAsync(string[] keys)
+        {
+            if (keys != null)
+            {
+                foreach (var key in keys)
+                {
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        _memoryCache.Remove(key);
+                    }
+                }
+            }
+            return Task.CompletedTask;
+        }
+
+        //public Task<bool> ExistsAsync(string key)
+        //{
+        //    return Task.FromResult(Exists(key));
+        //}
+
+        //public Task<string> GetAsync(string key)
+        //{
+        //    return Task.FromResult(Get(key));
+        //}
+
+        //public Task<T?> GetObjectAsync<T>(string key)
+        //{
+        //    return Task.FromResult(GetObject<T>(key));
+        //}
+
+        public Task<T> GetOrCreateAsync<T>(string key, Func<ICacheEntry, Task<T>> factory, TimeSpan? expiration = null)
+        {
+            return _memoryCache.GetOrCreateAsync(key, async entry =>
+            {
+                SetCacheEntryOptions(entry, expiration);
+                return await factory(entry);
+            });
+        }
+
+        //public Task<bool> SetAsync(string key, string value, TimeSpan? expiry = null)
+        //{
+        //    return Task.FromResult(Set(key, value, expiry));
+        //}
+
+        //public Task<bool> SetAsync(string key, string value, int seconds)
+        //{
+        //    return Task.FromResult(Set(key, value, seconds));
+        //}
+
+        //public Task<bool> SetObjectAsync<T>(string key, T value, int second)
+        //{
+        //    return Task.FromResult(SetObject(key, value, second));
+        //}
+
+        //public Task<bool> SetExpireAsync(string key, int seconds)
+        //{
+        //    return Task.FromResult(SetExpire(key, seconds));
+        //}
+
+        //public Task<bool> SetExpireAsync(string key, TimeSpan? expiry)
+        //{
+        //    return Task.FromResult(SetExpire(key, expiry));
+        //}
+
+        //public Task<bool> LockAsync(string key, int seconds)
+        //{
+        //    return Task.FromResult(Lock(key, seconds));
+        //}
+
+        //public Task<bool> UnLockAsync(string key)
+        //{
+        //    return Task.FromResult(UnLock(key));
+        //}
+
+        #endregion
+
+        #region Hash 操作
+
+        //public string HashGet(string key, string subKey)
+        //{
+        //    if (_memoryCache.TryGetValue(key, out var obj) && obj is Dictionary<string, string> dict)
+        //    {
+        //        return dict.TryGetValue(subKey, out var val) ? val : string.Empty;
+        //    }
+        //    return string.Empty;
+        //}
+
+        //public HashEntry[] HashGetAll(string key)
+        //{
+        //    if (_memoryCache.TryGetValue(key, out var obj) && obj is Dictionary<string, string> dict)
+        //    {
+        //        return dict.Select(x => new HashEntry(x.Key, x.Value)).ToArray();
+        //    }
+        //    return Array.Empty<HashEntry>();
+        //}
+
+        //public void HashSet(string key, HashEntry[] vals)
+        //{
+        //    var dict = _memoryCache.TryGetValue(key, out var obj) && obj is Dictionary<string, string> existing
+        //        ? existing
+        //        : new Dictionary<string, string>();
+
+        //    foreach (var entry in vals)
+        //    {
+        //        dict[entry.Name.ToString()] = entry.Value.ToString();
+        //    }
+
+        //    _memoryCache.Set(key, dict);
+        //}
+
+        public Task<string> HashGetAsync(string key, string subKey)
+        {
+            return Task.FromResult(HashGet(key, subKey));
+        }
+
+        //public Task<HashEntry[]> HashGetAllAsync(string key)
+        //{
+        //    return Task.FromResult(HashGetAll(key));
+        //}
+
+        public Task HashSetAsync(string key, HashEntry[] vals)
+        {
+            HashSet(key, vals);
+            return Task.CompletedTask;
+        }
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="key"></param>
+        ///// <param name="field"></param>
+        ///// <returns></returns>
+        //public Task<bool> HashDeleteAsync(string key, string field)
+        //{
+        //    if (_memoryCache.TryGetValue(key, out var obj) && obj is Dictionary<string, string> dict)
+        //    {
+        //        if (dict.ContainsKey(field))
+        //        {
+        //            dict.Remove(field);
+        //        }
+        //    }
+        //    return Task.FromResult(true);
+        //}
+
+        public Task<HashEntry> HashRandomFieldsWithValuesAsync(string key)
+        {
+            if (_memoryCache.TryGetValue(key, out var obj) && obj is Dictionary<string, string> dict && dict.Count > 0)
+            {
+                var keys = dict.Keys.ToArray();
+                var randomKey = keys[_random.Next(keys.Length)];
+                return Task.FromResult(new HashEntry(randomKey, dict[randomKey]));
+            }
+            return Task.FromResult(new HashEntry(string.Empty, string.Empty));
+        }
+
+        public Task<long> HashIncrementAsync(string key, RedisValue field, long num = 1)
+        {
+            // MemoryCache 不支持原子增减，简单实现
+            var current = HashGet(key, field.ToString());
+            if (long.TryParse(current, out var value))
+            {
+                var newValue = value + num;
+                HashSet(key, new[] { new HashEntry(field, newValue.ToString()) });
+                return Task.FromResult(newValue);
+            }
+            HashSet(key, new[] { new HashEntry(field, num.ToString()) });
+            return Task.FromResult(num);
+        }
+
+        public Task<long> HashDecrementAsync(string key, RedisValue field, long num = 1)
+        {
+            return HashIncrementAsync(key, field, -num);
+        }
+
+        #endregion
+
+        #region 未实现的方法（抛出明确异常）
+
+        //public void HashSet(string key, List<HashKeyValue> vals)
+        //{
+        //    throw new NotImplementedException("MemoryCache 不支持此操作");
+        //}
+
+        public Task HashSetAsync(string key, List<HashKeyValue> vals)
+        {
+            throw new NotImplementedException("MemoryCache 不支持此操作");
+        }
+
+        List<HashKeyValue> IAppCache.HashGetAll(string key)
+        {
+            throw new NotImplementedException("MemoryCache 不支持此操作");
+        }
+
+        Task<List<HashKeyValue>> IAppCache.HashGetAllAsync(string key)
+        {
+            throw new NotImplementedException("MemoryCache 不支持此操作");
+        }
+
+        public Task<HashEntry[]> HashScanAsync(string key, string pattern, int size = 1, int cursor = 0, int offset = 0)
+        {
+            throw new NotImplementedException("MemoryCache 不支持 HashScan");
+        }
+
+        #endregion
+
+        #region 私有辅助方法
+
+        private static void SetCacheEntryOptions(ICacheEntry entry, TimeSpan? expiration)
+        {
+            if (expiration.HasValue)
+            {
+                entry.AbsoluteExpirationRelativeToNow = expiration;
+            }
+            else
+            {
+                entry.SlidingExpiration = TimeSpan.FromMinutes(5);
+            }
+        }
+
+        #endregion
+
+
     }
 
 }

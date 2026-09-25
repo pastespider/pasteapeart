@@ -192,7 +192,7 @@
         </member>
         <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultAfterUpdateStateAsync(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
             <summary>
-            
+            状态变更后 绑定后
             </summary>
             <param name="entityName"></param>
             <param name="input"></param>
@@ -200,7 +200,7 @@
         </member>
         <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
             <summary>
-            
+            基于对象信息 构建元数据
             </summary>
             <param name="action"></param>
             <param name="dto"></param>
@@ -210,7 +210,7 @@
         </member>
         <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultDataSetExtendAsync(System.Type,System.Object,System.String)">
             <summary>
-            
+            一些默认值的填充 比如填充当前用户等 其实比较适合二次数据加工
             </summary>
             <param name="entityType"></param>
             <param name="obj"></param>
@@ -223,6 +223,16 @@
             </summary>
             <param name="entityType"></param>
             <param name="obj"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DefaultAfterSaveAsync(System.Type,System.Object,System.Object,System.String)">
+            <summary>
+            数据更新后 比如更新后 比如新增后
+            </summary>
+            <param name="entityType"></param>
+            <param name="entityObject"></param>
+            <param name="inputObject"></param>
             <param name="action"></param>
             <returns></returns>
         </member>
@@ -734,11 +744,11 @@
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultFilterDataAsync(System.Type,System.Object,System.String)">
             <summary>
-            数据校验，判断权限等 需要在基Class定义AuthDataFilterAsync(Type,Entity)
+            权限判断 就是这个
             </summary>
             <param name="entityType"></param>
-            <param name="obj"></param>
-            <param name="action"></param>
+            <param name="obj">可能为null比如add的时候</param>
+            <param name="action">add/update/remove/state/page/detail</param>
             <returns></returns>
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultAfterUpdateStateAsync(System.String,PasteApeart.Application.Contracts.InputQueryUpdateState)">
@@ -772,6 +782,16 @@
             <param name="entityType"></param>
             <param name="obj"></param>
             <param name="action">add或update</param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultAfterSaveAsync(System.Type,System.Object,System.Object,System.String)">
+            <summary>
+            数据保存后 比如新增 比如更新
+            </summary>
+            <param name="entityType"></param>
+            <param name="entityObject"></param>
+            <param name="inputObject"></param>
+            <param name="action"></param>
             <returns></returns>
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.DefaultBuildPropertyInfo(System.String,System.Object,System.Type,System.Boolean)">
@@ -1198,6 +1218,15 @@
             <param name="input"></param>
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
+        </member>
+        <member name="M:PasteApeart.Application.PasteDefaultHelper.PasteOrder(System.Linq.IQueryable,System.String)">
+            <summary>
+            支持多排序 比如id,name desc等
+            </summary>
+            <param name="query"></param>
+            <param name="ordering"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException"></exception>
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultHelper.ReadCurrentPropertyThrowException(System.Type,System.String)">
             <summary>

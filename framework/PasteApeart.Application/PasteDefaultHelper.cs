@@ -2020,29 +2020,32 @@ namespace PasteApeart.Application
             var actionOrderby = false;
             if (!String.IsNullOrEmpty(orderby))
             {
-                //这里做查找和适配
-                var fieldName = orderby.Split(" ")[0];
-                var findOrderProperty = ReadCurrentProperty(entityType, fieldName);
-                if (findOrderProperty != null)
-                {
-                    var orderType = "OrderByDescending";
-                    if (!orderby.Contains(" desc", StringComparison.OrdinalIgnoreCase))
-                    {
-                        orderType = "OrderBy";
-                    }
-                    // 构建排序表达式 默认 OrderByDescending(x=>x.Id)
-                    var parameter = Expression.Parameter(entityType, "x");
-                    var propertyAccess = Expression.Property(parameter, findOrderProperty);
-                    var lambda = Expression.Lambda(propertyAccess, parameter);
-                    // 使用正确的属性类型作为排序键类型
-                    var orderByDescendingCall = Expression.Call(
-                        typeof(Queryable), orderType,
-                        new Type[] { entityType, findOrderProperty.PropertyType }, // 使用实际的属性类型
-                        query.Expression,
-                        lambda);
-                    query = query.Provider.CreateQuery(orderByDescendingCall);
-                    actionOrderby = true;
-                }
+                #region 下面是旧版本，只支持单个排序
+                //var fieldName = orderby.Split(" ")[0];
+                //var findOrderProperty = ReadCurrentProperty(entityType, fieldName);
+                //if (findOrderProperty != null)
+                //{
+                //    var orderType = "OrderByDescending";
+                //    if (!orderby.Contains(" desc", StringComparison.OrdinalIgnoreCase))
+                //    {
+                //        orderType = "OrderBy";
+                //    }
+                //    // 构建排序表达式 默认 OrderByDescending(x=>x.Id)
+                //    var parameter = Expression.Parameter(entityType, "x");
+                //    var propertyAccess = Expression.Property(parameter, findOrderProperty);
+                //    var lambda = Expression.Lambda(propertyAccess, parameter);
+                //    // 使用正确的属性类型作为排序键类型
+                //    var orderByDescendingCall = Expression.Call(
+                //        typeof(Queryable), orderType,
+                //        new Type[] { entityType, findOrderProperty.PropertyType }, // 使用实际的属性类型
+                //        query.Expression,
+                //        lambda);
+                //    query = query.Provider.CreateQuery(orderByDescendingCall);
+                //    actionOrderby = true;
+                //}
+                #endregion
+                //支持多个查询，比如id,name desc
+                query = PasteOrder(query, orderby);
             }
             if (!actionOrderby)
             {
@@ -2062,6 +2065,75 @@ namespace PasteApeart.Application
             // 应用分页
             query = query.Skip((page - 1) * size).Take(size);
             return query;
+        }
+
+        /// <summary>
+        /// 支持多排序 比如id,name desc等
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="ordering"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        private IOrderedQueryable PasteOrder(IQueryable query, string ordering)
+        {
+            //if (string.IsNullOrWhiteSpace(ordering))
+            //return query.OrderBy(x => 1);
+            if (String.IsNullOrEmpty(ordering))
+            {
+                return (IOrderedQueryable)query;
+            }
+            // 分割多个排序字段
+            var orderClauses = ordering.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            IOrderedQueryable orderedQuery = null;
+            var eType = query.ElementType;
+            foreach (var clause in orderClauses)
+            {
+                var parts = clause.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length == 0) continue;
+
+                var fieldName = parts[0];
+                var descending = false;
+                if (parts.Length > 1)
+                {
+                    descending = parts.Length > 1 &&
+                                   (parts[1].Equals("desc", StringComparison.OrdinalIgnoreCase) ||
+                                    parts[1].Equals("descending", StringComparison.OrdinalIgnoreCase));
+                }
+                var propertyInfo = ReadTypeProperties(eType).FirstOrDefault(x => string.Equals(x.Name, fieldName, StringComparison.OrdinalIgnoreCase));
+                if (propertyInfo == null)
+                {
+                    throw new ArgumentException($"类型 '{eType.Name}' 中不存在属性 '{fieldName}'");
+                }
+
+                // 构建表达式
+                var parameter = Expression.Parameter(eType, "x");
+                var property = Expression.Property(parameter, propertyInfo);
+                var lambda = Expression.Lambda(property, parameter);
+
+                if (orderedQuery == null)
+                {
+                    // 第一个排序字段
+                    var methodName = descending ? "OrderByDescending" : "OrderBy";
+                    var methodCall = Expression.Call(
+                        typeof(Queryable), methodName,
+                        new Type[] { eType, property.Type },
+                        query.Expression, Expression.Quote(lambda));
+
+                    orderedQuery = (IOrderedQueryable)query.Provider.CreateQuery(methodCall);
+                }
+                else
+                {
+                    // 后续排序字段
+                    var methodName = descending ? "ThenByDescending" : "ThenBy";
+                    var methodCall = Expression.Call(
+                        typeof(Queryable), methodName,
+                        new Type[] { eType, property.Type },
+                        orderedQuery.Expression, Expression.Quote(lambda));
+
+                    orderedQuery = (IOrderedQueryable)orderedQuery.Provider.CreateQuery(methodCall);
+                }
+            }
+            return orderedQuery ?? (IOrderedQueryable)query;
         }
 
         /// <summary>
@@ -2093,7 +2165,8 @@ namespace PasteApeart.Application
             var properties = ReadTypeProperties(entityType);
             if (properties != null)
             {
-                var find = properties.FirstOrDefault(x => x.Name == propertyName);
+                //var find = properties.FirstOrDefault(x => x.Name == propertyName);
+                var find = properties.FirstOrDefault(x => string.Equals(x.Name, propertyName, StringComparison.OrdinalIgnoreCase));
                 if (find != null)
                 {
                     return find;

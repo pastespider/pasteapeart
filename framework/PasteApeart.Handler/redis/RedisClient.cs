@@ -948,6 +948,267 @@ namespace PasteApeart.Handler.redis
         {
             return "is redis!";
         }
+
+
+
+        //--------------------------------------------------------------------------------
+
+
+
+        #region 同步方法...
+
+
+
+        #endregion
+
+        #region 异步方法...
+
+
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public async Task BatchRemoveAsync(string[] keys)
+        {
+            var batchCommand = _database.CreateBatch();
+            var redisKeys = keys.Select(x => new RedisKey(setKey(x))).ToArray();
+            await batchCommand.KeyDeleteAsync(redisKeys);
+        }
+
+
+
+        #endregion
+
+        #region 分布式锁...
+
+
+        #endregion
+
+        #region Hash
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<HashEntry[]> HashReadAllAsync(string key)
+        {
+            return await _database.HashGetAllAsync(setKey(key));
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="vals"></param>
+        public async Task HashSetAsync(string key, HashEntry[] vals)
+        {
+            await _database.HashSetAsync(setKey(key), vals);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="field"></param>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public async Task<long> HashIncrementAsync(string key, RedisValue field, long num = 1)
+        {
+            return await _database.HashIncrementAsync(setKey(key), field, num);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="field"></param>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public async Task<long> HashDecrementAsync(string key, RedisValue field, long num = 1)
+        {
+            return await _database.HashDecrementAsync(setKey(key), field, num);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="sunkey"></param>
+        /// <returns></returns>
+        public async Task<string> HashGetAsync(string key, string sunkey)
+        {
+            return await _database.HashGetAsync(setKey(key), sunkey);
+        }
+
+        #endregion
+
+
+
+        public async Task HashSetAsync(string key, List<HashKeyValue> vals)
+        {
+            var list = new List<HashEntry>();
+            foreach (var item in vals)
+            {
+                list.Add(new HashEntry(item.Key, item.Value) { });
+            }
+
+            await _database.HashSetAsync(setKey(key), list.ToArray());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="field"></param>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public async Task HashIncrementAsync(string key, string field, int num)
+        {
+            await _database.HashIncrementAsync(setKey(key), field, num);
+        }
+
+
+        /// <summary>
+        /// 写入有序排序
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="field"></param>
+        /// <param name="score"></param>
+        public async Task SortedSetAddAsync(string key, RedisValue field, int score)
+        {
+            await _database.SortedSetAddAsync(setKey(key), field, score);
+        }
+
+        /// <summary>
+        /// 批量写入有序排序
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="fields"></param>
+        public async Task SortedSetAddAsync(string key, SortedSetEntry[] fields)
+        {
+            await _database.SortedSetAddAsync(setKey(key), fields);
+        }
+
+
+        /// <summary>
+        /// 从hash中获取随机一个！！！
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public async Task<HashEntry> HashRandomFieldsWithValuesAsync(string key)
+        {
+            var reads = await _database.HashRandomFieldsWithValuesAsync(setKey(key), 1);
+            if (reads?.Length > 0)
+            {
+                return reads.First();
+            }
+            return default;
+        }
+
+        /// <summary>
+        /// 查询符合条件的
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="pattern">*XXX*</param>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        public async Task<HashEntry[]> HashScanAsync(string key, string pattern, int size = 1, int cursor = 0, int offset = 0)
+        {
+            var results = new List<HashEntry>();
+            var reads = _database.HashScanAsync(setKey(key), pattern, size, cursor, offset);
+            await foreach (var item in reads)
+            {
+                results.Add(item);
+                if (results.Count >= size)
+                {
+                    break;
+                }
+            }
+            return results.ToArray();
+        }
+
+
+        /// <summary>
+        /// 按照分数升序，获取第一个分数 >= 指定分数的数据并删除
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="minScore">最低分数</param>
+        /// <returns></returns>
+        public async Task<SortedSetEntry?> SortedSetStartPopScoreAsync(string key, int minScore)
+        {
+            var luaScript = @"
+                    local members = redis.call('ZRANGEBYSCORE', KEYS[1], ARGV[1], '+inf', 'WITHSCORES', 'LIMIT', 0, 1)
+                    if #members == 0 then
+                        return nil
+                    end
+                    redis.call('ZREM', KEYS[1], members[1])
+                    return {members[1], members[2]}
+                ";
+            var result = await _database.ScriptEvaluateAsync(luaScript,
+                new RedisKey[] { setKey(key) },
+                new RedisValue[] { minScore });
+            if (result.IsNull)
+            {
+                return null;
+            }
+            var resultArray = (RedisResult[])result;
+            if (resultArray.Length >= 2)
+            {
+                string element = (string)resultArray[0];
+                double redisScore = (double)resultArray[1];
+                // 将double转换为int（根据您的需求）
+                int scoreValue = (int)redisScore;
+                return new SortedSetEntry(element, scoreValue);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 返回分数符合的第一个元素，返回并删除这个元素
+        /// </summary>
+        public async Task<SortedSetEntry?> SortedSetPopExactScoreAsync(string key, int targetScore)
+        {
+            var luaScript = @"
+                    local members = redis.call('ZRANGEBYSCORE', KEYS[1], ARGV[1], ARGV[1], 'WITHSCORES', 'LIMIT', 0, 1)
+                    if #members == 0 then
+                        return nil
+                    end
+                    redis.call('ZREM', KEYS[1], members[1])
+                    return {members[1], members[2]}
+                ";
+
+            var result = await _database.ScriptEvaluateAsync(luaScript,
+                new RedisKey[] { setKey(key) },
+                new RedisValue[] { targetScore });
+
+            if (result.IsNull)
+            {
+                return null;
+            }
+
+            var resultArray = (RedisResult[])result;
+            if (resultArray.Length >= 2)
+            {
+                string element = (string)resultArray[0];
+                double redisScore = (double)resultArray[1];
+                int scoreValue = (int)redisScore;
+
+                return new SortedSetEntry(element, scoreValue);
+            }
+
+            return null;
+        }
+
+
+
+
+
+
     }
 
 

@@ -1551,6 +1551,12 @@ function handlerModelFieldcolumnProperty(properties) {
                             {
                                 item.dataType = "menuhtml";
                                 item.hidden = true;
+                                if(_attribute.args4) {
+                                    if (_attribute.args4 == 'box') {
+                                        item.dataType = 'menuhtmlbox';
+                                        _config.menubox = true;
+                                    }
+                                }
                                 globalMenuCount++;
                             }
                             break;

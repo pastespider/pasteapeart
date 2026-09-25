@@ -22,15 +22,17 @@ namespace PasteApeart.Application
         /// <param name="inputString"></param>
         /// <returns></returns>
         Task<dynamic> CreateItemAsync(string entityName, string inputString);
+
         /// <summary>
-        /// 
+        /// 状态变更后 绑定后
         /// </summary>
         /// <param name="entityName"></param>
         /// <param name="input"></param>
         /// <returns></returns>
         Task DefaultAfterUpdateStateAsync(string entityName, InputQueryUpdateState input);
+
         /// <summary>
-        /// 
+        /// 基于对象信息 构建元数据
         /// </summary>
         /// <param name="action"></param>
         /// <param name="dto"></param>
@@ -38,14 +40,16 @@ namespace PasteApeart.Application
         /// <param name="listModel"></param>
         /// <returns></returns>
         Task<VoloModelInfo> DefaultBuildPropertyInfo(string action, object dto, Type dtoType, bool listModel = false);
+
         /// <summary>
-        /// 
+        /// 一些默认值的填充 比如填充当前用户等 其实比较适合二次数据加工
         /// </summary>
         /// <param name="entityType"></param>
         /// <param name="obj"></param>
         /// <param name="action"></param>
         /// <returns></returns>
         Task DefaultDataSetExtendAsync(Type entityType, object obj, string action);
+
         /// <summary>
         /// 
         /// </summary>
@@ -54,6 +58,17 @@ namespace PasteApeart.Application
         /// <param name="action"></param>
         /// <returns></returns>
         Task DefaultFilterDataAsync(Type entityType, object obj, string action);
+
+        /// <summary>
+        /// 数据更新后 比如更新后 比如新增后
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <param name="entityObject"></param>
+        /// <param name="inputObject"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        Task DefaultAfterSaveAsync(Type entityType, object entityObject, object inputObject, string action);
+
         /// <summary>
         /// 
         /// </summary>

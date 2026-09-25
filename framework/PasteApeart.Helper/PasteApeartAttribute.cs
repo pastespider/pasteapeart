@@ -464,6 +464,12 @@ namespace PasteApeart.Helper
     {
 
         /// <summary>
+        /// 是否在盒子内
+        /// </summary>
+        public bool InBox { get; set; }
+
+
+        /// <summary>
         /// 菜单A标签模式
         /// </summary>
         /// <param name="_name">名称</param>
@@ -487,6 +493,10 @@ namespace PasteApeart.Helper
                 base.Args4 = "box";
             }
             this.Code = btnCode;
+            if (InBox)
+            {
+                base.Args4 = "box";
+            }
         }
 
         /// <summary>
@@ -511,8 +521,9 @@ namespace PasteApeart.Helper
             base.Name = "ifmenu";
             base.Args1 = "1==1";
             base.Args2 = $"<a href=\"javascript:;\" {((!String.IsNullOrEmpty(className)) ? $"class=\"{className}\"" : "")} onclick=\"{func}\">{((!String.IsNullOrEmpty(iconFont)) ? $"<i class=\"Hui-iconfont {iconFont}\">{name}</i>" : $"{name}")}</a>";
-            if (_box)
+            if (_box || InBox)
             {
+                //ifmenu是args3
                 base.Args3 = "box";
             }
             base.Args4 = args4;
@@ -526,6 +537,10 @@ namespace PasteApeart.Helper
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class PasteMenuhtmlAttribute : BtnCodeAttribute
     {
+        /// <summary>
+        /// 是否在盒子内
+        /// </summary>
+        public bool InBox { get; set; }
 
         /// <summary>
         /// HTML模式的菜单，直接用当前字段的值，为空或者有效值
@@ -537,6 +552,10 @@ namespace PasteApeart.Helper
             {
                 base.Code = btnCode;
             }
+            if (InBox)
+            {
+                base.Args4 = "box";
+            }
         }
     }
 
@@ -547,6 +566,12 @@ namespace PasteApeart.Helper
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class PasteIfMenuAttribute : BtnCodeAttribute
     {
+
+        /// <summary>
+        /// 是否在盒子内
+        /// </summary>
+        public bool InBox { get; set; }
+
 
         /// <summary>
         /// 条件按钮
@@ -566,7 +591,7 @@ namespace PasteApeart.Helper
             base.Name = "ifmenu";
             base.Args1 = _expresion;
             base.Args2 = _insertHtml;
-            if (_box)
+            if (_box || InBox)
             {
                 base.Args3 = "box";
             }
@@ -598,7 +623,7 @@ namespace PasteApeart.Helper
             base.Name = "ifmenu";
             base.Args1 = expiresion;
             base.Args2 = $"<a href=\"javascript:;\" {((!String.IsNullOrEmpty(className)) ? $"class=\"{className}\"" : "")} onclick=\"{func}\">{((!String.IsNullOrEmpty(iconFont)) ? $"<i class=\"Hui-iconfont {iconFont}\">{name}</i>" : $"{name}")}</a>";
-            if (_box)
+            if (_box || InBox)
             {
                 base.Args3 = "box";
             }
@@ -2025,10 +2050,10 @@ namespace PasteApeart.Helper
     {
 
         /// <summary>
-        /// 排序
+        /// 排序 不写表示当前字段的默认值，小写开头(ui要判断样式) 比如nickName和nickName desc
         /// </summary>
-        /// <param name="acsName">升序 示例:Id,不写默认为当前字段升序</param>
-        /// <param name="descName">降序 示例:Id desc，不写为当前字段降序</param>
+        /// <param name="acsName">升序 示例:nickName,不写默认为当前字段升序</param>
+        /// <param name="descName">降序 示例:nickName desc，不写为当前字段降序</param>
         public PasteOrderbyAttribute(string acsName = null, string descName = null)
         {
             base.Name = "orderby";
@@ -2039,6 +2064,8 @@ namespace PasteApeart.Helper
 
     /// <summary>
     /// 按钮 注意Property上只能单个 Class上可以多个，表示功能按钮
+    /// 如果在Class上，需要做权限按钮，需要配合Order使用，先禁用这个功能，然后写入这个按钮
+    /// 也就是PasteEnable中，比如配置add为0，然后配置PasteButton中的code为add
     /// </summary>
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Class, AllowMultiple = true)]
     public class PasteButtonAttribute : BtnCodeAttribute
@@ -2076,7 +2103,7 @@ namespace PasteApeart.Helper
     {
 
         /// <summary>
-        /// 编辑模式后的小按钮
+        /// 编辑模式后的小按钮 估计用html模式更可靠
         /// </summary>
         /// <param name="name">按钮名称示例:保存</param>
         /// <param name="func">自定义函数，留空表示func_min_btn_click(this,id,name)</param>
@@ -2093,6 +2120,24 @@ namespace PasteApeart.Helper
     }
 
     /// <summary>
+    /// 导出忽略 导出的时候，忽略这个字段 一般用于ListDto中的字段中 ，导出约定，菜单区域不导出，然后是这个特性的不导出
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public class PasteOutignoreAttribute : ColumnDataTypeAttribute
+    {
+
+        /// <summary>
+        /// 导出忽略 导出的时候，忽略这个字段 一般用于ListDto中的字段中 ，导出约定，菜单区域不导出，然后是这个特性的不导出
+        /// 导出约定 没有名称的，菜单区域的 配置了当前特性的 都不导出
+        /// </summary>
+        public PasteOutignoreAttribute()
+        {
+            base.Name = "outignore";
+        }
+    }
+
+
+    /// <summary>
     /// 样式内容
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
@@ -2100,7 +2145,7 @@ namespace PasteApeart.Helper
     {
 
         /// <summary>
-        /// 样式的内容
+        /// 样式的内容 直接写样式，比如height:300px;
         /// </summary>
         /// <param name="_style">height:300px;</param>
         public PasteStyleAttribute(string _style)
@@ -2118,7 +2163,7 @@ namespace PasteApeart.Helper
     {
 
         /// <summary>
-        /// 文本输入拆分为数组splitarray
+        /// 文本输入拆分为数组splitarray 一般用于要使用输入框输入数组的时候使用！
         /// </summary>
         /// <param name="_split_char"></param>
         public PasteSplitAttribute(string _split_char = ",")

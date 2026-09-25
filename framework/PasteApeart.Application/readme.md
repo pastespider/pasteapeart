@@ -1,5 +1,9 @@
 ## 版本说明
 
+## 26.09.17
+	1.orderby 忽略大小写
+
+
 ## 26.9.6
 	1.PasteDefaultAppService添加DirectPageAsync，这样你自己的接口可以直接复用 表示获取某一页的数据
 	2.AppService转API的时候，只有结尾的Async才替换，var actionName = action.ActionName.EndsWith("Async") ? action.ActionName.Replace("Async", "") : action.ActionName;

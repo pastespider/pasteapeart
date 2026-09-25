@@ -133,7 +133,7 @@ namespace ExampleApeart.HttpApi.Host.Controllers
             var _query_roleid = _dbContext.GradeRole.Where(x => grade_ids.Contains(x.GradeId)).Select(x => x.RoleId);
 
             //通过二次缓存，可以读取权限列表信息
-            var roles = await _dbContext.RoleInfo.Where(x => x.IsEnable && x.RoleType == 0)
+            var roles = await _dbContext.RoleInfo.Where(x => x.IsEnable && x.RoleType ==  EnumRoleType.Role)
                 .WhereIf(!_is_root, x => _query_roleid.Contains(x.Id))
                 .WhereIf(_is_root, x => true)
                 .AsNoTracking()

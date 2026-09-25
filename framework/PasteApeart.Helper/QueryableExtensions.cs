@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace PasteApeart.Helper
@@ -42,16 +42,16 @@ namespace PasteApeart.Helper
                 //var property = Expression.Property(parameter, fieldName);
                 //var lambda = Expression.Lambda(property, parameter);
                 // 使用 GetProperty 而不是 Expression.Property
-                var propertyInfo = eType.GetProperty(fieldName,
-                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.IgnoreCase);
+                //var propertyInfo = eType.GetProperty(fieldName,
+                //    BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.IgnoreCase);
 
-                if (propertyInfo == null)
-                {
-                    // 如果当前类型没有，查找基类的属性
-                    propertyInfo = eType.GetProperty(fieldName,
-                        BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-                }
-
+                //if (propertyInfo == null)
+                //{
+                //    // 如果当前类型没有，查找基类的属性
+                //    propertyInfo = eType.GetProperty(fieldName,
+                //        BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                //}
+                var propertyInfo = ReadTypeProperties(eType).FirstOrDefault(x => string.Equals(x.Name, fieldName, StringComparison.OrdinalIgnoreCase));
                 if (propertyInfo == null)
                 {
                     throw new ArgumentException($"类型 '{eType.Name}' 中不存在属性 '{fieldName}'");
@@ -129,15 +129,15 @@ namespace PasteApeart.Helper
                 //var lambda = Expression.Lambda(property, parameter);
 
                 // 使用 GetProperty 而不是 Expression.Property
-                var propertyInfo = eType.GetProperty(fieldName,
-                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.IgnoreCase);
-
-                if (propertyInfo == null)
-                {
-                    // 如果当前类型没有，查找基类的属性
-                    propertyInfo = eType.GetProperty(fieldName,
-                        BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
-                }
+                //var propertyInfo = eType.GetProperty(fieldName,
+                //    BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.IgnoreCase);
+                var propertyInfo = ReadTypeProperties(eType).FirstOrDefault(x => string.Equals(x.Name, fieldName, StringComparison.OrdinalIgnoreCase));
+                //if (propertyInfo == null)
+                //{
+                //    // 如果当前类型没有，查找基类的属性
+                //    propertyInfo = eType.GetProperty(fieldName,
+                //        BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                //}
 
                 if (propertyInfo == null)
                 {
@@ -174,6 +174,52 @@ namespace PasteApeart.Helper
             }
 
             return orderedQuery ?? (IOrderedQueryable)query;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchType"></param>
+        /// <returns></returns>
+        private static PropertyInfo[] ReadTypeProperties(Type searchType)
+        {
+
+            var typeName = searchType.FullName;
+            // 使用GetOrCreate替代TryGetValue+Set
+            //return t.GetProperties(); // 耗时的反射操作
+            var allProperties = searchType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            // 如果有属性被隐藏（new），才需要复杂处理
+            var hasDuplicates = allProperties.Length != allProperties.Select(p => p.Name).Distinct().Count();
+            if (!hasDuplicates)
+            {
+                // 没有重复属性名，直接返回
+                return allProperties;
+            }
+            // 有重复属性名，进行分组处理
+            var propertyGroups = allProperties.GroupBy(p => p.Name);
+            var result = new PropertyInfo[propertyGroups.Count()];
+
+            int index = 0;
+            foreach (var group in propertyGroups)
+            {
+                // 手动查找，避免 LINQ 的开销
+                PropertyInfo selected = null;
+                foreach (var prop in group)
+                {
+                    if (prop.DeclaringType == searchType)
+                    {
+                        selected = prop;
+                        break;  // 找到当前类声明的，立即退出
+                    }
+                    selected ??= prop;  // 否则保留第一个
+                }
+                result[index++] = selected!;
+            }
+
+            return result;
+
+
         }
     }
 }

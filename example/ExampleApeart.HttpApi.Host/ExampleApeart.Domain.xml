@@ -91,7 +91,7 @@
         </member>
         <member name="F:ExampleApeart.EnumRoleType.All">
             <summary>
-            全部
+            全部/无
             </summary>
         </member>
         <member name="F:ExampleApeart.EnumRoleType.Role">
@@ -106,7 +106,7 @@
         </member>
         <member name="F:ExampleApeart.EnumRoleType.Button">
             <summary>
-            权限
+            按钮
             </summary>
         </member>
         <member name="F:ExampleApeart.EnumRoleType.MiniMenu">

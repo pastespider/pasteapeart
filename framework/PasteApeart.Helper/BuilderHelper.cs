@@ -343,7 +343,7 @@ namespace PasteApeart.Helper
                 var attributes = _property.GetCustomAttributes<Attribute>();
                 var _attributes = HandlerAttribute2(attributes, _cpro);
 
-                if (_attributes?.Any()==true)
+                if (_attributes?.Any() == true)
                 {
                     _cpro.Attributes = _attributes;
                 }
@@ -426,7 +426,7 @@ namespace PasteApeart.Helper
                                 }
                                 if (_reads != null)
                                 {
-                                    HandlerEnumDatas(_cpro, _reads);
+                                    HandlerEnumDatas(_cpro, _reads, _classType.Name.StartsWith("InputQuery") ? "search" : "form");
 
                                 }
                             }
@@ -564,20 +564,23 @@ namespace PasteApeart.Helper
         }
 
         /// <summary>
-        /// 
+        /// 把枚举的信息写入到特性中，如果没有则自动创建
         /// </summary>
-        /// <param name="_cpro"></param>
-        /// <param name="_reads"></param>
-        private static void HandlerEnumDatas(VoloModelProperty _cpro, List<VoloEnumProperty> _reads)
+        /// <param name="voloPro"></param>
+        /// <param name="enumProperties"></param>
+        /// <param name="action"></param>
+        private static void HandlerEnumDatas(VoloModelProperty voloPro, List<VoloEnumProperty> enumProperties, string action = "search")
         {
-            if (_cpro.Attributes == null)
+            if (voloPro.Attributes == null)
             {
-                _cpro.Attributes = new List<VoloModelAttribute>();
+                voloPro.Attributes = new List<VoloModelAttribute>();
             }
-            var find = _cpro.Attributes.Where(x => x.Name == "select" || x.Name == "lselect" || x.Name == "selects" || x.Name == "datalist").FirstOrDefault();
+            var find = voloPro.Attributes.Where(x => x.Name == "select" || x.Name == "lselect" || x.Name == "selects" || x.Name == "datalist").FirstOrDefault();
             if (find == null || find == default)
             {
-                _cpro.Attributes.Add(new VoloModelAttribute { Name = "select", Args1 = System.Text.Json.JsonSerializer.Serialize(_reads) });
+                HandlerEnumItemAllOrEmpty(enumProperties, action);
+
+                voloPro.Attributes.Add(new VoloModelAttribute { Name = "select", Args1 = System.Text.Json.JsonSerializer.Serialize(enumProperties) });
             }
             else
             {
@@ -587,7 +590,7 @@ namespace PasteApeart.Helper
                     {
                         if (!String.IsNullOrEmpty(_del))
                         {
-                            foreach (var ii in _reads)
+                            foreach (var ii in enumProperties)
                             {
                                 var _val = ii.value.ToString();
                                 switch (ii.key_type)
@@ -635,16 +638,63 @@ namespace PasteApeart.Helper
                                 }
                                 if (_val == _del)
                                 {
-                                    _reads.Remove(ii);
+                                    enumProperties.Remove(ii);
                                     break;
                                 }
                             }
                         }
                     }
                 }
-                find.Args1 = System.Text.Json.JsonSerializer.Serialize(_reads);
+
+                HandlerEnumItemAllOrEmpty(enumProperties, action);
+
+                find.Args1 = System.Text.Json.JsonSerializer.Serialize(enumProperties);
             }
         }
+
+        /// <summary>
+        /// 处理枚举中的 全部/无 的信息
+        /// </summary>
+        /// <param name="_reads"></param>
+        /// <param name="action"></param>
+        private static void HandlerEnumItemAllOrEmpty(List<VoloEnumProperty> _reads, string action)
+        {
+            //(search)全部/(其他)无
+            foreach (var item in _reads)
+            {
+                if (item.key_type != "int")
+                {
+                    break;
+                }
+                if (item.value != null)
+                {
+                    var iv = (int)item.value;
+                    if (iv == 0)
+                    {
+                        if (action == "search")
+                        {
+                            if (!string.IsNullOrEmpty(item.name) && item.name.Contains("/"))
+                            {
+                                item.name = item.name.Split("/")[0];
+                            }
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(item.name))
+                            {
+                                if (item.name.Contains("/"))
+                                {
+                                    item.name = item.name.Split("/")[1];
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+
 
         /// <summary>
         /// 
@@ -1017,7 +1067,7 @@ namespace PasteApeart.Helper
                             }
                             if (_reads != null)
                             {
-                                HandlerEnumDatas(proInfo, _reads);
+                                HandlerEnumDatas(proInfo, _reads, _classType.Name.StartsWith("InputQuery") ? "search" : "form");
                             }
                             if (_is_enum_type)
                             {
@@ -1297,7 +1347,7 @@ namespace PasteApeart.Helper
                             }
                             if (_reads != null)
                             {
-                                HandlerEnumDatas(proInfo, _reads);
+                                HandlerEnumDatas(proInfo, _reads, action);
                             }
                             if (_is_enum_type)
                             {

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PasteApeart.Application.Contracts;
+using PasteApeart.Handler.Extend;
 using PasteApeart.Handler.Extensions;
 using PasteApeart.Handler.rabbit;
 using PasteApeart.Handler.redis;

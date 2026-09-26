@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using PasteApeart;
 using PasteApeart.Application;
 using PasteApeart.Application.Contracts;
+using PasteApeart.Handler;
 
 namespace ExampleApeart.Application
 {

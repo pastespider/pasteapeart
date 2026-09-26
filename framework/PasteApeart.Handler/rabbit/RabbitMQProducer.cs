@@ -46,27 +46,31 @@ namespace PasteApeart.Handler.rabbit
             _config = config.Value;
             _closeToken = _closeTokenSource.Token;
 
-            MaxChannelCount = _config.MaxChannelCount;
-            _modelLocks = new SemaphoreSlim[MaxChannelCount];
-            _models = new IChannel[MaxChannelCount];
-            //_channels = new IChannel[MaxChannelCount];
-            _properties = new BasicProperties[MaxChannelCount];
-            // RabbitMQ channels are not thread-safe.
-            // https://www.rabbitmq.com/dotnet-api-guide.html#model-sharing
-            // Create a pool of channels and give each call to Publish one channel.
-            for (var i = 0; i < MaxChannelCount; i++)
+            if (_config.RabbitQueue)
             {
-                _modelLocks[i] = new SemaphoreSlim(1);
+
+                MaxChannelCount = _config.MaxChannelCount;
+                _modelLocks = new SemaphoreSlim[MaxChannelCount];
+                _models = new IChannel[MaxChannelCount];
+                //_channels = new IChannel[MaxChannelCount];
+                _properties = new BasicProperties[MaxChannelCount];
+                // RabbitMQ channels are not thread-safe.
+                // https://www.rabbitmq.com/dotnet-api-guide.html#model-sharing
+                // Create a pool of channels and give each call to Publish one channel.
+                for (var i = 0; i < MaxChannelCount; i++)
+                {
+                    _modelLocks[i] = new SemaphoreSlim(1);
+                }
+
+                // load configuration
+
+                //_publicationAddress = new PublicationAddress(_config.ExpireExchangeType, _config.ExpiredExchange, _config.ExpireRouteKey);
+
+                // initialize
+                _connectionFactory = GetConnectionFactory();
+
+                //_random = new Random();
             }
-
-            // load configuration
-
-            //_publicationAddress = new PublicationAddress(_config.ExpireExchangeType, _config.ExpiredExchange, _config.ExpireRouteKey);
-
-            // initialize
-            _connectionFactory = GetConnectionFactory();
-
-            //_random = new Random();
         }
 
         /// <summary>

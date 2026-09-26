@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PasteApeart.Domain;
 using PasteApeart.Domain.Entity;
 
-namespace PasteApeart.Handler
+namespace PasteApeart.Handler.Level
 {
     /// <summary>
     /// 多层级 非递归多层级新增和更新

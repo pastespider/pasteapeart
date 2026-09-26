@@ -21,32 +21,29 @@ namespace PasteApeart.Handler.rabbit
         private readonly int _channelCount = 2; // 根据CPU核心数调整
         //private readonly SemaphoreSlim _channelSemaphore;
         private IChannel _defaultChannel; // 用于声明的默认channel
-        private readonly IServiceProvider _serviceProvider;
-        private readonly IChannelHelper _channelHelper;
-
+        //private readonly IServiceProvider _serviceProvider;
+        //private readonly IChannelHelper _channelHelper;
         private readonly IEventActionHandler _eventActionHandler;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceProvider"></param>
         /// <param name="logger"></param>
+        /// <param name="eventActionHandler"></param>
         /// <param name="rabbitConfig"></param>
         public RabbitMultiConsumerHandler(
-            IServiceProvider serviceProvider,
+            //IServiceProvider serviceProvider,
             ILogger<RabbitMultiConsumerHandler> logger,
-            IChannelHelper channelHelper,
+            //IChannelHelper channelHelper,
             IEventActionHandler eventActionHandler,
             IOptions<RabbitConfig> rabbitConfig)
         {
-            _serviceProvider = serviceProvider;
+            //_serviceProvider = serviceProvider;
             _logger = logger;
             _eventActionHandler = eventActionHandler;
-            _channelHelper = channelHelper;
+            //_channelHelper = channelHelper;
             _rabbitConfig = rabbitConfig.Value;
             _channelCount = _rabbitConfig.ReadChannelCount;
-            //_channelSemaphore = new SemaphoreSlim(_channelCount, _channelCount);
-
             _channelCompletionSources = new List<TaskCompletionSource<bool>>();
         }
 

@@ -119,6 +119,11 @@
             测试 测试全部/无的枚举功能
             </summary>
         </member>
+        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.datalist">
+            <summary>
+            DataList
+            </summary>
+        </member>
         <member name="T:ExampleApeart.usermodels.GradeInfoUpdateDto">
             <summary>
             角色信息 一个账号可以绑定多个角色,角色绑定权限

@@ -65,6 +65,12 @@ namespace ExampleApeart.usermodels
         /// </summary>
         public EnumRoleType roletype { get; set; } = EnumRoleType.Menu;
 
+        /// <summary>
+        /// DataList
+        /// </summary>
+        [PasteDatalist("","0")]
+        public EnumRoleType datalist { get; set; }
+
     }
 
     ///<summary>

@@ -1,7 +1,7 @@
 using PasteApeart.Application.Contracts;
 using System.Threading.Channels;
 
-namespace PasteApeart
+namespace PasteApeart.Handler
 {
     public interface IChannelHelper
     {

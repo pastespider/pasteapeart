@@ -10,6 +10,7 @@
 
 	  <PackageReadmeFile>readme.md</PackageReadmeFile>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
 	  <None Include="readme.md" Pack="true" PackagePath="/" Visible="true" />

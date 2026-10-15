@@ -22,7 +22,7 @@
 
     <div class="page-container index-page">
         <div class="searcharea">
-            <form id="formsearch" class="pasteform oneline"  onsubmit="return false;" action="javascript:void(0);">
+            <form id="formsearch" class="pasteform oneline" onsubmit="return false;" action="javascript:void(0);">
                 <div class="searchbox"></div>
             </form>
             <div class="tap_more">
@@ -32,7 +32,7 @@
         </div>
         <div class="ppbody">
             <div class="st">
-                
+
                 <input type="button" class="isedit btn btnstyle btnadd" value="新增" onclick="tap_add_form(this);" />
 
                 <!-- 用于显示表名或者是模块名称 -->
@@ -44,24 +44,28 @@
                 <div class="func_btn_area"></div>
 
                 <!-- 切换table和chart模式 -->
-                 <div class="show_type">
-                    <i class="Hui-iconfont Hui-iconfont-zhongtumoshi type_table rbtn selected" onclick="handlerChangeShowType(false,this);"></i>
-                    <i class="Hui-iconfont Hui-iconfont-tongji-xian type_chart rbtn" onclick="handlerChangeShowType(true,this);"></i>
-                 </div>
-
+                <div class="show_type">
+                    <i class="Hui-iconfont Hui-iconfont-zhongtumoshi type_table rbtn selected"
+                        onclick="handlerChangeShowType(false,this);"></i>
+                    <i class="Hui-iconfont Hui-iconfont-tongji-xian type_chart rbtn"
+                        onclick="handlerChangeShowType(true,this);"></i>
+                </div>
+                <a href="javascript:exportExcel(this);" style="display:none;" class="btnautoarea command_excel_out" title="导出当前页为EXCEL"><i
+                        class="Hui-iconfont Hui-iconfont-dangan"></i></a>
                 <input type="button" class="btnsearch btn" onclick="readPageData(1);" value="查询">
                 <a class="btnrefush" href="javascript:location.replace(location.href);" title="刷新"><i
                         class="Hui-iconfont">&#xe68f;</i></a>
                 <a href="javascript:func_auto_searcharea(this);" class="btnautoarea" title="显示更多查询项"><i
                         class="Hui-iconfont Hui-iconfont-search1"></i></a>
-                        <a href="javascript:printTable(this);" class="btnautoarea" title="打印当前页，建议使用横向模式"><i
-                            class="Hui-iconfont Hui-iconfont-dayinji"></i></a>
-                            <a href="javascript:cleanTableColumnOrder(this);" class="btnautoarea btn_clear_order_column" title="清理列排序缓存"><i
-                                class="Hui-iconfont Hui-iconfont-del2"></i></a>
+                <a href="javascript:printTable(this);" class="btnautoarea command_print" title="打印当前页，建议使用横向模式"><i
+                        class="Hui-iconfont Hui-iconfont-dayinji"></i></a>
+                <a href="javascript:cleanTableColumnOrder(this);" class="btnautoarea btn_clear_order_column"
+                    title="清理列排序缓存"><i class="Hui-iconfont Hui-iconfont-del2"></i></a>
             </div>
             <div class="batcharea"></div>
             <div class="mt-20 table_wrap">
-                <table id="data-table" class="table table-border table-bordered tb_freeze table-bg table-hover table-sort table-responsive">
+                <table id="data-table"
+                    class="table table-border table-bordered tb_freeze table-bg table-hover table-sort table-responsive">
                     <thead>
                     </thead>
                     <tbody>
@@ -251,7 +255,7 @@
                     </div>
                 <% } %>
             <% }) %>
-        </script>    
+        </script>
 
 
         <!-- 头部的批量操作的模板 -->
@@ -505,12 +509,12 @@
                 <% } %>
             </tr>
         </script>
-        <!-- 版本二 --> 
+        <!-- 版本二 -->
         <script type="text/html" id="template_body_tbody">
             <!-- 注意花括号百分比的是当前的模板 2个花括号的是占位，下一个的模板代码 -->
-            <% list.forEach(ii=>{ %>
-                <%:=templatetr({item:ii,config:config}) %>
-            <% }) %>
+        <% list.forEach(ii=>{ %>
+            <%:=templatetr({item:ii,config:config}) %>
+                <% }) %>
         </script>
 
         <!-- 生成后的模板内容，用于排错用 -->
@@ -526,7 +530,7 @@
     <script type="text/javascript" src="./lib/template.js"></script>
     <script type="text/javascript" src="./lib/My97DatePicker/4.8/WdatePicker.js"></script>
     <script type="text/javascript" src="../lib/api.js?v=251002"></script>
-    
+
     <!-- <script type="text/javascript" src="../lib/page.min.js"></script> -->
 
     <script type="text/javascript" src="../lib/jquery.pagination.js"></script>

@@ -43,10 +43,12 @@
             background-color: #f5f7fa;
             color: #333;
             padding: 20px;
+            height:100%;
+            overflow-y:auto;
         }
         
         .dashboard {
-            max-width: 1200px;
+            max-width: 1900px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -101,8 +103,8 @@
         }
         
         .chart-container {
-            height: 300px;
-            margin-top: 20px;
+            height: 240px;
+            padding:20px 20px 40px 40px;
             position: relative;
         }
         
@@ -148,11 +150,13 @@
             text-align: right;
             padding-right: 5px;
         }
-        
+
         .conversion-rate {
-            display: flex;
+            display: grid;
             justify-content: space-between;
             margin-top: 20px;
+            grid-gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
         }
         
         .conversion-item {
@@ -161,13 +165,14 @@
         }
         
         .conversion-item .label {
-            font-size: 14px;
+            font-size: 16px;
             color: #7f8c8d;
             margin-bottom: 5px;
+            background:#fff;
         }
         
         .conversion-item .value {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
             color: #2c3e50;
         }
@@ -371,6 +376,22 @@
                 <div class="conversion-item">
                     <div class="label">时间</div>
                     <div class="value">15:30</div>
+                </div>
+                <div class="conversion-item">
+                    <div class="label">老客户</div>
+                    <div class="value">32.5%</div>
+                </div>
+                <div class="conversion-item">
+                    <div class="label">注册率</div>
+                    <div class="value">18.3%</div>
+                </div>
+                <div class="conversion-item">
+                    <div class="label">环比</div>
+                    <div class="value">+21.1%</div>
+                </div>
+                <div class="conversion-item">
+                    <div class="label">日期</div>
+                    <div class="value">09-20</div>
                 </div>
             </div>
         </div>

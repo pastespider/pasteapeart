@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PasteApeart.Handler;
 using PasteApeart.Helper;
+using System.Dynamic;
 using System.Text;
 
 namespace ExampleApeart.HttpApi.Host.Controllers
@@ -86,6 +87,9 @@ namespace ExampleApeart.HttpApi.Host.Controllers
         public async Task<string> TestAdaptAsync()
         {
             var first = await _dbContext.UserInfo.OrderBy(x => x.Id).AsNoTracking().FirstOrDefaultAsync();
+            ExpandoObject abd = new ExpandoObject();
+            dynamic dobj = new ExpandoObject();
+            dobj.abc = "123";
 
             var newone = new UserInfo { };
             first.Adapt(newone);

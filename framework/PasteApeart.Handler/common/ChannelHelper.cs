@@ -139,6 +139,7 @@ namespace PasteApeart.Handler
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="input"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         [Obsolete("use WriteAutoQueueAsync before new MutexKey")]
         public async Task WriteMutexMQAsync<T>(T input, object id) where T : IEventModel

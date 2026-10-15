@@ -5301,7 +5301,7 @@ function toolResizeTapMenuWidth() {
                 }
             }
 
-            console.log('计算出的目标宽度:', targetWidth);
+            // console.log('计算出的目标宽度:', targetWidth);
 
             function applyWidthToLastTh() {
                 var $lastTh = $(".table th:last");

@@ -5,6 +5,9 @@ using ExampleApeart.Application.Contracts;
 using ExampleApeart.EntityFrameworkCore;
 using ExampleApeart.Handler;
 using ExampleApeart.usermodels;
+using PasteApeart.Domain.Entity;
+using PasteApeart.Handler.redis;
+using PasteApeart.Dependency;
 
 namespace ExampleApeart
 {

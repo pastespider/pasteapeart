@@ -1,6 +1,5 @@
 using ExampleApeart.Application.Contracts.eventmodels;
 using Microsoft.Extensions.Logging;
-using PasteApeart;
 using PasteApeart.Dependency;
 using PasteApeart.Handler;
 using PasteApeart.Handler.Extensions;
@@ -32,7 +31,10 @@ namespace ExampleApeart.Handler.eventmodels
             _channelHelper = channelHelper;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public object Result { get; protected set; }
 
         /// <summary>
         /// 

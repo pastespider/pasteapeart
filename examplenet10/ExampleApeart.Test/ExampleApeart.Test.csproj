@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+		<PackageReference Include="Sdcb.SimdPaddleOCR" Version="2.0.0" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.6" />
+		<PackageReference Include="xunit.v3" Version="4.0.2" />
+
+		<!-- 图形识别测试
+		<PackageReference Include="Sdcb.SimdPaddleOCR.Models.ChineseV6Tiny" Version="1.0.0" />
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />-->
+
+
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="sample.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+</Project>

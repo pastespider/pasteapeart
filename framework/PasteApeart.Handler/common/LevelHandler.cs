@@ -34,9 +34,10 @@ namespace PasteApeart.Handler.Level
 
 
         /// <summary>
-        /// 新增后调用，用于自动处理关系链
+        /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <typeparam name="Tkey"></typeparam>
         /// <param name="info"></param>
         /// <returns></returns>
         public async Task AfterAddAsync<T, Tkey>(ILevelEntity<Tkey> info) where T : class, ILevelEntity<Tkey>
@@ -89,10 +90,12 @@ namespace PasteApeart.Handler.Level
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <typeparam name="Tkey"></typeparam>
         /// <param name="info"></param>
         /// <param name="oldFatherStr"></param>
         /// <param name="oldLevel"></param>
         /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public async Task AfterUpdateAsync<T, Tkey>(ILevelEntity<Tkey> info, string oldFatherStr, int oldLevel) where T : class, ILevelEntity<Tkey>
         {
             //IQueryable<ILevelEntity> dbSet = null;
@@ -161,11 +164,12 @@ namespace PasteApeart.Handler.Level
 
 
         /// <summary>
-        /// 基于FatherId和Sort重新计算Level SortStr FatherStr
+        /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <typeparam name="Tkey"></typeparam>
         /// <param name="entities"></param>
-        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public void AllResortByFatherIdAndSort<T, Tkey>(List<T> entities) where T : ILevelEntity<Tkey>
         {
             if (entities == null || entities.Count == 0) return;
@@ -194,6 +198,7 @@ namespace PasteApeart.Handler.Level
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
+        /// <typeparam name="Tkey"></typeparam>
         /// <param name="node"></param>
         /// <param name="entities"></param>
         /// <exception cref="Exception"></exception>

@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace PasteApeart.Helper
 {
@@ -10,12 +10,12 @@ namespace PasteApeart.Helper
         /// <summary>
         /// 字段名称 CreateDate
         /// </summary>
-        public string Name { get; set; } = "";
+        public string Name { get; set; }
 
         /// <summary>
         /// 字段类型 System.DateTime
         /// </summary>
-        public string DataType { get; set; } = "";
+        public string DataType { get; set; }
 
         /// <summary>
         /// 字段默认值 0001/1/1 0:00:00
@@ -25,18 +25,18 @@ namespace PasteApeart.Helper
         /// <summary>
         /// 字段中文 创建日期
         /// </summary>
-        public string Title { get; set; } = "";
+        public string Title { get; set; }
 
         /// <summary>
         /// 注释的后部分 空格之后的，一般用于描述
         /// </summary>
-        public string Placeholder { get; set; } = "";
+        public string Placeholder { get; set; }
 
         /// <summary>
         /// XML文档注释内容
         /// </summary>
         [JsonIgnore]
-        public string Summary { get; set; } = "";
+        public string Summary { get; set; }
 
         /// <summary>
         /// 限定 最大长度

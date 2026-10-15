@@ -6,7 +6,9 @@ using PasteApeart.Handler.rabbit;
 namespace PasteApeart.Handler
 {
 
-
+    /// <summary>
+    /// 
+    /// </summary>
     public static class PasteApeartHandlerModule
     {
 

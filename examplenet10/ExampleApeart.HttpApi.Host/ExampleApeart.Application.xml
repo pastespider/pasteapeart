@@ -90,7 +90,7 @@
             
             </summary>
         </member>
-        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.#ctor(PasteApeart.Application.IPasteDefaultHelper,PasteApeart.IChannelHelper,ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext)">
+        <member name="M:ExampleApeart.Application.ExampleApeartDefaultService.#ctor(PasteApeart.Application.IPasteDefaultHelper,PasteApeart.Handler.IChannelHelper,ExampleApeart.EntityFrameworkCore.IExampleApeartDbContext)">
             <summary>
             
             </summary>
@@ -218,6 +218,11 @@
         <member name="P:ExampleApeart.ExampleApeartAppService._userHelper">
             <summary>
             
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.ExampleApeartAppService._currentUser">
+            <summary>
+            当前登录用户
             </summary>
         </member>
         <member name="M:ExampleApeart.ExampleApeartAppService.#ctor">

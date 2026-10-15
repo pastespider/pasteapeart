@@ -2,6 +2,9 @@ using PasteApeart.Application.Contracts;
 
 namespace PasteApeart.Handler
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IEventActionHandler
     {
         /// <summary>
@@ -30,16 +33,33 @@ namespace PasteApeart.Handler
         /// <summary>
         /// 一般用于本地的Channel模式
         /// </summary>
-        /// <param name="read"></param>
+        /// <param name="msg"></param>
         /// <returns></returns>
         Task ActionMessageAsync(IEventModel msg);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="read"></param>
+        /// <param name="msg"></param>
         /// <returns></returns>
         [Obsolete("use ActionMessageAsync")]
         Task HanlderEventMessage(IEventModel msg);
+
+        /// <summary>
+        /// 有返回值的，自定义执行函数 一般用于事件控制台
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="methodName"></param>
+        /// <returns></returns>
+        Task<object> ActionResultAsync(string msg, string methodName = "HandleEventAsync");
+
+        /// <summary>
+        /// 有返回值的，自定义执行函数 一般用于事件控制台
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="types"></param>
+        /// <param name="methodName"></param>
+        /// <returns></returns>
+        Task<object> ActionResultAsync(string msg, Type[] types, string methodName = "HandleEventAsync");
     }
 }

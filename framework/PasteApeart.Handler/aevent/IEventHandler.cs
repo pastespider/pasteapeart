@@ -1,9 +1,4 @@
 using PasteApeart.Application.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PasteApeart.Handler
 {
@@ -20,5 +15,10 @@ namespace PasteApeart.Handler
         /// <param name="input"></param>
         /// <returns></returns>
         Task HandleEventAsync(EventModel input);
+
+        ///// <summary>
+        ///// 执行结果
+        ///// </summary>
+        //object Result { get; }
     }
 }

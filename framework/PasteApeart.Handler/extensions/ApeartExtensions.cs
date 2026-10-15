@@ -90,41 +90,44 @@ namespace PasteApeart.Handler.Extensions
                 : source;
         }
 
-        //
-        // 摘要:
-        //     Used for paging. Can be used as an alternative to Skip(...).Take(...) chaining.
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="skipCount"></param>
+        /// <param name="maxResultCount"></param>
+        /// <returns></returns>
         public static IQueryable<T> PageBy<T>(this IQueryable<T> query, int skipCount, int maxResultCount)
         {
             Check.NotNull(query, "query");
             return query.Skip(skipCount).Take(maxResultCount);
         }
 
-        //
-        // 摘要:
-        //     Used for paging. Can be used as an alternative to Skip(...).Take(...) chaining.
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TQueryable"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="skipCount"></param>
+        /// <param name="maxResultCount"></param>
+        /// <returns></returns>
         public static TQueryable PageBy<T, TQueryable>(this TQueryable query, int skipCount, int maxResultCount) where TQueryable : IQueryable<T>
         {
             Check.NotNull(query, "query");
             return (TQueryable)query.Skip(skipCount).Take(maxResultCount);
         }
 
-        //
-        // 摘要:
-        //     Filters a System.Linq.IQueryable`1 by given predicate if given condition is true.
-        //
-        //
-        // 参数:
-        //   query:
-        //     Queryable to apply filtering
-        //
-        //   condition:
-        //     A boolean value
-        //
-        //   predicate:
-        //     Predicate to filter the query
-        //
-        // 返回结果:
-        //     Filtered or not filtered query based on condition
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="condition"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, bool>> predicate)
         {
             Check.NotNull(query, "query");
@@ -136,23 +139,15 @@ namespace PasteApeart.Handler.Extensions
             return query.Where(predicate);
         }
 
-        //
-        // 摘要:
-        //     Filters a System.Linq.IQueryable`1 by given predicate if given condition is true.
-        //
-        //
-        // 参数:
-        //   query:
-        //     Queryable to apply filtering
-        //
-        //   condition:
-        //     A boolean value
-        //
-        //   predicate:
-        //     Predicate to filter the query
-        //
-        // 返回结果:
-        //     Filtered or not filtered query based on condition
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TQueryable"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="condition"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public static TQueryable WhereIf<T, TQueryable>(this TQueryable query, bool condition, Expression<Func<T, bool>> predicate) where TQueryable : IQueryable<T>
         {
             Check.NotNull(query, "query");
@@ -164,23 +159,14 @@ namespace PasteApeart.Handler.Extensions
             return (TQueryable)query.Where(predicate);
         }
 
-        //
-        // 摘要:
-        //     Filters a System.Linq.IQueryable`1 by given predicate if given condition is true.
-        //
-        //
-        // 参数:
-        //   query:
-        //     Queryable to apply filtering
-        //
-        //   condition:
-        //     A boolean value
-        //
-        //   predicate:
-        //     Predicate to filter the query
-        //
-        // 返回结果:
-        //     Filtered or not filtered query based on condition
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="condition"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, bool condition, Expression<Func<T, int, bool>> predicate)
         {
             Check.NotNull(query, "query");
@@ -192,23 +178,15 @@ namespace PasteApeart.Handler.Extensions
             return query.Where(predicate);
         }
 
-        //
-        // 摘要:
-        //     Filters a System.Linq.IQueryable`1 by given predicate if given condition is true.
-        //
-        //
-        // 参数:
-        //   query:
-        //     Queryable to apply filtering
-        //
-        //   condition:
-        //     A boolean value
-        //
-        //   predicate:
-        //     Predicate to filter the query
-        //
-        // 返回结果:
-        //     Filtered or not filtered query based on condition
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TQueryable"></typeparam>
+        /// <param name="query"></param>
+        /// <param name="condition"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public static TQueryable WhereIf<T, TQueryable>(this TQueryable query, bool condition, Expression<Func<T, int, bool>> predicate) where TQueryable : IQueryable<T>
         {
             Check.NotNull(query, "query");

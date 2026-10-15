@@ -3,6 +3,9 @@ using System.Threading.Channels;
 
 namespace PasteApeart.Handler
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IChannelHelper
     {
         /// <summary>

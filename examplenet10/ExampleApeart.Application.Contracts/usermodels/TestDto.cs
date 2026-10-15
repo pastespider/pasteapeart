@@ -1,4 +1,5 @@
 using PasteApeart;
+using PasteApeart.Applciation.Contracts.EntityDto;
 
 namespace ExampleApeart.Application.Contracts.usermodels
 {

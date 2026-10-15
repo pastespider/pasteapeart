@@ -1,7 +1,10 @@
 using ExampleApeart.HttpApi.Host.auditmodels;
 using Microsoft.AspNetCore.Mvc;
 using PasteApeart;
+using PasteApeart.Dependency;
 using PasteApeart.Handler;
+using PasteApeart.Handler.Extensions;
+using PasteApeart.Handler.redis;
 
 namespace ExampleApeart.HttpApi.Host
 {

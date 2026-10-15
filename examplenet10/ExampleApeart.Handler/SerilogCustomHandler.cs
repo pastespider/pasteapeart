@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using PasteApeart;
+using PasteApeart.Handler;
 using Serilog.Core;
 using Serilog.Events;
 
@@ -36,7 +31,7 @@ namespace ExampleApeart.Handler
         {
             if (ServiceProvider != null)
             {
-                var _channel = ServiceProvider.GetRequiredService<ChannelHelper>();
+                var _channel = ServiceProvider.GetRequiredService<IChannelHelper>();
                 //Console.WriteLine($"channel is null:{(_channel == null)}!");
                 //这里进行比如异常推送等
             }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Xml.Linq;
 
@@ -337,7 +338,7 @@ namespace PasteApeart.Helper
                 {
                     var _declarType = _property.DeclaringType;
                 }
-                _cpro.Name = _property.Name.FirstLetterToLower();
+                _cpro.Name = _property.Name.ToCamelCase();
                 _cpro.DataType = _property.PropertyType.Name;
                 //_cpro.Value = _property.GetValue(_new)?.ToString();
                 var attributes = _property.GetCustomAttributes<Attribute>();
@@ -955,7 +956,7 @@ namespace PasteApeart.Helper
                 }
                 else
                 {
-                    proInfo.Name = $"{head}{_property.Name.FirstLetterToLower()}";
+                    proInfo.Name = $"{head}{_property.Name.ToCamelCase()}";
                 }
                 proInfo.DataType = _property.PropertyType.Name;
                 var attributes = _property.GetCustomAttributes<Attribute>();
@@ -1105,6 +1106,21 @@ namespace PasteApeart.Helper
                             }
                         }
                     }
+
+                    // 判断是否为基础类型数组（如 int[]、string[] 等），是则追加特性split
+                    var _ele_type = _property.PropertyType.GetElementType();
+                    if (_property.PropertyType.IsArray && _ele_type != null && _ele_type.FullName != null && _ele_type.FullName.StartsWith("System"))
+                    {
+                        if (proInfo.Attributes == null)
+                        {
+                            proInfo.Attributes = new List<VoloModelAttribute>();
+                        }
+                        if (!proInfo.Attributes.Any(x => x.Name == "split"))
+                        {
+                            proInfo.Attributes.Add(new VoloModelAttribute { Name = "split", Args1 = ";" });
+                        }
+                    }
+
                 }
 
                 //有Description特性的话，如果是空值，可能是故意这么设定的!
@@ -1234,7 +1250,7 @@ namespace PasteApeart.Helper
                 }
                 else
                 {
-                    proInfo.Name = $"{head}{_property.Name.FirstLetterToLower()}";
+                    proInfo.Name = $"{head}{_property.Name.ToCamelCase()}";
                 }
 
                 proInfo.DataType = _property.PropertyType.Name;
@@ -2306,11 +2322,11 @@ namespace PasteApeart.Helper
                             {
                                 if (String.IsNullOrEmpty(_attri.Args1))
                                 {
-                                    _attri.Args1 = property.Name;
+                                    _attri.Args1 = property.Name.ToCamelCase();
                                 }
                                 if (String.IsNullOrEmpty(_attri.Args2))
                                 {
-                                    _attri.Args2 = $"{property.Name} Desc";
+                                    _attri.Args2 = $"{property.Name} desc".ToCamelCase();
                                 }
                             }
                         }
@@ -2368,31 +2384,36 @@ namespace PasteApeart.Helper
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private static string FirstLetterToLower(this string input)
+        private static string ToCamelCase(this string input)
         {
-            if (!String.IsNullOrEmpty(input))
+            if (!string.IsNullOrEmpty(input))
             {
-                var _index = 0;
-                for (var k = 0; k < input.Length; k++)
-                {
-                    var _char = input[k];
-                    if ((int)_char >= 97)
-                    {
-                        _index = k - 1;
-                        break;
-                    }
-                }
-                if (_index > 0)
-                {
-                    return (input.Substring(0, _index).ToLower() + input.Substring(_index));
-                }
-                else
-                {
-                    return (input.Substring(0, 1).ToLower() + input.Substring(1));
-                }
+                return JsonNamingPolicy.CamelCase.ConvertName(input);
             }
             return input;
         }
+        //if (!String.IsNullOrEmpty(input))
+        //{
+        //    var _index = 0;
+        //    for (var k = 0; k < input.Length; k++)
+        //    {
+        //        var _char = input[k];
+        //        if ((int)_char >= 97)
+        //        {
+        //            _index = k - 1;
+        //            break;
+        //        }
+        //    }
+        //    if (_index > 0)
+        //    {
+        //        return (input.Substring(0, _index).ToLower() + input.Substring(_index));
+        //    }
+        //    else
+        //    {
+        //        return (input.Substring(0, 1).ToLower() + input.Substring(1));
+        //    }
+        //}
+        //return input;
 
         private static readonly IMemoryCache _memoryCache = new MemoryCache(new MemoryCacheOptions());
         /// <summary>

@@ -122,9 +122,10 @@ namespace PasteApeart.Handler
         }
 
         /// <summary>
-        /// 设置下一次执行时间 并压入到队列
+        /// 
         /// </summary>
         /// <param name="input"></param>
+        /// <param name="_channelHelper"></param>
         /// <returns></returns>
         public static async Task<bool> ToAutoExpireAndSendAsync(this AbsEventModel input, IChannelHelper _channelHelper)
         {

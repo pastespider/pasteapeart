@@ -1,4 +1,3 @@
-using ExampleApeart;
 using Microsoft.AspNetCore.Mvc;
 using PasteApeart.Application;
 using PasteApeart.Application.Contracts;

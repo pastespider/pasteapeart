@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Linq.Expressions;
 using PasteApeart;
 using PasteApeart.EntityFrameworkCore;
+using PasteApeart.Domain.Entity;
 
 namespace ExampleApeart.EntityFrameworkCore
 {

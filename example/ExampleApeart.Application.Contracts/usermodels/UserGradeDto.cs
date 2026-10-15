@@ -91,6 +91,7 @@ namespace ExampleApeart.usermodels
     ///用户绑定角色 解绑的直接删除数据
     ///</summary>
     [Description("用户绑定角色 解绑的直接删除数据")]
+    [PasteBatch("批量禁用","func_batch_disable_usergrade(this);")]
     public class UserGradeListDto : EntityDto<int>
     {
         ///<summary>

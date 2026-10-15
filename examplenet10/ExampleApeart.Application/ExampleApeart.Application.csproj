@@ -16,7 +16,7 @@
   <ItemGroup>
 	<PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.7" />
 	<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	<PackageReference Include="PasteApeart.Application" Version="26.8.5" />
+	<PackageReference Include="PasteApeart.Application" Version="26.10.5" />
   </ItemGroup>
 
   <ItemGroup>

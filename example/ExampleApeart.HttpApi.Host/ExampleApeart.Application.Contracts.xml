@@ -104,26 +104,6 @@
             状态
             </summary>
         </member>
-        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.ids">
-            <summary>
-            int 模拟输入多个int,使用,分割
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.dates">
-            <summary>
-            DateTime 模拟输入多个DateTime,使用;分割
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.roletype">
-            <summary>
-            测试 测试全部/无的枚举功能
-            </summary>
-        </member>
-        <member name="P:ExampleApeart.usermodels.GradeInfoAddDto.datalist">
-            <summary>
-            DataList
-            </summary>
-        </member>
         <member name="T:ExampleApeart.usermodels.GradeInfoUpdateDto">
             <summary>
             角色信息 一个账号可以绑定多个角色,角色绑定权限
@@ -907,6 +887,11 @@
         <member name="T:ExampleApeart.usermodels.InputQueryUserInfo">
             <summary>
              查询
+            </summary>
+        </member>
+        <member name="M:ExampleApeart.usermodels.InputQueryUserInfo.#ctor">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ExampleApeart.usermodels.InputQueryUserInfo.sdate">

@@ -49,6 +49,21 @@
             使用读写分离
             </summary>
         </member>
+        <member name="T:ExampleApeart.CurrentUser">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.CurrentUser.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ExampleApeart.CurrentUser.Token">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ExampleApeart.EnumIsEnableState">
             <summary>
             状态枚举

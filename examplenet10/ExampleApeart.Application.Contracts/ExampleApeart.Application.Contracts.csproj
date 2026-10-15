@@ -12,7 +12,7 @@
 	    <DocumentationFile>..\ExampleApeart.HttpApi.Host\ExampleApeart.Application.Contracts.xml</DocumentationFile>
   </PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="PasteApeart.Application.Contracts" Version="26.8.2" />
+		<PackageReference Include="PasteApeart.Application.Contracts" Version="26.10.5" />
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExampleApeart.Domain\ExampleApeart.Domain.csproj" />

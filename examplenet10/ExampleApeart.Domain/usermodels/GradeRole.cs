@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PasteApeart;
+using PasteApeart.Domain.Entity;
 using PasteApeart.Helper;
 
 namespace ExampleApeart.usermodels

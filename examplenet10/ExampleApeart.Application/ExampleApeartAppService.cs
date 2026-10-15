@@ -1,9 +1,9 @@
+using ExampleApeart.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using PasteApeart;
 using PasteApeart.Application.Contracts;
+using PasteApeart.Handler.lazy;
 using PasteApeart.Helper;
-using ExampleApeart.Application.Contracts;
-using ExampleApeart.EntityFrameworkCore;
 using System.Reflection;
 
 namespace ExampleApeart
@@ -28,6 +28,11 @@ namespace ExampleApeart
         /// 
         /// </summary>
         protected CacheHandler _userHelper => LazyServiceProvider.LazyGetRequiredService<CacheHandler>();
+
+        /// <summary>
+        /// 当前登录用户
+        /// </summary>
+        protected CurrentUser _currentUser => LazyServiceProvider.LazyGetRequiredService<CurrentUser>();
 
         /// <summary>
         /// 
@@ -96,28 +101,29 @@ namespace ExampleApeart
         /// <returns></returns>
         protected string ReadCurrentUserToken()
         {
-            if (_httpContext.Request.Headers.TryGetValue(PublicString.TokenHeadName, out var heads))
-            {
-                var token = heads.FirstOrDefault();
-                if (!String.IsNullOrEmpty(token))
-                {
-                    if (token.TokenCheck())
-                    {
-                        return token;
-                    }
-                }
-            }
-            if (_httpContext.Request.Cookies.TryGetValue(PublicString.TokenHeadName, out var cookie))
-            {
-                if (!String.IsNullOrEmpty(cookie))
-                {
-                    if (cookie.TokenCheck())
-                    {
-                        return cookie.ToString();
-                    }
-                }
-            }
-            return "";
+            return _currentUser.Token;
+            //if (_httpContext.Request.Headers.TryGetValue(PublicString.TokenHeadName, out var heads))
+            //{
+            //    var token = heads.FirstOrDefault();
+            //    if (!String.IsNullOrEmpty(token))
+            //    {
+            //        if (token.TokenCheck())
+            //        {
+            //            return token;
+            //        }
+            //    }
+            //}
+            //if (_httpContext.Request.Cookies.TryGetValue(PublicString.TokenHeadName, out var cookie))
+            //{
+            //    if (!String.IsNullOrEmpty(cookie))
+            //    {
+            //        if (cookie.TokenCheck())
+            //        {
+            //            return cookie.ToString();
+            //        }
+            //    }
+            //}
+            //return "";
         }
 
         /// <summary>

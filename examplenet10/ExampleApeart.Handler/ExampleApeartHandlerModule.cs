@@ -1,12 +1,9 @@
-using Autofac;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using PasteApeart;
+using PasteApeart.Dependency;
 using PasteApeart.Handler;
-using PasteApeart.Handler.eventmodels;
-using PasteApeart.Handler.rabbitmodel;
-using System.Collections.Concurrent;
+using PasteApeart.Handler.lazy;
+using PasteApeart.Handler.rabbit;
 
 namespace ExampleApeart
 {
@@ -26,13 +23,13 @@ namespace ExampleApeart
             services.AddTransient<ILazyServiceProvider, LazyServiceProvider>();
             services.AddScoped<CurrentUser>();
 
-            services.AddSingleton<IChannelHelper,ChannelHelper>();
+            services.AddSingleton<IChannelHelper, ChannelHelper>();
             services.AddSingleton<IRabbitMQProducer, RabbitMQProducer>();
             services.AddSingleton<IEventActionHandler, EventActionHandler>();
-            services.AddSingleton<RabbitMultiConsumerHandler>();
-            services.AddSingleton<RabbitMQProducer>();
+            services.AddSingleton<IRabbitMultiConsumerHandler,RabbitMultiConsumerHandler>();
 
-            services.AddSingleton<ChannelHelper>();
+
+            services.AddScoped<CurrentUser>();
 
 
             //services.AddAutoDependencyInjection(typeof(PasteApeartHandlerModule).Assembly);

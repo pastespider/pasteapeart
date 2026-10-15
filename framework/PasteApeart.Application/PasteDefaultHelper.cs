@@ -2044,8 +2044,11 @@ namespace PasteApeart.Application
                 //    actionOrderby = true;
                 //}
                 #endregion
+
+                //Console.WriteLine(orderby);
                 //支持多个查询，比如id,name desc
                 query = PasteOrder(query, orderby);
+                actionOrderby = true;
             }
             if (!actionOrderby)
             {

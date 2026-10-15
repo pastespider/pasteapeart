@@ -17,7 +17,6 @@ namespace PasteApeart.Handler.cache
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <param name="cache"></param>
-        /// <param name="map"></param>
         public CacheHandler(DbContext serviceProvider, IAppCache cache)
         {
             _dbContext = serviceProvider;

@@ -44,7 +44,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 400px;
+  height: 200px;
 }
 .table_wrap,
 .mt-20 {

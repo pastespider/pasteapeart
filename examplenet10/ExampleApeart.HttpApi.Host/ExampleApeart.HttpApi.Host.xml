@@ -341,6 +341,12 @@
             
             </summary>
         </member>
+        <member name="M:ExampleApeart.HttpApi.Host.Services.AuthMiddleware.#ctor(ExampleApeart.CurrentUser)">
+            <summary>
+            
+            </summary>
+            <param name="current"></param>
+        </member>
         <member name="M:ExampleApeart.HttpApi.Host.Services.AuthMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
             <summary>
             
@@ -403,7 +409,7 @@
             系统初始化
             </summary>
         </member>
-        <member name="M:ExampleApeart.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.RabbitConfig},PasteApeart.Handler.rabbitmodel.RabbitMultiConsumerHandler,Microsoft.Extensions.Logging.ILogger{ExampleApeart.StartHostedService},PasteApeart.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleApeart.AppConfig})">
+        <member name="M:ExampleApeart.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.Application.Contracts.RabbitConfig},PasteApeart.Handler.rabbit.IRabbitMultiConsumerHandler,Microsoft.Extensions.Logging.ILogger{ExampleApeart.StartHostedService},PasteApeart.Handler.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleApeart.AppConfig})">
             <summary>
             
             </summary>

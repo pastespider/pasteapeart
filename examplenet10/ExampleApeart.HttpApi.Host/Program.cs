@@ -2,6 +2,7 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using ExampleApeart.Handler;
 using PasteApeart;
+using PasteApeart.Handler.lazy;
 using Serilog;
 
 //using Serilog.Sinks.RabbitMQ;

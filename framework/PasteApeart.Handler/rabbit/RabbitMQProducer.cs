@@ -37,9 +37,10 @@ namespace PasteApeart.Handler.rabbit
         private readonly ILogger<RabbitMQProducer> _logger;
 
         /// <summary>
-        /// Constructor for RabbitMqClient
+        /// 
         /// </summary>
-        /// <param name="config">mandatory</param>
+        /// <param name="config"></param>
+        /// <param name="logger"></param>
         public RabbitMQProducer(IOptions<RabbitConfig> config, ILogger<RabbitMQProducer> logger)
         {
             _logger = logger;

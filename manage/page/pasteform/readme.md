@@ -1575,3 +1575,5 @@ public class UserInfoListDto{
     2.修复1中的宽度问题，不知道啥时候设置的margin-right:100px;
     
     
+## 26.09.10
+    1.index.js引入_config.auto_menu_width 页面载入后，是否自动伸缩菜单区域的宽度

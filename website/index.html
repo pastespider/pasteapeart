@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PasteApeart · All in Dto + All in Handler - DTO 驱动 UI + Handler 聚合业务场景</title>
+  <meta name="description"
+    content="PasteApeart（PasteForm 进阶版）是 All in Dto + All in Handler 的管理后台开发框架。DTO 元数据驱动 UI，Handler 聚合业务场景，实现管理端 0 代码与业务逻辑多宿主复用。" />
+  <meta name="keywords"
+    content="PasteApeart, PasteForm, All in Dto, All in Handler, DTO驱动, Handler聚合, CRUD框架, 管理后台极速开发, ABP, 元数据驱动UI, 业务场景复用, 6种宿主" />
+  <meta property="og:title" content="PasteApeart · All in Dto + All in Handler" />
+  <meta property="og:description" content="DTO 定义 UI，Handler 聚合业务场景。管理端 0 代码，业务逻辑一次编写、多宿主复用。" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#hero" class="logo">
+        <div class="logo-mark"><span>P</span></div>
+        <span class="logo-text">PasteApeart</span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#pillars">双支柱</a>
+        <a href="#architecture">架构设计</a>
+        <a href="#multihost">多宿主复用</a>
+        <a href="#features">核心特性</a>
+        <a href="#attributes">特性系统</a>
+        <a href="#eventmodel">事件模型</a>
+        <a href="#toolchain">工具链</a>
+        <a href="#ecosystem">生态</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="https://gita.pastecode.cn/apeart/paste-apeart/full/master/readme.md" target="_blank" rel="noopener"
+          class="btn btn-ghost">
+          <i class="bi bi-journal-text"></i> README
+        </a>
+        <a href="https://gitee.com/pastecode/paste-apeart" target="_blank" rel="noopener" class="btn btn-primary">
+          <i class="bi bi-git"></i> Gitee 源码
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="切换导航" aria-expanded="false">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="hero">
+      <div class="container hero-inner">
+        <div class="hero-content fade-up">
+          <div class="badge"><span class="dot"></span>All in Dto + All in Handler</div>
+          <h1 class="hero-title">
+            <span class="gradient">DTO</span> 定义 UI · <span class="gradient">Handler</span> 聚合业务场景
+          </h1>
+          <p class="hero-subtitle">
+            PasteApeart 是 <strong>PasteForm（All in Dto）</strong> 的进阶版。<br />
+            通过 DTO 元数据驱动管理端 UI，并以<strong>业务场景（Business Scenario）</strong>聚合业务逻辑，<br />
+            实现<strong>管理端 0 代码</strong> + <strong>业务逻辑一次编写、多宿主复用</strong>。
+          </p>
+          <div class="hero-actions">
+            <a href="https://gita.pastecode.cn/apeart/paste-apeart/full/master/readme.md" target="_blank" rel="noopener"
+              class="btn btn-primary btn-lg">
+              <i class="bi bi-rocket-takeoff"></i> 快速开始
+            </a>
+            <a href="https://gitee.com/pastecode/paste-apeart" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">
+              <i class="bi bi-code-slash"></i> 查看源码
+            </a>
+          </div>
+          <div class="hero-tags">
+            <span class="tag">All in Dto</span>
+            <span class="tag">All in Handler</span>
+            <span class="tag">DTO 元数据驱动 UI</span>
+            <span class="tag">业务场景聚合（Handler）</span>
+            <span class="tag">6 种宿主复用</span>
+            <span class="tag">IEventModel · 幂等·延迟</span>
+          </div>
+        </div>
+        <div class="hero-visual fade-up delay-1">
+          <div class="mockup">
+            <div class="mockup-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="mockup-title">PasteApeart · All in Dto + All in Handler</span>
+            </div>
+            <div class="mockup-body">
+              <div class="pillars-preview">
+                <div class="pillar-pill dto">
+                  <span class="pillar-dot"></span>All in Dto · UI 由 DTO 元数据驱动
+                </div>
+                <div class="pillar-pill handler">
+                  <span class="pillar-dot"></span>All in Handler · 业务按场景聚合到 Handler
+                </div>
+              </div>
+              <div class="hosts-preview">
+                <div class="hosts-label">业务场景一次编写 · 多宿主复用</div>
+                <div class="hosts-chips">
+                  <span class="host-chip">HTTP</span>
+                  <span class="host-chip">MQ</span>
+                  <span class="host-chip">Timer</span>
+                  <span class="host-chip">Job</span>
+                  <span class="host-chip">Event</span>
+                  <span class="host-chip">Background</span>
+                </div>
+              </div>
+              <div class="arch-preview">
+                <div class="arch-layer host">Host · 视图聚合接口</div>
+                <div class="arch-line"></div>
+                <div class="arch-layer app">Application · 单表 CRUD（大部分 0 代码）</div>
+                <div class="arch-line"></div>
+                <div class="arch-layer handler">Handler · 业务场景聚合（可多宿主复用）</div>
+              </div>
+            </div>
+          </div>
+          <div class="glow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pillars -->
+    <section id="pillars" class="section">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>双支柱 · UI + 业务双收敛</h2>
+          <p>
+            PasteApeart 的核心是两条平行的收敛原则：<strong>All in Dto</strong> 收敛 UI 呈现，<strong>All in Handler</strong>
+            收敛业务规则，<br />
+            将管理后台开发从“重复适配”提升到“范式约束”。
+          </p>
+        </div>
+        <div class="pillars-grid fade-up delay-1">
+          <div class="card pillar-card dto">
+            <div class="pillar-header">
+              <div class="card-icon"><i class="bi bi-braces-asterisk"></i></div>
+              <div class="pillar-title">
+                <h3>All in Dto</h3>
+                <span class="pillar-tag">UI 由 DTO 元数据驱动</span>
+              </div>
+            </div>
+            <p>
+              将表格、搜索区、表单、新增/编辑/详情页的控件类型、布局、交互规则，都定义在 DTO 的特性（Attributes）与注释中。框架通过反射读取
+              <code>VoloModelInfo</code> 元数据，由通用前端统一渲染。
+            </p>
+            <ul class="pillar-list">
+              <li><i class="bi bi-check-circle"></i> DTO 改动即 UI 改动，前后端一次对齐</li>
+              <li><i class="bi bi-check-circle"></i> 管理端近乎 0 代码，页面骨架 <code>index.html / view.html / detail.html</code> 通用复用</li>
+              <li><i class="bi bi-check-circle"></i> 元数据驱动（<code>VoloModelInfo</code>），思想可跨语言平移</li>
+              <li><i class="bi bi-check-circle"></i> 统一 UI 范式，杜绝管理端风格割裂</li>
+            </ul>
+          </div>
+          <div class="card pillar-card handler">
+            <div class="pillar-header">
+              <div class="card-icon handler"><i class="bi bi-diagram-3"></i></div>
+              <div class="pillar-title">
+                <h3>All in Handler</h3>
+                <span class="pillar-tag handler">业务按场景聚合到 Handler</span>
+              </div>
+            </div>
+            <p>
+              将业务逻辑按<strong>业务场景（Business Scenario）</strong>聚合到 <code>Handler</code>
+              层，而不是按单表散落。<code>Application</code> 只做单表 CRUD 协调（大部分场景 0 代码），<code>Host</code>
+              只做跨表视图聚合。
+            </p>
+            <ul class="pillar-list">
+              <li><i class="bi bi-check-circle"></i><strong>业务收敛中心</strong>：一个业务场景的所有规则只写一次</li>
+              <li><i class="bi bi-check-circle"></i><strong>多宿主复用</strong>：一次编写，可被 6 种宿主反复调用</li>
+              <li><i class="bi bi-check-circle"></i><strong>职责清晰</strong>：Host → Application → Handler 严格单向引用（硬约束）</li>
+              <li><i class="bi bi-check-circle"></i><strong>杜绝业务扩散</strong>：强制业务收敛，架构更清晰、更易维护</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Evolution -->
+    <section id="evolution" class="section section-alt">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>从 PasteForm 到 PasteApeart</h2>
+          <p>
+            PasteApeart 是 PasteForm 的<strong>进阶版</strong>，并非推翻，而是进一步把“业务逻辑该放在哪”这个问题收敛到了
+            <code>Handler</code> 层。
+          </p>
+        </div>
+        <div class="evolution-grid fade-up delay-1">
+          <div class="evo-card form">
+            <div class="evo-badge">PasteForm</div>
+            <h3>All in Dto</h3>
+            <p>专注解决“管理端重复开发、前后端字段不一致”的问题。通过 DTO 元数据驱动 UI，实现管理端自动化。</p>
+            <div class="evo-focus">聚焦：UI 自动化 · 管理端 0 代码</div>
+          </div>
+          <div class="evo-arrow"><i class="bi bi-arrow-right"></i></div>
+          <div class="evo-card apeart">
+            <div class="evo-badge apeart">PasteApeart</div>
+            <h3>All in Dto + All in Handler</h3>
+            <p>在 All in Dto 的基础上，进一步解决“业务逻辑复用、职责边界混乱”的问题。将业务按场景聚合到 Handler，实现业务规则的多宿主复用。</p>
+            <div class="evo-focus">聚焦：UI 自动化 + 业务场景聚合 + 架构硬约束</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem" class="section">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>痛点：重复的不是业务，是适配与组织方式</h2>
+          <p>
+            管理后台不仅面临字段同步的重复劳动，更面临<strong>复杂业务逻辑该写在哪、如何复用</strong>这个长期困扰团队的架构问题。
+          </p>
+        </div>
+        <div class="grid grid-4 fade-up delay-1">
+          <div class="card">
+            <div class="card-icon"><i class="bi bi-arrow-repeat"></i></div>
+            <h3>管理端重复开发</h3>
+            <p>数十张表的 CRUD，结构雷同却要反复适配，字段增删需要多处同步。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="bi bi-shuffle"></i></div>
+            <h3>前后端字段脱节</h3>
+            <p>DTO、API、前端表单难以保持一致，维护成本随表数量线性增长。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="bi bi-layers"></i></div>
+            <h3>业务逻辑复用困难</h3>
+            <p>同一段跨表业务规则，常被复制到 Controller、Job、MQ、定时任务等不同入口，导致重复与不一致。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="bi bi-diagram-2"></i></div>
+            <h3>代码放置混乱，难以收敛</h3>
+            <p>复杂业务堆砌在 AppService，职责不清，项目久了容易腐化，架构约束不够明确。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solution -->
+    <section id="solution" class="section section-alt">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>解决方案：<span class="gradient">DTO 定义 UI · Handler 聚合业务场景</span></h2>
+          <p>
+            PasteApeart 用两条收敛原则解决这两个层面的重复：<strong>UI 呈现收敛到 DTO 元数据</strong>，<strong>业务规则收敛到
+            Handler 场景</strong>。
+          </p>
+        </div>
+        <div class="compare fade-up delay-1">
+          <div class="compare-item">
+            <h3>传统方式</h3>
+            <ul>
+              <li>手写列表页、表单页、详情页 → 字段多处同步</li>
+              <li>业务逻辑按入口/单表散落（Controller、Job、MQ 重复实现）</li>
+              <li>跨表复杂逻辑难以复用，容易出现逻辑不一致</li>
+              <li>缺乏明确的架构硬约束，职责边界模糊</li>
+            </ul>
+          </div>
+          <div class="compare-arrow"><i class="bi bi-arrow-right"></i></div>
+          <div class="compare-item highlight">
+            <h3>PasteApeart（All in Dto + All in Handler）</h3>
+            <ul>
+              <li><strong>DTO + 特性定义 UI</strong> → 元数据自动渲染，改动一处即全局生效</li>
+              <li><strong>Handler 按业务场景聚合</strong> → 业务规则一次编写，到处复用</li>
+              <li><strong>多宿主复用</strong>（HTTP/MQ/Timer/Job/Event/Background）→ 逻辑永远一致</li>
+              <li><strong>Host → Application → Handler</strong> 单向引用硬约束 → 职责清晰、可维护</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section id="architecture" class="section">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>架构设计 · Handler 是业务收敛中心</h2>
+          <p>
+            PasteApeart 将职责严格划分为 <strong>Host · Application · Handler</strong> 三层，<br />
+            强制 <strong>Host → Application → Handler</strong> 单向引用（编译器级硬约束），将业务逻辑彻底收敛到 Handler 层。
+          </p>
+        </div>
+        <div class="arch-wrap fade-up delay-1">
+          <div class="arch-flow">
+            <div class="arch-node host">
+              <div class="arch-title">Host（视图接口层）</div>
+              <div class="arch-desc">为前端提供跨表聚合视图（View）接口，不污染核心业务逻辑</div>
+              <div class="arch-sub">职责：视图聚合 · 展示数据适配</div>
+            </div>
+            <div class="arch-arrow"><i class="bi bi-arrow-down"></i></div>
+            <div class="arch-node app">
+              <div class="arch-title">Application（单表 CRUD 协调层）</div>
+              <div class="arch-desc">围绕单张表，继承 <code>DefaultAppService</code> 可实现 <strong>0 代码</strong> CRUD</div>
+              <div class="arch-sub">职责：单表协调 · 薄层，不承载跨表复杂业务</div>
+            </div>
+            <div class="arch-arrow"><i class="bi bi-arrow-down"></i></div>
+            <div class="arch-node handler">
+              <div class="arch-title">Handler（业务场景聚合层）</div>
+              <div class="arch-desc"><strong>业务收敛中心</strong> —— 按业务场景（Scenario）组织，支持<strong>6 种宿主复用</strong></div>
+              <div class="arch-sub">职责：核心业务规则 · 跨表/跨领域 · 场景级复用</div>
+            </div>
+            <div class="arch-note">
+              引用方向：<strong>Host → Application → Handler</strong>（严格单向，不可逆向引用）—— 编译器级物理硬约束
+            </div>
+          </div>
+          <div class="arch-table">
+            <div class="arch-row head">
+              <div>对比维度</div>
+              <div>Handler</div>
+              <div>Application</div>
+              <div>Host</div>
+            </div>
+            <div class="arch-row">
+              <div>组织维度</div>
+              <div><strong>业务场景（Scenario）· 跨表</strong></div>
+              <div>单张数据库表</div>
+              <div>前端视图（View）· 跨表聚合</div>
+            </div>
+            <div class="arch-row">
+              <div>核心职责</div>
+              <div><strong>业务规则聚合与复用（All in Handler）</strong></div>
+              <div>标准增删改查协调</div>
+              <div>视图接口聚合，不污染业务</div>
+            </div>
+            <div class="arch-row">
+              <div>复用性</div>
+              <div><strong>最高</strong>（HTTP、MQ、Timer、Job、Event、Background · 6 种宿主）</div>
+              <div>单表维度</div>
+              <div>视图维度</div>
+            </div>
+            <div class="arch-row">
+              <div>代码量</div>
+              <div>按业务场景复杂度</div>
+              <div><strong>大部分场景 0 代码</strong>（继承 DefaultAppService）</div>
+              <div>按视图聚合需要</div>
+            </div>
+            <div class="arch-row">
+              <div>定位</div>
+              <div><strong>业务收敛中心</strong></div>
+              <div>CRUD 协调层（薄层）</div>
+              <div>展示适配层</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Multi-host Reuse -->
+    <section id="multihost" class="section section-alt">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>6 种宿主复用 · 一次编写，到处复用</h2>
+          <p>
+            在 PasteApeart 中，业务场景被聚合到 <strong>Handler</strong>。<br />
+            同一个 Handler 方法，不需要复制粘贴，就能被以下 6 种宿主调用，实现<strong>业务逻辑 100% 复用</strong>。
+          </p>
+        </div>
+        <div class="hosts-grid fade-up delay-1">
+          <div class="host-card">
+            <div class="host-icon"><i class="bi bi-globe2"></i></div>
+            <div class="host-name">HTTP</div>
+            <div class="host-desc">REST API 接口，Host/Application 对外暴露的 Web 接口</div>
+          </div>
+          <div class="host-card">
+            <div class="host-icon"><i class="bi bi-diagram-2"></i></div>
+            <div class="host-name">MQ</div>
+            <div class="host-desc">消息队列（Message Queue），异步消息消费场景</div>
+          </div>
+          <div class="host-card">
+            <div class="host-icon"><i class="bi bi-clock-history"></i></div>
+            <div class="host-name">Timer</div>
+            <div class="host-desc">定时器（Timer），周期性/定时执行的任务</div>
+          </div>
+          <div class="host-card">
+            <div class="host-icon"><i class="bi bi-briefcase"></i></div>
+            <div class="host-name">Job</div>
+            <div class="host-desc">后台作业（Background Job），离线批处理任务</div>
+          </div>
+          <div class="host-card">
+            <div class="host-icon"><i class="bi bi-lightning-charge"></i></div>
+            <div class="host-name">Event</div>
+            <div class="host-desc">领域事件（Domain Event），事件驱动的业务处理</div>
+          </div>
+          <div class="host-card">
+            <div class="host-icon"><i class="bi bi-cpu"></i></div>
+            <div class="host-name">Background</div>
+            <div class="host-desc">后台服务（Background Service），常驻后台处理任务</div>
+          </div>
+        </div>
+        <div class="hosts-quote fade-up delay-2">
+          <i class="bi bi-quote"></i>
+          <p>一个业务场景（Scenario）只在 Handler 写一次，所有入口共用同一套业务规则，避免逻辑重复和不一致。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>核心特性</h2>
+          <p>
+            PasteApeart 将 UI 自动化（All in Dto）与业务场景聚合（All in Handler）有机结合，<br />
+            在减少重复劳动的同时，强化了架构的可维护性与业务复用性。
+          </p>
+        </div>
+        <div class="grid grid-3 fade-up delay-1">
+          <div class="card feature-card highlight">
+            <div class="card-icon handler"><i class="bi bi-diagram-3-fill"></i></div>
+            <h3>All in Handler · 业务场景聚合</h3>
+            <p>按业务场景组织 Handler，业务规则一次编写即可被 <strong>HTTP、MQ、Timer、Job、Event、Background</strong> 等 6
+              种宿主复用，实现业务逻辑 100% 复用。</p>
+          </div>
+          <div class="card feature-card highlight">
+            <div class="card-icon"><i class="bi bi-braces-asterisk"></i></div>
+            <h3>All in Dto · 元数据驱动 UI</h3>
+            <p>DTO + 特性定义 UI，框架输出 <code>VoloModelInfo</code> 元数据，由通用前端统一渲染表格、搜索、表单、详情，实现管理端近乎 0
+              代码。</p>
+          </div>
+          <div class="card feature-card">
+            <div class="card-icon"><i class="bi bi-shield-check"></i></div>
+            <h3>IEventModel · 事件模型</h3>
+            <p>内置延迟执行（<code>ExpireSecond</code>）、绝对时间（<code>ExpireTime</code>）、自动幂等（<code>MutexKey</code>），配合
+              <code>EventActionHandler</code> 统一调度，优雅解决异步、延迟、幂等三大痛点。</p>
+          </div>
+          <div class="card feature-card">
+            <div class="card-icon"><i class="bi bi-bezier2"></i></div>
+            <h3>三层架构 · 硬约束</h3>
+            <p><strong>Host → Application → Handler</strong> 严格单向引用（编译器级物理约束）。职责边界清晰，强制业务收敛，有效防止架构腐化。</p>
+          </div>
+          <div class="card feature-card">
+            <div class="card-icon"><i class="bi bi-sliders"></i></div>
+            <h3>config.json · 批量规则</h3>
+            <p>支持动态字段注入、特性批量预设（<code>attribute.all</code>），减少 DTO 重复标注，让全局规则集中可维护。</p>
+          </div>
+          <div class="card feature-card">
+            <div class="card-icon"><i class="bi bi-file-earmark-code"></i></div>
+            <h3>Liquid 模板 · 可定制生成</h3>
+            <p>通过 <code>*.html.liquid</code> 自定义 DTO、Service 等代码生成模板，配合 PasteBuilder 满足团队不同的代码风格偏好。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Attributes -->
+    <section id="attributes" class="section section-alt">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>特性系统 · 用 DTO 特性控制 UI 呈现</h2>
+          <p>
+            PasteApeart 的特性系统（Attributes）源自 <code>PasteApeart.Helper</code>，<br />
+            一行特性即可决定字段的控件类型、校验、布局、交互、显隐等行为，真正做到“<strong>All in Dto</strong>”。
+          </p>
+        </div>
+
+        <div class="attr-toolbar fade-up">
+          <div class="attr-search">
+            <i class="bi bi-search"></i>
+            <input type="text" id="attrSearch" placeholder="搜索特性名称或说明（如 image、select、outer...）"
+              aria-label="搜索特性" />
+            <button class="attr-clear" id="attrClear" type="button" title="清空搜索" aria-label="清空搜索">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+          <div class="attr-count">共 <span id="attrTotal">0</span> 个特性</div>
+        </div>
+
+        <div class="attr-group fade-up" data-group="基础信息">
+          <h3 class="attr-group-title"><i class="bi bi-info-circle"></i> 基础信息（Model Meta）</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste display 显示 名称 字段名">
+              <div class="attr-name">PasteDisplay</div>
+              <div class="attr-desc">设置字段显示名称</div>
+            </div>
+            <div class="attr-item" data-keywords="paste desc 描述 说明 字段描述">
+              <div class="attr-name">PasteDesc</div>
+              <div class="attr-desc">字段描述说明</div>
+            </div>
+            <div class="attr-item" data-keywords="paste title 标题 模型标题 页面标题">
+              <div class="attr-name">PasteTitle</div>
+              <div class="attr-desc">模型/页面标题</div>
+            </div>
+            <div class="attr-item" data-keywords="paste class 类路径 模型标识">
+              <div class="attr-name">PasteClass</div>
+              <div class="attr-desc">指定类路径/模型标识</div>
+            </div>
+            <div class="attr-item" data-keywords="paste path 路径 访问路径">
+              <div class="attr-name">PastePath</div>
+              <div class="attr-desc">指定访问路径</div>
+            </div>
+            <div class="attr-item" data-keywords="paste model 模型 标识">
+              <div class="attr-name">PasteModel</div>
+              <div class="attr-desc">模型标识配置</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="布局分组">
+          <h3 class="attr-group-title"><i class="bi bi-layout-three-columns"></i> 布局、分组与自定义</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste group 分组 表单分组">
+              <div class="attr-name">PasteGroup</div>
+              <div class="attr-desc">表单字段分组</div>
+            </div>
+            <div class="attr-item" data-keywords="paste template 模板 自定义 列模板 表单模板">
+              <div class="attr-name">PasteTemplate</div>
+              <div class="attr-desc">自定义列/表单模板（Template）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste style 样式 行内样式 css">
+              <div class="attr-name">PasteStyle</div>
+              <div class="attr-desc">字段行内样式</div>
+            </div>
+            <div class="attr-item" data-keywords="paste mark 提示 说明 tooltip">
+              <div class="attr-name">PasteMark</div>
+              <div class="attr-desc">字段说明、提示标记（Mark/Tooltip）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste tips 提示信息">
+              <div class="attr-name">PasteTips</div>
+              <div class="attr-desc">字段提示信息</div>
+            </div>
+            <div class="attr-item" data-keywords="paste help 帮助 帮助说明">
+              <div class="attr-name">PasteHelp</div>
+              <div class="attr-desc">字段帮助说明</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="选择控件">
+          <h3 class="attr-group-title"><i class="bi bi-menu-button-wide"></i> 选择控件</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste select 单选 下拉 下拉框">
+              <div class="attr-name">PasteSelect</div>
+              <div class="attr-desc">单选下拉框</div>
+            </div>
+            <div class="attr-item" data-keywords="paste selects 多选 多选下拉">
+              <div class="attr-name">PasteSelects</div>
+              <div class="attr-desc">多选下拉框</div>
+            </div>
+            <div class="attr-item" data-keywords="paste lselect 枚举 枚举过滤 过滤 ignore">
+              <div class="attr-name">PasteLselect</div>
+              <div class="attr-desc">枚举/列表过滤选择（支持 ignore 过滤选项）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste reload 联动 联动刷新 字段联动">
+              <div class="attr-name">PasteReload</div>
+              <div class="attr-desc">选项联动刷新（字段联动重载表单）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="关联数据">
+          <h3 class="attr-group-title"><i class="bi bi-diagram-2"></i> 关联数据（外表、嵌套对象）</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste outer 外表 外表关联 关联">
+              <div class="attr-name">PasteOuter</div>
+              <div class="attr-desc">外表关联（单选外表对象）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste outers 外表多选 多选外表">
+              <div class="attr-name">PasteOuters</div>
+              <div class="attr-desc">外表多选（多选外表对象）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste outerdisplay 外表显示 显示字段 友好名称">
+              <div class="attr-name">PasteOuterDisplay</div>
+              <div class="attr-desc">外表显示字段（列表/表单显示友好名称）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste object 嵌套对象 对象">
+              <div class="attr-name">PasteObject</div>
+              <div class="attr-desc">嵌套对象</div>
+            </div>
+            <div class="attr-item" data-keywords="paste objects 嵌套对象数组 对象数组">
+              <div class="attr-name">PasteObjects</div>
+              <div class="attr-desc">嵌套对象数组</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="上传">
+          <h3 class="attr-group-title"><i class="bi bi-cloud-upload"></i> 上传控件</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste image 图片 图片上传 多图 单图">
+              <div class="attr-name">PasteImage</div>
+              <div class="attr-desc">图片上传（支持单图/多图、数量、尺寸、分组目录）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste file 文件 文件上传 多文件">
+              <div class="attr-name">PasteFile</div>
+              <div class="attr-desc">文件上传（支持多文件、类型限制）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="内容编辑">
+          <h3 class="attr-group-title"><i class="bi bi-type"></i> 富文本 / 内容编辑</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste richtext 富文本 富文本编辑器 html">
+              <div class="attr-name">PasteRichText</div>
+              <div class="attr-desc">富文本编辑器（HTML）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste markdown markdown编辑器 md">
+              <div class="attr-name">PasteMarkdown</div>
+              <div class="attr-desc">Markdown 编辑器</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="日期时间">
+          <h3 class="attr-group-title"><i class="bi bi-calendar3"></i> 日期时间</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste datetime 日期 时间 日期时间">
+              <div class="attr-name">PasteDatetime</div>
+              <div class="attr-desc">日期时间选择</div>
+            </div>
+            <div class="attr-item" data-keywords="paste daterange 日期范围 范围">
+              <div class="attr-name">PasteDateRange</div>
+              <div class="attr-desc">日期范围选择</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="查询联动">
+          <h3 class="attr-group-title"><i class="bi bi-search"></i> 查询、联动</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste query 查询 搜索 搜索参数">
+              <div class="attr-name">PasteQuery</div>
+              <div class="attr-desc">查询参数绑定（Search/Query 区域）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste linkquery 联动查询 查询联动">
+              <div class="attr-name">PasteLinkQuery</div>
+              <div class="attr-desc">字段联动查询（LinkQuery）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="按钮菜单">
+          <h3 class="attr-group-title"><i class="bi bi-menu-app"></i> 操作按钮、菜单</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste button 按钮 操作按钮">
+              <div class="attr-name">PasteButton</div>
+              <div class="attr-desc">单个操作按钮</div>
+            </div>
+            <div class="attr-item" data-keywords="paste buttons 多个按钮 按钮组">
+              <div class="attr-name">PasteButtons</div>
+              <div class="attr-desc">多个操作按钮</div>
+            </div>
+            <div class="attr-item" data-keywords="paste menu 菜单 操作菜单">
+              <div class="attr-name">PasteMenu</div>
+              <div class="attr-desc">操作菜单</div>
+            </div>
+            <div class="attr-item" data-keywords="paste menus 多个菜单 菜单组">
+              <div class="attr-name">PasteMenus</div>
+              <div class="attr-desc">多个操作菜单</div>
+            </div>
+            <div class="attr-item" data-keywords="paste ifmenu 条件菜单 条件">
+              <div class="attr-name">PasteIfMenu</div>
+              <div class="attr-desc">条件菜单（按条件显示隐藏）</div>
+            </div>
+            <div class="attr-item" data-keywords="paste bitch 批量 批量操作 batch">
+              <div class="attr-name">PasteBitch</div>
+              <div class="attr-desc">批量操作（Batch）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="校验">
+          <h3 class="attr-group-title"><i class="bi bi-shield-check"></i> 校验、限制</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste required 必填 校验">
+              <div class="attr-name">PasteRequired</div>
+              <div class="attr-desc">必填校验</div>
+            </div>
+            <div class="attr-item" data-keywords="paste maxlength 最大长度 长度">
+              <div class="attr-name">PasteMaxLength</div>
+              <div class="attr-desc">最大长度</div>
+            </div>
+            <div class="attr-item" data-keywords="paste minlength 最小长度">
+              <div class="attr-name">PasteMinLength</div>
+              <div class="attr-desc">最小长度</div>
+            </div>
+            <div class="attr-item" data-keywords="paste range 范围 数值范围">
+              <div class="attr-name">PasteRange</div>
+              <div class="attr-desc">数值范围校验</div>
+            </div>
+            <div class="attr-item" data-keywords="paste regex 正则 正则表达式">
+              <div class="attr-name">PasteRegex</div>
+              <div class="attr-desc">正则表达式校验</div>
+            </div>
+            <div class="attr-item" data-keywords="paste email 邮箱 邮箱校验">
+              <div class="attr-name">PasteEmail</div>
+              <div class="attr-desc">邮箱格式校验</div>
+            </div>
+            <div class="attr-item" data-keywords="paste phone 手机 手机号 手机号校验">
+              <div class="attr-name">PastePhone</div>
+              <div class="attr-desc">手机号格式校验</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="显示控制">
+          <h3 class="attr-group-title"><i class="bi bi-eye"></i> 显示控制</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste hidden 隐藏 显隐">
+              <div class="attr-name">PasteHidden</div>
+              <div class="attr-desc">字段隐藏</div>
+            </div>
+            <div class="attr-item" data-keywords="paste disable 禁用">
+              <div class="attr-name">PasteDisable</div>
+              <div class="attr-desc">字段禁用</div>
+            </div>
+            <div class="attr-item" data-keywords="paste readonly 只读">
+              <div class="attr-name">PasteReadonly</div>
+              <div class="attr-desc">字段只读</div>
+            </div>
+            <div class="attr-item" data-keywords="paste switch 开关">
+              <div class="attr-name">PasteSwitch</div>
+              <div class="attr-desc">开关控件（支持 view/bind 等展示模式）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-group fade-up delay-1" data-group="数据转换">
+          <h3 class="attr-group-title"><i class="bi bi-braces"></i> 数据转换</h3>
+          <div class="attrs-grid">
+            <div class="attr-item" data-keywords="paste splitarray 分隔符 数组 分隔符数组">
+              <div class="attr-name">PasteSplitArray</div>
+              <div class="attr-desc">分隔符字符串转数组</div>
+            </div>
+            <div class="attr-item" data-keywords="paste array 数组">
+              <div class="attr-name">PasteArray</div>
+              <div class="attr-desc">数组类型处理</div>
+            </div>
+            <div class="attr-item" data-keywords="paste json json处理">
+              <div class="attr-name">PasteJson</div>
+              <div class="attr-desc">JSON 数据处理</div>
+            </div>
+            <div class="attr-item" data-keywords="paste default 默认值">
+              <div class="attr-name">PasteDefault</div>
+              <div class="attr-desc">字段默认值</div>
+            </div>
+            <div class="attr-item" data-keywords="paste order 排序 顺序">
+              <div class="attr-name">PasteOrder</div>
+              <div class="attr-desc">字段排序/顺序控制</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="attr-empty" id="attrEmpty" hidden>
+          <i class="bi bi-search"></i>
+          <p>未找到匹配的特性，请尝试其他关键词</p>
+        </div>
+
+        <div class="attr-more fade-up delay-2">
+          <p>
+            完整特性说明与参数详情见：
+            <a href="https://gita.pastecode.cn/apeart/paste-apeart/full/master/framework/PasteApeart.Helper/docs/md.md"
+              target="_blank" rel="noopener">
+              <i class="bi bi-book"></i> PasteApeart.Helper 特性文档（md.md）
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event Model -->
+    <section id="eventmodel" class="section">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>事件模型（IEventModel）· 与 Handler 场景深度结合</h2>
+          <p>
+            基于 <code>IEventModel</code>，PasteApeart 将<strong>延迟执行、绝对时间、自动幂等</strong>内置到事件体系中。<br />
+            配合 Handler 的业务场景聚合，使得异步任务、延时处理同样能做到<strong>一次定义、多宿主复用</strong>。
+          </p>
+        </div>
+        <div class="grid grid-4 fade-up delay-1">
+          <div class="card">
+            <div class="card-icon"><i class="bi bi-hourglass-split"></i></div>
+            <h3>延迟执行</h3>
+            <p>通过 <code>ExpireSecond</code> 配置，轻松实现“X 秒后执行”，适用于延时关闭、超时处理等场景。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="bi bi-calendar-event"></i></div>
+            <h3>绝对时间</h3>
+            <p>通过 <code>ExpireTime</code> 配置，支持指定时间点执行（如每天凌晨 3 点），满足定时/计划任务场景。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="bi bi-shield-check"></i></div>
+            <h3>自动幂等</h3>
+            <p>通过 <code>MutexKey</code> 配置，由 <code>EventActionHandler</code> 统一基于 Redis/DB 做排重，确保事件<strong>永远只执行一次</strong>。</p>
+          </div>
+          <div class="card">
+            <div class="card-icon"><i class="bi bi-recycle"></i></div>
+            <h3>多宿主复用</h3>
+            <p>事件可与 Handler 场景配合使用，在不同宿主入口触发同一业务处理逻辑，<strong>只需实现一次</strong>。</p>
+          </div>
+        </div>
+
+        <div class="event-flow fade-up delay-2">
+          <div class="flow-step">
+            <div class="flow-num">1</div>
+            <div class="flow-title">定义事件模型</div>
+            <div class="flow-desc">继承 <code>AbsBaseModel</code> 并实现 <code>IEventModel</code></div>
+          </div>
+          <div class="flow-arrow"><i class="bi bi-arrow-right"></i></div>
+          <div class="flow-step">
+            <div class="flow-num">2</div>
+            <div class="flow-title">配置幂等与时效</div>
+            <div class="flow-desc">设置 <code>MutexKey</code>、<code>ExpireSecond</code> / <code>ExpireTime</code></div>
+          </div>
+          <div class="flow-arrow"><i class="bi bi-arrow-right"></i></div>
+          <div class="flow-step">
+            <div class="flow-num">3</div>
+            <div class="flow-title">统一调度</div>
+            <div class="flow-desc">由 <code>EventActionHandler</code> 统一调度、排重与执行</div>
+          </div>
+          <div class="flow-arrow"><i class="bi bi-arrow-right"></i></div>
+          <div class="flow-step">
+            <div class="flow-num">4</div>
+            <div class="flow-title">Handler 场景处理</div>
+            <div class="flow-desc">事件触发对应的 Handler 业务场景，保障处理逻辑一致</div>
+          </div>
+        </div>
+
+        <div class="code-block fade-up delay-2">
+          <div class="code-header">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="code-title">IEventModel · 事件定义示意</span>
+            <button class="code-copy" id="codeCopy" type="button" title="复制代码" aria-label="复制代码">
+              <i class="bi bi-clipboard"></i>
+            </button>
+          </div>
+          <pre><code class="language-csharp">public class OrderCreatedEvent : AbsBaseModel, IEventModel
+{
+    public string OrderId { get; set; } = string.Empty;
+    public string UserId  { get; set; } = string.Empty;
+
+    // 延迟 30 分钟执行（ExpireSecond：秒）
+    public int ExpireSecond { get; set; } = 1800;
+
+    // 绝对执行时间（可选，用于指定时间点执行）
+    public DateTime? ExpireTime { get; set; }
+
+    // 自动幂等键（按业务唯一键生成，确保只执行一次）
+    public string MutexKey =&gt; $"order:created:expire:{OrderId}";
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toolchain -->
+    <section id="toolchain" class="section section-alt">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>工具链 · 配套生态，开箱即用</h2>
+          <p>PasteApeart 不止是框架，更是一套围绕“All in Dto + All in Handler”的生产力工具链。</p>
+        </div>
+        <div class="grid grid-2 fade-up delay-1">
+          <div class="card tool-card">
+            <div class="tool-header">
+              <div class="card-icon"><i class="bi bi-magic"></i></div>
+              <h3>PasteBuilder · 代码生成器</h3>
+            </div>
+            <p>CodeFirst，一键生成 DTO（Add/Update/List/InputQuery）、AppService、EF 配置等骨架代码。配合 Liquid 模板与
+              <code>config.json</code> 可深度定制生成风格。</p>
+            <ul class="tool-list">
+              <li><i class="bi bi-check-circle"></i> 统一团队代码规范，减少重复骨架代码</li>
+              <li><i class="bi bi-check-circle"></i> 支持 Liquid 模板（<code>*.html.liquid</code>）自定义</li>
+              <li><i class="bi bi-check-circle"></i> 配合 <code>config.json</code> 批量预设特性，减少标注</li>
+            </ul>
+          </div>
+          <div class="card tool-card">
+            <div class="tool-header">
+              <div class="card-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+              <h3>PasteSpider · 智能部署</h3>
+            </div>
+            <p>智能差异发布、热更新、无感部署、多环境隔离、平滑升级，让发布流程更简单、更安全、更可控。</p>
+            <ul class="tool-list">
+              <li><i class="bi bi-check-circle"></i> 只上传变更文件，提升发布效率</li>
+              <li><i class="bi bi-check-circle"></i> 热更新无感生效，降低服务中断风险</li>
+              <li><i class="bi bi-check-circle"></i> 开发/测试/生产环境一键切换</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="howitworks" class="section">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>如何工作 · 3 步极速上手</h2>
+          <p>将 All in Dto + All in Handler 的理念，落到实践只需简单 3 步。</p>
+        </div>
+        <div class="steps fade-up delay-1">
+          <div class="step">
+            <div class="step-num">01</div>
+            <h3>定义 DTO 并标注特性</h3>
+            <p>编写 Add/List/Update/InputQuery DTO，在字段上添加 Paste* 特性（Attributes），描述控件类型、校验、布局、交互等 UI 规则。</p>
+          </div>
+          <div class="step-arrow"><i class="bi bi-arrow-right"></i></div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <h3>按业务场景编写 Handler</h3>
+            <p>将跨表复杂业务按<strong>业务场景</strong>聚合到 <code>Handler</code> 层，单表 CRUD 则继承 <code>DefaultAppService</code>
+              （大部分 0 代码）。框架自动暴露 <code>VoloModelInfo</code> 元数据。</p>
+          </div>
+          <div class="step-arrow"><i class="bi bi-arrow-right"></i></div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <h3>自动渲染管理端 + 多宿主复用</h3>
+            <p>通用页面 <code>index.html / view.html / detail.html</code> 根据元数据自动渲染管理端。Handler 业务场景可按需被
+              <strong>6 种宿主</strong>复用。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Use Cases -->
+    <section id="usecases" class="section section-alt">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>适用场景</h2>
+          <p>清晰的边界，帮你判断是否适合你的项目。</p>
+        </div>
+        <div class="usecases fade-up delay-1">
+          <div class="usecase fit">
+            <h3><i class="bi bi-check-circle-fill"></i> 推荐使用</h3>
+            <ul>
+              <li>后台管理系统、运营后台、CMS、CRM、ERP 等内部管理平台</li>
+              <li><strong>CRUD 密集 + 业务复杂</strong>（表较多、字段频繁变化、且存在大量跨表业务场景）</li>
+              <li>需要<strong>统一管理端 UI</strong> 与<strong>统一业务架构约束</strong>的团队</li>
+              <li>希望业务逻辑能<strong>跨 HTTP/MQ/Timer/Job/Event/Background 多入口复用</strong>的项目</li>
+              <li>基于 ABP vNext 的项目，想进一步提升管理端效率与架构规范</li>
+            </ul>
+          </div>
+          <div class="usecase notfit">
+            <h3><i class="bi bi-x-circle-fill"></i> 暂不推荐</h3>
+            <ul>
+              <li>高度定制的 C 端复杂交互（复杂动画、自由度极高的图形编辑等）</li>
+              <li>纯前端驱动、对 UI 自由度要求极高的可视化大屏</li>
+              <li>业务逻辑极简单且一次性、不需要管理后台与多入口复用的场景</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ecosystem -->
+    <section id="ecosystem" class="section">
+      <div class="container">
+        <div class="section-header fade-up">
+          <h2>生态与资源</h2>
+          <p>获取文档、源码、示例项目，快速开始你的 PasteApeart 之旅。</p>
+        </div>
+        <div class="ecosystem-grid fade-up delay-1">
+          <a class="eco-card" href="https://gita.pastecode.cn/apeart/paste-apeart/full/master/readme.md" target="_blank"
+            rel="noopener">
+            <div class="eco-icon"><i class="bi bi-book"></i></div>
+            <div class="eco-content">
+              <h3>README · 项目介绍</h3>
+              <p>核心思想、架构说明、快速入门（All in Dto + All in Handler）</p>
+            </div>
+            <i class="bi bi-arrow-right eco-arrow"></i>
+          </a>
+          <a class="eco-card"
+            href="https://gita.pastecode.cn/apeart/paste-apeart/full/master/framework/PasteApeart.Helper/docs/md.md"
+            target="_blank" rel="noopener">
+            <div class="eco-icon"><i class="bi bi-list-columns-reverse"></i></div>
+            <div class="eco-content">
+              <h3>特性文档（md.md）</h3>
+              <p>PasteApeart.Helper 全部特性（Attributes）详细说明与参数</p>
+            </div>
+            <i class="bi bi-arrow-right eco-arrow"></i>
+          </a>
+          <a class="eco-card" href="https://gitee.com/pastecode/paste-apeart" target="_blank" rel="noopener">
+            <div class="eco-icon"><i class="bi bi-git"></i></div>
+            <div class="eco-content">
+              <h3>Gitee 源码</h3>
+              <p>PasteForm / PasteApeart 相关源码、Issues、PR</p>
+            </div>
+            <i class="bi bi-arrow-right eco-arrow"></i>
+          </a>
+          <a class="eco-card" href="https://gitee.com/pastecode/paste-template" target="_blank" rel="noopener">
+            <div class="eco-icon"><i class="bi bi-layout-text-sidebar-reverse"></i></div>
+            <div class="eco-content">
+              <h3>示例项目（PasteTemplate）</h3>
+              <p>All in Dto + All in Handler 最佳实践示例，开箱即用</p>
+            </div>
+            <i class="bi bi-arrow-right eco-arrow"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="section cta-section">
+      <div class="container">
+        <div class="cta-inner fade-up">
+          <h2>All in Dto + All in Handler</h2>
+          <p>
+            DTO 定义 UI，Handler 聚合业务场景。<br />
+            把管理端还给框架，把业务收敛到 Handler，让你的代码更清晰、更可复用、更易维护。
+          </p>
+          <div class="hero-actions">
+            <a href="https://gita.pastecode.cn/apeart/paste-apeart/full/master/readme.md" target="_blank" rel="noopener"
+              class="btn btn-primary btn-lg">
+              <i class="bi bi-rocket-takeoff"></i> 开始使用 PasteApeart
+            </a>
+            <a href="https://gitee.com/pastecode/paste-apeart" target="_blank" rel="noopener" class="btn btn-white btn-lg">
+              <i class="bi bi-code-slash"></i> 查看 Gitee 源码
+            </a>
+          </div>
+          <div class="cta-note">PasteForm → PasteApeart · All in Dto + All in Handler</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo">
+          <div class="logo-mark"><span>P</span></div>
+          <span class="logo-text">PasteApeart</span>
+        </div>
+        <p class="footer-desc">
+          All in Dto + All in Handler<br />
+          DTO 元数据驱动 UI · Handler 聚合业务场景<br />
+          管理端 0 代码 · 业务逻辑 6 种宿主复用
+        </p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>核心理念</h4>
+          <a href="#pillars">All in Dto</a>
+          <a href="#pillars">All in Handler</a>
+          <a href="#evolution">PasteForm → PasteApeart</a>
+          <a href="#architecture">三层架构</a>
+        </div>
+        <div class="footer-col">
+          <h4>能力</h4>
+          <a href="#multihost">6 种宿主复用</a>
+          <a href="#features">核心特性</a>
+          <a href="#attributes">特性系统（Attributes）</a>
+          <a href="#eventmodel">事件模型（IEventModel）</a>
+        </div>
+        <div class="footer-col">
+          <h4>工具链</h4>
+          <a href="#toolchain">PasteBuilder</a>
+          <a href="#toolchain">PasteSpider</a>
+          <a href="#toolchain">Liquid 模板</a>
+          <a href="#toolchain">config.json</a>
+        </div>
+        <div class="footer-col">
+          <h4>资源</h4>
+          <a href="https://gita.pastecode.cn/apeart/paste-apeart/full/master/readme.md" target="_blank"
+            rel="noopener">README</a>
+          <a href="https://gita.pastecode.cn/apeart/paste-apeart/full/master/framework/PasteApeart.Helper/docs/md.md"
+            target="_blank" rel="noopener">特性文档（md.md）</a>
+          <a href="https://gitee.com/pastecode/paste-apeart" target="_blank" rel="noopener">Gitee 源码</a>
+          <a href="https://gitee.com/pastecode/paste-template" target="_blank" rel="noopener">示例项目</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© <span id="year"></span> PasteApeart · All in Dto + All in Handler</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" type="button" aria-label="回到顶部">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-csharp.min.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>

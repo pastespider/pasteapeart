@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using PasteApeart.Handler.Extend;
 using StackExchange.Redis;
 using System.Text.Json;
 
@@ -433,6 +434,27 @@ namespace PasteApeart.Handler.redis
             return result;
 
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public HashEntry[] HashGetAllEntry(string key)
+        {
+            return _database.HashGetAll(setKey(key));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<HashEntry[]> HashGetAllEntryAsync(string key)
+        {
+            return await _database.HashGetAllAsync(setKey(key));
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -469,6 +491,8 @@ namespace PasteApeart.Handler.redis
         /// </summary>
         /// <param name="key"></param>
         /// <param name="vals"></param>
+        /// <param name="isnum"></param>
+        /// <returns></returns>
         public async Task HashSetAsync(string key, HashEntry[] vals, bool isnum = false)
         {
             await _database.HashSetAsync(setKey(key), vals);
@@ -478,12 +502,21 @@ namespace PasteApeart.Handler.redis
         /// 
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="vals"></param>
+        /// <param name="field"></param>
+        /// <param name="value"></param>
+        /// <param name="isnum"></param>
+        /// <returns></returns>
         public async Task HashSetAsync(string key, string field, RedisValue value, bool isnum = false)
         {
             await _database.HashSetAsync(setKey(key), field, value);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="sunkey"></param>
+        /// <returns></returns>
         public string HashGet(string key, string sunkey)
         {
             return _database.HashGet(setKey(key), sunkey);
@@ -494,6 +527,7 @@ namespace PasteApeart.Handler.redis
         /// </summary>
         /// <param name="key"></param>
         /// <param name="sunkey"></param>
+        /// <param name="isnum"></param>
         /// <returns></returns>
         public async Task<string> HashGetAsync(string key, string sunkey, bool isnum = false)
         {
@@ -502,10 +536,11 @@ namespace PasteApeart.Handler.redis
 
 
         /// <summary>
-        /// 同时获取多个
+        /// 
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="sunkey"></param>
+        /// <param name="fields"></param>
+        /// <param name="isinnum"></param>
         /// <returns></returns>
         public async Task<RedisValue[]> HashGetAsync(string key, RedisValue[] fields, bool isinnum = false)
         {
@@ -528,7 +563,7 @@ namespace PasteApeart.Handler.redis
         /// 
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="field"></param>
+        /// <param name="fields"></param>
         /// <returns></returns>
         public async Task<bool> HashDeleteAsync(string key, RedisValue[] fields)
         {
@@ -585,6 +620,7 @@ namespace PasteApeart.Handler.redis
         /// </summary>
         /// <param name="key"></param>
         /// <param name="field"></param>
+        /// <param name="num"></param>
         /// <returns></returns>
         public long HashIncrement(string key, string field, long num = 1)
         {
@@ -596,6 +632,7 @@ namespace PasteApeart.Handler.redis
         /// </summary>
         /// <param name="key"></param>
         /// <param name="field"></param>
+        /// <param name="val"></param>
         /// <returns></returns>
         public async Task<long> HashDecrementAsync(string key, string field, long val = 1)
         {
@@ -627,13 +664,13 @@ namespace PasteApeart.Handler.redis
         }
 
         /// <summary>
-        /// Hash 分页查询
-        /// 已测试可以使用
+        /// 
         /// </summary>
         /// <param name="key"></param>
         /// <param name="pattern"></param>
-        /// <param name="page">页码从1开始</param>
-        /// <param name="size">每页的大小</param>
+        /// <param name="page"></param>
+        /// <param name="size"></param>
+        /// <param name="isincom"></param>
         /// <returns></returns>
         public async Task<List<HashEntry>> HashScanAsync(string key, string pattern, int page, int size, bool isincom = true)
         {
@@ -681,6 +718,7 @@ namespace PasteApeart.Handler.redis
         /// </summary>
         /// <param name="key"></param>
         /// <param name="field"></param>
+        /// <param name="isNum"></param>
         /// <returns></returns>
         public async Task<int> HashGetIntFieldAsync(string key, string field, bool isNum = false)
         {
@@ -692,12 +730,12 @@ namespace PasteApeart.Handler.redis
             }
             return default(int);
         }
-
         /// <summary>
         /// 
         /// </summary>
         /// <param name="key"></param>
         /// <param name="field"></param>
+        /// <param name="isNum"></param>
         /// <returns></returns>
         public async Task<long> HashGetLongFieldAsync(string key, string field, bool isNum = false)
         {
@@ -806,7 +844,6 @@ namespace PasteApeart.Handler.redis
         /// </summary>
         /// <param name="key"></param>
         /// <param name="field"></param>
-        /// <param name="value"></param>
         /// <returns></returns>
         public async Task<bool> SortedSetRemoveAsync(string key, string field)
         {
@@ -833,60 +870,11 @@ namespace PasteApeart.Handler.redis
         /// <param name="key"></param>
         /// <param name="start"></param>
         /// <param name="end"></param>
-        /// <param name="bit"></param>   
-        /// <returns></returns>
-        public long StringBitPosition(string key, int start, int end, bool bit)
-        {
-            return _database.StringBitPosition(setKey(key), bit, start, end);
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
         /// <param name="bit"></param>
         /// <returns></returns>
         public async Task<long> StringBitPositionAsync(string key, int start, int end, bool bit)
         {
             return await _database.StringBitPositionAsync(setKey(key), bit, start, end);
-        }
-
-
-        /// <summary>
-        /// 获取个数?
-        /// </summary>
-        /// <param name="deskey"></param>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public long StringBitOperation(string deskey, string key)
-        {
-            return _database.StringBitOperation(Bitwise.And, setKey(deskey), setKey(key));
-        }
-
-
-        /// <summary>
-        /// 设置值
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="offset"></param>
-        /// <param name="bit"></param>
-        /// <returns></returns>
-        public bool StringSetBit(string key, long offset, bool bit)
-        {
-            return _database.StringSetBit(setKey(key), offset, bit);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="start"></param>
-        /// <param name="end"></param>
-        /// <returns></returns>
-        public long StringBitCount(string key, long start = 0, long end = -1)
-        {
-            return _database.StringBitCount(setKey(key), start, end);
         }
 
         /// <summary>
@@ -913,6 +901,11 @@ namespace PasteApeart.Handler.redis
             return await _database.StringSetBitAsync(setKey(key), offset, bit);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="vals"></param>
         public void HashSet(string key, List<HashKeyValue> vals)
         {
             var list = new List<HashEntry>();
@@ -924,6 +917,13 @@ namespace PasteApeart.Handler.redis
             _database.HashSet(setKey(key), list.ToArray());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="vals"></param>
+        /// <param name="isnum"></param>
+        /// <returns></returns>
         public async Task HashSetAsync(string key, List<HashKeyValue> vals, bool isnum = false)
         {
             var list = new List<HashEntry>();
@@ -935,6 +935,12 @@ namespace PasteApeart.Handler.redis
             await _database.HashSetAsync(setKey(key), list.ToArray());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
         public bool SetValue(string key, string val)
         {
             return Set(key, val);
@@ -1047,7 +1053,12 @@ namespace PasteApeart.Handler.redis
         #endregion
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="vals"></param>
+        /// <returns></returns>
         public async Task HashSetAsync(string key, List<HashKeyValue> vals)
         {
             var list = new List<HashEntry>();
@@ -1098,7 +1109,6 @@ namespace PasteApeart.Handler.redis
         /// 从hash中获取随机一个！！！
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="count"></param>
         /// <returns></returns>
         public async Task<HashEntry> HashRandomFieldsWithValuesAsync(string key)
         {
@@ -1111,11 +1121,13 @@ namespace PasteApeart.Handler.redis
         }
 
         /// <summary>
-        /// 查询符合条件的
+        /// 
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="pattern">*XXX*</param>
+        /// <param name="pattern"></param>
         /// <param name="size"></param>
+        /// <param name="cursor"></param>
+        /// <param name="offset"></param>
         /// <returns></returns>
         public async Task<HashEntry[]> HashScanAsync(string key, string pattern, int size = 1, int cursor = 0, int offset = 0)
         {
@@ -1205,7 +1217,328 @@ namespace PasteApeart.Handler.redis
         }
 
 
+        #region -----------------blog--------------------------------
 
+
+        #region Hash模块
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<string[]> HashKeysAsync(string key)
+        {
+            var keys = await _database.HashKeysAsync(setKey(key));
+            var list = new List<string>();
+            foreach (var item in keys)
+            {
+                list.Add(item.ToString());
+            }
+            return list.ToArray();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public Task<string> ReadStringAsync(string key)
+        {
+            return Task.Run<string>((Func<Task<string>>)(async () =>
+            {
+                return await this._database.StringGetAsync(setKey(key));
+            }));
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<T> ReadObjectAsync<T>(string key)
+        {
+
+            string str = await _database.StringGetAsync(setKey(key));
+            if (!string.IsNullOrEmpty(str))
+            {
+                return JsonSerializer.Deserialize<T>(str, JsonConfig.Options);// Newtonsoft.Json.JsonConvert.DeserializeObject<T>(str);
+            }
+            return default(T);
+
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public async Task<bool> SetAddAsync(string skey, int val)
+        {
+            return await _database.SetAddAsync(setKey(skey), val);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="filed"></param>
+        /// <returns></returns>
+        public async Task<bool> SetContainsAsync(string skey, int filed)
+        {
+            return await _database.SetContainsAsync(setKey(skey), filed);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="filed"></param>
+        /// <returns></returns>
+        public async Task<bool> SetRemoveAsync(string skey, int filed)
+        {
+            return await _database.SetRemoveAsync(setKey(skey), filed);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <returns></returns>
+        public async Task<long> SetRandomMemberAsync(string skey)
+        {
+            (await _database.SetRandomMemberAsync(setKey(skey))).TryParse(out long val);
+            return val;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <returns></returns>
+        public async Task<long> SetLengthAsync(string skey)
+        {
+            return (await _database.SetLengthAsync(setKey(skey)));
+        }
+
+        /// <summary>
+        /// 获取排序中的第一个field并删除
+        /// type.action.randcode.id
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <returns></returns>
+        public async Task<string> SortedSetRangeByRankAsync(string skey)
+        {
+            var _read = await _database.SortedSetRangeByRankAsync(setKey(skey), 0, 1);
+            if (_read != null && _read.Length > 0)
+            {
+                var _current = _read[0];
+                await _database.SortedSetRemoveAsync(setKey(skey), _current);
+                return _current.ToString();
+            }
+            return String.Empty;
+        }
+
+        /// <summary>
+        /// 返回最近的一个！并删除
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="_time"></param>
+        /// <returns></returns>
+        public async Task<string> SortedSetRangeByScoreWithScoresAsync(string skey, long _time)
+        {
+            var reads = await _database.SortedSetRangeByScoreWithScoresAsync(setKey(skey), 0, _time, take: 1);
+            if (reads != null && reads.Length > 0)
+            {
+                var _field = reads[0].Element.ToString();
+                await _database.SortedSetRemoveAsync(setKey(skey), _field);
+                return _field;
+            }
+            return String.Empty;
+        }
+
+        /// <summary>
+        /// 返回最近的一个！并删除
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="_time">yyyyMMddHHmmss</param>
+        /// <returns></returns>
+        public async Task<string> SortedSetRangeByScoreAsync(string skey, long _time)
+        {
+            var reads = await _database.SortedSetRangeByScoreAsync(setKey(skey), 0, _time, take: 1);
+            if (reads != null && reads.Length > 0)
+            {
+                var _field = reads[0].ToString();
+                await _database.SortedSetRemoveAsync(setKey(skey), _field);
+                return _field;
+            }
+            return String.Empty;
+        }
+
+        /// <summary>
+        /// 获取当前排期最长的任务时间戳 如果没有则返回当前时间戳
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <returns>时间戳秒</returns>
+        public async Task<long> SortedSetRangeByRankWithScoresAsync(string skey)
+        {
+            var _read = await _database.SortedSetRangeByRankWithScoresAsync(setKey(skey), 0, 1, Order.Descending);
+            if (_read != null && _read.Length > 0)
+            {
+                var _current = _read[0];
+                return (long)_current.Score;
+            }
+            return DateTime.Now.ToUnixTimeSeconds();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="start"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
+        public List<string> ListRange(string skey, int start = 0, int stop = 30)
+        {
+            var vals = _database.ListRange(setKey(skey), start, stop);
+            if (vals != null && vals.Length > 0)
+            {
+                var strs = new List<string>();
+                foreach (var item in vals)
+                {
+                    if (item.HasValue)
+                    {
+                        strs.Add(item.ToString());
+                    }
+                }
+                return strs;
+            }
+            return new List<string>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="start"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
+        public async Task<List<string>> ListRangeAsync(string skey, int start = 0, int stop = 30)
+        {
+            var vals = await _database.ListRangeAsync(setKey(skey), start, stop);
+            if (vals != null && vals.Length > 0)
+            {
+                var strs = new List<string>();
+                foreach (var item in vals)
+                {
+                    if (item.HasValue)
+                    {
+                        strs.Add(item.ToString());
+                    }
+                }
+                return strs;
+            }
+            return new List<string>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="start"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
+        public List<T> ListRange<T>(string skey, int start = 0, int stop = 30)
+        {
+            var vals = _database.ListRange(setKey(skey), start, stop);
+            if (vals != null && vals.Length > 0)
+            {
+                var strs = new List<T>();
+                foreach (var item in vals)
+                {
+                    if (item.HasValue)
+                    {
+                        strs.Add(JsonSerializer.Deserialize<T>(item.ToString(), JsonConfig.Options));// Newtonsoft.Json.JsonConvert.DeserializeObject<T>(item.ToString()));
+                    }
+                }
+                return strs;
+            }
+            return new List<T>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="start"></param>
+        /// <param name="stop"></param>
+        /// <returns></returns>
+        public async Task<List<T>> ListRangeAsync<T>(string skey, int start = 0, int stop = 30)
+        {
+            var vals = await _database.ListRangeAsync(setKey(skey), start, stop);
+            if (vals != null && vals.Length > 0)
+            {
+                var strs = new List<T>();
+                foreach (var item in vals)
+                {
+                    if (item.HasValue)
+                    {
+                        strs.Add(JsonSerializer.Deserialize<T>(item.ToString(), JsonConfig.Options));
+                    }
+                }
+                return strs;
+            }
+            return new List<T>();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <param name="sval"></param>
+        /// <returns></returns>
+        public async Task<long> ListRightPushAsync(string skey, string sval)
+        {
+            return await _database.ListRightPushAsync(setKey(skey), sval);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <returns></returns>
+        public async Task<long> ListLengthAsync(string skey)
+        {
+            return await _database.ListLengthAsync(setKey(skey));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="skey"></param>
+        /// <returns></returns>
+        public async Task<string> ListLeftPopAsync(string skey)
+        {
+            return await _database.ListLeftPopAsync(setKey(skey));
+        }
+
+
+
+
+        #endregion
+
+
+
+        #endregion
 
 
 

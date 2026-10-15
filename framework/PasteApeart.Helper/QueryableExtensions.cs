@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace PasteApeart.Helper
+namespace PasteApeart.Helper.Extensions
 {
     /// <summary>
     /// 

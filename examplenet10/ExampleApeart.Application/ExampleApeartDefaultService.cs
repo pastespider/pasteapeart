@@ -2,9 +2,9 @@ using ExampleApeart.Application.Contracts.eventmodels;
 using ExampleApeart.EntityFrameworkCore;
 using ExampleApeart.usermodels;
 using Microsoft.EntityFrameworkCore;
-using PasteApeart;
 using PasteApeart.Application;
 using PasteApeart.Application.Contracts;
+using PasteApeart.Handler;
 
 namespace ExampleApeart.Application
 {

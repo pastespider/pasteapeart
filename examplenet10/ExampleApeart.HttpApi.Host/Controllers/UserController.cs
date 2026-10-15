@@ -7,6 +7,8 @@ using PasteApeart.Handler;
 using ExampleApeart.Controllers;
 using ExampleApeart.usermodels;
 using System.ComponentModel.DataAnnotations;
+using PasteApeart.Handler.redis;
+using PasteApeart.Handler.Extensions;
 
 namespace ExampleApeart.HttpApi.Host.Controllers
 {

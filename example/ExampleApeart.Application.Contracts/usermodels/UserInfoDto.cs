@@ -244,6 +244,16 @@ namespace ExampleApeart.usermodels
     [Description("查询")]
     public class InputQueryUserInfo : InputSearchBase
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public InputQueryUserInfo()
+        {
+            sdate = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-01"));
+            edate = sdate.Value.AddMonths(1);
+        }
+
         /// <summary>
         /// 注册区间
         /// </summary>
@@ -274,4 +284,9 @@ namespace ExampleApeart.usermodels
 
 
     }
+
+
+
+
+
 }

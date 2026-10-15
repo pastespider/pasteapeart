@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 
 namespace PasteApeart.Helper
 {
@@ -10,18 +10,18 @@ namespace PasteApeart.Helper
         /// <summary>
         /// 中文名称 注释的空格前部分
         /// </summary>
-        public string Title { get; set; } = "";
+        public string Title { get; set; }
 
         /// <summary>
         /// 描述 注释的空格后部分
         /// </summary>
-        public string Desc { get; set; } = "";
+        public string Desc { get; set; }
 
         /// <summary>
         /// 文档注释
         /// </summary>
         [JsonIgnore]
-        public string Summary { get; set; } = "";
+        public string Summary { get; set; }
 
         /// <summary>
         /// 主键类型

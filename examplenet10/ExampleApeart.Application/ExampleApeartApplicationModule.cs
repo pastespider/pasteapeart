@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.WebEncoders.Testing;
 using PasteApeart;
 using PasteApeart.Application;
+using PasteApeart.Dependency;
 using PasteApeart.Handler;
 using System.Text.Json;
 using System.Text.Json.Serialization;

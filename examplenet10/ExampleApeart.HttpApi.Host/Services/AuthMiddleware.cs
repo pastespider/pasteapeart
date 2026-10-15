@@ -1,4 +1,4 @@
-using PasteApeart;
+using PasteApeart.Dependency;
 using PasteApeart.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -9,6 +9,16 @@ namespace ExampleApeart.HttpApi.Host.Services
     /// </summary>
     public class AuthMiddleware : IMiddleware, IScopedDependency
     {
+        private readonly CurrentUser _currentUser;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="current"></param>
+        public AuthMiddleware(CurrentUser current)
+        {
+            _currentUser = current;
+        }
 
         /// <summary>
         /// 
@@ -42,7 +52,7 @@ namespace ExampleApeart.HttpApi.Host.Services
             }
             if (!String.IsNullOrEmpty(token))
             {
-                Console.WriteLine($"解析到密钥：{token}");
+                //Console.WriteLine($"解析到密钥：{token}");
 
                 var userId = token.CurrentUserId();
                 //context.Items["CurrentUser"] = new CurrentUser { Id = userId, Token = token };
@@ -56,8 +66,10 @@ namespace ExampleApeart.HttpApi.Host.Services
                 var identity = new ClaimsIdentity(claims, "Custom");//Simple
                 context.User = new ClaimsPrincipal(identity);
                 //context.User.FindFirstValue
+                _currentUser.Id = userId;
+                _currentUser.Token = token;
                 //Console.WriteLine($"配置了用户信息{token} {userId}");
-                context.Items["CurrentUser"] = new CurrentUser { Id = userId, Token = token };
+                context.Items["CurrentUser"] = _currentUser;
             }
 
             var endpoint = context.GetEndpoint();

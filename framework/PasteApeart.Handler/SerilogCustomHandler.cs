@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,9 @@ using Serilog.Events;
 
 namespace PasteApeart.Handler
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class SerilogCustomHandler : ILogEventSink
     {
         /// <summary>

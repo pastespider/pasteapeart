@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using PasteApeart;
+using PasteApeart.Handler;
 using Serilog.Core;
 using Serilog.Events;
 

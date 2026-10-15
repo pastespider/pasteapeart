@@ -1,6 +1,9 @@
 
 namespace PasteApeart.Handler.cache
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface ICacheHandler
     {
         /// <summary>

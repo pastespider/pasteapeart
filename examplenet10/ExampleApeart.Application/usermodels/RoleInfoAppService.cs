@@ -6,6 +6,8 @@ using PasteApeart.Helper;
 using ExampleApeart.Application;
 using ExampleApeart.Handler;
 using System.Linq.Dynamic.Core;
+using PasteApeart.Handler.Extensions;
+using PasteApeart.Helper.Extensions;
 
 namespace ExampleApeart.usermodels
 {

@@ -54,7 +54,7 @@ var _has_outer = false;
  */
 var _config = {
     className: '',//需要和路径的一致，表示后端的对象
-    model: 'view',//当前模式view bind select
+    model: 'view',//当前模式view bind select dialog
     menubox: false,//是否有按钮盒子
     enable_view: false,//默认不显示详细
     disable_del: true,//默认禁止删除
@@ -72,13 +72,15 @@ var _config = {
     // page:1,//当前默认第几页，主要是为了传参覆盖 这个不能用，因为后端是第一页才会获取总量，统计等信息
     // page_default_size: 20,//默认的分页大小使用_pageSize
     drag_order_column: false,//拖拽修改列顺序
+    auto_menu_width: true,//自动计算菜单宽度
     empty_create: false,//查询没有数据的时候是否打开创建
     expend_search_box: true,//加载后是否展开搜索区域，这个主要针对默认搜索区域关闭的情况，比如select/bind模式下
     freeze: true,//是否冻结表头
     search_after_selected: true,//搜索区域outer选择后，是否直接查询
     trclass: null,//表格中trclass的字段名称，实际中这个值中去获取
     batch: false,//是否启用批量操作
-    orderby:"id",//排序
+    show_excel: false,//是否启用导出excel功能
+    orderby: "id",//排序
     update_row_min_match_rate: 0.6,//更新行数据的时候，最小匹配率，低于这个值则不进行更新
     bind_with_edit: false,//绑定模式下，是否启用编辑模式
 };
@@ -119,6 +121,13 @@ $(window).ready(function () {
         // _config.expend_search_box = false;
     }
 
+    if (_model == "dialog") {
+        _config.expend_search_box = false;
+        _config.has_menu = false;
+        _config.freeze = false;
+        $(".btnadd").hide();
+    }
+
     if (Array.isArray(_config.select_num)) {
         _config.select_num = _config.select_num[(_config.select_num.length - 1)];
     }
@@ -151,12 +160,8 @@ $(window).ready(function () {
 
     //localStorage.setItem(`${location.pathname}?path=${_classPath}`,pageSize);
     //切换排序 查询基于哪个排序基于哪个
-    $(".table").on('click', '.ordersell', function () {
-        _config.orderby = $(this).attr('dataval');
-        $(".table").find(".ordersell").removeClass('ordered');
-        $(this).addClass('ordered');
-        readPageData(1);//直接基于这个查询第一页
-    })
+    addListenBindOrderby();
+
     if (_config.expend_search_box) {
         $(".searcharea").show();//不要动画
     } else {
@@ -184,7 +189,83 @@ $(window).ready(function () {
     addImgTapListenter();
 
     QueryModel();
+
+    //显示导出功能
+    if (_config.show_excel) {
+        $(".command_excel_out").show();
+        //载入资源组件 导出到excel
+        loadResource("./lib/xlsx.js", false);
+    }
 });
+
+/**
+ * 绑定并处理点击排序
+ */
+function addListenBindOrderby() {
+    $(".table").on('click', '.ordersell', function (e) {
+        var val = $(this).attr('dataval');
+        var field = val.split(/\s+/)[0];
+
+        var $table = $(".table");
+
+        if (e.ctrlKey || e.metaKey) {
+            // ============ 多列排序模式 ============
+            var parts = (_config.orderby || '')
+                .split(',')
+                .map(function (s) { return s.trim(); })
+                .filter(Boolean);
+
+            // 1. 精确匹配当前 dataval
+            var exactIndex = parts.indexOf(val);
+
+            if (exactIndex > -1) {
+                // 完全相同 => 取消
+                parts.splice(exactIndex, 1);
+            } else {
+                // 2. 找同字段（开头一样）的那一项
+                var sameFieldIndex = -1;
+                for (var i = 0; i < parts.length; i++) {
+                    if (parts[i].split(/\s+/)[0] === field) {
+                        sameFieldIndex = i;
+                        break;
+                    }
+                }
+
+                if (sameFieldIndex > -1) {
+                    // 同字段不同方向 => 替换
+                    parts[sameFieldIndex] = val;
+                } else {
+                    // 3. 追加
+                    parts.push(val);
+                }
+            }
+
+            _config.orderby = parts.join(',');
+        } else {
+            // ============ 单列排序模式：直接顶替 ============
+            if (_config.orderby === val) {
+                _config.orderby = '';
+            } else {
+                _config.orderby = val;
+            }
+        }
+
+        // ============ 更新 UI 高亮（精确匹配 dataval）============
+        var currentParts = (_config.orderby || '')
+            .split(',')
+            .map(function (s) { return s.trim(); })
+            .filter(Boolean);
+
+        $table.find(".ordersell").removeClass('ordered');
+        $table.find(".ordersell").each(function () {
+            if (currentParts.indexOf($(this).attr('dataval')) > -1) {
+                $(this).addClass('ordered');
+            }
+        });
+
+        readPageData(1);
+    });
+}
 
 /**
  * 绑定，预览图片
@@ -984,6 +1065,17 @@ function handlerReadRowData(elc) {
         rowData[dataName] = value;
     });
 
+    if (!rowData.hasOwnProperty('id')) {
+        rowData.id = $(row).attr('dataid'); // 从tr的dataid属性获取id
+        //关键在于如何获得类型???
+        const idProperty = findPropertyByName(_global_list_properties, 'id');
+        if (idProperty) {
+            if (IsNumberDataType(idProperty.dataType)) {
+                rowData.id = Number(rowData.id);
+            }
+        }
+    }
+
     if (rowData.id) {
         if (global_page_data) {
             for (let item of global_page_data) {
@@ -1003,6 +1095,26 @@ function handlerReadRowData(elc) {
 
     return rowData;
     //可以考虑和list的item进行组合，进行完整数据回传，比如基于id来判断，如果id无效，则不继续了... .. .
+}
+
+/**
+ * 判断是否是Number类型
+ * @param {*} dataType 
+ * @returns 
+ */
+function IsNumberDataType(dataType) {
+    const numberTypes = ["Int32", "Int64", "UInt32", "UInt64", "number", "Double"];
+    return numberTypes.includes(dataType);
+}
+
+/**
+ * 判断是否是Number数组类型
+ * @param {*} dataType 
+ * @returns 
+ */
+function IsNumberArrayDataType(dataType) {
+    const numberTypes = ["Int32[]", "Int64[]", "UInt32[]", "UInt64[]", "number[]", "Double[]"];
+    return numberTypes.includes(dataType);
 }
 
 /**
@@ -1087,10 +1199,13 @@ async function handlerModelFormatConfig(obj, pageData) {
     //模型处理，如何显示外表 比如cate.name 
     handlerModelFieldcolumnProperty(obj.properties);
 
+    if (_config.model == "bind" || _config.model == "dialog") {
+        _config.has_menu = false;
+    }
+
     if (_config.model == "bind") {
         //确保最后一项extendBind在最后面
         obj.properties = moveExtendBindToEndInPlace(obj.properties);
-        _config.has_menu = false;
     }
 
     if (_config.has_menu) {
@@ -1493,13 +1608,7 @@ function findExistsPropertyByName(properties, targetName) {
  * @returns 
  */
 function findPropertyByName(properties, propertyName) {
-    //这里后续要做优化 做成map的形式，或者是用一些更高效的查找方式，现在先这样简单实现
-    for (const property of properties) {
-        if (property.name == propertyName) {
-            return property;
-        }
-    }
-    return false;
+    return properties.find(p => p.name === propertyName) ?? null;
 }
 
 /**
@@ -1551,7 +1660,7 @@ function handlerModelFieldcolumnProperty(properties) {
                             {
                                 item.dataType = "menuhtml";
                                 item.hidden = true;
-                                if(_attribute.args4) {
+                                if (_attribute.args4) {
                                     if (_attribute.args4 == 'box') {
                                         item.dataType = 'menuhtmlbox';
                                         _config.menubox = true;
@@ -1830,7 +1939,7 @@ function handlerModelFieldcolumnProperty(properties) {
                                         asc: _attribute.args1,
                                         desc: _attribute.args2
                                     };
-                                    
+
                                 }
                             }
                             break;
@@ -2250,7 +2359,7 @@ function HandlerQueryItem(listproperties, pageData) {
 
         if (item.name == "next_key") {
             _config.next.key = item.name;
-            if (item.dataType == "Int32" || item.dataType == "Int64" || item.dataType == "UInt32" || item.dataType == "UInt64") {
+            if (IsNumberDataType(item.dataType)) {
                 _config.next.type = "number";
             } else {
                 _config.next.type = "string";
@@ -2340,8 +2449,8 @@ function InitUiData() {
 
         if ($(".ulitems").length > 0) {
 
-                    //合并改版 新版本
-        register_ulitems_click_event();
+            //合并改版 新版本
+            register_ulitems_click_event();
 
             // //合并改版 旧版本
             // $(".ulitems").on('click', 'li', function () {
@@ -2487,7 +2596,7 @@ function handlerInputValue(_info) {
                                 _array.push($(_elcs[k]).attr('value'));
                             }
                             if (item.dataFrom.indexOf("[]") >= 0) {
-                                if (item.dataFrom == "Int32[]" || item.dataFrom == "Int64[]" || item.dataFrom == "UInt32[]" || item.dataFrom == "UInt64[]") {
+                                if (IsNumberArrayDataType(item.dataFrom)) {
                                     var _newarray = new Array();
                                     _array.forEach(_ary => {
                                         _newarray.push(Number(_ary));
@@ -2499,7 +2608,7 @@ function handlerInputValue(_info) {
                             } else {
                                 //string
 
-                                if (item.dataFrom == 'Int32' || item.dataFrom == 'Int64' || item.dataFrom == 'UInt32' || item.dataFrom == 'UInt64') {
+                                if (IsNumberDataType(item.dataFrom)) {
                                     _info[item.name] = Number(_array[0]);
                                 } else {
                                     var _splitchar = ',';
@@ -2532,7 +2641,7 @@ function handlerInputValue(_info) {
                             var _val = _info[item.name];
                             if (_val) {
                                 _val = _val.replace(/，/g, _split_char);
-                                if (item.dataFrom == "Int32[]" || item.dataFrom == "Int64[]" || item.dataFrom == "UInt32[]" || item.dataFrom == "UInt64[]") {
+                                if (IsNumberArrayDataType(item.dataFrom)) {
                                     var strs = _val.split(_split_char);
                                     var arr = new Array();
                                     for (var ia of strs) {
@@ -2736,7 +2845,7 @@ function handlerSwitchUpload(elc) {
         if (c != 200) {
             $(elc).prop('checked', !_value);
         } else {
-            layer.tips(typeof(o)=='string'?o: '操作成功', elc, { tipsMore: true,time:2000, tips: [4, '#3a3a3a'] });
+            layer.tips(typeof (o) == 'string' ? o : '操作成功', elc, { tipsMore: true, time: 2000, tips: [4, '#3a3a3a'] });
             // 是否更新本行数据，如果是bind模式，则更新父级... .. .
             if (_dataname == 'extendBind') {
                 //提示成功
@@ -2986,7 +3095,7 @@ function afterReadPageData(code, obj, page) {
             }
         }
 
-        if (page == 1) {
+        if (page == 1 && _config.auto_menu_width && _config.has_menu) {
             if (typeof toolResizeTapMenuWidth != 'undefined') {
                 toolResizeTapMenuWidth();
             }

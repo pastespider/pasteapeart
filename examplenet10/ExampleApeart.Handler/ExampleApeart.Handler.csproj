@@ -11,10 +11,12 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="PasteApeart.Dependency" Version="26.10.5" />
 		<PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
 		<!--
 		<PackageReference Include="Volo.Abp.AutoMapper" Version="8.3.4" />
-		<PackageReference Include="Volo.Abp.ObjectMapping" Version="8.3.4" />-->
+		<PackageReference Include="Volo.Abp.ObjectMapping" Version="8.3.4" />
 		
 		<PackageReference Include="Mapster" Version="10.0.8" />
 		<PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
@@ -22,11 +24,12 @@
 		<PackageReference Include="Autofac" Version="9.2.0" />
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="11.0.0" />
 		
-		<PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.1.7" />
+
 		<PackageReference Include="StackExchange.Redis" Version="3.0.0" />
 
 		<PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
-		<PackageReference Include="PasteApeart.Handler" Version="26.8.3" />
+		-->
+		<PackageReference Include="PasteApeart.Handler" Version="26.10.5" />
 		<!--<PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="8.103.9.3" />-->
 	</ItemGroup>
 	

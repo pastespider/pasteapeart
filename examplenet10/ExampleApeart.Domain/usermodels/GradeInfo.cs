@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PasteApeart;
+using PasteApeart.Domain.Entity;
 using PasteApeart.Helper;
 using System.ComponentModel.DataAnnotations;
 

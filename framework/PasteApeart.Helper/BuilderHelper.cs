@@ -16,6 +16,9 @@ namespace PasteApeart.Helper
     /// </summary>
     public static class BuilderHelper
     {
+        /// <summary>
+        /// 空格替换字符
+        /// </summary>
         private const string SplitChar = "_*_";
 
         /// <summary>
@@ -322,66 +325,70 @@ namespace PasteApeart.Helper
                 LoadXmlFiles(_path);
                 LoadSummaryFromXelement(_classType.FullName, _classModel, "T");
             }
-            var _pro_list = new List<VoloModelProperty>();
+            var propertyList = new List<VoloModelProperty>();
             foreach (var _property in ReadTypeProperties(_classType))
             {
                 if (!_property.PropertyType.IsPublic)
                 {
                     continue;
                 }
-                var _cpro = new VoloModelProperty();
+                var proInfo = new VoloModelProperty();
+                if (!_property.CanWrite)
+                {
+                    proInfo.CanWrite = false;
+                }
                 if (xmlModel)
                 {
-                    ReadXmlSummary(_classType, _property, _cpro, 0);
+                    ReadXmlSummary(_classType, _property, proInfo, 0);
                 }
                 if (_property.DeclaringType != null)
                 {
                     var _declarType = _property.DeclaringType;
                 }
-                _cpro.Name = _property.Name.ToCamelCase();
-                _cpro.DataType = _property.PropertyType.Name;
+                proInfo.Name = _property.Name.ToCamelCase();
+                proInfo.DataType = _property.PropertyType.Name;
                 //_cpro.Value = _property.GetValue(_new)?.ToString();
                 var attributes = _property.GetCustomAttributes<Attribute>();
-                var _attributes = HandlerAttribute2(attributes, _cpro);
+                var _attributes = HandlerAttribute2(attributes, proInfo);
 
                 if (_attributes?.Any() == true)
                 {
-                    _cpro.Attributes = _attributes;
+                    proInfo.Attributes = _attributes;
                 }
-                if (!String.IsNullOrEmpty(_cpro.Summary))
+                if (!String.IsNullOrEmpty(proInfo.Summary))
                 {
-                    _cpro.Title = _cpro.Summary.Split(' ')[0].Replace(SplitChar, " ");
-                    if (_cpro.Summary.Contains(" "))
+                    proInfo.Title = proInfo.Summary.Split(' ')[0].Replace(SplitChar, " ");
+                    if (proInfo.Summary.Contains(" "))
                     {
-                        _cpro.Placeholder = _cpro.Summary.Split(' ')[1].Replace(SplitChar, " ");
+                        proInfo.Placeholder = proInfo.Summary.Split(' ')[1].Replace(SplitChar, " ");
                     }
                 }
-                if (_cpro.DataType == "DateTime")
+                if (proInfo.DataType == "DateTime")
                 {
-                    _cpro.Required = true;
+                    proInfo.Required = true;
                 }
-                if (_cpro.DataType.Contains("Nullable"))
+                if (proInfo.DataType.Contains("Nullable"))
                 {
-                    SetNullable(_cpro, _property);
+                    SetNullable(proInfo, _property);
                 }
 
                 //因为上面可能会把新的数据类型穿透出来，所以在这里进行默认值的校验，特别是时间格式
                 var _value = _property.GetValue(_obj);
                 if (_value != null)
                 {
-                    if (_cpro.DataType == "DateTime")
+                    if (proInfo.DataType == "DateTime")
                     {
                         if (DateTime.TryParse(_value.ToString(), out var _time))
                         {
                             if (_time.Year > 1000)
                             {
-                                _cpro.Value = _time.ToString("yyyy-MM-dd HH:mm:ss");
+                                proInfo.Value = _time.ToString("yyyy-MM-dd HH:mm:ss");
                             }
                         }
                     }
                     else
                     {
-                        _cpro.Value = _value;
+                        proInfo.Value = _value;
                     }
                 }
 
@@ -427,7 +434,7 @@ namespace PasteApeart.Helper
                                 }
                                 if (_reads != null)
                                 {
-                                    HandlerEnumDatas(_cpro, _reads, _classType.Name.StartsWith("InputQuery") ? "search" : "form");
+                                    HandlerEnumDatas(proInfo, _reads, _classType.Name.StartsWith("InputQuery") ? "search" : "form");
 
                                 }
                             }
@@ -439,41 +446,41 @@ namespace PasteApeart.Helper
                     }
                 }
 
-                if (_cpro.Name == "id")
+                if (proInfo.Name == "id")
                 {
-                    if (String.IsNullOrEmpty(_cpro.Title))
+                    if (String.IsNullOrEmpty(proInfo.Title))
                     {
-                        _cpro.Title = "ID";
+                        proInfo.Title = "ID";
                     }
-                    _pro_list.Insert(0, _cpro);
+                    propertyList.Insert(0, proInfo);
                 }
                 else
                 {
-                    _pro_list.Add(_cpro);
+                    propertyList.Add(proInfo);
                 }
             }
 
             //大于0 的追加到后面 小于0的追加到前面???为0的不动
-            if (_pro_list != null && _pro_list.Count > 0 && _pro_list.Where(x => x.Sort != 0).Any())
+            if (propertyList != null && propertyList.Count > 0 && propertyList.Where(x => x.Sort != 0).Any())
             {
-                var headers = _pro_list.Where(x => x.Sort < 0).OrderBy(x => x.Sort).ToList();
-                var foots = _pro_list.Where(x => x.Sort > 0).OrderBy(x => x.Sort).ToList();
-                var middle = _pro_list.Where(x => x.Sort == 0).ToList();
-                _pro_list.Clear();
+                var headers = propertyList.Where(x => x.Sort < 0).OrderBy(x => x.Sort).ToList();
+                var foots = propertyList.Where(x => x.Sort > 0).OrderBy(x => x.Sort).ToList();
+                var middle = propertyList.Where(x => x.Sort == 0).ToList();
+                propertyList.Clear();
                 if (headers.Count > 0)
                 {
-                    _pro_list.AddRange(headers);
+                    propertyList.AddRange(headers);
                 }
                 if (middle.Count > 0)
                 {
-                    _pro_list.AddRange(middle);
+                    propertyList.AddRange(middle);
                 }
                 if (foots.Count > 0)
                 {
-                    _pro_list.AddRange(foots);
+                    propertyList.AddRange(foots);
                 }
             }
-            _classModel.Properties = _pro_list;//可能会打乱原来的排序，造成所有的都要设定sort,所以放业务中，业务按照需求自己排序
+            _classModel.Properties = propertyList;//可能会打乱原来的排序，造成所有的都要设定sort,所以放业务中，业务按照需求自己排序
 
             if (!String.IsNullOrEmpty(_classModel.Summary))
             {
@@ -931,7 +938,7 @@ namespace PasteApeart.Helper
                 _obj = Activator.CreateInstance(_classType);
             }
             //var _obj = Activator.CreateInstance(_classType);
-            var _pro_list = new List<VoloModelProperty>();
+            var propertyList = new List<VoloModelProperty>();
             foreach (var _property in ReadTypeProperties(_classType))
             {
                 if (!_property.PropertyType.IsPublic)
@@ -945,6 +952,10 @@ namespace PasteApeart.Helper
                     continue;
                 }
                 var proInfo = new VoloModelProperty();
+                if (!_property.CanWrite)
+                {
+                    proInfo.CanWrite = false;
+                }
                 if (xmlModel)
                 {
                     ReadXmlSummary(_classType, _property, proInfo, 0);
@@ -1072,7 +1083,7 @@ namespace PasteApeart.Helper
                             }
                             if (_is_enum_type)
                             {
-                                _pro_list.Add(proInfo);
+                                propertyList.Add(proInfo);
                                 continue;
                             }
                         }
@@ -1083,7 +1094,7 @@ namespace PasteApeart.Helper
                             {
                                 //var sort = ReadDirectSunSortAttribute(_attributes);
                                 //处理sort的问题，传递给下一级... .. .
-                                var _read = ReadNextProperty(_property, _obj, proInfo, _pro_list, _g_attribute, ListModel, _attributes.Any(x => x.Name == "hidden"), xmlModel, proInfo.Sort);
+                                var _read = ReadNextProperty(_property, _obj, proInfo, propertyList, _g_attribute, ListModel, _attributes.Any(x => x.Name == "hidden"), xmlModel, proInfo.Sort);
                                 if (_read)
                                 {
                                     continue;
@@ -1099,7 +1110,7 @@ namespace PasteApeart.Helper
                         if (_attributes != null && _attributes.Any(x => x.Name == "directsun"))
                         {
                             //var sort = ReadDirectSunSortAttribute(_attributes);
-                            var _read = ReadNextProperty(_property, _obj, proInfo, _pro_list, _g_attribute, ListModel, _attributes.Any(x => x.Name == "hidden"), xmlModel, proInfo.Sort);
+                            var _read = ReadNextProperty(_property, _obj, proInfo, propertyList, _g_attribute, ListModel, _attributes.Any(x => x.Name == "hidden"), xmlModel, proInfo.Sort);
                             if (_read)
                             {
                                 continue;
@@ -1190,14 +1201,14 @@ namespace PasteApeart.Helper
                 //id写入到前面去
                 if (proInfo.Name == "id")
                 {
-                    _pro_list.Insert(0, proInfo);
+                    propertyList.Insert(0, proInfo);
                 }
                 else
                 {
-                    _pro_list.Add(proInfo);
+                    propertyList.Add(proInfo);
                 }
             }
-            return _pro_list;
+            return propertyList;
         }
 
         /// <summary>
@@ -1239,6 +1250,10 @@ namespace PasteApeart.Helper
                     continue;
                 }
                 var proInfo = new VoloModelProperty();
+                if (!_property.CanWrite)
+                {
+                    proInfo.CanWrite = false;
+                }
                 if (xmlModel)
                 {
                     ReadXmlSummary(_classType, _property, proInfo, 0);

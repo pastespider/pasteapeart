@@ -1,4 +1,5 @@
 // expend.js
+// 作者 lll
 // window._global_list_properties
 // window.global_page_data
 // window._global_list_properties

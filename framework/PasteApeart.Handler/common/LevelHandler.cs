@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using PasteApeart.Domain;
 using PasteApeart.Domain.Entity;
 
 namespace PasteApeart.Handler.Level
@@ -15,21 +14,24 @@ namespace PasteApeart.Handler.Level
         /// <summary>
         /// 每层最大支持的排序位数 5表示00000
         /// </summary>
-        private const int _persize = 4;
+        private int _persize { get; set; } = 4;
 
         /// <summary>
         /// 最大层级个数，从0开始 比如4就是 0 1 2 3
         /// </summary>
-        private const int _maxlevel = 6;
-
+        private int _maxlevel { get; set; } = 6;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="dbContext"></param>
-        public LevelHandler(DbContext dbContext)
+        /// <param name="dbContext">数据库链接</param>
+        /// <param name="perSize">串长度</param>
+        /// <param name="maxLevel">层级</param>
+        public LevelHandler(DbContext dbContext, int perSize = 4, int maxLevel = 6)
         {
             _dbContext = dbContext;
+            _persize = perSize;
+            _maxlevel = maxLevel;
         }
 
 
@@ -202,7 +204,7 @@ namespace PasteApeart.Handler.Level
         /// <param name="node"></param>
         /// <param name="entities"></param>
         /// <exception cref="Exception"></exception>
-        private static void RecalculateTree<T, Tkey>(T node, List<T> entities) where T : ILevelEntity<Tkey>
+        private void RecalculateTree<T, Tkey>(T node, List<T> entities) where T : ILevelEntity<Tkey>
         {
             //寻找他的子集
             var childs = entities
@@ -231,7 +233,7 @@ namespace PasteApeart.Handler.Level
         /// </summary>
         /// <param name="sort"></param>
         /// <returns></returns>
-        private static string FullRootSortStr(int sort)
+        private string FullRootSortStr(int sort)
         {
             return sort.ToString().PadLeft(_persize, '0') + "0".PadLeft((_maxlevel - 1) * _persize, '0');
         }
@@ -244,7 +246,7 @@ namespace PasteApeart.Handler.Level
         /// <param name="fatherSortstr">为空表示当前是顶级</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        private static string BuildUnRootSortStr(int currentLevel, int currentSort, string fatherSortstr = "")
+        private string BuildUnRootSortStr(int currentLevel, int currentSort, string fatherSortstr = "")
         {
             var fatherLevel = currentLevel - 1;
             if (currentLevel < _maxlevel)
@@ -306,7 +308,7 @@ namespace PasteApeart.Handler.Level
         /// </summary>
         /// <param name="currentEntity"></param>
         /// <param name="fatherEntity"></param>
-        private static void BuildSortStr<Tkey>(ILevelEntity<Tkey> currentEntity, ILevelEntity<Tkey> fatherEntity)
+        private void BuildSortStr<Tkey>(ILevelEntity<Tkey> currentEntity, ILevelEntity<Tkey> fatherEntity)
         {
             if (currentEntity.Level < _maxlevel)
             {
@@ -335,7 +337,7 @@ namespace PasteApeart.Handler.Level
         /// </summary>
         /// <param name="currentEntity"></param>
         /// <param name="fatherEntity">是自己的上级或者祖级</param>
-        private static void BuildFootSortStr<Tkey>(ILevelEntity<Tkey> currentEntity, ILevelEntity<Tkey> fatherEntity)
+        private void BuildFootSortStr<Tkey>(ILevelEntity<Tkey> currentEntity, ILevelEntity<Tkey> fatherEntity)
         {
             var _old_sort_str = currentEntity.SortStr;
             currentEntity.SortStr = fatherEntity.SortStr.Substring(0, (fatherEntity.Level + 1) * _persize);

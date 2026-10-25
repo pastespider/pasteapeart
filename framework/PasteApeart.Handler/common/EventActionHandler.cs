@@ -88,6 +88,7 @@ namespace PasteApeart.Handler
         {
             if (string.IsNullOrWhiteSpace(msg))
             {
+                _logger.LogError("传入的数据不能为空");
                 return null;
             }
 
@@ -310,14 +311,12 @@ namespace PasteApeart.Handler
                     if (task != null)
                     {
                         await task;
-                        //var type = task.GetType();
-                        //if (type.IsGenericType)
-                        //{
-                        //    return type.GetProperty("Result")?.GetValue(task);
-                        //}
-                        //return null;
-                        // 从 handler 实例上读 Result 属性（而不是从 Task<T> 里读）
-                        var resultProp = handlerType.GetProperty("Result");
+                        //// 从 handler 接口上读 Result 属性（而不是从 Task<T> 里读）
+                        //var resultProp = handlerType.GetProperty("Result");
+                        //return resultProp?.GetValue(handler);
+
+                        // 用具体类型读，而不是接口类型
+                        var resultProp = handler.GetType().GetProperty("Result");
                         return resultProp?.GetValue(handler);
                     }
                     else

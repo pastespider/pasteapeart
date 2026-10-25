@@ -118,7 +118,7 @@
                                     
                                 <% break; 
                                 case "fentoyuan": %>
-                                    <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                    <input name="<%:=item.name%>" autocomplete="off" class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
                                     <span class="unit">元</span>
                                 <% break; 
                                 case "Boolean":case "switch": %>
@@ -203,7 +203,7 @@
                                         <% if(item.mark){ %>
                                             <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
                                         <% } %>
-                                        <input type="text" name="<%:=item.name%>" <%if(item.value){%>value="<%:=item.value%>"<%}%> class="inputword" onClick="WdatePicker({el:this,dateFmt:'<%:=item.format%>'})" placeholder="<%:=item.placeholder || ''%>">
+                                        <input type="text" autocomplete="off" name="<%:=item.name%>" <%if(item.value){%>value="<%:=item.value%>"<%}%> class="inputword" onClick="WdatePicker({el:this,dateFmt:'<%:=item.format%>'})" placeholder="<%:=item.placeholder || ''%>">
                                         <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerSearchClean(this)"></span>
                                     
                                 <% break; 
@@ -228,7 +228,7 @@
                                         <% if(item.mark){ %>
                                             <span class="tapmark" onclick="global_tap_mark('<%:=item.mark.model%>','<%:=item.mark.value%>','<%:=item.mark.style%>',this)">?</span>
                                         <% } %>
-                                        <input type="text" class="inputword drange" name="<%:=item.name%>" readonly datas="" datae="" <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>" id="<%:=item.name%>">
+                                        <input type="text" autocomplete="off" class="inputword drange" name="<%:=item.name%>" readonly datas="" datae="" <%if(item.value){%>value="<%:=item.value%>"<%}%> placeholder="<%:=item.placeholder || ''%>" id="<%:=item.name%>">
                                     
                                 <% break; 
                                 case "searchrange": %>
@@ -364,9 +364,9 @@
                                                 case "outer": %>
                                                     <div class="outer">
                                                         <% if(item.dataFrom=='Int32' || item.dataFrom=='Int64'){ %>
-                                                            <input type="number" class="outerid" autocomplete="to-off" style="display:none;" value="{{:=item.<%:=item.name%>}}" name="<%:=item.name%>">
+                                                            <input type="number" class="outerid" autocomplete="off" style="display:none;" value="{{:=item.<%:=item.name%>}}" name="<%:=item.name%>">
                                                         <%}else{%>
-                                                            <input type="text" class="outerid" autocomplete="to-off" style="display:none;"  value="{{:=item.<%:=item.name%>}}" name="<%:=item.name%>">
+                                                            <input type="text" class="outerid" autocomplete="off" style="display:none;"  value="{{:=item.<%:=item.name%>}}" name="<%:=item.name%>">
                                                         <%}%>
                                                         <input type="text" class="tedit outerdisplay" dataname="<%:=item.name%>" onclick="handler_edit_outer(this)" value="{{:=item.<%:=item.display%>}}" readonly placeholder="<%:=item.placeholder%>" >
                                                         <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerEditClean(this)"></span>

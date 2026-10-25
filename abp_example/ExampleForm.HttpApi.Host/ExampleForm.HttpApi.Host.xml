@@ -319,7 +319,7 @@
             系统初始化
             </summary>
         </member>
-        <member name="M:ExampleForm.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.Application.Contracts.RabbitConfig},Microsoft.Extensions.Logging.ILogger{ExampleForm.StartHostedService},PasteApeart.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleForm.AppConfig})">
+        <member name="M:ExampleForm.StartHostedService.#ctor(System.IServiceProvider,Microsoft.Extensions.Options.IOptions{PasteApeart.Application.Contracts.RabbitConfig},Microsoft.Extensions.Logging.ILogger{ExampleForm.StartHostedService},PasteApeart.Handler.IChannelHelper,PasteApeart.Handler.IEventActionHandler,Microsoft.Extensions.Options.IOptions{ExampleForm.AppConfig})">
             <summary>
             
             </summary>

@@ -83,6 +83,7 @@ var _config = {
     orderby: "id",//排序
     update_row_min_match_rate: 0.6,//更新行数据的时候，最小匹配率，低于这个值则不进行更新
     bind_with_edit: false,//绑定模式下，是否启用编辑模式
+    is_page_index:true,//当前是table所在的index页面，还是view或者detail页面，主要是为了处理一些UI的显示问题
 };
 
 /**

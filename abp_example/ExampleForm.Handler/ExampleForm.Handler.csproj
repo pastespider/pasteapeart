@@ -25,11 +25,17 @@
 		<PackageReference Include="StackExchange.Redis" Version="2.8.58" />
 		<PackageReference Include="Z.EntityFramework.Plus.EFCore" Version="8.103.9.3" />
 	</ItemGroup>
-	
-  <ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <ProjectReference Include="..\..\framework\PasteApeart.Handler\PasteApeart.Handler.csproj" />
-    <ProjectReference Include="..\ExampleForm.Application.Contracts\ExampleForm.Application.Contracts.csproj" />
-    <ProjectReference Include="..\ExampleForm.EntityFrameworkCore\ExampleForm.EntityFrameworkCore.csproj" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
+	  <PackageReference Include="PasteApeart.Handler" Version="26.10.08" />
+  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ExampleForm.Application.Contracts\ExampleForm.Application.Contracts.csproj" />
+		<ProjectReference Include="..\ExampleForm.EntityFrameworkCore\ExampleForm.EntityFrameworkCore.csproj" />
+	</ItemGroup>
 
 </Project>

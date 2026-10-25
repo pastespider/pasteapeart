@@ -87,10 +87,10 @@
         </member>
         <member name="T:ExampleForm.Application.ExampleFormDefaultService">
             <summary>
-            
+            默认接口的辅助实现
             </summary>
         </member>
-        <member name="M:ExampleForm.Application.ExampleFormDefaultService.#ctor(PasteApeart.Application.IPasteDefaultHelper,PasteApeart.IChannelHelper,ExampleForm.IExampleFormDbContext)">
+        <member name="M:ExampleForm.Application.ExampleFormDefaultService.#ctor(PasteApeart.Application.IPasteDefaultHelper,PasteApeart.Handler.IChannelHelper,ExampleForm.IExampleFormDbContext)">
             <summary>
             
             </summary>

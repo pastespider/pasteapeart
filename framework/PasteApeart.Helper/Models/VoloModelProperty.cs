@@ -66,6 +66,12 @@ namespace PasteApeart.Helper
         public bool HasDescAttribute { get; set; } = false;
 
         /// <summary>
+        /// 是否可以写入 用于特殊情况下过滤，不返回给前端 默认true false的时候赋值
+        /// </summary>
+        [JsonIgnore]
+        public bool CanWrite { get; set; } = true;
+
+        /// <summary>
         /// 字段属性规则
         /// </summary>
         public List<VoloModelAttribute> Attributes { get; set; }

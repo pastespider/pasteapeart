@@ -3758,6 +3758,14 @@ function handlerExchangeItemToUIData(item) {
                         item.hidden = true;//可以被changeui唤醒
                     }
                     break;
+                case "display":
+                    {
+                        if(_config.is_page_view){
+                            item.hide = true;//始终隐藏
+                            item.hidden = true;//可以被changeui唤醒
+                        }
+                    }
+                    break;
                 case "valuetype":
                     {
                         item.valueType = _attribute.args1;
@@ -4136,9 +4144,10 @@ function handlerExchangeItemToUIData(item) {
                         item.dataType = "score";
                     }
                     break;
-                case "singlerow": {
-                    item.singlerow = true;
-                }
+                case "singlerow": 
+                    {
+                        item.singlerow = true;
+                    }
                     break;
                 case "markdown":
                     {

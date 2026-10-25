@@ -18,9 +18,15 @@
     <PackageReference Include="Volo.Abp.Ddd.Application.Contracts" Version="8.3.4" />
   </ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
     <ProjectReference Include="..\..\framework\PasteApeart.Application.Contracts\PasteApeart.Application.Contracts.csproj" />
-    <ProjectReference Include="..\ExampleForm.Domain\ExampleForm.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
+	  <PackageReference Include="PasteApeart.Application.Contracts" Version="26.10.08" />
+  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ExampleForm.Domain\ExampleForm.Domain.csproj" />
+	</ItemGroup>
 
 </Project>

@@ -11,11 +11,13 @@ namespace PasteApeart
     /// </summary>
     /// <typeparam name="T"></typeparam>
     [Serializable]
+    [Obsolete("use PasteResultDto")]
     public class PagedResultDto<T>
     {
         /// <summary>
         /// 
         /// </summary>
+        [Obsolete("use PasteResultDto")]
         public PagedResultDto()
         {
 
@@ -34,6 +36,13 @@ namespace PasteApeart
         /// 数据模型
         /// </summary>
         public VoloModelInfo PasteModel { get; set; }
+
+
+        /// <summary>
+        /// 综合统计
+        /// </summary>
+        public List<PasteSelectModel> PasteTotal { get; set; }
+
 
         /// <summary>
         /// 设定类型

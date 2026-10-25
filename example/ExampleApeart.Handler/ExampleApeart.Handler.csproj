@@ -36,7 +36,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
-		<PackageReference Include="PasteApeart.Handler" Version="26.9.16" />
+		<PackageReference Include="PasteApeart.Handler" Version="26.10.8" />
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ExampleApeart.Application.Contracts\ExampleApeart.Application.Contracts.csproj" />

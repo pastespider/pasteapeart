@@ -8,15 +8,16 @@ namespace PasteApeart.Handler.Level
     public interface ILevelHandler
     {
         /// <summary>
-        /// 
+        /// 新增数据后 记得要调用SaveChangesAsync()
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="Tkey"></typeparam>
         /// <param name="info"></param>
         /// <returns></returns>
         Task AfterAddAsync<T, Tkey>(ILevelEntity<Tkey> info) where T : class, ILevelEntity<Tkey>;
+
         /// <summary>
-        /// 
+        /// 更新数据后 记得要调用SaveChangesAsync()
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="Tkey"></typeparam>
@@ -25,15 +26,17 @@ namespace PasteApeart.Handler.Level
         /// <param name="oldLevel"></param>
         /// <returns></returns>
         Task AfterUpdateAsync<T, Tkey>(ILevelEntity<Tkey> info, string oldFatherStr, int oldLevel) where T : class, ILevelEntity<Tkey>;
+
         /// <summary>
-        /// 
+        /// 重新排序
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="Tkey"></typeparam>
         /// <param name="entities"></param>
         void AllResortByFatherIdAndSort<T, Tkey>(List<T> entities) where T : ILevelEntity<Tkey>;
+
         /// <summary>
-        /// 
+        /// 自动排序
         /// </summary>
         /// <typeparam name="Tkey"></typeparam>
         /// <param name="TableName"></param>

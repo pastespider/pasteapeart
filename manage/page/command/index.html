@@ -114,44 +114,6 @@
     <script type="text/javascript" src="../pasteform/form.js"></script>
 
     <script type="text/javascript">
-        // async function func_query_submit() {
-        //     var input = $(".inputbody").val();
-        //     if (input) {
-        //         var info = {
-        //             command: input
-        //         };
-        //         if (input.indexOf("select") == -1 && input.indexOf("SELECT") == -1) {
-        //             layer.msg("没有监测到有 select 字样！");
-        //             return;
-        //         }
-        //         var read = await apipostPromise('/api/app/Test/QueryCommand', info);
-        //         if (typeof read.info == "object") {
-        //             read.info = JSON.stringify(read.info, null, 2);
-        //         }
-        //         $(".iheader").html(new Date().getTime());
-        //         $(".result pre").html(read.info);
-        //     }
-        // }
-
-        // async function func_exec_submit() {
-        //     var input = $(".inputbody").val();
-        //     if (input) {
-        //         var info = {
-        //             command: input
-        //         };
-        //         if (input.indexOf("update") == -1 && input.indexOf("delete") == -1 && input.indexOf("UPDATE") == -1 && input.indexOf("DELETE") == -1) {
-        //             layer.msg("没有监测到有 update delete 字样！");
-        //             return;
-        //         }
-        //         var read = await apipostPromise('/api/app/Test/ExecuteCommand', info);
-        //         if (typeof read.info == "object") {
-        //             read.info = JSON.stringify(read.info, null, 2);
-        //         }
-        //         $(".iheader").html(new Date().getTime());
-        //         $(".result pre").html(read.info);
-        //     }
-        // }
-
         $(window).ready(function () {
             $(".arear").on("click", "li", function () {
                 var text = $(this).text();

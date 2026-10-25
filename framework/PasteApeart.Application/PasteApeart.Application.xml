@@ -47,6 +47,11 @@
             数据模型
             </summary>
         </member>
+        <member name="P:PasteApeart.PagedResultDto`1.PasteTotal">
+            <summary>
+            综合统计
+            </summary>
+        </member>
         <member name="M:PasteApeart.PagedResultDto`1.BuildModel(System.Object,System.Object)">
             <summary>
             设定类型
@@ -68,17 +73,22 @@
         </member>
         <member name="P:PasteApeart.PasteResultDto`1.TotalCount">
             <summary>
-            
+            总数
             </summary>
         </member>
         <member name="P:PasteApeart.PasteResultDto`1.Items">
             <summary>
-            
+            数据
             </summary>
         </member>
         <member name="P:PasteApeart.PasteResultDto`1.PasteModel">
             <summary>
-            数据模型
+            数据模型 适用于request=one page==1的返回
+            </summary>
+        </member>
+        <member name="P:PasteApeart.PasteResultDto`1.PasteTotal">
+            <summary>
+            综合统计 适用于基于查询的数据总量，PasteSum是当前页的，这个是总的
             </summary>
         </member>
         <member name="M:PasteApeart.PasteResultDto`1.BuildModel(System.Object,System.Object)">
@@ -88,6 +98,21 @@
             <param name="listObj">new XXXListDto()</param>
             <param name="queryObj">new InputQueryXXX()</param>
             <returns></returns>
+        </member>
+        <member name="T:PasteApeart.PasteSelectModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:PasteApeart.PasteSelectModel.name">
+            <summary>
+            名称 示例:销量
+            </summary>
+        </member>
+        <member name="P:PasteApeart.PasteSelectModel.value">
+            <summary>
+            值 示例:￥35,000.00
+            </summary>
         </member>
         <member name="T:PasteApeart.ApiRouteOption">
             <summary>

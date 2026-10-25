@@ -52,6 +52,7 @@ var _config = {
     remove_empty: false,//字段空值的时候是否去除,比如{name:"",age:5}如果true,则返回{age:5}
     show_button: true,//是否显示提交按钮，默认显示
     single_line_length:128,//大于多少长度，是独占一行，否则是半行
+    is_page_view:true,
     reload: true//执行完成后，是否重新加载父级页面 请使用okaction
 };
 

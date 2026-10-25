@@ -114,31 +114,31 @@
                     <div class="formControls i<%:=item.dataType%>" >
                         <% switch(item.dataType) { 
                             case "text": case "Guid": case "splitarray": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-text" <% if(item.required){ %>required<% } %> type="text" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:a=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>"  class="input-text" <% if(item.required){ %>required<% } %> type="text" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:a=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
                                 <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
                                 <%if(item.unit){%>
                                     <span class="unit"><%:=item.unit%></span>
                                 <%}%>
                             <% break; 
                             case "password": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-text" <% if(item.required){%>required<%}%> type="password" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>" autocomplete="off" class="input-text" <% if(item.required){%>required<%}%> type="password" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
                                 <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
                             <% break; 
                             case "html": %>
                                 <div class="item-html"><%:=item.value || ''%></div>
                             <% break; 
                             case "number": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" placeholder-class="p-form-placeholder" type="number" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>"  class="input-number" placeholder-class="p-form-placeholder" type="number" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
                                 <%if(item.unit){%>
                                     <span class="unit"><%:=item.unit%></span>
                                 <%}%>
                             <% break; 
                             case "fentoyuan": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off" class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" onblur="handlerBlur(this)" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>"  class="input-number" step="0.01" min="0" max="99999999" placeholder-class="p-form-placeholder" <% if(item.readonly){ %>readonly<% } %> type="number" onblur="handlerBlur(this)" value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
                                 <span class="unit">元</span>
                             <% break; 
                             case "Double": case "Decimal": %>
-                                <input name="<%:=item.name%>" autocomplete="to-off"  class="input-number" step="<%:=item.step%>" placeholder-class="p-form-placeholder" type="number" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>"   class="input-number" step="<%:=item.step%>" placeholder-class="p-form-placeholder" type="number" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" placeholder="<%:=item.placeholder%>" />
                                 <%if(item.unit){%>
                                     <span class="unit"><%:=item.unit%></span>
                                 <%}%>
@@ -152,12 +152,12 @@
                                 <span class="placeholder"><%:=item?.placeholder || ''%></span>
                             <% break; 
                             case "datetime": %>
-                                <input type="text" autocomplete="to-off" value="<%:=item.value || ''%>" name="<%:=item.name%>" <% if(item.required){%>required<%}%> maxlength="20" <% if(item.readonly){ %>readonly<% } %> placeholder="<%:=item.placeholder%>" onClick="WdatePicker({el:this,dateFmt:'<%:=item.format%>'})"
-                                autocomplete="to-off" class="input-text input-form-date">
+                                <input type="text" autocomplete="off" value="<%:=item.value || ''%>" name="<%:=item.name%>" <% if(item.required){%>required<%}%> maxlength="20" <% if(item.readonly){ %>readonly<% } %> placeholder="<%:=item.placeholder%>" onClick="WdatePicker({el:this,dateFmt:'<%:=item.format%>'})"
+                                 class="input-text input-form-date">
                             <% break; 
                             case "daterange": %>
-                                <input type="text" autocomplete="to-off" value="<%:=item.value || ''%>" id="<%:=item.name%>" name="<%:=item.name%>" datas="" datae="" <% if(item.readonly){ %>readonly<% } %> <% if(item.required){ %>required<%}%> placeholder="<%:=item.placeholder%>" 
-                                autocomplete="to-off" class="input-text input-form-date">
+                                <input type="text" autocomplete="off" value="<%:=item.value || ''%>" id="<%:=item.name%>" name="<%:=item.name%>" datas="" datae="" <% if(item.readonly){ %>readonly<% } %> <% if(item.required){ %>required<%}%> placeholder="<%:=item.placeholder%>" 
+                                 class="input-text input-form-date">
                             <% break; 
                             case "richtext": %>
                                 <div class="editoryarea">
@@ -176,16 +176,16 @@
                             case "file": %>
                                 <% if(item.url){%>
                                     <input type="file" id="<%:=item.name%>" accept="<%:=item.accept%>" datanum="<%:=item.num%>" <% if(item.readonly){ %>readonly<% } %> onchange="handlerUploadOnlyFile(this)" <% if(item.url){ %>dataurl="<%:=item.url%>" <% } %> datatype="<%:=item.type%>" datasize="<%:=item.size%>" style="display:none" />
-                                    <input type="text" name="<%:=item.name%>" autocomplete="to-off" value="<%:=item.value%>" placeholder="<%:=item.placeholder%>" onclick="$('[id=<%:=item.name%>]').trigger('click');">
+                                    <input type="text" name="<%:=item.name%>"  value="<%:=item.value%>" placeholder="<%:=item.placeholder%>" onclick="$('[id=<%:=item.name%>]').trigger('click');">
                                 <%}%>
                                 <% if(item.filehandler){%>
                                     <input type="file" id="<%:=item.name%>" accept="<%:=item.accept%>" datanum="<%:=item.num%>" <% if(item.readonly){ %>readonly<% } %> onchange=<%:=item.filehandler%> style="display:none" />
-                                    <input type="text" name="<%:=item.name%>" autocomplete="to-off" value="<%:=item.value%>" placeholder="<%:=item.placeholder%>" onclick="$('[id=<%:=item.name%>]').trigger('click');">
+                                    <input type="text" name="<%:=item.name%>"  value="<%:=item.value%>" placeholder="<%:=item.placeholder%>" onclick="$('[id=<%:=item.name%>]').trigger('click');">
                                 <%}%>
                                 <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
                             <% break; 
                             case "image": case "images": %>
-                                <input type="text" style="display:none" autocomplete="to-off" name="<%:=item.name%>" <% if(item.readonly){ %>readonly<% } %> <% if(item.imgid && item.imgid !=null ){ %>value="<%:=item.imgid%>"<%}%> >
+                                <input type="text" style="display:none"  name="<%:=item.name%>" <% if(item.readonly){ %>readonly<% } %> <% if(item.imgid && item.imgid !=null ){ %>value="<%:=item.imgid%>"<%}%> >
                                 <input type="file" multiple id="<%:=item.name%>" datanum="<%:=item.num%>" <% if(item.readonly){ %>readonly<% } %> onchange="handlerUploadFile(this)" datatype="<%:=item.type%>" datasize="<%:=item.size%>" style="display:none;" />
                                 <% if(item.num ==1){%>
                                     <label for="<%:=item.name%>">
@@ -231,9 +231,9 @@
                             case "outer": %>
                                 <div class="outer">
                                     <% if(item.dataFrom=='Int32' || item.dataFrom=='Int64'){ %>
-                                        <input type="number" class="outerid" autocomplete="to-off" style="display:none;" value="<%:=item.value%>" name="<%:=item.name%>">
+                                        <input type="number" class="outerid"  style="display:none;" value="<%:=item.value%>" name="<%:=item.name%>">
                                     <%}else{%>
-                                        <input type="text" class="outerid" autocomplete="to-off" style="display:none;"  value="<%:=item.value%>" name="<%:=item.name%>">
+                                        <input type="text" class="outerid"  style="display:none;"  value="<%:=item.value%>" name="<%:=item.name%>">
                                     <%}%>
                                     <input type="text" class="outerdisplay" dataname="<%:=item.name%>" <% if(!item.readonly){ %>onclick="handler_outer_value(this)"<% } %> value="<%:=item.display%>" readonly placeholder="<%:=item.placeholder%>" >
                                     <% if(!item.readonly){ %>
@@ -265,8 +265,8 @@
                             <% break; 
                             case "object": %>
                                 <div class="outer">
-                                    <input type="text" class="outerid" autocomplete="to-off" style="display:none;"  value="<%:=item.value%>" name="<%:=item.name%>">
-                                    <input type="text" class="outerdisplay" autocomplete="to-off" dataname="<%:=item.name%>" value="<%:=item.display%>" onclick="handler_object_value(this)" readonly placeholder="<%:=item.placeholder%>" >
+                                    <input type="text" class="outerid"  style="display:none;"  value="<%:=item.value%>" name="<%:=item.name%>">
+                                    <input type="text" class="outerdisplay"  dataname="<%:=item.name%>" value="<%:=item.display%>" onclick="handler_object_value(this)" readonly placeholder="<%:=item.placeholder%>" >
                                     <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
                                 </div>
                             <% break; 

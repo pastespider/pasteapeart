@@ -14,7 +14,7 @@ namespace PasteApeart.Handler
         Channel<IEventModel> ChannelEventModel { get; }
 
         /// <summary>
-        /// 
+        /// 压入到队列 如果MutexKey有值而MutexVal没有，则会进行赋值 如果ExpireSecond大于0则压入延迟队列，否则是及时队列
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -25,7 +25,7 @@ namespace PasteApeart.Handler
         /// <param name="input"></param>
         /// <param name="isremove"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("use WriteAutoQueueAsync set IsSubscribe=true")]
         Task WriteBroadcastMessageAsync(IEventModel input, bool isremove);
         /// <summary>
         /// 
@@ -33,7 +33,7 @@ namespace PasteApeart.Handler
         /// <typeparam name="T"></typeparam>
         /// <param name="input"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("use WriteAutoQueueAsync set MutexKey !=stringEmpty and MutexVal is null")]
         Task WriteMutexMQAsync<T>(T input) where T : IEventModel;
         /// <summary>
         /// 
@@ -42,7 +42,7 @@ namespace PasteApeart.Handler
         /// <param name="input"></param>
         /// <param name="id"></param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("use WriteAutoQueueAsync set MutexKey !=stringEmpty and MutexVal is null")]
         Task WriteMutexMQAsync<T>(T input, object id) where T : IEventModel;
     }
 }

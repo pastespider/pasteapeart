@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using PasteApeart;
 using PasteApeart.Handler;
 using PasteApeart.Handler.common;
+using PasteApeart.Handler.Level;
 using PasteApeart.Handler.rabbit;
 using Volo.Abp.Modularity;
 

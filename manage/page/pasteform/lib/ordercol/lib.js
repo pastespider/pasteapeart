@@ -1,3 +1,8 @@
+/**
+ * 作者 apeart
+ * 主要针对的是多图模式的拖拽排序的支持
+ * 增强版支持动态操作的jQuery拖拽排序组件 应对多图得拖拽移动顺序
+ */
 class ColumnDragSorter {
     // 使用示例
     // var COLUMN_ORDER_KEY="table_order"

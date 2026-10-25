@@ -13,7 +13,8 @@ var _global_class_attributes = null;
  * 
  */
 var _config = {
-    single_line_length:128//大于多少长度，是独占一行，否则是半行
+    single_line_length:128,//大于多少长度，是独占一行，否则是半行
+    is_page_detail:true
 };
 
 /**

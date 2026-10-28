@@ -1,12 +1,11 @@
 using ExampleForm.Application;
-using ExampleForm.Application.Contracts;
 using ExampleForm.Handler;
+using ExpressiveSharp;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PasteApeart.Application.Contracts;
-using PasteApeart.Handler;
 using PasteApeart.Handler.Level;
 using PasteApeart.Helper;
 using PasteApeart.Helper.Extensions;
@@ -148,7 +147,7 @@ namespace ExampleForm.usermodels
                     _model.Properties.RemoveAll(x => x.Name == "button");
                 }
             }
-            var _query_model = BuilderHelper.DynamicReadModelProperty(new InputQueryRoleInfo());
+            var _query_model = BuilderHelper.AttributeReadModelProperty(new InputQueryRoleInfo());
             if (_query_model != null)
             {
                 _model.QueryProperties = _query_model.Properties;
@@ -188,14 +187,39 @@ namespace ExampleForm.usermodels
                             RoleType = a.RoleType,
                             SortStr = a.SortStr,
                             Sort = a.Sort,
-                            ExtendFather = role.ToRoleShort()
+                            ExtendFather = role.ToRoleShort(),// LinqExtend.AsRoleShort(role)
                         };
+
+            //var query = from a in _dbContext.RoleInfo
+            //.WhereIf(!string.IsNullOrEmpty(input.word), x => x.Name.Contains(input.word) || x.Desc.Contains(input.word))
+            //.WhereIf(input.FatherId != 0, x => x.FatherId == input.FatherId)
+            //.WhereIf(input.role_type != EnumRoleType.All, x => x.RoleType == input.role_type)
+            //            join b in _dbContext.RoleInfo on a.FatherId equals b.Id into c
+            //            from role in c.DefaultIfEmpty()
+            //            select new RoleInfoListDto
+            //            {
+            //                Id = a.Id,
+            //                Desc = a.Desc,
+            //                FatherId = a.FatherId,
+            //                Icon = a.Icon,
+            //                IsEnable = a.IsEnable,
+            //                Level = a.Level,
+            //                Model = a.Model,
+            //                Name = a.Name,
+            //                Path = a.Path,
+            //                Role = a.Role,
+            //                RoleType = a.RoleType,
+            //                SortStr = a.SortStr,
+            //                Sort = a.Sort,
+            //                ExtendFather = role != null ? new RoleShort { Id = role.Id, Name = role.Name } : null
+            //            };
+
             //var query = _query.WhereIf(!string.IsNullOrEmpty(input.word), x => x.Name.Contains(input.word) || x.Desc.Contains(input.word))
             //    .WhereIf(input.FatherId != 0, x => x.FatherId == input.FatherId)
             //    .WhereIf(input.role_type != EnumRoleType.All, x => x.RoleType == input.role_type);
             var _pagedto = new PagedResultDto<RoleInfoListDto>();
             _pagedto.TotalCount = await query.CountAsync();
-            var dataList = await query.PasteOrderBy(input.orderby).Page(input.page, input.size).ToListAsync();
+            var dataList = await query.AsExpressive().PasteOrderBy(input.orderby).Page(input.page, input.size).ToListAsync();
             if (input.GradeId > 0)
             {
                 var binds = await _dbContext.GradeRole.Where(x => x.GradeId == input.GradeId).Select(x => x.RoleId).ToArrayAsync();

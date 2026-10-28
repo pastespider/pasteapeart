@@ -24,6 +24,10 @@ namespace PasteApeart.Application.Contracts
         /// 广播模式 是否是广播模式的消息，默认false，false为队列消息
         /// </summary>
         bool IsSubscribe { get; set; }
+
+        //重试次数
+        //最大重试次数
+        //重试模型 内置或者默认值 new Random().Next(5,10)*time
     }
 
 

@@ -246,7 +246,7 @@ namespace PasteApeart.Helper
         /// </summary>
         /// <param name="_sdate">开始日期字段 默认为sdate</param>
         /// <param name="_edate">结束日期字段 默认为edate</param>
-        /// <param name="args3">备用</param>
+        /// <param name="args3">输入的格式，默认为yyyy-MM-dd HH:mm:ss 可以理解为UI格式</param>
         /// <param name="out_format">输出格式，默认为时间格式不填，你可以填写times时间戳秒和timems时间戳毫秒格式</param>
         public PasteDaterangeAttribute(string _sdate = "sdate", string _edate = "edate", string args3 = null, string out_format = null)
         {
@@ -1074,16 +1074,16 @@ namespace PasteApeart.Helper
         public char MaskChar { get; set; } = '*';
 
         /// <summary>
-        /// 
+        /// 创建新对象，还是在原值上修改，顶级Class上有效，字段上无效
         /// </summary>
         public bool CreateNewObj { get; set; } = false;
 
         /// <summary>
         /// 服务端特性 脱敏处理 需要Class先标记，表示这个对象有字段要脱敏 然后字段标记
         /// </summary>
-        /// <param name="startLen"></param>
-        /// <param name="endLen"></param>
-        /// <param name="hideChar"></param>
+        /// <param name="startLen">开头保持位数</param>
+        /// <param name="endLen">尾巴保持位数</param>
+        /// <param name="hideChar">默认字段的脱敏字符</param>
         /// <param name="newObj">新对象上处理，否则为原对象上变更</param>
         public PasteHalfHideAttribute(int startLen = 3, int endLen = 4, char hideChar = '*', bool newObj = false)
         {

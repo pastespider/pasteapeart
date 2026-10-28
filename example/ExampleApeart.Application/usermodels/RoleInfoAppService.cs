@@ -9,6 +9,7 @@ using PasteApeart.Handler;
 using PasteApeart.Handler.Extensions;
 using PasteApeart.Handler.Level;
 using PasteApeart.Helper;
+using PasteApeart.Helper.Extensions;
 using System.Linq.Dynamic.Core;
 
 namespace ExampleApeart.usermodels

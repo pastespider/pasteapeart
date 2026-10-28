@@ -97,24 +97,35 @@ namespace PasteApeart.Application
         /// <param name="searchObject"></param>
         /// <param name="entityType"></param>
         /// <param name="searchType"></param>
-        /// <param name="input"></param>
+        /// <param name="page">当前页码，第1页要读取totalCount</param>
         /// <param name="listDtoType"></param>
         /// <returns></returns>
-        Task<dynamic> DirectPageAsync(object searchObject, Type entityType, Type searchType, InputSearchBase input, Type listDtoType);
+        Task<dynamic> DirectPageAsync(object searchObject, Type entityType, Type searchType, int page, Type listDtoType);
 
         /// <summary>
-        /// 
+        /// 获取新增 元数据
         /// </summary>
         /// <param name="entityName"></param>
         /// <returns></returns>
         Task<VoloModelInfo> ReadAddModel(string entityName);
+
         /// <summary>
-        /// 
+        /// 获取对象详细的元数据
         /// </summary>
         /// <param name="entityName"></param>
         /// <param name="id"></param>
         /// <returns></returns>
         Task<VoloModelInfo> ReadDetailModel(string entityName, string id);
+
+        /// <summary>
+        /// 获取对象详细
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <param name="dtoType"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<object> ReadDetailObjectAsync(Type entityType, Type dtoType, string id);
+
         /// <summary>
         /// 
         /// </summary>

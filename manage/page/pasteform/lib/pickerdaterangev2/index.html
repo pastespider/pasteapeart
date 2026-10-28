@@ -1,0 +1,86 @@
+﻿<!DOCTYPE HTML>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+	<title> GRI calendar Demo </title>
+	<script type="text/javascript" src="./jquery.min.js"></script>
+	<script type="text/javascript" src="./dateRange.js"></script>
+
+
+
+	<link rel="stylesheet" type="text/css" href="./dateRange.css"/>
+
+
+
+
+
+</head>
+
+<body bgcolor="white" text="black">
+	<div class="wrapper">
+
+		<!-- format 属性（主输入框自定义属性）：short = 载入即进入时分秒模式且时间到分（HH:mm，级联为 时|分 两列）；long = 载入即进入时分秒模式且时间到秒（HH:mm:ss，级联为 时|分|秒 三列）；不传 = 默认只到天，面板内可点"时分秒"切换，切换后时间行右侧可在 短时间格式(到分)/长时间格式(到秒) 间切换 -->
+		<input type="text" id="date_demo31" readonly="readonly" format="daily" width="300px" >
+
+				<input type="text" id="date_demo32" readonly="readonly" format="long" width="300px" >
+
+		<script type="text/javascript">
+			var dateRange1 = new pickerDateRange('date_demo31', {
+				isTodayValid : false,
+					// startDate : '2013-04-14',
+					// endDate : '2013-04-21',
+					//needCompare : true,
+					//isSingleDay : true,
+					//shortOpr : true,
+					defaultText : ' 至 ',
+					inputTrigger : 'input_trigger_demo3',
+					quickSelect : true,   // 面板顶部快捷选择条：昨日/今日/本月/上月/上度/本年/最近7天/最近30天
+					enableTimeMode : true, // 支持 补零模式(默认只到天) / 时分秒模式 切换：底部按钮区含格式徽标+"时分秒"切换链接，点击日期框弹出层级选择器；输入框 format="long" 时载入即时分秒模式
+					success : function(obj) {
+						// console.info(obj);
+					},
+					clear :function(){
+						console.info(0);
+					}
+				});
+
+							var dateRange2 = new pickerDateRange('date_demo32', {
+				isTodayValid : false,
+					// startDate : '2013-04-14',
+					// endDate : '2013-04-21',
+					//needCompare : true,
+					//isSingleDay : true,
+					//shortOpr : true,
+					defaultText : ' 至 ',
+					inputTrigger : 'input_trigger_demo3',
+					quickSelect : true,   // 面板顶部快捷选择条：昨日/今日/本月/上月/上度/本年/最近7天/最近30天
+					enableTimeMode : true, // 支持 补零模式(默认只到天) / 时分秒模式 切换：底部按钮区含格式徽标+"时分秒"切换链接，点击日期框弹出层级选择器；输入框 format="long" 时载入即时分秒模式
+					success : function(obj) {
+						// console.info(obj);
+					},
+					clear :function(){
+
+						console.info(0);
+					}
+				});
+
+				function setDateRange1(start, end) {
+					setPickerDate('date_demo31', start, end);
+				}
+
+				function setDateRange2(start, end) {
+					setPickerDate('date_demo32', start, end);
+				}
+
+			</script>
+
+			<div>
+				<input type="button" value="设置时间范围1" onclick="setDateRange1('2026-04-14 12:00:00', '2026-04-21 12:00:00')">
+
+				<input type="button" value="设置时间范围2" onclick="setDateRange2('2026-05-15', '2026-05-21')">
+			</div>
+
+		</div>
+
+	</body>
+	</html>

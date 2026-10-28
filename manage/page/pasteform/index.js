@@ -2513,193 +2513,197 @@ function InitUiData() {
  * @param {*} _info 
  */
 function handlerInputValue(_info) {
-    if (_global_data_properties) {
-        _global_data_properties.forEach(item => {
-            switch (item.dataType) {
-                case "daterange":
-                    {
-                        if (item.attributes) {
-                            for (let _attribute of item.attributes) {
-                                if (_attribute.name == 'daterange') {
-                                    var _value = _info[item.name];//获取当前选中的值
-                                    if (_value) {
-                                        var splits = _value.split('  ');
-                                        if (splits.length == 3) {
-                                            let _start = `${splits[0]} 00:00:00`;
-                                            let _end = `${splits[2]} 00:00:00`;
-                                            if (_attribute.args1) {
-                                                // _info[_attribute.args1] = _start;
-                                                setValueToSameLevel(item.name, _info, _attribute.args1, _start);
-                                            }
-                                            if (_attribute.args2) {
-                                                // _info[_attribute.args2] = _end;
-                                                // setValueToSameLevel(item.name, _info, _attribute.args2, _end);
-                                                if (_config.next_end_date) {
-                                                    let _next_end = new Date(_end);
-                                                    _next_end.setDate(_next_end.getDate() + 1);
-                                                    let _next_end_str = `${_next_end.getFullYear()}-${(_next_end.getMonth() + 1).toString().padStart(2, '0')}-${_next_end.getDate().toString().padStart(2, '0')} 00:00:00`;
-                                                    setValueToSameLevel(item.name, _info, _attribute.args2, _next_end_str);
-                                                } else {
-                                                    setValueToSameLevel(item.name, _info, _attribute.args2, _end);
-                                                }
-                                            }
 
-                                            if (_attribute.args4) {
-                                                switch (_attribute.args4) {
-                                                    case "times":
-                                                        {
-                                                            let _times = new Date(_start).getTime() / 1000;
-                                                            let _timee = new Date(_end).getTime() / 1000;
-                                                            // _info[_attribute.args1] = _times;
-                                                            // _info[_attribute.args2] = _timee;
-                                                            setValueToSameLevel(item.name, _info, _attribute.args1, _times);
-                                                            setValueToSameLevel(item.name, _info, _attribute.args2, _timee);
-                                                        }
-                                                        break;
-                                                    case "timems":
-                                                        {
-                                                            let _times = new Date(_start).getTime();
-                                                            let _timee = new Date(_end).getTime();
-                                                            // _info[_attribute.args1] = _times;
-                                                            // _info[_attribute.args2] = _timee;
-                                                            setValueToSameLevel(item.name, _info, _attribute.args1, _times);
-                                                            setValueToSameLevel(item.name, _info, _attribute.args2, _timee);
-                                                        }
-                                                        break;
-                                                }
-                                            }
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case "Guid":
-                case "DateTime":
-                    {
-                        if (!item.required) {
-                            if (_info[item.name] == "null" || _info[item.name] == '') {
-                                delete _info[item.name];
-                            }
-                        }
-                    }
-                    break;
-                case "selects":
-                case "lselect":
-                    {
-                        //基于结果进行值拼接！
-                        var _elcs = $(`[name=${item.name}]`).find('.selected');
-                        if (_elcs && _elcs.length > 0) {
-                            var _array = new Array();
-                            for (var k = 0; k < _elcs.length; k++) {
-                                _array.push($(_elcs[k]).attr('value'));
-                            }
-                            if (item.dataFrom.indexOf("[]") >= 0) {
-                                if (IsNumberArrayDataType(item.dataFrom)) {
-                                    var _newarray = new Array();
-                                    _array.forEach(_ary => {
-                                        _newarray.push(Number(_ary));
-                                    });
-                                    _info[item.name] = _newarray;
-                                } else {
-                                    _info[item.name] = _array;
-                                }
-                            } else {
-                                //string
+    FuncHandlerParseFormValue(_info);
 
-                                if (IsNumberDataType(item.dataFrom)) {
-                                    _info[item.name] = Number(_array[0]);
-                                } else {
-                                    var _splitchar = ',';
-                                    if (item.attributes) {
-                                        for (var _attribute of item.attributes) {
-                                            if (_attribute.name == item.dataType) {
-                                                if (_attribute.args2) {
-                                                    _splitchar = _attribute.args2;
-                                                }
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    _info[item.name] = _array.join(_splitchar);
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case "splitarray":
-                    {
-                        var _split_char = ',';//默认值使用逗号隔开
-                        var _split = funcFindAttribute(item.attributes, "splitarray");
-                        if (_split) {
-                            if (_split.args1) {
-                                _split_char = _split.args1;
-                            }
-                        }
-                        if (_info.hasOwnProperty(item.name)) {
-                            var _val = _info[item.name];
-                            if (_val) {
-                                _val = _val.replace(/，/g, _split_char);
-                                if (IsNumberArrayDataType(item.dataFrom)) {
-                                    var strs = _val.split(_split_char);
-                                    var arr = new Array();
-                                    for (var ia of strs) {
-                                        arr.push(Number(ia));
-                                    }
-                                    _info[item.name] = arr;
-                                } else {
-                                    _info[item.name] = _val.split(_split_char);
-                                }
-                            } else {
-                                delete _info[item.name];
-                            }
+    //旧版本 上面是新版本 二合一模式
+    // if (_global_data_properties) {
+    //     _global_data_properties.forEach(item => {
+    //         switch (item.dataType) {
+    //             case "daterange":
+    //                 {
+    //                     if (item.attributes) {
+    //                         for (let _attribute of item.attributes) {
+    //                             if (_attribute.name == 'daterange') {
+    //                                 var _value = _info[item.name];//获取当前选中的值
+    //                                 if (_value) {
+    //                                     var splits = _value.split('  ');
+    //                                     if (splits.length == 3) {
+    //                                         let _start = `${splits[0]} 00:00:00`;
+    //                                         let _end = `${splits[2]} 00:00:00`;
+    //                                         if (_attribute.args1) {
+    //                                             // _info[_attribute.args1] = _start;
+    //                                             setValueToSameLevel(item.name, _info, _attribute.args1, _start);
+    //                                         }
+    //                                         if (_attribute.args2) {
+    //                                             // _info[_attribute.args2] = _end;
+    //                                             // setValueToSameLevel(item.name, _info, _attribute.args2, _end);
+    //                                             if (_config.next_end_date) {
+    //                                                 let _next_end = new Date(_end);
+    //                                                 _next_end.setDate(_next_end.getDate() + 1);
+    //                                                 let _next_end_str = `${_next_end.getFullYear()}-${(_next_end.getMonth() + 1).toString().padStart(2, '0')}-${_next_end.getDate().toString().padStart(2, '0')} 00:00:00`;
+    //                                                 setValueToSameLevel(item.name, _info, _attribute.args2, _next_end_str);
+    //                                             } else {
+    //                                                 setValueToSameLevel(item.name, _info, _attribute.args2, _end);
+    //                                             }
+    //                                         }
 
-                        }
-                    }
-                    break;
-                case "fentoyuan":
-                    {
-                        var _value = _info[item.name];
-                        if (_value) {
-                            _info[item.name] = Number((_value * 100).toFixed(2));// Number(Math.fround(_value * 100));
-                        }
-                    }
-                    break;
-            }
-            if (typeof (item.value) == 'number') {
-                if (!_info.hasOwnProperty(item.name)) {
-                    _info[item.name] = 0;
-                }
-            }
+    //                                         if (_attribute.args4) {
+    //                                             switch (_attribute.args4) {
+    //                                                 case "times":
+    //                                                     {
+    //                                                         let _times = new Date(_start).getTime() / 1000;
+    //                                                         let _timee = new Date(_end).getTime() / 1000;
+    //                                                         // _info[_attribute.args1] = _times;
+    //                                                         // _info[_attribute.args2] = _timee;
+    //                                                         setValueToSameLevel(item.name, _info, _attribute.args1, _times);
+    //                                                         setValueToSameLevel(item.name, _info, _attribute.args2, _timee);
+    //                                                     }
+    //                                                     break;
+    //                                                 case "timems":
+    //                                                     {
+    //                                                         let _times = new Date(_start).getTime();
+    //                                                         let _timee = new Date(_end).getTime();
+    //                                                         // _info[_attribute.args1] = _times;
+    //                                                         // _info[_attribute.args2] = _timee;
+    //                                                         setValueToSameLevel(item.name, _info, _attribute.args1, _times);
+    //                                                         setValueToSameLevel(item.name, _info, _attribute.args2, _timee);
+    //                                                     }
+    //                                                     break;
+    //                                             }
+    //                                         }
+    //                                     }
+    //                                 }
+    //                                 break;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //                 break;
+    //             case "Guid":
+    //             case "DateTime":
+    //                 {
+    //                     if (!item.required) {
+    //                         if (_info[item.name] == "null" || _info[item.name] == '') {
+    //                             delete _info[item.name];
+    //                         }
+    //                     }
+    //                 }
+    //                 break;
+    //             case "selects":
+    //             case "lselect":
+    //                 {
+    //                     //基于结果进行值拼接！
+    //                     var _elcs = $(`[name=${item.name}]`).find('.selected');
+    //                     if (_elcs && _elcs.length > 0) {
+    //                         var _array = new Array();
+    //                         for (var k = 0; k < _elcs.length; k++) {
+    //                             _array.push($(_elcs[k]).attr('value'));
+    //                         }
+    //                         if (item.dataFrom.indexOf("[]") >= 0) {
+    //                             if (IsNumberArrayDataType(item.dataFrom)) {
+    //                                 var _newarray = new Array();
+    //                                 _array.forEach(_ary => {
+    //                                     _newarray.push(Number(_ary));
+    //                                 });
+    //                                 _info[item.name] = _newarray;
+    //                             } else {
+    //                                 _info[item.name] = _array;
+    //                             }
+    //                         } else {
+    //                             //string
 
-            if (item.nullable) {
-                var _value = null;
-                if (_info.hasOwnProperty(item.name)) {
-                    _value = _info[item.name];
-                }
-                //null的问题应该是API处理
-                if (!_value) {
-                    delete _info[item.name];
-                }
-                switch (item.dataFrom) {
-                    case "DateTime":
-                    case "Guid":
-                        {
-                            if (_info[item.name] == "null" || _info[item.name] == '') {
-                                delete _info[item.name];
-                            }
-                        }
-                        break;
-                }
-            }
-            //int类型的0可能被忽略，这样后台会命中比如默认值-1的情况
+    //                             if (IsNumberDataType(item.dataFrom)) {
+    //                                 _info[item.name] = Number(_array[0]);
+    //                             } else {
+    //                                 var _splitchar = ',';
+    //                                 if (item.attributes) {
+    //                                     for (var _attribute of item.attributes) {
+    //                                         if (_attribute.name == item.dataType) {
+    //                                             if (_attribute.args2) {
+    //                                                 _splitchar = _attribute.args2;
+    //                                             }
+    //                                             break;
+    //                                         }
+    //                                     }
+    //                                 }
+    //                                 _info[item.name] = _array.join(_splitchar);
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //                 break;
+    //             case "splitarray":
+    //                 {
+    //                     var _split_char = ',';//默认值使用逗号隔开
+    //                     var _split = funcFindAttribute(item.attributes, "splitarray");
+    //                     if (_split) {
+    //                         if (_split.args1) {
+    //                             _split_char = _split.args1;
+    //                         }
+    //                     }
+    //                     if (_info.hasOwnProperty(item.name)) {
+    //                         var _val = _info[item.name];
+    //                         if (_val) {
+    //                             _val = _val.replace(/，/g, _split_char);
+    //                             if (IsNumberArrayDataType(item.dataFrom)) {
+    //                                 var strs = _val.split(_split_char);
+    //                                 var arr = new Array();
+    //                                 for (var ia of strs) {
+    //                                     arr.push(Number(ia));
+    //                                 }
+    //                                 _info[item.name] = arr;
+    //                             } else {
+    //                                 _info[item.name] = _val.split(_split_char);
+    //                             }
+    //                         } else {
+    //                             delete _info[item.name];
+    //                         }
 
-        });
-    } else {
-        //request=one模式下，可能会这样，则需要从query中拼接数据
-    }
+    //                     }
+    //                 }
+    //                 break;
+    //             case "fentoyuan":
+    //                 {
+    //                     var _value = _info[item.name];
+    //                     if (_value) {
+    //                         _info[item.name] = Number((_value * 100).toFixed(2));// Number(Math.fround(_value * 100));
+    //                     }
+    //                 }
+    //                 break;
+    //         }
+    //         if (typeof (item.value) == 'number') {
+    //             if (!_info.hasOwnProperty(item.name)) {
+    //                 _info[item.name] = 0;
+    //             }
+    //         }
+
+    //         if (item.nullable) {
+    //             var _value = null;
+    //             if (_info.hasOwnProperty(item.name)) {
+    //                 _value = _info[item.name];
+    //             }
+    //             //null的问题应该是API处理
+    //             if (!_value) {
+    //                 delete _info[item.name];
+    //             }
+    //             switch (item.dataFrom) {
+    //                 case "DateTime":
+    //                 case "Guid":
+    //                     {
+    //                         if (_info[item.name] == "null" || _info[item.name] == '') {
+    //                             delete _info[item.name];
+    //                         }
+    //                     }
+    //                     break;
+    //             }
+    //         }
+    //         //int类型的0可能被忽略，这样后台会命中比如默认值-1的情况
+
+    //     });
+    // } else {
+    //     //request=one模式下，可能会这样，则需要从query中拼接数据
+    // }
 }
 
 

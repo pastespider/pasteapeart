@@ -128,7 +128,7 @@ namespace PasteApeart.Application
         }
 
         /// <summary>
-        /// 获取详细
+        /// 获取详细 获取详细对应的元数据
         /// </summary>
         /// <returns></returns>
         public async Task<VoloModelInfo> ReadDetailModel(string entityName, string id)
@@ -144,6 +144,53 @@ namespace PasteApeart.Application
                 throw new PasteCodeException($"找不到对应的实体或 DTO 类型: {entityName}");
             }
 
+            var dto = await ReadDetailObjectAsync(entityType,dtoType,id);
+
+            //// 2. 动态查询实体
+            //var entity = await _defaultHelper.FindEntityByIdWithIncludeAsync(_dbContext, entityType, id);
+            //if (entity == null)
+            //{
+            //    throw new PasteCodeException("查询的信息不存在，无法执行编辑操作！");
+            //}
+
+            //await DefaultFilterDataAsync(entityType, entity, "detail");
+            //var dto = Activator.CreateInstance(dtoType);
+            //_defaultHelper.MapProperties(entity, dto, entityType, dtoType);
+
+            ////构建外表等 Include的如何搞定？？？
+            //await _defaultHelper.BuildOuterQuery(_dbContext, dto, dtoType);
+
+            ////进行脱敏处理
+            //var hasHalfHideAttribute = dtoType.GetCustomAttribute<PasteHalfHideAttribute>();
+            //if (hasHalfHideAttribute != null)
+            //{
+            //    HalfHideHelper.PasteMaskData(dto, dtoType);
+            //}
+
+            // 4. 动态读取 DTO 的属性信息
+            return await DefaultBuildPropertyInfo("detail", dto, dtoType);
+
+        }
+
+
+        /// <summary>
+        /// 获取详细 获取数据本身
+        /// </summary>
+        /// <returns></returns>
+        public async Task<object> ReadDetailObjectAsync(Type entityType,Type dtoType, string id)
+        {
+
+            //entityName = DefaultMapperEntityName(entityName);
+
+            //// 1. 根据实体名称查找对应的实体类型和 DTO 类型
+            //var entityType = _defaultHelper.FindEntityType(entityName);
+            //var dtoType = _defaultHelper.FindDtoType(entityName, "Dto");
+
+            //if (entityType == null || dtoType == null)
+            //{
+            //    throw new PasteCodeException($"找不到对应的实体或 DTO 类型: {entityName}");
+            //}
+
             // 2. 动态查询实体
             var entity = await _defaultHelper.FindEntityByIdWithIncludeAsync(_dbContext, entityType, id);
             if (entity == null)
@@ -157,15 +204,25 @@ namespace PasteApeart.Application
             // 3. 动态映射实体到 DTO
             //var dto = DefaultHelper.MapEntityToDto(ObjectMapper, entity, entityType, dtoType);
 
+
+
             //构建外表等 Include的如何搞定？？？
             await _defaultHelper.BuildOuterQuery(_dbContext, dto, dtoType);
+
+            //进行脱敏处理
+            var hasHalfHideAttribute = dtoType.GetCustomAttribute<PasteHalfHideAttribute>();
+            if (hasHalfHideAttribute != null)
+            {
+                HalfHideHelper.PasteMaskData(dto, dtoType);
+            }
 
             // 4. 动态读取 DTO 的属性信息
             //var dataModel = DefaultHelper.ReadModelProperties(dto, dtoType);
             //return dataModel;
-            return await DefaultBuildPropertyInfo("detail", dto, dtoType);
-
+            //return await DefaultBuildPropertyInfo("detail", dto, dtoType);
+            return dto;
         }
+
 
         /// <summary>
         /// 获取列表格式
@@ -280,7 +337,7 @@ namespace PasteApeart.Application
             var input = _defaultHelper.MapperToQueryModel(queryString, searchType, searchObject);
 
 
-            dynamic pagedto = await DirectPageAsync(searchObject, entityType, searchType, input, listDtoType);
+            dynamic pagedto = await DirectPageAsync(searchObject, entityType, searchType, input.page, listDtoType);
             if (input.page == 1)
             {
                 if (queryString.Contains("request=one"))
@@ -349,15 +406,15 @@ namespace PasteApeart.Application
         /// <param name="searchObject"></param>
         /// <param name="entityType"></param>
         /// <param name="searchType"></param>
-        /// <param name="input"></param>
+        /// <param name="page">第1页要返回totalCount</param>
         /// <param name="listDtoType"></param>
         /// <returns></returns>
-        public async Task<dynamic> DirectPageAsync(object searchObject, Type entityType, Type searchType, InputSearchBase input, Type listDtoType)
+        public async Task<dynamic> DirectPageAsync(object searchObject, Type entityType, Type searchType, int page, Type listDtoType)
         {
 
             dynamic pageDto = new ExpandoObject();
             IQueryable query = _defaultHelper.BuildDynamicQuery(_dbContext, entityType, searchType, searchObject);
-            if (input.page == 1)
+            if (page == 1)
             {
                 pageDto.totalCount = await _defaultHelper.ExecuteCountQuery(query, entityType);
             }
@@ -387,6 +444,14 @@ namespace PasteApeart.Application
             }
             //查询外表 并实现 这里是简单的外表ID的查询 如果有更复杂的，还需要实现
             await _defaultHelper.BuildOuterData(_dbContext, listDtoType, dtos);
+
+            //进行脱敏处理
+            var hasHalfHideAttribute = listDtoType.GetCustomAttribute<PasteHalfHideAttribute>();
+            if (hasHalfHideAttribute != null)
+            {
+                HalfHideHelper.PasteMaskData(dtos, listDtoType);
+            }
+
             // 7. 设置结果并返回
             //pagedDto.Items = dtos.Cast<object>().ToList();
             pageDto.items = dtos;

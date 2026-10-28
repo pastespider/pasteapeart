@@ -1,10 +1,9 @@
 using Newtonsoft.Json;
-using ExampleForm.Application.Contracts;
+using PasteApeart.Application.Contracts;
 using PasteApeart.Helper;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Application.Dtos;
-using PasteApeart.Application.Contracts;
 
 namespace ExampleForm.usermodels
 {
@@ -569,6 +568,13 @@ namespace ExampleForm.usermodels
     [Description("查询")]
     public class InputQueryRoleInfo : InputSearchBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public InputQueryRoleInfo()
+        {
+            orderby = "sortStr";
+        }
 
         /// <summary>
         /// 父级ID 基于父级ID查询
@@ -609,11 +615,14 @@ namespace ExampleForm.usermodels
         public EnumModel AuthType { get; set; } = EnumModel.ok;
 
         /// <summary>
-        /// 排序 这个字段是隐藏的
+        /// 时间转
         /// </summary>
-        [PasteHidden]
-        [Description("排序 这个字段是隐藏的")]
-        public new string orderby { get; set; } = "SortStr";
+        [PasteDaterange("sdate", "edate", "", "times")]
+        public long sdate { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public long edate { get; set; }
     }
 }

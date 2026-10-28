@@ -285,29 +285,38 @@
             <param name="searchName"></param>
             <returns></returns>
         </member>
-        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DirectPageAsync(System.Object,System.Type,System.Type,PasteApeart.Application.Contracts.InputSearchBase,System.Type)">
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.DirectPageAsync(System.Object,System.Type,System.Type,System.Int32,System.Type)">
             <summary>
             复用 按页查询
             </summary>
             <param name="searchObject"></param>
             <param name="entityType"></param>
             <param name="searchType"></param>
-            <param name="input"></param>
+            <param name="page">当前页码，第1页要读取totalCount</param>
             <param name="listDtoType"></param>
             <returns></returns>
         </member>
         <member name="M:PasteApeart.Application.IPasteDefaultAppService.ReadAddModel(System.String)">
             <summary>
-            
+            获取新增 元数据
             </summary>
             <param name="entityName"></param>
             <returns></returns>
         </member>
         <member name="M:PasteApeart.Application.IPasteDefaultAppService.ReadDetailModel(System.String,System.String)">
             <summary>
-            
+            获取对象详细的元数据
             </summary>
             <param name="entityName"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.IPasteDefaultAppService.ReadDetailObjectAsync(System.Type,System.Type,System.String)">
+            <summary>
+            获取对象详细
+            </summary>
+            <param name="entityType"></param>
+            <param name="dtoType"></param>
             <param name="id"></param>
             <returns></returns>
         </member>
@@ -664,7 +673,13 @@
         </member>
         <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadDetailModel(System.String,System.String)">
             <summary>
-            获取详细
+            获取详细 获取详细对应的元数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.ReadDetailObjectAsync(System.Type,System.Type,System.String)">
+            <summary>
+            获取详细 获取数据本身
             </summary>
             <returns></returns>
         </member>
@@ -693,14 +708,14 @@
             <returns></returns>
             <exception cref="T:PasteApeart.Application.Contracts.PasteCodeException"></exception>
         </member>
-        <member name="M:PasteApeart.Application.PasteDefaultAppService.DirectPageAsync(System.Object,System.Type,System.Type,PasteApeart.Application.Contracts.InputSearchBase,System.Type)">
+        <member name="M:PasteApeart.Application.PasteDefaultAppService.DirectPageAsync(System.Object,System.Type,System.Type,System.Int32,System.Type)">
             <summary>
             直接获取页面数据 用于快捷开发
             </summary>
             <param name="searchObject"></param>
             <param name="entityType"></param>
             <param name="searchType"></param>
-            <param name="input"></param>
+            <param name="page">第1页要返回totalCount</param>
             <param name="listDtoType"></param>
             <returns></returns>
         </member>

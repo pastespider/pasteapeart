@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 
 namespace ExampleForm
 {
@@ -14,7 +14,7 @@ namespace ExampleForm
         [Description("全部")]
         All = -1,
         /// <summary>
-        /// <![CDATA[<i_*_style="color:green;">权限</i>]]>
+        /// 权限
         /// </summary>
         [Description("权限")]
         Role = 0,

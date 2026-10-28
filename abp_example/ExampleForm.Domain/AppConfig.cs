@@ -20,11 +20,11 @@ namespace ExampleForm
         /// <summary>
         /// 
         /// </summary>
-        public string RootAccount { get; set; }
+        public string RootAccount { get; set; } = "admin@admin.com";
 
         /// <summary>
         /// 
         /// </summary>
-        public string RootPassword { get; set; }
+        public string RootPassword { get; set; } = "123456";
     }
 }

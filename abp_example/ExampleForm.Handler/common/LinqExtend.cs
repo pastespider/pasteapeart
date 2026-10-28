@@ -1,4 +1,4 @@
-﻿using ExampleForm.testmodels;
+using ExampleForm.testmodels;
 using ExampleForm.usermodels;
 
 namespace ExampleForm.Handler
@@ -74,18 +74,32 @@ namespace ExampleForm.Handler
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
+        [ExpressiveSharp.Expressive(AllowBlockBody = true)]
         public static RoleShort ToRoleShort(this RoleInfo input)
         {
-            if (input == null)
-            {
-                return null;
-            }
-            return new RoleShort
+            return input == null ? null : new RoleShort
             {
                 Id = input.Id,
                 Name = input.Name,
             };
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        [ExpressiveSharp.Expressive(AllowBlockBody = true)]
+        public static RoleShort AsRoleShort(RoleInfo input)
+        {
+            return input == null ? null : new RoleShort
+            {
+                Id = input.Id,
+                Name = input.Name,
+            };
+        }
+
+
 
         ///// <summary>
         ///// 
@@ -146,7 +160,7 @@ namespace ExampleForm.Handler
         /// <returns></returns>
         public static RoleInfoUpdateDto ToRoleUpdateDto(this RoleInfo a, RoleInfo rol)
         {
-            
+
             return new RoleInfoUpdateDto
             {
                 Id = a.Id,

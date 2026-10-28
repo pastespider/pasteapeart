@@ -1384,6 +1384,7 @@ function FuncHandlerParseFormValue(_info) {
                     break;
                 case "daterange":
                     {
+
                         if (item.attributes) {
                             for (let _attribute of item.attributes) {
                                 if (_attribute.name == 'daterange') {
@@ -2948,7 +2949,7 @@ function InitMarkDownEditor(item) {
 
     BtnExpend = editormd.BtnMenu;
 
-    _mdEditor = editormd(_editor, {
+    var _mdEditor = editormd(_editor, {
         height: _high,
         saveHTMLToTextarea: true,
         imageUpload: true,
@@ -4319,10 +4320,7 @@ function handlerExchangeItemToUIData(item) {
                     break;
                 case "datetime":
                     {
-                        if (item.dataType && item.dataType == "daterange") {
-                            return;
-                        }
-                        item.dataType = "datetime";
+
                         var _format = "yyyy-MM-dd HH:mm:ss";
                         if (_attribute.args1) {
                             _format = _attribute.args1;
@@ -4349,6 +4347,10 @@ function handlerExchangeItemToUIData(item) {
                                 }
                             }
                         }
+                        if (item.dataType && item.dataType == "daterange") {
+                            return;
+                        }
+                        item.dataType = "datetime";
                     }
                     break;
                 case "point":

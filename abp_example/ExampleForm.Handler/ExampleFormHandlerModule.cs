@@ -2,11 +2,11 @@ using ExampleForm.usermodels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PasteApeart;
 using PasteApeart.Handler;
 using PasteApeart.Handler.common;
 using PasteApeart.Handler.Level;
 using PasteApeart.Handler.rabbit;
+using Volo.Abp.DependencyInjection;
 using Volo.Abp.Modularity;
 
 namespace ExampleForm
@@ -51,6 +51,33 @@ namespace ExampleForm
                     sp.GetRequiredService<IEventActionHandler>(),
                     typeof(UserInfoDto).Assembly.GetTypes())
             );
+
+            //依赖注入IEventHadnler
+            var handlers = typeof(ExampleFormHandlerModule).Assembly
+                .GetTypes()
+                .Where(t => !t.IsAbstract &&
+                           !t.IsGenericType &&
+                           t.GetInterfaces()
+                            .Any(i => i.IsGenericType &&
+                                     i.GetGenericTypeDefinition() == typeof(IEventHandler<>)));
+            foreach (var handler in handlers)
+            {
+                var interfaceType = handler.GetInterfaces()
+                    .First(i => i.IsGenericType &&
+                                i.GetGenericTypeDefinition() == typeof(IEventHandler<>));
+                if (typeof(ISingletonDependency).IsAssignableFrom(handler))
+                {
+                    context.Services.AddSingleton(interfaceType, handler);
+                }
+                else if (typeof(IScopedDependency).IsAssignableFrom(handler))
+                {
+                    context.Services.AddScoped(interfaceType, handler);
+                }
+                else // 默认使用 ITransientDependency
+                {
+                    context.Services.AddTransient(interfaceType, handler);
+                }
+            }
 
         }
     }

@@ -296,7 +296,7 @@
         </member>
         <member name="F:ExampleForm.EnumRoleType.Role">
             <summary>
-            <![CDATA[<i_*_style="color:green;">权限</i>]]>
+            权限
             </summary>
         </member>
         <member name="F:ExampleForm.EnumRoleType.Menu">

@@ -121,7 +121,7 @@
                                 <%}%>
                             <% break; 
                             case "password": %>
-                                <input name="<%:=item.name%>" autocomplete="off" class="input-text" <% if(item.required){%>required<%}%> type="password" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
+                                <input name="<%:=item.name%>" autocomplete="new-password" class="input-text" <% if(item.required){%>required<%}%> type="password" onblur="handlerBlur(this)" <% if(item.readonly){ %>readonly<% } %> value="<%:=item.value || ''%>" <%if(item.maxlength!=0){%> maxlength="<%:=item.maxlength%>"<%}%> placeholder="<%:=item.placeholder%>" />
                                 <span class="Hui-iconfont Hui-iconfont-del spanclean" onclick="handlerClean(this)"></span>
                             <% break; 
                             case "html": %>

@@ -1649,6 +1649,11 @@
              查询
             </summary>
         </member>
+        <member name="M:ExampleForm.usermodels.InputQueryRoleInfo.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.FatherId">
             <summary>
             父级ID 基于父级ID查询
@@ -1669,9 +1674,14 @@
             授权类型
             </summary>
         </member>
-        <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.orderby">
+        <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.sdate">
             <summary>
-            排序 这个字段是隐藏的
+            时间转
+            </summary>
+        </member>
+        <member name="P:ExampleForm.usermodels.InputQueryRoleInfo.edate">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ExampleForm.usermodels.UserGradeAddDto">

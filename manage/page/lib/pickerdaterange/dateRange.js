@@ -80,6 +80,10 @@ function pickerDateRange(inputId, options) {
 	//将对象赋给__method变量
 	var __method = this;
 
+			    // ===== 新增：注册实例 =====
+    window.__pickerRegistry = window.__pickerRegistry || {};
+    window.__pickerRegistry[inputId] = this;
+
 	this.inputId = inputId;
 	this.inputCompareId = inputId + 'Compare';
 	this.compareInputDiv = 'div_compare_' + inputId;
@@ -467,6 +471,36 @@ function pickerDateRange(inputId, options) {
 		__method.close();
 	});
 };
+
+
+/**
+ * 
+ * @param {*} inputId 
+ * @param {*} start 
+ * @param {*} end 
+ * @returns 
+ */
+function setPickerDate(inputId, start, end) {
+    $('#' + inputId).val(start + '  至  ' + end);
+    $('#' + inputId).attr('datas', start);
+    $('#' + inputId).attr('datae', end);
+
+    var picker = window.__pickerRegistry && window.__pickerRegistry[inputId];
+    if (!picker) return;
+
+    // 用实例上真实的 id，不靠拼
+    $('#' + picker.startDateId).val(start);
+    $('#' + picker.endDateId).val(end);
+
+    // 提交隐藏域
+    $('#' + picker.mOpts.startDateId).val(start);
+    $('#' + picker.mOpts.endDateId).val(end);
+
+    // 同步 mOpts
+    picker.mOpts.startDate = start;
+    picker.mOpts.endDate   = end;
+}
+
 
 /**
  * @description 日期选择器的初始化方法，对象原型扩展
